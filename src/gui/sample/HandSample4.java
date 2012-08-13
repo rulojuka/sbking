@@ -6,11 +6,7 @@ import java.util.*;
 public class HandSample4 extends JApplet{
     
   private Deck myDeck;
-  private Hand northHand;
-  private Hand southHand;
   private Card myCard;
-  
-  private int turn;
   
   private final int NUMBER_OF_HANDS = 4;
 	private final int SIZE_OF_HAND = 13;
@@ -30,8 +26,11 @@ public class HandSample4 extends JApplet{
 	private final int CARD_WIDTH = 72;
 	private final int CARD_HEIGHT = 96;
 	
+  private int turn;
 	public int[] initial_x = new int[4];
   public int[] initial_y = new int[4];
+  public int[] light_x = new int[4];
+  public int[] light_y = new int[4];
 	
   private Hand[] hands = new Hand[NUMBER_OF_HANDS];
 	private JButton[][] buttons = new JButton[NUMBER_OF_HANDS][ SIZE_OF_HAND ]; /*Don't know how not to use this.*/
@@ -40,6 +39,7 @@ public class HandSample4 extends JApplet{
 	javax.swing.JButton JButton1 = new javax.swing.JButton();
 	javax.swing.JButton turn_light = new javax.swing.JButton();
 	private java.awt.Color TABLE_COLOR = new java.awt.Color(0,100,0);
+	private java.awt.Color TURN_LIGHT_COLOR = new java.awt.Color(255,0,0);
 	
 	public void init(){
 	
@@ -52,11 +52,15 @@ public class HandSample4 extends JApplet{
   initial_x[2]=SOUTH_X;
 	initial_x[3]=WEST_X;  
 	
-	turn = 0;
-	turn_light.setBounds(10,10,100,100); 
-	turn_light.setBorderPainted(false); 
-	turn_light.setBackground(Color.RED);
-	turn_light.setOpaque(true);
+  light_y[0]=NORTH_Y;
+	light_y[1]=EAST_Y;
+  light_y[2]=SOUTH_Y;
+	light_y[3]=WEST_Y;
+	light_x[0]=NORTH_X;
+	light_x[1]=EAST_X;
+  light_x[2]=SOUTH_X;
+	light_x[3]=WEST_X;
+	
 		
 		// This line prevents the "Swing: checked access to system event queue" message seen in some browsers.
 		getRootPane().putClientProperty("defeatSystemEventQueueCheck", Boolean.TRUE);
@@ -83,6 +87,16 @@ public class HandSample4 extends JApplet{
   		  handButtons[k][i] = buttons[k][i]; /*Really didn't understand the need of this line but break without it */
 	    }
 	  }
+	  
+	turn = 0;
+	turn_light.setBounds(initial_x[turn]-10 , initial_y[turn]-10 , (SIZE_OF_HAND-1)*BETWEEN_CARDS_WIDTH + CARD_WIDTH + 10 + 10, CARD_HEIGHT+20);
+	//turn_light.setBorderPainted(true); 
+	turn_light.setRolloverEnabled(false);
+	turn_light.setBackground(TURN_LIGHT_COLOR);
+	turn_light.setOpaque(true);
+	turn_light.setContentAreaFilled(true);
+		getContentPane().add(turn_light);
+	
 		
 		/*Other buttons*/
 		JButton1.setText("Draw and Sort");
@@ -121,6 +135,7 @@ public class HandSample4 extends JApplet{
 					   if (k==turn && object == handButtons[k][i]){
 						  removeCard(event,k,i);
 						  moveTurn();
+						  displayTurn();
 						 }
 				  }
 				}
@@ -186,10 +201,14 @@ public class HandSample4 extends JApplet{
 	  turn++;
 	  if(turn==4)
 	    turn=0;
+	  turn_light.setBounds(light_x[turn]-10,light_y[turn]-10,20,20);
+	    
 	}
 	
 	private void displayTurn(){
-	  
+	    int cards = hands[turn].getNumberOfCards();
+		  int discarded = SIZE_OF_HAND - cards;
+		  turn_light.setBounds(initial_x[turn]-10 + discarded*BETWEEN_CARDS_WIDTH/2 ,initial_y[turn]-10,(cards-1)*BETWEEN_CARDS_WIDTH + CARD_WIDTH + 10 + 10,CARD_HEIGHT+20);
 	}
 	
 }
