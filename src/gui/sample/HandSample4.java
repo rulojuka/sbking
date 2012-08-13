@@ -9,6 +9,7 @@ public class HandSample4 extends JApplet{
   private Hand northHand;
   private Hand southHand;
   private Card myCard;
+  private final int NUMBER_OF_HANDS = 4;
 	private final int SIZE_OF_HAND = 13;
 	private final int BETWEEN_CARDS_WIDTH = 26; /* 26 is good. 12 pixels to hide pictures*/
 	private final int WIDTH = 1024;
@@ -17,20 +18,35 @@ public class HandSample4 extends JApplet{
 	private final int B_Y = 600;
 	private final int NORTH_X = 1024/2 - BETWEEN_CARDS_WIDTH * 7; /* Ideal would be 6,5 (half of the cards) */
 	private final int SOUTH_X = NORTH_X;
+	private final int EAST_X = NORTH_X + 250;
+  private final int WEST_X = NORTH_X - 250;
   private final int NORTH_Y = 20;
 	private final int SOUTH_Y = 550;
+	private final int EAST_Y = 300;
+	private final int WEST_Y = EAST_Y;
 	private final int CARD_WIDTH = 72;
 	private final int CARD_HEIGHT = 96;
 	
-  private JButton[] buttons = new JButton[ SIZE_OF_HAND ]; /*Don't know how not to use this.*/
-  private JButton[] northButtons = new JButton[ SIZE_OF_HAND ];
-  private JButton[] buttons2 = new JButton[ SIZE_OF_HAND ]; /*Don't know how not to use this.*/
-  private JButton[] southButtons = new JButton[ SIZE_OF_HAND ];
-    
+	public int[] initial_x = new int[4];
+  public int[] initial_y = new int[4];
+	
+  private Hand[] hands = new Hand[NUMBER_OF_HANDS];
+	private JButton[][] buttons = new JButton[NUMBER_OF_HANDS][ SIZE_OF_HAND ]; /*Don't know how not to use this.*/
+	private JButton[][] handButtons = new JButton[NUMBER_OF_HANDS][ SIZE_OF_HAND ];
+	
 	javax.swing.JButton JButton1 = new javax.swing.JButton();
 	private java.awt.Color TABLE_COLOR = new java.awt.Color(0,100,0);
 	
 	public void init(){
+	
+	initial_y[0]=NORTH_Y;
+	initial_y[1]=EAST_Y;
+  initial_y[2]=SOUTH_Y;
+	initial_y[3]=WEST_Y;
+	initial_x[0]=NORTH_X;
+	initial_x[1]=EAST_X;
+  initial_x[2]=SOUTH_X;
+	initial_x[3]=WEST_X;  
 		
 		// This line prevents the "Swing: checked access to system event queue" message seen in some browsers.
 		getRootPane().putClientProperty("defeatSystemEventQueueCheck", Boolean.TRUE);
@@ -40,36 +56,22 @@ public class HandSample4 extends JApplet{
 		setSize(WIDTH,HEIGHT);
 		
 		/*Cards*/
-	  for(int i=SIZE_OF_HAND-1;i>=0;i--){ /*Only way I figured to paint in order*/
-		  buttons[i] = new JButton();
+		for(int k=0; k<NUMBER_OF_HANDS; k++){
+	    for(int i=SIZE_OF_HAND-1;i>=0;i--){ /*Only way I figured to paint in order*/
+		    buttons[k][i] = new JButton();
 		
-		  buttons[i].setFocusPainted(false);
-	    buttons[i].setRolloverEnabled(false); /*Does not bring up the focused button*/
-    	buttons[i].setBorderPainted(false); /*Does not paint the border*/
-    	buttons[i].setContentAreaFilled(false); /*Paint always in the same order???*/
+		    buttons[k][i].setFocusPainted(false);
+	      buttons[k][i].setRolloverEnabled(false); /*Does not bring up the focused button*/
+      	buttons[k][i].setBorderPainted(false); /*Does not paint the border*/
+      	buttons[k][i].setContentAreaFilled(false); /*Paint always in the same order???*/
 		
-		  buttons[i].setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-		  buttons[i].setToolTipText("This is a card.");
-		  getContentPane().add(buttons[i]);		
-		  buttons[i].setBounds(NORTH_X + i*BETWEEN_CARDS_WIDTH,NORTH_Y,CARD_WIDTH,CARD_HEIGHT); 
-		  // JLabel array mapping
-		  northButtons[i] = buttons[i]; /*Really didn't understand the need of this line but break without it */
-	  }
-	  
-	  for(int i=SIZE_OF_HAND-1;i>=0;i--){ /*Only way I figured to paint in order*/
-		  buttons2[i] = new JButton();
-		
-		  buttons2[i].setFocusPainted(false);
-	    buttons2[i].setRolloverEnabled(false); /*Does not bring up the focused button*/
-    	buttons2[i].setBorderPainted(false); /*Does not paint the border*/
-    	buttons2[i].setContentAreaFilled(false); /*Paint always in the same order???*/
-		
-		  buttons2[i].setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-		  buttons2[i].setToolTipText("This is a card.");
-		  getContentPane().add(buttons2[i]);		
-		  buttons2[i].setBounds(NORTH_X + i*BETWEEN_CARDS_WIDTH,NORTH_Y,CARD_WIDTH,CARD_HEIGHT); 
-		  // JLabel array mapping
-		  southButtons[i] = buttons2[i]; /*Really didn't understand the need of this line but break without it */
+		    buttons[k][i].setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+		    buttons[k][i].setToolTipText("This is a card.");
+		    getContentPane().add(buttons[k][i]);		
+		    buttons[k][i].setBounds(initial_x[k] + i*BETWEEN_CARDS_WIDTH,initial_y[k],CARD_WIDTH,CARD_HEIGHT); 
+		    // JLabel array mapping
+  		  handButtons[k][i] = buttons[k][i]; /*Really didn't understand the need of this line but break without it */
+	    }
 	  }
 		
 		/*Other buttons*/
@@ -80,17 +82,19 @@ public class HandSample4 extends JApplet{
 		
 		/*Initializing Hand*/
 		myDeck = new Deck();
-		northHand = new Hand();
-		southHand = new Hand();
+		for(int k=0; k<NUMBER_OF_HANDS; k++){
+		  hands[k] = new Hand();
+		}
     deal();
 		display();
 		
 		/*Listeners*/	
 		SymAction lSymAction = new SymAction();
 		JButton1.addActionListener(lSymAction);
-		for(int i=0;i<SIZE_OF_HAND;i++){
-			northButtons[i].addActionListener(lSymAction);
-			southButtons[i].addActionListener(lSymAction);
+		for(int k=0; k<NUMBER_OF_HANDS; k++){
+		  for(int i=0;i<SIZE_OF_HAND;i++){
+			  handButtons[k][i].addActionListener(lSymAction);
+		  }
 		}
 	}
 
@@ -102,13 +106,11 @@ public class HandSample4 extends JApplet{
 					sort(event);
 			}
 			else{
-				for(int i=0;i<SIZE_OF_HAND;i++){
-					 if (object == northButtons[i]){
-						removeNorthCard(event,i);
-					 }
-					 else if(object == southButtons[i]){
-						removeSouthCard(event,i);
-					 }
+			  for(int k=0; k<NUMBER_OF_HANDS; k++){
+				  for(int i=0;i<SIZE_OF_HAND;i++){
+					   if (object == handButtons[k][i])
+						  removeCard(event,k,i);
+				  }
 				}
 			}
 			display();
@@ -116,8 +118,8 @@ public class HandSample4 extends JApplet{
 	}
 
 	private void draw(java.awt.event.ActionEvent event){
-	  northHand.discardHand();
-	  southHand.discardHand();
+	  for(int k=0; k<NUMBER_OF_HANDS; k++)
+	    hands[k].discardHand();
 		myDeck.restore();
 		myDeck.shuffle();
 		restoreButtons();
@@ -126,59 +128,45 @@ public class HandSample4 extends JApplet{
 	}
 
 	private void sort(java.awt.event.ActionEvent event){
-		northHand.sort();
-		southHand.sort();
+		for(int k=0; k<NUMBER_OF_HANDS; k++)
+	    hands[k].sort();
 	}
 	
-	private void removeNorthCard(java.awt.event.ActionEvent event, int id){
-		int last = northHand.getNumberOfCards()-1;
+	private void removeCard(java.awt.event.ActionEvent event, int hand, int id){
+		int last;
+		last = hands[hand].getNumberOfCards()-1;
 		if(last>=id){
-			northHand.removeCard(id);
-			northButtons[last].setVisible(false);
-		}
-	}
-  private void removeSouthCard(java.awt.event.ActionEvent event, int id){
-		int last = southHand.getNumberOfCards()-1;
-		if(last>=id){
-			southHand.removeCard(id);
-			southButtons[last].setVisible(false);
+			hands[hand].removeCard(id);
+			handButtons[hand][last].setVisible(false);
 		}
 	}
 	private void restoreButtons(){
-		for(int i=0;i< SIZE_OF_HAND;i++){
-			northButtons[i].setVisible(true);
-			southButtons[i].setVisible(true);
+	  for(int k=0; k<NUMBER_OF_HANDS; k++)
+		  for(int i=0;i< SIZE_OF_HAND;i++){
+			  handButtons[k][i].setVisible(true);
 	    }
 	}
 	
 	private void deal(){
 		Card card;
-		for(int i=0;i< SIZE_OF_HAND;i++){
-        	card = myDeck.dealCard();
-        	northHand.addCard( card );
-	    }
-	  for(int i=0;i< SIZE_OF_HAND;i++){
-        	card = myDeck.dealCard();
-        	southHand.addCard( card );
-	    }
+		for(int k=0; k<NUMBER_OF_HANDS; k++)
+		  for(int i=0;i< SIZE_OF_HAND;i++){
+          	card = myDeck.dealCard();
+          	hands[k].addCard( card );
+	      }
 	}
 	
 	private void display(){
-		int cards = northHand.getNumberOfCards();
+		int cards;
 		int discarded; /*Number of cards already discarded*/
-		discarded = SIZE_OF_HAND - cards;
-	   for (int i = 0; i <cards; i++ ) {
-		    Card c = northHand.getCard( i );
-		    northButtons[i].setIcon( c.getCardImage() );
-		    northButtons[i].setBounds(NORTH_X + i*BETWEEN_CARDS_WIDTH + discarded*BETWEEN_CARDS_WIDTH/2,NORTH_Y,CARD_WIDTH,CARD_HEIGHT);
-		}
-		
-		cards = southHand.getNumberOfCards();
-		discarded = SIZE_OF_HAND - cards;
-	   for (int i = 0; i <cards; i++ ) {
-		    Card c = southHand.getCard( i );
-		    southButtons[i].setIcon( c.getCardImage() );
-		    southButtons[i].setBounds(SOUTH_X + i*BETWEEN_CARDS_WIDTH + discarded*BETWEEN_CARDS_WIDTH/2,SOUTH_Y,CARD_WIDTH,CARD_HEIGHT);
+		for(int k=0; k<NUMBER_OF_HANDS; k++){
+		  cards = hands[k].getNumberOfCards();
+		  discarded = SIZE_OF_HAND - cards;
+	     for (int i = 0; i <cards; i++ ) {
+		      Card c = hands[k].getCard( i );
+		      handButtons[k][i].setIcon( c.getCardImage() );
+		      handButtons[k][i].setBounds(initial_x[k] + i*BETWEEN_CARDS_WIDTH + discarded*BETWEEN_CARDS_WIDTH/2,initial_y[k],CARD_WIDTH,CARD_HEIGHT);
+		  }
 		}
 	}
 	
