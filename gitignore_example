@@ -1,0 +1,6 @@
+.gitignore
+tmp
+*.swp
+*~
+*.class
+TODO

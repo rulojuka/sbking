@@ -1,0 +1,19 @@
+Planned features:
+
+* Network King game
+	- Internet playing
+	- Play specific hand or entire match
+	- Review last trick
+	- Multiple scoring methods
+	- Duplicate matches
+* Kibitzer mode
+* Lobby and Chat
+* Buddy List
+* History of games played
+	- Save hands played
+	- See hands of other players
+
+System Requirements:
+
+* Java
+

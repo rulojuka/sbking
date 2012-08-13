@@ -1,0 +1,8 @@
+Your sbking directory must be at ~/sbking
+Change your ~/sbking/src/bin/policy path to your right path.
+Change your ~/sbking/src/core/Deck.java path to your right path.
+
+Run these steps:
+./script/delete.sh
+./script/compile.sh
+./script/run.sh HandSample
