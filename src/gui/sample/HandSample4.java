@@ -9,6 +9,9 @@ public class HandSample4 extends JApplet{
   private Hand northHand;
   private Hand southHand;
   private Card myCard;
+  
+  private int turn;
+  
   private final int NUMBER_OF_HANDS = 4;
 	private final int SIZE_OF_HAND = 13;
 	private final int BETWEEN_CARDS_WIDTH = 26; /* 26 is good. 12 pixels to hide pictures*/
@@ -35,6 +38,7 @@ public class HandSample4 extends JApplet{
 	private JButton[][] handButtons = new JButton[NUMBER_OF_HANDS][ SIZE_OF_HAND ];
 	
 	javax.swing.JButton JButton1 = new javax.swing.JButton();
+	javax.swing.JButton turn_light = new javax.swing.JButton();
 	private java.awt.Color TABLE_COLOR = new java.awt.Color(0,100,0);
 	
 	public void init(){
@@ -47,6 +51,12 @@ public class HandSample4 extends JApplet{
 	initial_x[1]=EAST_X;
   initial_x[2]=SOUTH_X;
 	initial_x[3]=WEST_X;  
+	
+	turn = 0;
+	turn_light.setBounds(10,10,100,100); 
+	turn_light.setBorderPainted(false); 
+	turn_light.setBackground(Color.RED);
+	turn_light.setOpaque(true);
 		
 		// This line prevents the "Swing: checked access to system event queue" message seen in some browsers.
 		getRootPane().putClientProperty("defeatSystemEventQueueCheck", Boolean.TRUE);
@@ -108,8 +118,10 @@ public class HandSample4 extends JApplet{
 			else{
 			  for(int k=0; k<NUMBER_OF_HANDS; k++){
 				  for(int i=0;i<SIZE_OF_HAND;i++){
-					   if (object == handButtons[k][i])
+					   if (k==turn && object == handButtons[k][i]){
 						  removeCard(event,k,i);
+						  moveTurn();
+						 }
 				  }
 				}
 			}
@@ -168,6 +180,16 @@ public class HandSample4 extends JApplet{
 		      handButtons[k][i].setBounds(initial_x[k] + i*BETWEEN_CARDS_WIDTH + discarded*BETWEEN_CARDS_WIDTH/2,initial_y[k],CARD_WIDTH,CARD_HEIGHT);
 		  }
 		}
+	}
+	
+	private void moveTurn(){
+	  turn++;
+	  if(turn==4)
+	    turn=0;
+	}
+	
+	private void displayTurn(){
+	  
 	}
 	
 }
