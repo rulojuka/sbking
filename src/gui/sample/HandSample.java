@@ -3,7 +3,7 @@ import java.awt.*;
 import javax.swing.*;
 import java.util.*;
 
-public class HandSample extends JApplet{
+public class HandSample extends JFrame {
     
     private Deck myDeck;
     private Hand myHand;
@@ -21,13 +21,20 @@ public class HandSample extends JApplet{
 	javax.swing.JButton JButton4 = new javax.swing.JButton();
 	javax.swing.JLabel scoreLbl = new javax.swing.JLabel();
 	
+	//procurar por plaf (look and feel) nimbus
+	public static void main (String args[]) {
+	  HandSample hand = new HandSample();
+	  hand.init();
+	  hand.setVisible(true);
+	}
+	
 	public void init(){
 		
 		// This line prevents the "Swing: checked access to system event queue" message seen in some browsers.
 		getRootPane().putClientProperty("defeatSystemEventQueueCheck", Boolean.TRUE);
 		
 		getContentPane().setLayout(null);
-		getContentPane().setBackground(java.awt.Color.cyan);
+//		getContentPane().setBackground(java.awt.Color.cyan);
 		setSize(420,203);
 		
 		/*Cards*/

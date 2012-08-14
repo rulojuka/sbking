@@ -8,7 +8,7 @@ public class Deck {
    private java.util.List deck;
    private int index;
    private static final int DECK_SIZE = 52;
-   public String directory = "/home/rulojuka/sbking/data/images/cards/";
+   public String directory = "/home/users/rulojuka/sbking/data/images/cards/";
    
    public Deck() {
         deck = new ArrayList();
