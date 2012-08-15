@@ -45,32 +45,32 @@ public class HandSample4 extends JFrame{
 	  HandSample4 sample = new HandSample4();
 	  sample.init();
 	  sample.setVisible(true);
+    sample.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
 	public void init(){
 	
-	initial_y[0]=NORTH_Y;
-	initial_y[1]=EAST_Y;
-  initial_y[2]=SOUTH_Y;
-	initial_y[3]=WEST_Y;
-	initial_x[0]=NORTH_X;
-	initial_x[1]=EAST_X;
-  initial_x[2]=SOUTH_X;
-	initial_x[3]=WEST_X;  
+	  initial_y[0]=NORTH_Y;
+	  initial_y[1]=EAST_Y;
+    initial_y[2]=SOUTH_Y;
+	  initial_y[3]=WEST_Y;
+	  initial_x[0]=NORTH_X;
+	  initial_x[1]=EAST_X;
+    initial_x[2]=SOUTH_X;
+	  initial_x[3]=WEST_X;  
 	
-  light_y[0]=NORTH_Y;
-	light_y[1]=EAST_Y;
-  light_y[2]=SOUTH_Y;
-	light_y[3]=WEST_Y;
-	light_x[0]=NORTH_X;
-	light_x[1]=EAST_X;
-  light_x[2]=SOUTH_X;
-	light_x[3]=WEST_X;
+    light_y[0]=NORTH_Y;
+	  light_y[1]=EAST_Y;
+    light_y[2]=SOUTH_Y;
+	  light_y[3]=WEST_Y;
+	  light_x[0]=NORTH_X;
+	  light_x[1]=EAST_X;
+    light_x[2]=SOUTH_X;
+	  light_x[3]=WEST_X;
 	
 		
 		// This line prevents the "Swing: checked access to system event queue" message seen in some browsers.
 		getRootPane().putClientProperty("defeatSystemEventQueueCheck", Boolean.TRUE);
-		
 		getContentPane().setLayout(null);
 		getContentPane().setBackground(TABLE_COLOR);
 		setSize(WIDTH,HEIGHT);
@@ -141,11 +141,11 @@ public class HandSample4 extends JFrame{
 					   if (k==turn && object == handButtons[k][i]){
 						  removeCard(event,k,i);
 						  moveTurn();
-						  displayTurn();
 						 }
 				  }
 				}
 			}
+			displayTurn();
 			display();
 		}
 	}

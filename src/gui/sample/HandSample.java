@@ -4,17 +4,18 @@ import javax.swing.*;
 import java.util.*;
 
 public class HandSample extends JFrame {
-    
-    private Deck myDeck;
-    private Hand myHand;
-    private Card myCard;
+
+  private Deck myDeck;
+  private Hand myHand;
+  private Card myCard;
 	private final int SIZE_OF_HAND = 13;
 	private final int BETWEEN_CARDS_WIDTH = 26; /* 26 is good. 12 pixels to hide pictures*/
-	
-    private JButton[] cardButtons = new JButton[ SIZE_OF_HAND ];
-    private JButton[] buttons = new JButton[ SIZE_OF_HAND ]; /*Don't know how not to use this.*/
-    
-    
+	private final int WIDTH = 450;
+	private final int HEIGHT = 235;
+
+  private JButton[] cardButtons = new JButton[ SIZE_OF_HAND ];
+  private JButton[] buttons = new JButton[ SIZE_OF_HAND ]; /*Don't know how not to use this.*/
+
 	javax.swing.JButton JButton1 = new javax.swing.JButton();
 	javax.swing.JButton JButton2 = new javax.swing.JButton();
 	javax.swing.JButton JButton3 = new javax.swing.JButton();
@@ -25,26 +26,24 @@ public class HandSample extends JFrame {
 	  HandSample sample = new HandSample();
 	  sample.init();
 	  sample.setVisible(true);
+    sample.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
 	public void init(){
 		
 		// This line prevents the "Swing: checked access to system event queue" message seen in some browsers.
 		getRootPane().putClientProperty("defeatSystemEventQueueCheck", Boolean.TRUE);
-		
 		getContentPane().setLayout(null);
-//		getContentPane().setBackground(java.awt.Color.cyan);
-		setSize(420,203);
+    getContentPane().setBackground(java.awt.Color.cyan);
+		setSize(WIDTH,HEIGHT);
 		
 		/*Cards*/
 		for(int i=SIZE_OF_HAND-1;i>=0;i--){ /*Only way I figured to paint in order*/
 			buttons[i] = new JButton();
-			
 			buttons[i].setFocusPainted(false);
-		    buttons[i].setRolloverEnabled(false); /*Does not bring up the focused button*/
-    		buttons[i].setBorderPainted(false); /*Does not paint the border*/
-    		buttons[i].setContentAreaFilled(false); /*Paint always in the same order???*/
-			
+		  buttons[i].setRolloverEnabled(false); /*Does not bring up the focused button*/
+      buttons[i].setBorderPainted(false); /*Does not paint the border*/
+    	buttons[i].setContentAreaFilled(false); /*Paint always in the same order???*/
 			buttons[i].setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 			buttons[i].setToolTipText("This is a card.");
 			getContentPane().add(buttons[i]);		
@@ -77,7 +76,7 @@ public class HandSample extends JFrame {
 		/*Initializing Hand*/
 		myDeck = new Deck();
 		myHand = new Hand();
-        deal();
+    deal();
 		display();
 		
 		/*Listeners*/	
