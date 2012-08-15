@@ -3,7 +3,7 @@ import java.awt.*;
 import javax.swing.*;
 import java.util.*;
 
-public class HandSample4 extends JApplet{
+public class HandSample4 extends JFrame{
     
   private Deck myDeck;
   private Card myCard;
@@ -40,6 +40,12 @@ public class HandSample4 extends JApplet{
 	javax.swing.JButton turn_light = new javax.swing.JButton();
 	private java.awt.Color TABLE_COLOR = new java.awt.Color(0,100,0);
 	private java.awt.Color TURN_LIGHT_COLOR = new java.awt.Color(255,0,0);
+	
+	public static void main (String args[]) {
+	  HandSample4 sample = new HandSample4();
+	  sample.init();
+	  sample.setVisible(true);
+	}
 	
 	public void init(){
 	

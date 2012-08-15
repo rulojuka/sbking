@@ -21,11 +21,10 @@ public class HandSample extends JFrame {
 	javax.swing.JButton JButton4 = new javax.swing.JButton();
 	javax.swing.JLabel scoreLbl = new javax.swing.JLabel();
 	
-	//procurar por plaf (look and feel) nimbus
 	public static void main (String args[]) {
-	  HandSample hand = new HandSample();
-	  hand.init();
-	  hand.setVisible(true);
+	  HandSample sample = new HandSample();
+	  sample.init();
+	  sample.setVisible(true);
 	}
 	
 	public void init(){
