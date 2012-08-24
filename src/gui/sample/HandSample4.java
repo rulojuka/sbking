@@ -112,10 +112,15 @@ public class HandSample4 extends JFrame{
 		
 		/*Initializing Hand*/
 		myDeck = new Deck();
+		Iterator directionIterator = Direction.VALUES.iterator();
 		for(int k=0; k<NUMBER_OF_HANDS; k++){
-		  hands[k] = new Hand();
+			if(directionIterator.hasNext()){
+				Direction direction = (Direction) directionIterator.next();
+			  	hands[k] = new Hand();
+			  	hands[k].setOwner( direction );
+		  	}
 		}
-    deal();
+	    deal();
 		display();
 		
 		/*Listeners*/	
@@ -144,6 +149,7 @@ public class HandSample4 extends JFrame{
 						 }
 				  }
 				}
+				JButton1.setText(hands[turn].owner());
 			}
 			displayTurn();
 			display();

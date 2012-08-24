@@ -5,6 +5,7 @@ import java.util.*;
 public class Hand{
     
    private java.util.List hand = new ArrayList();
+   public Direction owner;
 
    public void addCard( Card card ) {
       hand.add( card );
@@ -54,14 +55,13 @@ public class Hand{
         return hand.toString();
     }
     
-/*    public void setOwner( Direction direction ){
+	public void setOwner( Direction direction ){
     	owner = direction;
     }
     
-    public Direction owner(){
-    	return owner;
+    public String owner(){
+    	return owner.toString();
     }
-*/    
 
    public void print(){
     	int i;
