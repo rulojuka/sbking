@@ -111,7 +111,7 @@ public class HandSample extends JFrame {
 	}
 
 	private void draw(java.awt.event.ActionEvent event){
-	    myHand.discardHand();
+	  myHand.discard();
 		myDeck.restore();
 		myDeck.shuffle();
 		restoreButtons();

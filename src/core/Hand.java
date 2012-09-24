@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Hand{
     
-   private java.util.List hand = new ArrayList();
+   private List hand = new ArrayList();
    public Direction owner;
 
    public void addCard( Card card ) {
@@ -27,7 +27,7 @@ public class Hand{
       return (Card) hand.remove( index );
    }
 
-   public void discardHand() {
+   public void discard() {
       hand.clear();
    }
 

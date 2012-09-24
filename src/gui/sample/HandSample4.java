@@ -158,7 +158,7 @@ public class HandSample4 extends JFrame{
 
 	private void draw(java.awt.event.ActionEvent event){
 	  for(int k=0; k<NUMBER_OF_HANDS; k++)
-	    hands[k].discardHand();
+	    hands[k].discard();
 		myDeck.restore();
 		myDeck.shuffle();
 		restoreButtons();
