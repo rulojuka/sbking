@@ -2,7 +2,7 @@ package core;
 
 import java.util.*;
 
-class Trick{
+public class Trick{
    private List trick = new ArrayList();
    private Direction leader;
    private Suit trumpSuit;
@@ -11,24 +11,35 @@ class Trick{
       if(this.getNumberOfCards() < 4)
         trick.add( card );
    }
+   public Card getCard( int index ){
+      return (Card) trick.get(index);
+   }
    
    public void discard() {
       trick.clear();
+      trumpSuit = null;
+      leader = null;
    }
    
    public void setLeader(Direction direction){
      leader = direction;
    }
+   public Direction getLeader(){
+      return this.leader;
+   }
    
    public void setTrump(Suit suit){
      trumpSuit = suit;
    }
+   public Suit getTrump(){
+     return trumpSuit;
+   }
    
-   private int getNumberOfCards() {
+   public int getNumberOfCards() {
       return trick.size();
    }
    
-	public Direction whoWon(){
+	public Direction winner(){
 	  Card firstCard = (Card) trick.get(0);
 	  Suit leadSuit = firstCard.getSuit();
 	  boolean hasTrump = false;
@@ -47,13 +58,13 @@ class Trick{
 	        resp=i;
 	      }
 	      else{
-	        if( bigger.compareTo(current) < 0 )
+	        if( bigger.compareTo(current) > 0 )
 	          resp = i;
 	      }
 	    }
 	    else if(current.getSuit() == leadSuit){
 	      if(bigger.getSuit()!=trumpSuit){
-	        if( bigger.compareTo(current) < 0 )
+	        if( bigger.compareTo(current) > 0 )
 	          resp = i;
 	      }
 	    }

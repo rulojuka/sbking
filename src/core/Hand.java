@@ -5,7 +5,7 @@ import java.util.*;
 public class Hand{
     
    private List hand = new ArrayList();
-   public Direction owner;
+   private Direction owner;
 
    public void addCard( Card card ) {
       hand.add( card );
@@ -59,8 +59,8 @@ public class Hand{
     	owner = direction;
     }
     
-    public String owner(){
-    	return owner.toString();
+    public Direction getOwner(){
+    	return owner;
     }
 
    public void print(){
