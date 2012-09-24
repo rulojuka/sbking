@@ -187,8 +187,12 @@ public class HandSample4 extends JFrame{
 			  for(int k=0; k<NUMBER_OF_HANDS; k++){
 				  for(int i=0;i<SIZE_OF_HAND;i++){
 					   if (k==turn && object == handButtons[k][i]){
-						  removeCard(event,k,i);
-						  moveTurnLight();
+					    Card c = hands[k].getCard(i);
+					    Hand h = hands[k];
+					    if(myTrick.getNumberOfCards()==4 || isValid(c,h)){
+						    removeCard(event,k,i);
+						    moveTurnLight();
+						  }
 						 }
 				  }
 				}
@@ -197,6 +201,25 @@ public class HandSample4 extends JFrame{
 			displayTurn();
 			display();
 		}
+	}
+	
+	private boolean isValid( Card c, Hand h){
+	  System.out.println("TESTANDO VALIDADE EM :");
+	  	  int cards = myTrick.getNumberOfCards();
+	  for(int i = 0; i < cards;i++){
+	    System.out.println(myTrick.getCard(i).toString());
+	  }
+	  System.out.println("----------");
+		if (myTrick.getNumberOfCards() == 0 )
+	    return true;
+	  Suit leadSuit = myTrick.getCard(0).getSuit();
+	    
+	  if( h.hasSuit( leadSuit ) == false )
+	    return true;
+	  if( h.hasSuit( leadSuit ) == true && c.getSuit() == leadSuit )
+	    return true;
+	    
+    return false;
 	}
 
 	private void draw(java.awt.event.ActionEvent event){ /*Draw a hand, not a painting*/

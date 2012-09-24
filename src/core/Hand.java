@@ -59,6 +59,15 @@ public class Hand{
     	owner = direction;
     }
     
+    public boolean hasSuit( Suit suit){
+      int n = getNumberOfCards();
+      for(int i=0;i<n;i++){
+        if(this.getCard(i).getSuit() == suit)
+          return true;
+      }
+      return false;
+    }
+    
     public Direction getOwner(){
     	return owner;
     }
