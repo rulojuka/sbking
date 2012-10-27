@@ -4,7 +4,8 @@ import java.util.*;
 
 public class Hand{
     
-   private java.util.List hand = new ArrayList();
+   private List hand = new ArrayList();
+   private Direction owner;
 
    public void addCard( Card card ) {
       hand.add( card );
@@ -26,7 +27,7 @@ public class Hand{
       return (Card) hand.remove( index );
    }
 
-   public void discardHand() {
+   public void discard() {
       hand.clear();
    }
 
@@ -54,14 +55,22 @@ public class Hand{
         return hand.toString();
     }
     
-/*    public void setOwner( Direction direction ){
+	public void setOwner( Direction direction ){
     	owner = direction;
     }
     
-    public Direction owner(){
+    public boolean hasSuit( Suit suit){
+      int n = getNumberOfCards();
+      for(int i=0;i<n;i++){
+        if(this.getCard(i).getSuit() == suit)
+          return true;
+      }
+      return false;
+    }
+    
+    public Direction getOwner(){
     	return owner;
     }
-*/    
 
    public void print(){
     	int i;

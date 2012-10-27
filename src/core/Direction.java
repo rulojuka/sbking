@@ -26,6 +26,25 @@ public final class Direction{
        return direction;
    }
    
+   public Direction add(int x){
+      Direction resp = this;
+      if(x<0)
+        return resp;
+      for(int i=0;i<x;i++){
+        resp=resp.next();
+      }
+      return resp;
+   }
+   
+   public int diff(Direction other){
+      int resp = VALUES.indexOf( other ) - VALUES.indexOf( this );
+      if(resp<0)
+        resp+=4;
+      if(resp>=4)
+        resp-=4;
+      return resp;
+   }
+   
    public Direction next(){
    		int index = VALUES.indexOf( this ) + 1;
    		if( index >= 4 )
@@ -35,4 +54,3 @@ public final class Direction{
 
 }
 
-    
