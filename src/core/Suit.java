@@ -32,7 +32,7 @@ public final class Suit implements Comparable {
       return name;
    }
    
-   public int compareTo( Object otherSuitObject ) {
+   public int compareTo( Object otherSuitObject ) { /* Used to sort cards, not used in the game rules*/
       Suit otherSuit = (Suit) otherSuitObject;
       return VALUES.indexOf( otherSuit ) - VALUES.indexOf( this );
    }
