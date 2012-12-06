@@ -27,7 +27,7 @@ public class HandSample4 extends JFrame{
 	private final int CARD_WIDTH = 72;
 	private final int CARD_HEIGHT = 96;
 	
-  private int turn;
+  private int turn; /* Current Player */
 	public int[] initial_x = new int[4];
   public int[] initial_y = new int[4];
   public int[] light_x = new int[4];
@@ -205,12 +205,12 @@ public class HandSample4 extends JFrame{
 	}
 	
 	private boolean isValid( Card c, Hand h){
-	  System.out.println("TESTANDO VALIDADE EM :");
+	  //System.out.println("TESTANDO VALIDADE EM :");
 	  	  int cards = myTrick.getNumberOfCards();
-	  for(int i = 0; i < cards;i++){
-	    System.out.println(myTrick.getCard(i).toString());
-	  }
-	  System.out.println("----------");
+//	  for(int i = 0; i < cards;i++){
+//	    System.out.println(myTrick.getCard(i).toString());
+//	  }
+//	  System.out.println("----------");
 		if (myTrick.getNumberOfCards() == 0 )
 	    return true;
 	  Suit leadSuit = myTrick.getCard(0).getSuit();
@@ -258,11 +258,9 @@ public class HandSample4 extends JFrame{
 	    turn=0;
 		
 		if(myTrick.getNumberOfCards()==4){
-  		myTrick.setTrump( diamonds );
 		  Direction winner = myTrick.winner();
-		  System.out.println("Winner of this trick is " + winner.toString());
- 		  System.out.println("And Trump Suit is " + myTrick.getTrump().toString());
-		  turn = north.diff(winner);
+//		  System.out.println("Winner of this trick is " + winner.toString());
+		  turn = winner.index();
 		}
 		
 		last = hands[hand].getNumberOfCards()-1;
@@ -308,7 +306,13 @@ public class HandSample4 extends JFrame{
 	private void displayTrick(){
 	  int cards = myTrick.getNumberOfCards();
 	  Direction leader = myTrick.getLeader();
-	  int diff = north.diff(leader);
+	  int diff = 0;
+	  if(leader!=null){
+		  diff = leader.index() - north.index();
+		  diff+=4;
+		  while(diff>4)
+			  diff-=4;
+	  }
 	  for(int i = 0; i<4;i++){
 	    trickButtons[i].setVisible(false);
 	  }
@@ -316,9 +320,9 @@ public class HandSample4 extends JFrame{
 	    Card c = myTrick.getCard(i);
 	    trickButtons[(diff+i)%4].setIcon( c.getCardImage() );
 	    trickButtons[(diff+i)%4].setVisible(true);
-	    System.out.println(myTrick.getCard(i).toString());
+	    //System.out.println(myTrick.getCard(i).toString());
 	  }
-	  System.out.println();
+//	  System.out.println();
 	}
 	
 	private void moveTurnLight(){

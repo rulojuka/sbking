@@ -1,3 +1,5 @@
+package gui;
+
 import core.*;
 import java.awt.*;
 import javax.swing.*;
@@ -11,12 +13,12 @@ public class CardButton{
 	private static final String directory = "/data/images/cards/";
 	
 	public static void main (String args[]) {
-	  Deck myDeck = new Deck();
-	  myCard = myDeck.dealCard();
-	  System.out.println(directory + myCard.getFilename(myCard.getSuit(), myCard.getRank()) );
-	  
-	  imageURL = findResource(directory + myCard.getFilename(myCard.getSuit(), myCard.getRank()));
-	  System.out.println(imageURL.getFile() );
+//	  Deck myDeck = new Deck();
+//	  myCard = myDeck.dealCard();
+//	  System.out.println(directory + myCard.getFilename(myCard.getSuit(), myCard.getRank()) );
+//	  
+//	  imageURL = findResource(directory + myCard.getFilename(myCard.getSuit(), myCard.getRank()));
+//	  System.out.println(imageURL.getFile() );
 	}
 	
 }

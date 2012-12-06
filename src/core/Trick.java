@@ -69,7 +69,7 @@ public class Trick{
 	      }
 	    }
 	  }
-	  return leader.add(resp);
+	  return leader.next(resp);
   }
   
 }

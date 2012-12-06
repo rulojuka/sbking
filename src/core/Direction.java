@@ -26,30 +26,22 @@ public final class Direction{
        return direction;
    }
    
-   public Direction add(int x){
-      Direction resp = this;
-      if(x<0)
-        return resp;
-      for(int i=0;i<x;i++){
-        resp=resp.next();
-      }
-      return resp;
-   }
-   
-   public int diff(Direction other){
-      int resp = VALUES.indexOf( other ) - VALUES.indexOf( this );
-      if(resp<0)
-        resp+=4;
-      if(resp>=4)
-        resp-=4;
-      return resp;
+   public int index() {
+	   return VALUES.indexOf( this );
    }
    
    public Direction next(){
    		int index = VALUES.indexOf( this ) + 1;
-   		if( index >= 4 )
-   			index -= 4;
+   		while(index>4)
+   			index-=4;
    		return (Direction) VALUES.get(index);
    }
+   
+   public Direction next(int n){
+  		int index = VALUES.indexOf( this ) + n;
+   		while(index>4)
+   			index-=4;
+  		return (Direction) VALUES.get(index);
+  }
 
 }
