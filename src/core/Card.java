@@ -33,16 +33,8 @@ public class Card implements Comparable {
    public String toString() {
       return rankValue.toString() + " of " + suitValue.toString();
    }
-  
-   public String rankToString() {
-      return rankValue.toString();
-   }
-
-   public String suitToString() {
-      return suitValue.toString();
-   }
    
-   public int compareTo( Object otherCardObject ) {
+   public int compareTo( Object otherCardObject ) { /*Returns <0 if card is bigger than otherCard*/
      Card otherCard = (Card) otherCardObject;
      int suitDiff = suitValue.compareTo( otherCard.suitValue );
      int rankDiff = rankValue.compareTo( otherCard.rankValue );   
