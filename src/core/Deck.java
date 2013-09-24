@@ -7,6 +7,7 @@ public class Deck {
    private java.util.List deck;
    private int index;
    private static final int DECK_SIZE = 52;
+//FIXME This next line should not have a hardcoded directory
    public String directory = "/home/rulojuka/sbking/data/images/cards/";
    
    public Deck() {
