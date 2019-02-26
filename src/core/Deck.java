@@ -8,7 +8,7 @@ public class Deck {
    private int index;
    private static final int DECK_SIZE = 52;
 //FIXME This next line should not have a hardcoded directory
-   public String directory = "/home/rulojuka/sbking/data/images/cards/";
+   public String directory = "/home/rulojuka/workspace/sbking/data/images/cards/";
    
    public Deck() {
         deck = new ArrayList();

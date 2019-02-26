@@ -39,6 +39,7 @@ public class DirectionTest {
   public void shouldGetNext() {
     assertEquals(east, north.next());
     assertEquals(south, north.next(10));
+    // Seems wrong. Verify
   }
   
 }
