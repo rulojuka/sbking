@@ -44,13 +44,36 @@ public final class Direction {
 	}
 
 	public boolean isNorthSouth() {
-		if (NORTH.toString().equals(this.toString()) || SOUTH.toString().equals(this.toString())) {
-			return true;
-		}
-		return false;
+		return isNorth() || isSouth();
 	}
 	
 	public boolean isEastWest() {
-		return !this.isNorthSouth();
+		return isEast() || isWest();
 	}
+
+	public boolean isNorth() {
+		return NORTH.toString().equals(this.toString());
+	}
+	
+	public boolean isEast() {
+		return EAST.toString().equals(this.toString());
+	}
+	
+	public boolean isSouth() {
+		return SOUTH.toString().equals(this.toString());
+	}
+	
+	public boolean isWest() {
+		return WEST.toString().equals(this.toString());
+	}
+
+	public int toInt() {
+		if( this.isNorth() ) return 0;
+		if( this.isEast() ) return 1;
+		if( this.isSouth() ) return 2;
+		if( this.isWest() ) return 3;
+		throw new RuntimeException("Invalid direction");
+	}
+	
+	
 }
