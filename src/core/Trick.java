@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Trick {
 	private static final int COMPLETE_TRICK_NUMBER_OF_CARDS = 4;
-	private List trick = new ArrayList();
+	private List<Card> trick = new ArrayList<Card>();
 	private Direction leader;
 	private Suit trumpSuit;
 
@@ -14,7 +14,7 @@ public class Trick {
 	}
 
 	public Card getCard(int index) {
-		return (Card) trick.get(index);
+		return trick.get(index);
 	}
 
 	public void discard() {
@@ -44,19 +44,21 @@ public class Trick {
 	}
 
 	public Direction winner() {
-		Card firstCard = (Card) trick.get(0);
+		Card firstCard = trick.get(0);
 		Suit leadSuit = firstCard.getSuit();
+		
+		// Trump suits not implemented yet
 		boolean hasTrump = false;
 		for (int i = 0; i < 4; i++) {
-			if (((Card) trick.get(i)).getSuit() == trumpSuit)
+			if ((trick.get(i)).getSuit() == trumpSuit)
 				hasTrump = true;
 		}
 
 		int resp = 0;
 		Card bigger, current;
 		for (int i = 1; i < 4; i++) {
-			bigger = (Card) trick.get(resp);
-			current = (Card) trick.get(i);
+			bigger = trick.get(resp);
+			current = trick.get(i);
 			if (current.getSuit() == trumpSuit) {
 				if (bigger.getSuit() != trumpSuit) {
 					resp = i;

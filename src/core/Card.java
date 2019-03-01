@@ -1,21 +1,14 @@
 package core;
 
-import javax.swing.*;
-
-public class Card implements Comparable {
+public class Card implements Comparable<Card> {
     
    private Suit suitValue;
    private Rank rankValue;
-   private ImageIcon cardImage;
+
    
-   public Card( Suit suit, Rank rank, ImageIcon cardFace ) {
-      cardImage = cardFace;
+   public Card( Suit suit, Rank rank ) {
       suitValue = suit;
       rankValue = rank;
-   }
-    
-   public static String getFilename( Suit suit, Rank rank ) {
-      return suit.getSymbol() + rank.getSymbol() + ".png";
    }
 
    public Suit getSuit() {
@@ -26,16 +19,11 @@ public class Card implements Comparable {
       return rankValue;
    }
 
-   public ImageIcon getCardImage() {
-	  return cardImage;
-   }
-
    public String toString() {
       return rankValue.toString() + " of " + suitValue.toString();
    }
    
-   public int compareTo( Object otherCardObject ) { /*Returns <0 if card is bigger than otherCard*/
-     Card otherCard = (Card) otherCardObject;
+   public int compareTo( Card otherCard ) { /*Returns <0 if card is bigger than otherCard*/
      int suitDiff = suitValue.compareTo( otherCard.suitValue );
      int rankDiff = rankValue.compareTo( otherCard.rankValue );   
        

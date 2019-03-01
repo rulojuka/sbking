@@ -1,6 +1,7 @@
 package core;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
 
 public final class Direction {
 	private String direction;
@@ -46,7 +47,7 @@ public final class Direction {
 	public boolean isNorthSouth() {
 		return isNorth() || isSouth();
 	}
-	
+
 	public boolean isEastWest() {
 		return isEast() || isWest();
 	}
@@ -54,26 +55,29 @@ public final class Direction {
 	public boolean isNorth() {
 		return NORTH.toString().equals(this.toString());
 	}
-	
+
 	public boolean isEast() {
 		return EAST.toString().equals(this.toString());
 	}
-	
+
 	public boolean isSouth() {
 		return SOUTH.toString().equals(this.toString());
 	}
-	
+
 	public boolean isWest() {
 		return WEST.toString().equals(this.toString());
 	}
 
 	public int toInt() {
-		if( this.isNorth() ) return 0;
-		if( this.isEast() ) return 1;
-		if( this.isSouth() ) return 2;
-		if( this.isWest() ) return 3;
+		if (this.isNorth())
+			return 0;
+		if (this.isEast())
+			return 1;
+		if (this.isSouth())
+			return 2;
+		if (this.isWest())
+			return 3;
 		throw new RuntimeException("Invalid direction");
 	}
-	
-	
+
 }

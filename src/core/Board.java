@@ -54,7 +54,7 @@ public class Board {
 	public int getEastWestTricks() {
 		return eastWestTricks;
 	}
-	
+
 	private void sortHands() {
 		northHand.sort();
 		eastHand.sort();
@@ -71,7 +71,6 @@ public class Board {
 	 */
 	public boolean isValid(Card c, Hand h) {
 		Trick myTrick = this.getCurrentTrick();
-		int cards = myTrick.getNumberOfCards();
 		if (myTrick.getNumberOfCards() == 0)
 			return true;
 		Suit leadSuit = myTrick.getCard(0).getSuit();
@@ -120,10 +119,26 @@ public class Board {
 	}
 
 	private boolean playedCardIsFromCurrentPlayer(Card card) {
-		return currentPlayer.isNorth() && northHand.containsCard(card)
-				|| currentPlayer.isEast() && eastHand.containsCard(card)
-				|| currentPlayer.isSouth() && southHand.containsCard(card)
-				|| currentPlayer.isWest() && westHand.containsCard(card);
+		return (currentPlayer.isNorth() && northHand.containsCard(card))
+				|| (currentPlayer.isEast() && eastHand.containsCard(card))
+				|| (currentPlayer.isSouth() && southHand.containsCard(card))
+				|| (currentPlayer.isWest() && westHand.containsCard(card));
+	}
+
+	public Hand getHandOfCurrentPlayer() {
+		if (this.currentPlayer.isNorth()) {
+			return this.northHand;
+		}
+		if (this.currentPlayer.isEast()) {
+			return this.eastHand;
+		}
+		if (this.currentPlayer.isSouth()) {
+			return this.southHand;
+		}
+		if (this.currentPlayer.isWest()) {
+			return this.westHand;
+		}
+		throw new RuntimeException("Invalid current player");
 	}
 
 }

@@ -1,106 +1,108 @@
 package core;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-public class Hand{
-    
-   private List hand = new ArrayList();
-   private Direction owner;
+public class Hand {
 
-   public void addCard( Card card ) {
-      hand.add( card );
-   }
+	private List<Card> hand = new ArrayList<Card>();
+	private Direction owner;
 
-   public Card getCard( int index ) {
-      return (Card) hand.get( index );
-   }
-  
-   public Card removeCard( Card card ) {
-      int index = hand.indexOf( card );
-      if ( index < 0 )
-         return null;
-      else
-         return (Card) hand.remove( index );     
-   }
+	public void addCard(Card card) {
+		hand.add(card);
+	}
 
-   public Card removeCard( int index ) {
-      return (Card) hand.remove( index );
-   }
+	public Card getCard(int index) {
+		return hand.get(index);
+	}
 
-   public void discard() {
-      hand.clear();
-   }
+	public Card removeCard(Card card) {
+		int index = hand.indexOf(card);
+		if (index < 0)
+			return null;
+		else
+			return hand.remove(index);
+	}
 
-   public int getNumberOfCards() {
-      return hand.size();
-   }
+	public Card removeCard(int index) {
+		return hand.remove(index);
+	}
 
-   public void sort() {
-      Collections.sort( hand );
-   }
+	public void discard() {
+		hand.clear();
+	}
 
-   public boolean isEmpty() {
-      return hand.isEmpty();
-   }
+	public int getNumberOfCards() {
+		return hand.size();
+	}
 
-   public boolean containsCard( Card card ) {
-      return false;
-   }
+	public void sort() {
+		Collections.sort(hand);
+	}
 
-   public int findCard( Card card ) {
-      return hand.indexOf( card );
-   }
-   
-   public String toString() {
-        return hand.toString();
-    }
-    
-	public void setOwner( Direction direction ){
-    	owner = direction;
-    }
-    
-    public boolean hasSuit( Suit suit){
-      int n = getNumberOfCards();
-      for(int i=0;i<n;i++){
-        if(this.getCard(i).getSuit() == suit)
-          return true;
-      }
-      return false;
-    }
-    
-    public Direction getOwner(){
-    	return owner;
-    }
+	public boolean isEmpty() {
+		return hand.isEmpty();
+	}
 
-   public void print(){
-    	int i;
-    	int n;
-    	Card auxCard;
-    	Rank auxRank;
-        Suit auxSuit;
-        
-    	n = getNumberOfCards();
-    	for(i=0;i<n;i++){
-    		auxCard = (Card) hand.get(i);
-    		auxRank = auxCard.getRank();
-    		auxSuit = auxCard.getSuit();
-    		if(i!=0)
-    			System.out.print(" | ");
-    		System.out.print( auxSuit.getSymbol() +  auxRank.getSymbol());
-    	}
-    	System.out.println();
-    }
-    
-    public int HCP(){
-    	int i,n;
-    	int resp=0;
-    	Card auxCard;
-    	n = getNumberOfCards();
-    	for(i=0;i<n;i++){
-    		auxCard = (Card) hand.get(i);
-    		resp+=auxCard.points();
-    	}
-    	return resp;
-    }
+	public boolean containsCard(Card card) {
+		return this.hand.contains(card);
+	}
+
+	public int findCard(Card card) {
+		return hand.indexOf(card);
+	}
+
+	public String toString() {
+		return hand.toString();
+	}
+
+	public void setOwner(Direction direction) {
+		owner = direction;
+	}
+
+	public boolean hasSuit(Suit suit) {
+		int n = getNumberOfCards();
+		for (int i = 0; i < n; i++) {
+			if (this.getCard(i).getSuit() == suit)
+				return true;
+		}
+		return false;
+	}
+
+	public Direction getOwner() {
+		return owner;
+	}
+
+	public void print() {
+		int i;
+		int n;
+		Card auxCard;
+		Rank auxRank;
+		Suit auxSuit;
+
+		n = getNumberOfCards();
+		for (i = 0; i < n; i++) {
+			auxCard = hand.get(i);
+			auxRank = auxCard.getRank();
+			auxSuit = auxCard.getSuit();
+			if (i != 0)
+				System.out.print(" | ");
+			System.out.print(auxSuit.getSymbol() + auxRank.getSymbol());
+		}
+		System.out.println();
+	}
+
+	public int HCP() {
+		int i, n;
+		int resp = 0;
+		Card auxCard;
+		n = getNumberOfCards();
+		for (i = 0; i < n; i++) {
+			auxCard = hand.get(i);
+			resp += auxCard.points();
+		}
+		return resp;
+	}
 
 }
