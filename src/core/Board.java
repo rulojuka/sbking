@@ -71,7 +71,7 @@ public class Board {
 	 * @return True if the card that is being played follow the basic trick rules.
 	 *         False if it does not.
 	 */
-	public boolean followsSuit(Card card, Hand hand) {
+	private boolean followsSuit(Card card, Hand hand) {
 		Trick myTrick = this.getCurrentTrick();
 		if (myTrick.getNumberOfCards() == 0)
 			return true;

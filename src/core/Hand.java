@@ -21,10 +21,6 @@ public class Hand {
 		listOfCards.remove(card);
 	}
 
-	public Card removeCard(int index) {
-		return listOfCards.remove(index);
-	}
-
 	public void discard() {
 		listOfCards.clear();
 	}
@@ -43,10 +39,6 @@ public class Hand {
 
 	public boolean containsCard(Card card) {
 		return this.listOfCards.contains(card);
-	}
-
-	public int findCard(Card card) {
-		return listOfCards.indexOf(card);
 	}
 
 	public String toString() {
@@ -100,8 +92,8 @@ public class Hand {
 		}
 		return resp;
 	}
-	
-	public List<Card> getListOfCards(){
+
+	public List<Card> getListOfCards() {
 		return this.listOfCards;
 	}
 

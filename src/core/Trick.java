@@ -1,6 +1,7 @@
 package core;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Trick {
 	private static final int COMPLETE_TRICK_NUMBER_OF_CARDS = 4;
@@ -31,14 +32,6 @@ public class Trick {
 		return this.leader;
 	}
 
-	public void setTrump(Suit suit) {
-		trumpSuit = suit;
-	}
-
-	public Suit getTrump() {
-		return trumpSuit;
-	}
-
 	public int getNumberOfCards() {
 		return trick.size();
 	}
@@ -46,7 +39,7 @@ public class Trick {
 	public Direction winner() {
 		Card firstCard = trick.get(0);
 		Suit leadSuit = firstCard.getSuit();
-		
+
 		// Trump suits not implemented yet
 		boolean hasTrump = false;
 		for (int i = 0; i < 4; i++) {
@@ -79,7 +72,7 @@ public class Trick {
 	public boolean isComplete() {
 		return this.getNumberOfCards() == COMPLETE_TRICK_NUMBER_OF_CARDS;
 	}
-	
+
 	public boolean isEmpty() {
 		return this.getNumberOfCards() == 0;
 	}
