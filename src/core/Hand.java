@@ -6,55 +6,51 @@ import java.util.List;
 
 public class Hand {
 
-	private List<Card> hand = new ArrayList<Card>();
+	private List<Card> listOfCards = new ArrayList<Card>();
 	private Direction owner;
 
 	public void addCard(Card card) {
-		hand.add(card);
+		listOfCards.add(card);
 	}
 
 	public Card getCard(int index) {
-		return hand.get(index);
+		return listOfCards.get(index);
 	}
 
-	public Card removeCard(Card card) {
-		int index = hand.indexOf(card);
-		if (index < 0)
-			return null;
-		else
-			return hand.remove(index);
+	public void removeCard(Card card) {
+		listOfCards.remove(card);
 	}
 
 	public Card removeCard(int index) {
-		return hand.remove(index);
+		return listOfCards.remove(index);
 	}
 
 	public void discard() {
-		hand.clear();
+		listOfCards.clear();
 	}
 
 	public int getNumberOfCards() {
-		return hand.size();
+		return listOfCards.size();
 	}
 
 	public void sort() {
-		Collections.sort(hand);
+		Collections.sort(listOfCards);
 	}
 
 	public boolean isEmpty() {
-		return hand.isEmpty();
+		return listOfCards.isEmpty();
 	}
 
 	public boolean containsCard(Card card) {
-		return this.hand.contains(card);
+		return this.listOfCards.contains(card);
 	}
 
 	public int findCard(Card card) {
-		return hand.indexOf(card);
+		return listOfCards.indexOf(card);
 	}
 
 	public String toString() {
-		return hand.toString();
+		return listOfCards.toString();
 	}
 
 	public void setOwner(Direction direction) {
@@ -83,7 +79,7 @@ public class Hand {
 
 		n = getNumberOfCards();
 		for (i = 0; i < n; i++) {
-			auxCard = hand.get(i);
+			auxCard = listOfCards.get(i);
 			auxRank = auxCard.getRank();
 			auxSuit = auxCard.getSuit();
 			if (i != 0)
@@ -99,10 +95,14 @@ public class Hand {
 		Card auxCard;
 		n = getNumberOfCards();
 		for (i = 0; i < n; i++) {
-			auxCard = hand.get(i);
+			auxCard = listOfCards.get(i);
 			resp += auxCard.points();
 		}
 		return resp;
+	}
+	
+	public List<Card> getListOfCards(){
+		return this.listOfCards;
 	}
 
 }

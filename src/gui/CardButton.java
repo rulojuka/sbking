@@ -1,7 +1,5 @@
 package gui;
 
-import java.awt.event.ActionListener;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
@@ -13,21 +11,25 @@ public class CardButton extends JButton {
 	private ImageIcon frontImage;
 	private ImageIcon backImage;
 	private boolean faceUp;
+	private Card card;
+	private final int CARD_WIDTH = 72;
+	private final int CARD_HEIGHT = 96;
 
-	public CardButton(Card card, ImageIcon frontImage, ImageIcon backImage, ActionListener actionListener) {
+	public CardButton(Card card, ImageIcon frontImage, ImageIcon backImage) {
 		super();
 
+		this.card = card;
 		this.frontImage = frontImage;
 		this.backImage = backImage;
 
+		this.setSize(CARD_WIDTH, CARD_HEIGHT);
 		this.faceUp = true;
 		this.setIcon(frontImage);
 
+		this.setFocusPainted(false);
 		this.setRolloverEnabled(false);
 		this.setContentAreaFilled(false); /* Paint always in the same order??? */
 		this.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-
-		this.addActionListener(actionListener);
 	}
 
 	public void flip() {
@@ -38,6 +40,10 @@ public class CardButton extends JButton {
 			this.setIcon(this.frontImage);
 			this.faceUp = true;
 		}
+	}
+
+	public Card getCard() {
+		return card;
 	}
 
 }

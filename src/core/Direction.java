@@ -33,7 +33,7 @@ public final class Direction {
 	public Direction next() {
 		int index = VALUES.indexOf(this) + 1;
 		while (index >= 4)
-			index = 0;
+			index -= 4;
 		return (Direction) VALUES.get(index);
 	}
 

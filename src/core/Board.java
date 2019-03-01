@@ -64,20 +64,20 @@ public class Board {
 
 	/**
 	 * 
-	 * @param c Card that is going to be be validated
-	 * @param h Hand of the player that is playing that card
+	 * @param card Card that is going to be be validated
+	 * @param hand Hand of the player that is playing that card
 	 * @return True if the card that is being played follow the basic trick rules.
 	 *         False if it does not.
 	 */
-	public boolean isValid(Card c, Hand h) {
+	public boolean followsSuit(Card card, Hand hand) {
 		Trick myTrick = this.getCurrentTrick();
 		if (myTrick.getNumberOfCards() == 0)
 			return true;
 		Suit leadSuit = myTrick.getCard(0).getSuit();
 
-		if (h.hasSuit(leadSuit) == false)
+		if (hand.hasSuit(leadSuit) == false)
 			return true;
-		if (h.hasSuit(leadSuit) == true && c.getSuit() == leadSuit)
+		if (hand.hasSuit(leadSuit) == true && card.getSuit() == leadSuit)
 			return true;
 
 		return false;
@@ -90,21 +90,30 @@ public class Board {
 	 * @param card Card to be played on the board.
 	 */
 	public void playCard(Card card) {
-		if (playedCardIsFromCurrentPlayer(card)) {
-			currentTrick.addCard(card);
-
-			if (currentTrick.isComplete()) {
-				Direction winner = currentTrick.winner();
-				currentTrick.discard();
-				currentTrick.setLeader(winner);
-				currentPlayer = winner;
-				updateScoreboard();
-			} else {
-				currentPlayer = currentPlayer.next();
-			}
-		} else {
-			throw new RuntimeException("Trying to play card in other player turn");
+		if (!playedCardIsFromCurrentPlayer(card)) {
+			throw new RuntimeException("Trying to play in another players turn.");
 		}
+		if (!followsSuit(card, getHandOfCurrentPlayer())) {
+			throw new RuntimeException("Card does not follow suit.");
+		}
+		if(currentTrick.isEmpty()) {
+			currentTrick.setLeader(currentPlayer);
+		}
+
+		currentTrick.addCard(card);
+		getHandOfCurrentPlayer().removeCard(card);
+		
+
+		if (currentTrick.isComplete()) {
+			Direction winner = currentTrick.winner();
+			currentTrick.discard();
+			currentTrick.setLeader(winner);
+			currentPlayer = winner;
+			updateScoreboard();
+		} else {
+			currentPlayer = currentPlayer.next();
+		}
+
 	}
 
 	private void updateScoreboard() {

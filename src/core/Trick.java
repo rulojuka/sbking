@@ -79,5 +79,9 @@ public class Trick {
 	public boolean isComplete() {
 		return this.getNumberOfCards() == COMPLETE_TRICK_NUMBER_OF_CARDS;
 	}
+	
+	public boolean isEmpty() {
+		return this.getNumberOfCards() == 0;
+	}
 
 }

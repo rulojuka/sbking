@@ -34,4 +34,5 @@ public final class Suit implements Comparable<Suit> {
 	public int compareTo(Suit otherSuit) { /* Used to sort cards, not used in the game rules */
 		return VALUES.indexOf(otherSuit) - VALUES.indexOf(this);
 	}
+
 }

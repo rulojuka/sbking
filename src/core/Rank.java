@@ -45,4 +45,5 @@ public class Rank implements Comparable<Rank> {
 	public int compareTo(Rank otherRank) {
 		return VALUES_ACE_HIGH.indexOf(otherRank) - VALUES_ACE_HIGH.indexOf(this);
 	}
+
 }
