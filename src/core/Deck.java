@@ -2,7 +2,6 @@ package core;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 public class Deck {
@@ -11,16 +10,10 @@ public class Deck {
 	private static final int DECK_SIZE = 52;
 
 	public Deck() {
-
 		deck = new ArrayList<Card>();
 		index = 0;
-		Iterator<Suit> suitIterator = Suit.VALUES.iterator();
-		while (suitIterator.hasNext()) {
-			Suit suit = suitIterator.next();
-			Iterator<Rank> rankIterator = Rank.VALUES.iterator();
-			while (rankIterator.hasNext()) {
-				Rank rank = rankIterator.next();
-
+		for (Suit suit : Suit.values()) {
+			for (Rank rank : Rank.values()) {
 				Card card = new Card(suit, rank);
 				deck.add(card);
 			}

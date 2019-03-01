@@ -1,22 +1,15 @@
 package core;
 
-import java.util.*;
+public enum Suit {
+	// Suit order used to sort cards, not used in the game rules
+	DIAMONDS("Diamonds", "d"), CLUBS("Clubs", "c"), HEARTS("Hearts", "h"), SPADES("Spades", "s");
 
-public final class Suit implements Comparable<Suit> {
-	private String name;
-	private String symbol;
+	private final String name;
+	private final String symbol;
 
-	public final static Suit CLUBS = new Suit("Clubs", "c");
-	public final static Suit DIAMONDS = new Suit("Diamonds", "d");
-	public final static Suit HEARTS = new Suit("Hearts", "h");
-	public final static Suit SPADES = new Suit("Spades", "s");
-
-	public final static java.util.List VALUES = Collections
-			.unmodifiableList(Arrays.asList(new Suit[] { DIAMONDS, CLUBS, HEARTS, SPADES }));
-
-	private Suit(String nameValue, String symbolValue) {
-		name = nameValue;
-		symbol = symbolValue;
+	private Suit(String name, String symbol) {
+		this.name = name;
+		this.symbol = symbol;
 	}
 
 	public String getName() {
@@ -25,14 +18,6 @@ public final class Suit implements Comparable<Suit> {
 
 	public String getSymbol() {
 		return symbol;
-	}
-
-	public String toString() {
-		return name;
-	}
-
-	public int compareTo(Suit otherSuit) { /* Used to sort cards, not used in the game rules */
-		return VALUES.indexOf(otherSuit) - VALUES.indexOf(this);
 	}
 
 }

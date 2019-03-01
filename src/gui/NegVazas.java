@@ -1,14 +1,10 @@
 package gui;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.swing.JFrame;
 
 import core.Board;
 import core.Dealer;
 import core.Direction;
-import gui.NegVazas.PlayCardActionListener;
 
 @SuppressWarnings("serial")
 public class NegVazas extends JFrame {
@@ -29,14 +25,6 @@ public class NegVazas extends JFrame {
 	public NegVazas() {
 		super();
 		this.init();
-		Direction north = Direction.NORTH;
-		System.out.println(north.next(1));
-		north = Direction.EAST;
-		System.out.println(north.next(1));
-		 north = Direction.SOUTH;
-		System.out.println(north.next(1));
-		 north = Direction.WEST;
-		System.out.println(north.next(1));
 	}
 
 	public void init() {
