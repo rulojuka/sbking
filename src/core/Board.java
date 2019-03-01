@@ -1,5 +1,7 @@
 package core;
 
+import java.util.List;
+
 public class Board {
 
 	private Hand northHand;
@@ -11,11 +13,11 @@ public class Board {
 	private int northSouthTricks;
 	private int eastWestTricks;
 
-	public Board(Hand northHand, Hand eastHand, Hand southHand, Hand westHand) {
-		this.northHand = northHand;
-		this.eastHand = eastHand;
-		this.southHand = southHand;
-		this.westHand = westHand;
+	public Board(List<Hand> hands) {
+		this.northHand = hands.get(0);
+		this.eastHand = hands.get(1);
+		this.southHand = hands.get(2);
+		this.westHand = hands.get(3);
 		currentTrick = new Trick();
 		currentPlayer = Direction.NORTH;
 		northSouthTricks = 0;
@@ -96,13 +98,12 @@ public class Board {
 		if (!followsSuit(card, getHandOfCurrentPlayer())) {
 			throw new RuntimeException("Card does not follow suit.");
 		}
-		if(currentTrick.isEmpty()) {
+		if (currentTrick.isEmpty()) {
 			currentTrick.setLeader(currentPlayer);
 		}
 
 		currentTrick.addCard(card);
 		getHandOfCurrentPlayer().removeCard(card);
-		
 
 		if (currentTrick.isComplete()) {
 			Direction winner = currentTrick.winner();
@@ -134,7 +135,7 @@ public class Board {
 				|| (currentPlayer.isWest() && westHand.containsCard(card));
 	}
 
-	public Hand getHandOfCurrentPlayer() {
+	private Hand getHandOfCurrentPlayer() {
 		if (this.currentPlayer.isNorth()) {
 			return this.northHand;
 		}

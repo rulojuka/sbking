@@ -1,47 +1,24 @@
 package core;
 
-import java.util.Arrays;
-import java.util.Collections;
+public enum Direction {
 
-public final class Direction {
-	private String direction;
+	// Clockwise order
+	NORTH, EAST, SOUTH, WEST;
 
-	public final static Direction NORTH = new Direction("North");
-	public final static Direction EAST = new Direction("East");
-	public final static Direction SOUTH = new Direction("South");
-	public final static Direction WEST = new Direction("West");
-
-	public final static java.util.List VALUES = Collections
-			.unmodifiableList(Arrays.asList(new Direction[] { NORTH, EAST, SOUTH, WEST }));
-
-	private Direction(String directionValue) {
-		direction = directionValue;
+	public boolean isNorth() {
+		return Direction.NORTH == this;
 	}
 
-	public String getDirection() {
-		return direction;
+	public boolean isEast() {
+		return Direction.EAST == this;
 	}
 
-	public String toString() {
-		return direction;
+	public boolean isSouth() {
+		return Direction.SOUTH == this;
 	}
 
-	public int index() {
-		return VALUES.indexOf(this);
-	}
-
-	public Direction next() {
-		int index = VALUES.indexOf(this) + 1;
-		while (index >= 4)
-			index -= 4;
-		return (Direction) VALUES.get(index);
-	}
-
-	public Direction next(int n) {
-		int index = VALUES.indexOf(this) + n;
-		while (index >= 4)
-			index -= 4;
-		return (Direction) VALUES.get(index);
+	public boolean isWest() {
+		return Direction.WEST == this;
 	}
 
 	public boolean isNorthSouth() {
@@ -52,32 +29,13 @@ public final class Direction {
 		return isEast() || isWest();
 	}
 
-	public boolean isNorth() {
-		return NORTH.toString().equals(this.toString());
+	// Static copy to avoid many copies
+	private static Direction[] vals = values();
+	public Direction next() {
+		return vals[(this.ordinal() + 1) % vals.length];
 	}
 
-	public boolean isEast() {
-		return EAST.toString().equals(this.toString());
+	public Direction next(int n) {
+		return vals[(this.ordinal() + n) % vals.length];
 	}
-
-	public boolean isSouth() {
-		return SOUTH.toString().equals(this.toString());
-	}
-
-	public boolean isWest() {
-		return WEST.toString().equals(this.toString());
-	}
-
-	public int toInt() {
-		if (this.isNorth())
-			return 0;
-		if (this.isEast())
-			return 1;
-		if (this.isSouth())
-			return 2;
-		if (this.isWest())
-			return 3;
-		throw new RuntimeException("Invalid direction");
-	}
-
 }
