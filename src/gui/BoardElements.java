@@ -31,6 +31,8 @@ public class BoardElements {
 		new ScoreboardElement(board,container, new Point(container.getWidth()-150,10));
 		
 		new TrickElement(board.getCurrentTrick(),container, new Point(container.getWidth()/2, container.getHeight()/2));
+		
+		new RulesetElement(board.getRuleset(), container, new Point(150,10));
 	}
 
 	private Point discoverCurrentPlayerElementLocation(Direction direction) {

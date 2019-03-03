@@ -45,4 +45,16 @@ public class Card implements Comparable<Card> {
 		return points;
 	}
 
+	public boolean isMan() {
+		return isJack() || isKing();
+	}
+
+	private boolean isKing() {
+		return this.rankValue == Rank.KING;
+	}
+
+	private boolean isJack() {
+		return this.rankValue == Rank.JACK;
+	}
+
 }

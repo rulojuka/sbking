@@ -6,9 +6,10 @@ import javax.swing.JFrame;
 
 import core.Board;
 import core.Dealer;
+import core.rulesets.Ruleset;
 
 @SuppressWarnings("serial")
-public class NegVazas extends JFrame {
+public class GameMode extends JFrame {
 
 	// Constants
 	private final int WIDTH = 1024;
@@ -23,15 +24,11 @@ public class NegVazas extends JFrame {
 
 	// private BoardElements boardElements;
 
-	public NegVazas() {
+	public GameMode(Ruleset ruleset) {
 		super();
-		this.init();
-	}
-
-	public void init() {
 		initializeJFrame();
 		initializeContentPane();
-		initializeBoard();
+		initializeBoard(ruleset);
 		paintBoardElements();
 	}
 
@@ -46,17 +43,17 @@ public class NegVazas extends JFrame {
 		getContentPane().setBackground(TABLE_COLOR);
 	}
 
-	private void initializeBoard() {
+	private void initializeBoard(Ruleset ruleset) {
 		Dealer dealer = new Dealer();
-		board = dealer.deal();
+		board = dealer.deal(ruleset);
 	}
 
 	private void paintBoardElements() {
 		Container contentPane = this.getContentPane();
 		contentPane.removeAll();
-		
+
 		new BoardElements(board, this.getContentPane(), new PlayCardActionListener());
-		
+
 		contentPane.validate();
 		contentPane.repaint();
 	}

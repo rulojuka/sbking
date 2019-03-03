@@ -2,6 +2,8 @@ package core;
 
 import java.util.List;
 
+import core.rulesets.Ruleset;
+
 public class Board {
 
 	private Hand northHand;
@@ -10,18 +12,20 @@ public class Board {
 	private Hand westHand;
 	private Trick currentTrick;
 	private Direction currentPlayer;
-	private int northSouthTricks;
-	private int eastWestTricks;
+	private int northSouthPoints;
+	private int eastWestPoints;
+	private Ruleset ruleset;
 
-	public Board(List<Hand> hands) {
+	public Board(List<Hand> hands, Ruleset ruleset) {
 		this.northHand = hands.get(0);
 		this.eastHand = hands.get(1);
 		this.southHand = hands.get(2);
 		this.westHand = hands.get(3);
 		currentTrick = new Trick();
 		currentPlayer = Direction.NORTH;
-		northSouthTricks = 0;
-		eastWestTricks = 0;
+		northSouthPoints = 0;
+		eastWestPoints = 0;
+		this.ruleset = ruleset;
 		sortHands();
 	}
 
@@ -50,11 +54,11 @@ public class Board {
 	}
 
 	public int getNorthSouthTricks() {
-		return northSouthTricks;
+		return northSouthPoints;
 	}
 
 	public int getEastWestTricks() {
-		return eastWestTricks;
+		return eastWestPoints;
 	}
 
 	private void sortHands() {
@@ -111,7 +115,7 @@ public class Board {
 
 		if (currentTrick.isComplete()) {
 			Direction winner = currentTrick.getWinner();
-			updateScoreboard();
+			updatePoints();
 			currentPlayer = winner;
 		} else {
 			currentPlayer = currentPlayer.next();
@@ -119,13 +123,13 @@ public class Board {
 
 	}
 
-	private void updateScoreboard() {
+	private void updatePoints() {
 		if (currentTrick.isComplete()) {
 			Direction winner = currentTrick.getWinner();
 			if (winner.isNorthSouth()) {
-				northSouthTricks++;
+				northSouthPoints += this.ruleset.getPoints(currentTrick);
 			} else {
-				eastWestTricks++;
+				eastWestPoints += this.ruleset.getPoints(currentTrick);
 			}
 		}
 	}
@@ -151,6 +155,10 @@ public class Board {
 			return this.westHand;
 		}
 		throw new RuntimeException("Invalid current player");
+	}
+	
+	public Ruleset getRuleset() {
+		return this.ruleset;
 	}
 
 }
