@@ -5,12 +5,15 @@ import java.util.List;
 import core.rulesets.Ruleset;
 
 public class Board {
+	
+	private final int NUMBER_OF_TRICKS_IN_A_COMPLETE_HAND = 13;
 
 	private Hand northHand;
 	private Hand eastHand;
 	private Hand southHand;
 	private Hand westHand;
 	private Trick currentTrick;
+	private int completedTricks;
 	private Direction currentPlayer;
 	private int northSouthPoints;
 	private int eastWestPoints;
@@ -25,6 +28,7 @@ public class Board {
 		currentPlayer = Direction.NORTH;
 		northSouthPoints = 0;
 		eastWestPoints = 0;
+		completedTricks = 0;
 		this.ruleset = ruleset;
 		sortHands();
 	}
@@ -100,8 +104,12 @@ public class Board {
 		if (!playedCardIsFromCurrentPlayer(card)) {
 			throw new RuntimeException("Trying to play in another players turn.");
 		}
-		if(currentTrick.isComplete()) {
+		if (currentTrick.isComplete()) {
+			completedTricks++;
 			currentTrick.discard();
+			if (completedTricks >= (NUMBER_OF_TRICKS_IN_A_COMPLETE_HAND - 2)) {
+				currentTrick.setLastTwo();
+			}
 		}
 		if (!followsSuit(card, getHandOfCurrentPlayer())) {
 			throw new RuntimeException("Card does not follow suit.");
@@ -156,7 +164,7 @@ public class Board {
 		}
 		throw new RuntimeException("Invalid current player");
 	}
-	
+
 	public Ruleset getRuleset() {
 		return this.ruleset;
 	}

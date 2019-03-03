@@ -57,4 +57,17 @@ public class Card implements Comparable<Card> {
 		return this.rankValue == Rank.JACK;
 	}
 
+	public boolean isQueen() {
+		return this.rankValue == Rank.QUEEN;
+	}
+
+	public boolean isHeart() {
+		return this.suitValue == Suit.HEARTS;
+	}
+	
+	public boolean isKingOfHearts() {
+		return isKing() && isHeart();
+	}
+
+
 }

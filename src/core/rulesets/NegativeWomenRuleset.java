@@ -2,28 +2,28 @@ package core.rulesets;
 
 import core.Trick;
 
-public class NegativeMenRuleset implements Ruleset {
+public class NegativeWomenRuleset implements Ruleset {
 
-	private final int NEGATIVE_MEN_SCORE_MULTIPLIER = 30;
+	private final int NEGATIVE_WOMEN_SCORE_MULTIPLIER = 50;
 
 	@Override
 	public int getScoreMultiplier() {
-		return NEGATIVE_MEN_SCORE_MULTIPLIER;
+		return NEGATIVE_WOMEN_SCORE_MULTIPLIER;
 	}
 
 	@Override
 	public int getPoints(Trick trick) {
-		return trick.getNumberOfMen();
+		return trick.getNumberOfWomen();
 	}
 
 	@Override
 	public String getShortDescription() {
-		return "Negative men";
+		return "Negative women";
 	}
 
 	@Override
 	public String getCompleteDescription() {
-		return "Avoid all jacks and kings";
+		return "Avoid all queens";
 	}
 
 }

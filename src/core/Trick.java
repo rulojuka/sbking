@@ -8,17 +8,18 @@ public class Trick {
 	private List<Card> trick = new ArrayList<Card>();
 	private Direction leader;
 	private Direction winner;
+	private boolean lastTwo;
 
 	public void addCard(Card card) {
 		if (!this.isComplete()) {
-			getTrickCards().add(card);
+			trick.add(card);
 		} else {
 			throw new RuntimeException("Trying to add card to a complete trick.");
 		}
 	}
 
 	public Card getLeadCard() {
-		return getTrickCards().get(0);
+		return trick.get(0);
 	}
 
 	public Suit getSuit() {
@@ -26,9 +27,10 @@ public class Trick {
 	}
 
 	public void discard() {
-		getTrickCards().clear();
-		winner = null;
+		trick.clear();
 		leader = null;
+		winner = null;
+		lastTwo = false;
 	}
 
 	public void setLeader(Direction direction) {
@@ -44,16 +46,16 @@ public class Trick {
 	}
 
 	public Direction getWinner() {
-		if(this.winner!=null) {
+		if (this.winner != null) {
 			return this.winner;
 		}
 		Suit leadSuit = this.getSuit();
 
 		int resp = 0;
 		Card highest, current;
-		highest = this.getTrickCards().get(0);
+		highest = trick.get(0);
 		for (int i = 1; i < this.getNumberOfCards(); i++) {
-			current = getTrickCards().get(i);
+			current = trick.get(i);
 			if (current.getSuit() == leadSuit) {
 				if (highest.compareTo(current) < 0) {
 					resp = i;
@@ -75,6 +77,53 @@ public class Trick {
 
 	public List<Card> getTrickCards() {
 		return trick;
+	}
+
+	public int getNumberOfMen() {
+		int men = 0;
+		for (Card c : trick) {
+			if (c.isMan()) {
+				men++;
+			}
+		}
+		return men;
+	}
+
+	public int getNumberOfWomen() {
+		int women = 0;
+		for (Card c : trick) {
+			if (c.isQueen()) {
+				women++;
+			}
+		}
+		return women;
+	}
+
+	public boolean isLastTwo() {
+		return this.lastTwo;
+	}
+
+	public void setLastTwo() {
+		this.lastTwo = true;
+	}
+
+	public boolean hasKingOfHearts() {
+		for (Card c : trick) {
+			if (c.isKingOfHearts()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public int getNumberOfHeartsCards() {
+		int hearts = 0;
+		for (Card c : trick) {
+			if (c.isHeart()) {
+				hearts++;
+			}
+		}
+		return hearts;
 	}
 
 }
