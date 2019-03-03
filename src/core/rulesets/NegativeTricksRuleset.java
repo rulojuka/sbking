@@ -26,5 +26,10 @@ public class NegativeTricksRuleset implements Ruleset {
 	public String getCompleteDescription() {
 		return "Avoid all tricks";
 	}
+	
+	@Override
+	public boolean prohibitsHeartsUntilOnlySuitLeft() {
+		return false;
+	}
 
 }

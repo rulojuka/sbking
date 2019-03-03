@@ -31,4 +31,9 @@ public class NegativeKingRuleset implements Ruleset {
 		return "Avoid the King of Hearts";
 	}
 
+	@Override
+	public boolean prohibitsHeartsUntilOnlySuitLeft() {
+		return false;
+	}
+
 }

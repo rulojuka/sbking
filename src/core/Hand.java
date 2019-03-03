@@ -97,4 +97,13 @@ public class Hand {
 		return this.listOfCards;
 	}
 
+	public boolean onlyHasHearts() {
+		for (Card card : listOfCards) {
+			if(!card.isHeart()) {
+				return false;
+			}
+		}
+		return true;
+	}
+
 }

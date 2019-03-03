@@ -111,7 +111,11 @@ public class Board {
 				currentTrick.setLastTwo();
 			}
 		}
-		if (!followsSuit(card, getHandOfCurrentPlayer())) {
+		Hand handOfCurrentPlayer = getHandOfCurrentPlayer();
+		if( currentTrick.isEmpty() && ruleset.prohibitsHeartsUntilOnlySuitLeft() && card.getSuit() == Suit.HEARTS && !handOfCurrentPlayer.onlyHasHearts()) {
+			throw new RuntimeException("Ruleset prohibits playing hearts until only suit left.");
+		}
+		if (!followsSuit(card, handOfCurrentPlayer)) {
 			throw new RuntimeException("Card does not follow suit.");
 		}
 		if (currentTrick.isEmpty()) {

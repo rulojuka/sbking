@@ -29,5 +29,10 @@ public class NegativeLastTwoRuleset implements Ruleset {
 	public String getCompleteDescription() {
 		return "Avoid the last two tricks";
 	}
+	
+	@Override
+	public boolean prohibitsHeartsUntilOnlySuitLeft() {
+		return false;
+	}
 
 }

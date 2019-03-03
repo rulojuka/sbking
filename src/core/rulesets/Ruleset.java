@@ -12,4 +12,6 @@ public interface Ruleset {
 	
 	public String getCompleteDescription();
 
+	public boolean prohibitsHeartsUntilOnlySuitLeft();
+
 }

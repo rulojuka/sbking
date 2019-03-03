@@ -25,5 +25,10 @@ public class NegativeMenRuleset implements Ruleset {
 	public String getCompleteDescription() {
 		return "Avoid all jacks and kings";
 	}
+	
+	@Override
+	public boolean prohibitsHeartsUntilOnlySuitLeft() {
+		return false;
+	}
 
 }
