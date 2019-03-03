@@ -9,6 +9,7 @@ public class Trick {
 	private Direction leader;
 	private Direction winner;
 	private boolean lastTwo;
+	private Suit trumpSuit;
 
 	public void addCard(Card card) {
 		if (!this.isComplete()) {
@@ -22,7 +23,7 @@ public class Trick {
 		return trick.get(0);
 	}
 
-	public Suit getSuit() {
+	public Suit getLeadSuit() {
 		return this.getLeadCard().getSuit();
 	}
 
@@ -31,6 +32,7 @@ public class Trick {
 		leader = null;
 		winner = null;
 		lastTwo = false;
+		trumpSuit = null;
 	}
 
 	public void setLeader(Direction direction) {
@@ -49,7 +51,7 @@ public class Trick {
 		if (this.winner != null) {
 			return this.winner;
 		}
-		Suit leadSuit = this.getSuit();
+		Suit leadSuit = this.getLeadSuit();
 
 		int resp = 0;
 		Card highest, current;
@@ -63,6 +65,24 @@ public class Trick {
 				}
 			}
 		}
+		
+		if(trumpSuit!=null) {
+			System.out.println("Entrou getWinner - trunfo: " + trumpSuit);
+			for (int i = 0; i < this.getNumberOfCards(); i++) {
+				current = trick.get(i);
+				if (current.getSuit() == trumpSuit) {
+					if(highest.getSuit() != trumpSuit) {
+						resp = i;
+						highest = current;
+						continue;
+					}else if (highest.compareTo(current) < 0) {
+						resp = i;
+						highest = current;
+					}
+				}
+			}
+		}
+		
 		this.winner = leader.next(resp);
 		return winner;
 	}
@@ -124,6 +144,11 @@ public class Trick {
 			}
 		}
 		return hearts;
+	}
+
+	public void setTrumpSuit(Suit trumpSuit) {
+		this.trumpSuit = trumpSuit;
+		
 	}
 
 }

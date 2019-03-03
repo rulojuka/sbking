@@ -22,7 +22,7 @@ public class NegativeLastTwoRuleset implements Ruleset {
 
 	@Override
 	public String getShortDescription() {
-		return "Negative Last Two";
+		return "Negative last two";
 	}
 
 	@Override

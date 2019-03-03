@@ -23,7 +23,7 @@ public class NegativeKingRuleset implements Ruleset {
 
 	@Override
 	public String getShortDescription() {
-		return "Negative King";
+		return "Negative king";
 	}
 
 	@Override

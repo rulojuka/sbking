@@ -2,6 +2,7 @@ package core;
 
 import java.util.List;
 
+import core.rulesets.PositiveWithTrumpRuleset;
 import core.rulesets.Ruleset;
 
 public class Board {
@@ -18,6 +19,7 @@ public class Board {
 	private int northSouthPoints;
 	private int eastWestPoints;
 	private Ruleset ruleset;
+	private Suit trumpSuit;
 
 	public Board(List<Hand> hands, Ruleset ruleset) {
 		this.northHand = hands.get(0);
@@ -30,6 +32,11 @@ public class Board {
 		eastWestPoints = 0;
 		completedTricks = 0;
 		this.ruleset = ruleset;
+		if( ruleset instanceof PositiveWithTrumpRuleset ) {
+			PositiveWithTrumpRuleset positiveWithTrumpRuleset = (PositiveWithTrumpRuleset) ruleset;
+			System.out.println("Setou trunfo como" + positiveWithTrumpRuleset.getTrumpSuit());
+			this.trumpSuit = positiveWithTrumpRuleset.getTrumpSuit();
+		}
 		sortHands();
 	}
 
@@ -83,7 +90,7 @@ public class Board {
 		Trick trick = this.getCurrentTrick();
 		if (trick.isEmpty())
 			return true;
-		Suit leadSuit = trick.getSuit();
+		Suit leadSuit = trick.getLeadSuit();
 
 		if (hand.hasSuit(leadSuit) == false) {
 			return true;
@@ -119,6 +126,7 @@ public class Board {
 		}
 		if (currentTrick.isEmpty()) {
 			currentTrick.setLeader(currentPlayer);
+			currentTrick.setTrumpSuit(trumpSuit);
 		}
 
 		currentTrick.addCard(card);

@@ -1,115 +1,130 @@
 package gui.frames;
 
 import java.awt.Container;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JRadioButton;
 
+import core.Suit;
 import core.rulesets.NegativeHeartsRuleset;
 import core.rulesets.NegativeKingRuleset;
 import core.rulesets.NegativeLastTwoRuleset;
 import core.rulesets.NegativeMenRuleset;
 import core.rulesets.NegativeTricksRuleset;
 import core.rulesets.NegativeWomenRuleset;
+import core.rulesets.PositiveNoTrumpsRuleset;
+import core.rulesets.PositiveWithTrumpRuleset;
 import core.rulesets.Ruleset;
 
 @SuppressWarnings("serial")
-public class GameSelectScreen extends JFrame{
-	
+public class GameSelectScreen extends JFrame {
+
 	// Constants
-		private final int WIDTH = 1024;
-		private final int HEIGHT = 768;
-		private final java.awt.Color TABLE_COLOR = new java.awt.Color(0, 100, 0); // Tablecloth green
-		private JRadioButton b1;
-		private JRadioButton b2;
-		private JRadioButton b3;
-		private JRadioButton b4;
-		private JRadioButton b5;
-		private JRadioButton b6;
+	private final int WIDTH = 1024;
+	private final int HEIGHT = 768;
+	private final java.awt.Color TABLE_COLOR = new java.awt.Color(0, 100, 0); // Tablecloth green
+	private List<JRadioButton> gameButtons = new ArrayList<JRadioButton>();
+	private JRadioButton gameButton;
+	private Ruleset negativeTricks = new NegativeTricksRuleset();
+	private Ruleset negativeHearts = new NegativeHeartsRuleset();
+	private Ruleset negativeMen = new NegativeMenRuleset();
+	private Ruleset negativeWomen = new NegativeWomenRuleset();
+	private Ruleset negativeLastTwo = new NegativeLastTwoRuleset();
+	private Ruleset negativeKing = new NegativeKingRuleset();
+	private Ruleset positiveNoTrumps = new PositiveNoTrumpsRuleset();
+	private Ruleset positiveClubs = new PositiveWithTrumpRuleset(Suit.CLUBS);
+	private Ruleset positiveDiamonds = new PositiveWithTrumpRuleset(Suit.DIAMONDS);
+	private Ruleset positiveHearts = new PositiveWithTrumpRuleset(Suit.HEARTS);
+	private Ruleset positiveSpades = new PositiveWithTrumpRuleset(Suit.SPADES);
+	private List<Ruleset> rulesets;
 
-		public GameSelectScreen() {
-			super();
-			initializeJFrame();
-			initializeContentPane();
-			Container contentPane = this.getContentPane();
-			
-			initializeSelectCombobox();
-			
-			contentPane.validate();
-			contentPane.repaint();
+	public GameSelectScreen() {
+		super();
+		initializeJFrame();
+		initializeContentPane();
+		Container contentPane = this.getContentPane();
+
+		initializeSelectCombobox();
+
+		contentPane.validate();
+		contentPane.repaint();
+	}
+
+	private void initializeSelectCombobox() {
+
+		rulesets = new ArrayList<Ruleset>();
+		rulesets.add(negativeTricks);
+		rulesets.add(negativeHearts);
+		rulesets.add(negativeMen);
+		rulesets.add(negativeWomen);
+		rulesets.add(negativeLastTwo);
+		rulesets.add(negativeKing);
+		rulesets.add(positiveNoTrumps);
+		rulesets.add(positiveClubs);
+		rulesets.add(positiveDiamonds);
+		rulesets.add(positiveHearts);
+		rulesets.add(positiveSpades);
+
+		int initial_y = 50;
+		int initial_x = 75;
+		int width = 170;
+		int height = 20;
+
+		int y = initial_y;
+
+		for (Ruleset ruleset : rulesets) {
+			gameButton = new JRadioButton(ruleset.getShortDescription());
+			gameButton.setBounds(initial_x, y, width, height);
+			gameButtons.add(gameButton);
+			y += 20;
+		}
+		gameButtons.get(0).setSelected(true);
+
+		ButtonGroup bg = new ButtonGroup();
+		for (JRadioButton currentButton : gameButtons) {
+			bg.add(currentButton);
+			this.getContentPane().add(currentButton);
 		}
 
-		private void initializeSelectCombobox() {
-			
-			b1 = new JRadioButton("Neg Vazas");
-			b1.setBounds(75,50,150,20);    
-			b1.setSelected(true);
-			b2 = new JRadioButton("Neg Copas");
-			b2.setBounds(75,70,150,20);
-			b3 = new JRadioButton("Neg Homens");
-			b3.setBounds(75,90,150,20);
-			b4 = new JRadioButton("Neg Mulheres");
-			b4.setBounds(75,110,150,20);
-			b5 = new JRadioButton("Neg 2U");
-			b5.setBounds(75,130,150,20);
-			b6 = new JRadioButton("Neg King");
-			b6.setBounds(75,150,150,20);
-			
-			ButtonGroup bg=new ButtonGroup();    
-			bg.add(b1);
-			bg.add(b2);
-			bg.add(b3);
-			bg.add(b4);
-			bg.add(b5);
-			bg.add(b6);
-			
-			this.getContentPane().add(b1);
-			this.getContentPane().add(b2);
-			this.getContentPane().add(b3);
-			this.getContentPane().add(b4);
-			this.getContentPane().add(b5);
-			this.getContentPane().add(b6);
-			
-			JButton playGameButton = new JButton();
-			this.getContentPane().add(playGameButton);
-			
-			playGameButton.addActionListener(new GameSelectActionListener());
-			playGameButton.setBounds(230, 50, 120, 120);
-			playGameButton.setText("Jogar");
-		}
+		JButton playGameButton = new JButton();
+		this.getContentPane().add(playGameButton);
 
-		private void initializeJFrame() {
-			this.setVisible(true);
-			this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			this.setSize(WIDTH, HEIGHT);
-		}
+		playGameButton.addActionListener(new GameSelectActionListener());
+		playGameButton.setBounds(initial_x + width + 10, initial_y, width / 2, height * rulesets.size());
+		playGameButton.setText("Play");
+	}
 
-		private void initializeContentPane() {
-			getContentPane().setLayout(null);
-			getContentPane().setBackground(TABLE_COLOR);
-		}
+	private void initializeJFrame() {
+		this.setVisible(true);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setSize(WIDTH, HEIGHT);
+	}
 
+	private void initializeContentPane() {
+		getContentPane().setLayout(null);
+		getContentPane().setBackground(TABLE_COLOR);
+	}
 
-		class GameSelectActionListener implements java.awt.event.ActionListener {
-			public void actionPerformed(java.awt.event.ActionEvent event) {
-				Ruleset ruleset;
-				if(b1.isSelected()) {
-					ruleset = new NegativeTricksRuleset();
-				}else if(b2.isSelected()){
-					ruleset = new NegativeHeartsRuleset();
-				}else if(b3.isSelected()){
-					ruleset = new NegativeMenRuleset();
-				}else if(b4.isSelected()){
-					ruleset = new NegativeWomenRuleset();
-				}else if(b5.isSelected()){
-					ruleset = new NegativeLastTwoRuleset();
-				}else{
-					ruleset = new NegativeKingRuleset();
-				}
-				new GameMode(ruleset);
+	class GameSelectActionListener implements java.awt.event.ActionListener {
+		public void actionPerformed(java.awt.event.ActionEvent event) {
+			Ruleset ruleset = negativeTricks;
+			JRadioButton selectedButton = null;
+
+			for (JRadioButton jRadioButton : gameButtons) {
+				if (jRadioButton.isSelected())
+					selectedButton = jRadioButton;
 			}
+			for (Ruleset currentRuleset : rulesets) {
+				if (currentRuleset.getShortDescription().equals(selectedButton.getText())) {
+					ruleset = currentRuleset;
+				}
+			}
+			new GameMode(ruleset);
 		}
+	}
 
 }

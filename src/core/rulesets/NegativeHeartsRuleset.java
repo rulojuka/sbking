@@ -16,7 +16,7 @@ public class NegativeHeartsRuleset implements Ruleset {
 
 	@Override
 	public String getShortDescription() {
-		return "Negative Hearts";
+		return "Negative hearts";
 	}
 
 	@Override

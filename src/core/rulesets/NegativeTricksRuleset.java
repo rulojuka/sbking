@@ -5,7 +5,7 @@ import core.Trick;
 public class NegativeTricksRuleset implements Ruleset {
 
 	private final int NEGATIVE_TRICKS_SCORE_MULTIPLIER = 20;
-	private final int NEGATIVE_TRICKS_POINST_IN_A_TRICK = 1;
+	private final int NEGATIVE_POINTS_PER_TRICK = 1;
 
 	@Override
 	public int getScoreMultiplier() {
@@ -14,7 +14,7 @@ public class NegativeTricksRuleset implements Ruleset {
 
 	@Override
 	public int getPoints(Trick trick) {
-		return NEGATIVE_TRICKS_POINST_IN_A_TRICK;
+		return NEGATIVE_POINTS_PER_TRICK;
 	}
 
 	@Override
