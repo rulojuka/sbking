@@ -1,30 +1,30 @@
 package gui;
 
+import java.net.URL;
+
 import javax.swing.ImageIcon;
 
 import core.Card;
 import core.Rank;
 import core.Suit;
 
-public final class DeckCardImageInformation {
-	
-	private DeckCardImageInformation() {
-		// This is here to prevent instantiation of this class. Yes, static classes suck, I know.
+public class DeckCardImageInformation {
+
+	private final String directory = "/images/cards/";
+
+	public ImageIcon getBackImage() {
+		String imagePath = directory + "b1fv.png";
+		URL url = getClass().getResource(imagePath);
+		return new ImageIcon(url);
 	}
-	
-	// FIXME This next line should not have a hardcoded directory
-	public static final String directory = "/home/rulojuka/workspace/sbking/data/images/cards/";
-	
-	public static ImageIcon getBackImage() {
-		return new ImageIcon(directory + "b1fv.png");
+
+	public ImageIcon getFrontImage(Card card) {
+		String imagePath = directory + getFilename(card.getSuit(), card.getRank());
+		URL url = getClass().getResource(imagePath);
+		return new ImageIcon(url);
 	}
-	
-	public static ImageIcon getFrontImage(Card card) {
-		String imageFile = directory + getFilename(card.getSuit(), card.getRank());
-		return new ImageIcon(imageFile);
-	}
-	
-	private static String getFilename(Suit suit, Rank rank) {
+
+	private String getFilename(Suit suit, Rank rank) {
 		return suit.getSymbol() + rank.getSymbol() + ".png";
 	}
 

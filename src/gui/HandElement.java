@@ -11,13 +11,15 @@ import core.Hand;
 public class HandElement {
 
 	private final int BETWEEN_CARDS_WIDTH = 26;
-
+	private DeckCardImageInformation deckCardImageInformation;
+	
 	public HandElement(Hand hand, Container container, ActionListener actionListener, Point handLocation) {
+		deckCardImageInformation = new DeckCardImageInformation();
 		List<Card> listOfCards = hand.getListOfCards();
 		for (int i = listOfCards.size() - 1; i >= 0; i--) { // This way, it draws correctly
 			Card card = listOfCards.get(i);
-			CardButton cardButton = new CardButton(card, DeckCardImageInformation.getFrontImage(card),
-					DeckCardImageInformation.getBackImage());
+			CardButton cardButton = new CardButton(card, deckCardImageInformation.getFrontImage(card),
+					deckCardImageInformation.getBackImage());
 			cardButton.addActionListener(actionListener);
 			container.add(cardButton); // This line needs to go before setting the button location
 			cardButton.setLocation(locationOfCard(i, handLocation)); // This line needs to go after adding the button to
