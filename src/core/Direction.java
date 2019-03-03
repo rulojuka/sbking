@@ -3,7 +3,15 @@ package core;
 public enum Direction {
 
 	// Clockwise order
-	NORTH, EAST, SOUTH, WEST;
+	NORTH("North", 'N'), EAST("East", 'E'), SOUTH("South", 'S'), WEST("West", 'E');
+
+	private final String completeName;
+	private final char abbreviation;
+
+	private Direction(String completeName, char abbreviation) {
+		this.completeName = completeName;
+		this.abbreviation = abbreviation;
+	}
 
 	public boolean isNorth() {
 		return Direction.NORTH == this;
@@ -37,5 +45,13 @@ public enum Direction {
 
 	public Direction next(int n) {
 		return vals[(this.ordinal() + n) % vals.length];
+	}
+
+	public String getCompleteName() {
+		return completeName;
+	}
+
+	public char getAbbreviation() {
+		return abbreviation;
 	}
 }

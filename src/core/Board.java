@@ -72,15 +72,16 @@ public class Board {
 	 *         False if it does not.
 	 */
 	private boolean followsSuit(Card card, Hand hand) {
-		Trick myTrick = this.getCurrentTrick();
-		if (myTrick.getNumberOfCards() == 0)
+		Trick trick = this.getCurrentTrick();
+		if (trick.isEmpty())
 			return true;
-		Suit leadSuit = myTrick.getCard(0).getSuit();
+		Suit leadSuit = trick.getSuit();
 
-		if (hand.hasSuit(leadSuit) == false)
+		if (hand.hasSuit(leadSuit) == false) {
 			return true;
-		if (hand.hasSuit(leadSuit) == true && card.getSuit() == leadSuit)
+		} else if (card.getSuit() == leadSuit) {
 			return true;
+		}
 
 		return false;
 	}
@@ -95,6 +96,9 @@ public class Board {
 		if (!playedCardIsFromCurrentPlayer(card)) {
 			throw new RuntimeException("Trying to play in another players turn.");
 		}
+		if(currentTrick.isComplete()) {
+			currentTrick.discard();
+		}
 		if (!followsSuit(card, getHandOfCurrentPlayer())) {
 			throw new RuntimeException("Card does not follow suit.");
 		}
@@ -106,11 +110,9 @@ public class Board {
 		getHandOfCurrentPlayer().removeCard(card);
 
 		if (currentTrick.isComplete()) {
-			Direction winner = currentTrick.winner();
-			currentTrick.discard();
-			currentTrick.setLeader(winner);
-			currentPlayer = winner;
+			Direction winner = currentTrick.getWinner();
 			updateScoreboard();
+			currentPlayer = winner;
 		} else {
 			currentPlayer = currentPlayer.next();
 		}
@@ -119,7 +121,7 @@ public class Board {
 
 	private void updateScoreboard() {
 		if (currentTrick.isComplete()) {
-			Direction winner = currentTrick.winner();
+			Direction winner = currentTrick.getWinner();
 			if (winner.isNorthSouth()) {
 				northSouthTricks++;
 			} else {

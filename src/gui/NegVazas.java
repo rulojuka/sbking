@@ -1,10 +1,11 @@
 package gui;
 
+import java.awt.Container;
+
 import javax.swing.JFrame;
 
 import core.Board;
 import core.Dealer;
-import core.Direction;
 
 @SuppressWarnings("serial")
 public class NegVazas extends JFrame {
@@ -19,8 +20,8 @@ public class NegVazas extends JFrame {
 	private Board board;
 
 	// GUI model
-	
-	private BoardElements boardElements;
+
+	// private BoardElements boardElements;
 
 	public NegVazas() {
 		super();
@@ -31,7 +32,7 @@ public class NegVazas extends JFrame {
 		initializeJFrame();
 		initializeContentPane();
 		initializeBoard();
-		initializeBoardElements();
+		paintBoardElements();
 	}
 
 	private void initializeJFrame() {
@@ -49,18 +50,26 @@ public class NegVazas extends JFrame {
 		Dealer dealer = new Dealer();
 		board = dealer.deal();
 	}
-	
-	private void initializeBoardElements() {
-		this.boardElements = new BoardElements(board, this.getContentPane(), new PlayCardActionListener());
+
+	private void paintBoardElements() {
+		Container contentPane = this.getContentPane();
+		contentPane.removeAll();
 		
+		new BoardElements(board, this.getContentPane(), new PlayCardActionListener());
+		
+		contentPane.validate();
+		contentPane.repaint();
 	}
-	
+
 	class PlayCardActionListener implements java.awt.event.ActionListener {
 		public void actionPerformed(java.awt.event.ActionEvent event) {
 			CardButton clickedCardButton = (CardButton) event.getSource();
-			board.playCard(clickedCardButton.getCard());
-			clickedCardButton.flip();
-
+			try {
+				board.playCard(clickedCardButton.getCard());
+				paintBoardElements();
+			} catch (RuntimeException e) {
+				throw e;
+			}
 		}
 	}
 

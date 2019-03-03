@@ -7,20 +7,27 @@ public class Trick {
 	private static final int COMPLETE_TRICK_NUMBER_OF_CARDS = 4;
 	private List<Card> trick = new ArrayList<Card>();
 	private Direction leader;
-	private Suit trumpSuit;
+	private Direction winner;
 
 	public void addCard(Card card) {
-		if (this.getNumberOfCards() < 4)
-			trick.add(card);
+		if (!this.isComplete()) {
+			getTrickCards().add(card);
+		} else {
+			throw new RuntimeException("Trying to add card to a complete trick.");
+		}
 	}
 
-	public Card getCard(int index) {
-		return trick.get(index);
+	public Card getLeadCard() {
+		return getTrickCards().get(0);
+	}
+
+	public Suit getSuit() {
+		return this.getLeadCard().getSuit();
 	}
 
 	public void discard() {
-		trick.clear();
-		trumpSuit = null;
+		getTrickCards().clear();
+		winner = null;
 		leader = null;
 	}
 
@@ -32,41 +39,30 @@ public class Trick {
 		return this.leader;
 	}
 
-	public int getNumberOfCards() {
-		return trick.size();
+	private int getNumberOfCards() {
+		return getTrickCards().size();
 	}
 
-	public Direction winner() {
-		Card firstCard = trick.get(0);
-		Suit leadSuit = firstCard.getSuit();
-
-		// Trump suits not implemented yet
-		boolean hasTrump = false;
-		for (int i = 0; i < 4; i++) {
-			if ((trick.get(i)).getSuit() == trumpSuit)
-				hasTrump = true;
+	public Direction getWinner() {
+		if(this.winner!=null) {
+			return this.winner;
 		}
+		Suit leadSuit = this.getSuit();
 
 		int resp = 0;
-		Card bigger, current;
-		for (int i = 1; i < 4; i++) {
-			bigger = trick.get(resp);
-			current = trick.get(i);
-			if (current.getSuit() == trumpSuit) {
-				if (bigger.getSuit() != trumpSuit) {
+		Card highest, current;
+		highest = this.getTrickCards().get(0);
+		for (int i = 1; i < this.getNumberOfCards(); i++) {
+			current = getTrickCards().get(i);
+			if (current.getSuit() == leadSuit) {
+				if (highest.compareTo(current) < 0) {
 					resp = i;
-				} else {
-					if (bigger.compareTo(current) > 0)
-						resp = i;
-				}
-			} else if (current.getSuit() == leadSuit) {
-				if (bigger.getSuit() != trumpSuit) {
-					if (bigger.compareTo(current) > 0)
-						resp = i;
+					highest = current;
 				}
 			}
 		}
-		return leader.next(resp);
+		this.winner = leader.next(resp);
+		return winner;
 	}
 
 	public boolean isComplete() {
@@ -75,6 +71,10 @@ public class Trick {
 
 	public boolean isEmpty() {
 		return this.getNumberOfCards() == 0;
+	}
+
+	public List<Card> getTrickCards() {
+		return trick;
 	}
 
 }
