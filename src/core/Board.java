@@ -57,11 +57,11 @@ public class Board {
 		return currentPlayer;
 	}
 
-	public int getNorthSouthTricks() {
+	public int getNorthSouthPoints() {
 		return northSouthPoints;
 	}
 
-	public int getEastWestTricks() {
+	public int getEastWestPoints() {
 		return eastWestPoints;
 	}
 
@@ -105,7 +105,6 @@ public class Board {
 			throw new RuntimeException("Trying to play in another players turn.");
 		}
 		if (currentTrick.isComplete()) {
-			completedTricks++;
 			currentTrick.discard();
 			if (completedTricks >= (NUMBER_OF_TRICKS_IN_A_COMPLETE_HAND - 2)) {
 				currentTrick.setLastTwo();
@@ -127,6 +126,7 @@ public class Board {
 
 		if (currentTrick.isComplete()) {
 			Direction winner = currentTrick.getWinner();
+			completedTricks++;
 			updatePoints();
 			currentPlayer = winner;
 		} else {
@@ -171,6 +171,10 @@ public class Board {
 
 	public Ruleset getRuleset() {
 		return this.ruleset;
+	}
+	
+	public boolean isFinished() {
+		return this.completedTricks == NUMBER_OF_TRICKS_IN_A_COMPLETE_HAND;
 	}
 
 }

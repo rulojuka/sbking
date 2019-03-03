@@ -10,6 +10,8 @@ import javax.swing.JLabel;
 import core.rulesets.Ruleset;
 
 public class RulesetElement {
+	
+	private java.awt.Color RULESET_ELEMENT_COLOR = new java.awt.Color(255, 0, 0);
 
 	public RulesetElement(Ruleset ruleset, Container container, Point point) {
 
@@ -17,6 +19,7 @@ public class RulesetElement {
 		rulesetLabel.setHorizontalAlignment(LEFT);
 		rulesetLabel.setSize(300, 15);
 		rulesetLabel.setLocation(point);
+		rulesetLabel.setForeground(RULESET_ELEMENT_COLOR);
 		container.add(rulesetLabel);
 	}
 }

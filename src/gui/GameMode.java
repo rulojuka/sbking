@@ -34,7 +34,6 @@ public class GameMode extends JFrame {
 
 	private void initializeJFrame() {
 		this.setVisible(true);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(WIDTH, HEIGHT);
 	}
 
@@ -51,8 +50,13 @@ public class GameMode extends JFrame {
 	private void paintBoardElements() {
 		Container contentPane = this.getContentPane();
 		contentPane.removeAll();
+		
+		if(board.isFinished()) {
+			new ScoreSummary(board, this.getContentPane());
+		}else {
+			new BoardElements(board, this.getContentPane(), new PlayCardActionListener());
+		}
 
-		new BoardElements(board, this.getContentPane(), new PlayCardActionListener());
 
 		contentPane.validate();
 		contentPane.repaint();
