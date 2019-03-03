@@ -1,4 +1,4 @@
-package gui;
+package gui.elements;
 
 import static javax.swing.SwingConstants.LEFT;
 

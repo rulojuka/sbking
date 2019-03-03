@@ -1,4 +1,4 @@
-package gui;
+package gui.elements;
 
 import java.awt.Container;
 import java.awt.Point;

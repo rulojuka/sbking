@@ -1,4 +1,4 @@
-package gui;
+package gui.frames;
 
 import java.awt.Container;
 
@@ -7,6 +7,9 @@ import javax.swing.JFrame;
 import core.Board;
 import core.Dealer;
 import core.rulesets.Ruleset;
+import gui.JElements.CardButton;
+import gui.elements.BoardElements;
+import gui.elements.ScoreSummaryElement;
 
 @SuppressWarnings("serial")
 public class GameMode extends JFrame {
@@ -52,7 +55,7 @@ public class GameMode extends JFrame {
 		contentPane.removeAll();
 		
 		if(board.isFinished()) {
-			new ScoreSummary(board, this.getContentPane());
+			new ScoreSummaryElement(board, this.getContentPane());
 		}else {
 			new BoardElements(board, this.getContentPane(), new PlayCardActionListener());
 		}

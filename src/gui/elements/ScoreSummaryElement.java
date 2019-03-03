@@ -1,4 +1,4 @@
-package gui;
+package gui.elements;
 
 import java.awt.Container;
 
@@ -6,9 +6,9 @@ import javax.swing.JButton;
 
 import core.Board;
 
-public class ScoreSummary {
+public class ScoreSummaryElement {
 
-	public ScoreSummary(Board board, Container container) {
+	public ScoreSummaryElement(Board board, Container container) {
 		int scoreMultiplier = board.getRuleset().getScoreMultiplier();
 		int size = 200;
 

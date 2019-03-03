@@ -1,4 +1,4 @@
-package gui;
+package gui.elements;
 
 import java.awt.Container;
 import java.awt.Point;
@@ -8,6 +8,8 @@ import java.util.List;
 import core.Card;
 import core.Direction;
 import core.Trick;
+import gui.DeckCardImageInformation;
+import gui.JElements.CardButton;
 
 public class TrickElement {
 

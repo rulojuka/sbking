@@ -1,4 +1,4 @@
-package gui;
+package gui.frames;
 
 import java.awt.Container;
 

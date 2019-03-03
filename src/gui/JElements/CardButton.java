@@ -1,4 +1,4 @@
-package gui;
+package gui.JElements;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
