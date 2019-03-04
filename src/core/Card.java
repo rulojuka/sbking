@@ -32,6 +32,22 @@ public class Card implements Comparable<Card> {
 			return rankDiff;
 	}
 
+	public boolean isMan() {
+		return isJack() || isKing();
+	}
+
+	public boolean isQueen() {
+		return this.rankValue == Rank.QUEEN;
+	}
+
+	public boolean isHeart() {
+		return this.suitValue == Suit.HEARTS;
+	}
+
+	public boolean isKingOfHearts() {
+		return isKing() && isHeart();
+	}
+
 	public int points() {
 		int points = 0;
 		if (this.getRank().compareTo(Rank.ACE) == 0)
@@ -45,10 +61,6 @@ public class Card implements Comparable<Card> {
 		return points;
 	}
 
-	public boolean isMan() {
-		return isJack() || isKing();
-	}
-
 	private boolean isKing() {
 		return this.rankValue == Rank.KING;
 	}
@@ -56,18 +68,5 @@ public class Card implements Comparable<Card> {
 	private boolean isJack() {
 		return this.rankValue == Rank.JACK;
 	}
-
-	public boolean isQueen() {
-		return this.rankValue == Rank.QUEEN;
-	}
-
-	public boolean isHeart() {
-		return this.suitValue == Suit.HEARTS;
-	}
-	
-	public boolean isKingOfHearts() {
-		return isKing() && isHeart();
-	}
-
 
 }

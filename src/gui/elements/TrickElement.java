@@ -22,7 +22,7 @@ public class TrickElement {
 		deckCardImageInformation = new DeckCardImageInformation();
 		trick = new ArrayList<CardButton>();
 		Direction leader = currentTrick.getLeader();
-		List<Card> listOfCards = currentTrick.getTrickCards();
+		List<Card> listOfCards = currentTrick.getListOfCards();
 		for (int i = listOfCards.size() - 1; i >= 0; i--) {
 			Card card = listOfCards.get(i);
 			CardButton cardButton = new CardButton(card, deckCardImageInformation.getFrontImage(card),

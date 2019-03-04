@@ -13,11 +13,11 @@ public enum Suit {
 	}
 
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	public String getSymbol() {
-		return symbol;
+		return this.symbol;
 	}
 
 }

@@ -1,11 +1,12 @@
 package core;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Trick {
 	private static final int COMPLETE_TRICK_NUMBER_OF_CARDS = 4;
-	private List<Card> trick = new ArrayList<Card>();
+	private List<Card> listOfCards = new ArrayList<Card>();
 	private Direction leader;
 	private Direction winner;
 	private boolean lastTwo;
@@ -13,14 +14,10 @@ public class Trick {
 
 	public void addCard(Card card) {
 		if (!this.isComplete()) {
-			trick.add(card);
+			listOfCards.add(card);
 		} else {
 			throw new RuntimeException("Trying to add card to a complete trick.");
 		}
-	}
-
-	public Card getLeadCard() {
-		return trick.get(0);
 	}
 
 	public Suit getLeadSuit() {
@@ -28,7 +25,7 @@ public class Trick {
 	}
 
 	public void discard() {
-		trick.clear();
+		listOfCards.clear();
 		leader = null;
 		winner = null;
 		lastTwo = false;
@@ -43,10 +40,6 @@ public class Trick {
 		return this.leader;
 	}
 
-	private int getNumberOfCards() {
-		return getTrickCards().size();
-	}
-
 	public Direction getWinner() {
 		if (this.winner != null) {
 			return this.winner;
@@ -55,9 +48,9 @@ public class Trick {
 
 		int resp = 0;
 		Card highest, current;
-		highest = trick.get(0);
+		highest = listOfCards.get(0);
 		for (int i = 1; i < this.getNumberOfCards(); i++) {
-			current = trick.get(i);
+			current = listOfCards.get(i);
 			if (current.getSuit() == leadSuit) {
 				if (highest.compareTo(current) < 0) {
 					resp = i;
@@ -65,24 +58,23 @@ public class Trick {
 				}
 			}
 		}
-		
-		if(trumpSuit!=null) {
-			System.out.println("Entrou getWinner - trunfo: " + trumpSuit);
+
+		if (trumpSuit != null) {
 			for (int i = 0; i < this.getNumberOfCards(); i++) {
-				current = trick.get(i);
+				current = listOfCards.get(i);
 				if (current.getSuit() == trumpSuit) {
-					if(highest.getSuit() != trumpSuit) {
+					if (highest.getSuit() != trumpSuit) {
 						resp = i;
 						highest = current;
 						continue;
-					}else if (highest.compareTo(current) < 0) {
+					} else if (highest.compareTo(current) < 0) {
 						resp = i;
 						highest = current;
 					}
 				}
 			}
 		}
-		
+
 		this.winner = leader.next(resp);
 		return winner;
 	}
@@ -92,16 +84,16 @@ public class Trick {
 	}
 
 	public boolean isEmpty() {
-		return this.getNumberOfCards() == 0;
+		return this.listOfCards.isEmpty();
 	}
 
-	public List<Card> getTrickCards() {
-		return trick;
+	public List<Card> getListOfCards() {
+		return Collections.unmodifiableList(this.listOfCards);
 	}
 
 	public int getNumberOfMen() {
 		int men = 0;
-		for (Card c : trick) {
+		for (Card c : listOfCards) {
 			if (c.isMan()) {
 				men++;
 			}
@@ -111,7 +103,7 @@ public class Trick {
 
 	public int getNumberOfWomen() {
 		int women = 0;
-		for (Card c : trick) {
+		for (Card c : listOfCards) {
 			if (c.isQueen()) {
 				women++;
 			}
@@ -128,7 +120,7 @@ public class Trick {
 	}
 
 	public boolean hasKingOfHearts() {
-		for (Card c : trick) {
+		for (Card c : listOfCards) {
 			if (c.isKingOfHearts()) {
 				return true;
 			}
@@ -138,7 +130,7 @@ public class Trick {
 
 	public int getNumberOfHeartsCards() {
 		int hearts = 0;
-		for (Card c : trick) {
+		for (Card c : listOfCards) {
 			if (c.isHeart()) {
 				hearts++;
 			}
@@ -148,7 +140,15 @@ public class Trick {
 
 	public void setTrumpSuit(Suit trumpSuit) {
 		this.trumpSuit = trumpSuit;
-		
+
+	}
+
+	private Card getLeadCard() {
+		return listOfCards.get(0);
+	}
+
+	private int getNumberOfCards() {
+		return this.listOfCards.size();
 	}
 
 }

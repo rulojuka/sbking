@@ -39,6 +39,7 @@ public enum Direction {
 
 	// Static copy to avoid many copies
 	private static Direction[] vals = values();
+
 	public Direction next() {
 		return vals[(this.ordinal() + 1) % vals.length];
 	}

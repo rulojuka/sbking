@@ -6,7 +6,7 @@ import core.rulesets.PositiveWithTrumpRuleset;
 import core.rulesets.Ruleset;
 
 public class Board {
-	
+
 	private final int NUMBER_OF_TRICKS_IN_A_COMPLETE_HAND = 13;
 
 	private Hand northHand;
@@ -32,9 +32,8 @@ public class Board {
 		eastWestPoints = 0;
 		completedTricks = 0;
 		this.ruleset = ruleset;
-		if( ruleset instanceof PositiveWithTrumpRuleset ) {
+		if (ruleset instanceof PositiveWithTrumpRuleset) {
 			PositiveWithTrumpRuleset positiveWithTrumpRuleset = (PositiveWithTrumpRuleset) ruleset;
-			System.out.println("Setou trunfo como" + positiveWithTrumpRuleset.getTrumpSuit());
 			this.trumpSuit = positiveWithTrumpRuleset.getTrumpSuit();
 		}
 		sortHands();
@@ -72,33 +71,12 @@ public class Board {
 		return eastWestPoints;
 	}
 
-	private void sortHands() {
-		northHand.sort();
-		eastHand.sort();
-		southHand.sort();
-		westHand.sort();
+	public Ruleset getRuleset() {
+		return this.ruleset;
 	}
 
-	/**
-	 * 
-	 * @param card Card that is going to be be validated
-	 * @param hand Hand of the player that is playing that card
-	 * @return True if the card that is being played follow the basic trick rules.
-	 *         False if it does not.
-	 */
-	private boolean followsSuit(Card card, Hand hand) {
-		Trick trick = this.getCurrentTrick();
-		if (trick.isEmpty())
-			return true;
-		Suit leadSuit = trick.getLeadSuit();
-
-		if (hand.hasSuit(leadSuit) == false) {
-			return true;
-		} else if (card.getSuit() == leadSuit) {
-			return true;
-		}
-
-		return false;
+	public boolean isFinished() {
+		return this.completedTricks == NUMBER_OF_TRICKS_IN_A_COMPLETE_HAND;
 	}
 
 	/**
@@ -118,7 +96,8 @@ public class Board {
 			}
 		}
 		Hand handOfCurrentPlayer = getHandOfCurrentPlayer();
-		if( currentTrick.isEmpty() && ruleset.prohibitsHeartsUntilOnlySuitLeft() && card.getSuit() == Suit.HEARTS && !handOfCurrentPlayer.onlyHasHearts()) {
+		if (currentTrick.isEmpty() && ruleset.prohibitsHeartsUntilOnlySuitLeft() && card.getSuit() == Suit.HEARTS
+				&& !handOfCurrentPlayer.onlyHasHearts()) {
 			throw new RuntimeException("Ruleset prohibits playing hearts until only suit left.");
 		}
 		if (!followsSuit(card, handOfCurrentPlayer)) {
@@ -141,6 +120,28 @@ public class Board {
 			currentPlayer = currentPlayer.next();
 		}
 
+	}
+
+	/**
+	 * 
+	 * @param card Card that is going to be be validated
+	 * @param hand Hand of the player that is playing that card
+	 * @return True if the card that is being played follow the basic trick rules.
+	 *         False if it does not.
+	 */
+	private boolean followsSuit(Card card, Hand hand) {
+		Trick trick = this.getCurrentTrick();
+		if (trick.isEmpty())
+			return true;
+		Suit leadSuit = trick.getLeadSuit();
+
+		if (hand.hasSuit(leadSuit) == false) {
+			return true;
+		} else if (card.getSuit() == leadSuit) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private void updatePoints() {
@@ -177,12 +178,11 @@ public class Board {
 		throw new RuntimeException("Invalid current player");
 	}
 
-	public Ruleset getRuleset() {
-		return this.ruleset;
-	}
-	
-	public boolean isFinished() {
-		return this.completedTricks == NUMBER_OF_TRICKS_IN_A_COMPLETE_HAND;
+	private void sortHands() {
+		northHand.sort();
+		eastHand.sort();
+		southHand.sort();
+		westHand.sort();
 	}
 
 }
