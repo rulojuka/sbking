@@ -1,74 +1,50 @@
 package br.com.sbk.sbking.core;
 
-import static org.junit.Assert.*;
-
-import java.util.Iterator;
-
-import javax.swing.ImageIcon;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class CardTest {
 
-	private static Suit suit;
-	private static Rank rank;
-	private static Card card;
-	private static ImageIcon image;
-	
-	@BeforeClass 
-	public static void setup(){
-		Iterator suitIterator = Suit.VALUES.iterator();
-		suit = (Suit) suitIterator.next();
-		Iterator rankIterator = Rank.VALUES.iterator();
-		rank = (Rank) rankIterator.next();
-		image = new ImageIcon();
-		card = new Card(suit,rank,image);
-	}
+	private static Suit diamonds;
+	private static Rank two;
+	private static Card twoOfDiamonds;
 
-	@Test
-	public void shouldGetFilename() {
-		assertEquals("d2.png", Card.getFilename(suit,rank));
+	@BeforeClass
+	public static void setup() {
+		diamonds = Suit.DIAMONDS;
+		two = Rank.TWO;
+		twoOfDiamonds = new Card(diamonds, two);
 	}
 
 	@Test
 	public void shouldGetSuit() {
-		assertEquals(suit,card.getSuit());
+		assertEquals(diamonds, twoOfDiamonds.getSuit());
 	}
 
 	@Test
 	public void testGetRank() {
-		assertEquals(rank,card.getRank());
-	}
-
-	@Test
-	public void testGetCardImage() {
-		assertEquals(image,card.getCardImage());
+		assertEquals(two, twoOfDiamonds.getRank());
 	}
 
 	@Test
 	public void testToString() {
-		assertEquals("Two of Diamonds", card.toString());
+		assertEquals("Two of Diamonds", twoOfDiamonds.toString());
 	}
 
 	@Test
 	public void testCompareTo() {
-		Iterator rankIterator = Rank.VALUES.iterator();
-		rankIterator.next();
-		Rank otherRank = (Rank) rankIterator.next();
-		Card otherCard = new Card(suit,otherRank,image);
-		assertEquals(1, card.compareTo(otherCard));
+		Card threeOfDiamonds = new Card(Suit.DIAMONDS, Rank.THREE);
+		assertTrue(threeOfDiamonds.compareTo(twoOfDiamonds) > 0 );
 	}
 
 	@Test
 	public void testPoints() {
-		Iterator rankIterator = Rank.VALUES.iterator();
-		for(int i=0;i<11;i++)
-			rankIterator.next();
-		Rank otherRank = (Rank) rankIterator.next();
-		Card otherCard = new Card(suit,otherRank,image); /*King of diamonds*/
-		assertEquals(0, card.points());
-		assertEquals(3, otherCard.points());
+		Card kingOfDiamonds = new Card(Suit.DIAMONDS, Rank.KING);
+		assertEquals(0, twoOfDiamonds.points());
+		assertEquals(3, kingOfDiamonds.points());
 	}
 
 }

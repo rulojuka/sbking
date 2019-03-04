@@ -19,7 +19,7 @@ public class Card implements Comparable<Card> {
 	}
 
 	public String toString() {
-		return rankValue.getName() + " of " + suitValue.toString();
+		return rankValue.getName() + " of " + suitValue.getName();
 	}
 
 	public int compareTo(Card otherCard) { /* Returns <0 if card is bigger than otherCard */
