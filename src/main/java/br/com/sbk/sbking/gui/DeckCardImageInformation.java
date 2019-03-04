@@ -25,7 +25,7 @@ public class DeckCardImageInformation {
 	}
 
 	private String getFilename(Suit suit, Rank rank) {
-		return suit.getSymbol() + rank.getSymbol() + ".png";
+		return suit.getSymbol() + rank.getSymbol().toLowerCase() + ".png";
 	}
 
 }
