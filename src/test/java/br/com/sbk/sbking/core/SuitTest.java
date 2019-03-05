@@ -10,32 +10,45 @@ public class SuitTest {
 
 	private static Suit diamonds;
 	private static Suit clubs;
-	private static Suit spades;
 	private static Suit hearts;
+	private static Suit spades;
 
 	@BeforeClass
 	public static void setup() {
 		diamonds = Suit.DIAMONDS;
 		clubs = Suit.CLUBS;
-		spades = Suit.SPADES;
 		hearts = Suit.HEARTS;
+		spades = Suit.SPADES;
+	}
+	
+	@Test
+	public void theSameSuitShouldAlwaysBeTheSameObject() {
+		Suit suit1 = Suit.CLUBS;
+		Suit suit2 = Suit.CLUBS;
+		assertTrue(suit1 == suit2);
+	}
+
+	@Test
+	public void theSameSuitShouldAlwaysBeEqual() {
+		Suit suit1 = Suit.CLUBS;
+		Suit suit2 = Suit.CLUBS;
+		assertEquals(suit1, suit2);
 	}
 
 	@Test
 	public void shouldGetName() {
 		assertEquals("Diamonds", diamonds.getName());
+		assertEquals("Clubs", clubs.getName());
+		assertEquals("Hearts", hearts.getName());
+		assertEquals("Spades", spades.getName());
 	}
 
 	@Test
 	public void shouldGetSymbol() {
 		assertEquals("d", diamonds.getSymbol());
-	}
-
-	@Test
-	public void shouldCompareCorrectly() {
-		assertTrue(diamonds.compareTo(clubs) < 0);
-		assertTrue(clubs.compareTo(hearts) < 0);
-		assertTrue(hearts.compareTo(spades) < 0);
+		assertEquals("c", clubs.getSymbol());
+		assertEquals("h", hearts.getSymbol());
+		assertEquals("s", spades.getSymbol());
 	}
 
 }

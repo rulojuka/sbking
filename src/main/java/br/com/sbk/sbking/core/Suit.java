@@ -1,7 +1,6 @@
 package br.com.sbk.sbking.core;
 
 public enum Suit {
-	// Suit order used to sort cards, not used in the game rules
 	DIAMONDS("Diamonds", "d"), CLUBS("Clubs", "c"), HEARTS("Hearts", "h"), SPADES("Spades", "s");
 
 	private final String name;

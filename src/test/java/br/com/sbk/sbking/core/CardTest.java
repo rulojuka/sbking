@@ -60,12 +60,16 @@ public class CardTest {
 
 	@Test
 	public void shouldBeRankComparable() {
-		assertTrue(twoOfDiamonds.compareRank(threeOfClubs) < 0);
+		int rankComparison = twoOfDiamonds.getRank().compareTo(threeOfClubs.getRank());
+		int cardComparison = twoOfDiamonds.compareRank(threeOfClubs);
+		assertEquals(rankComparison,cardComparison);
 	}
 
 	@Test
 	public void shouldBeSuitComparable() {
-		assertTrue(twoOfDiamonds.compareSuit(threeOfClubs) < 0);
+		int suitComparison = twoOfDiamonds.getSuit().compareTo(threeOfClubs.getSuit());
+		int cardComparison = twoOfDiamonds.compareSuit(threeOfClubs);
+		assertEquals(suitComparison,cardComparison);
 	}
 
 	@Test
