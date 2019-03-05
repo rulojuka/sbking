@@ -1,6 +1,6 @@
 package br.com.sbk.sbking.core;
 
-public class Card implements Comparable<Card> {
+public class Card {
 
 	private Suit suitValue;
 	private Rank rankValue;
@@ -22,30 +22,24 @@ public class Card implements Comparable<Card> {
 		return rankValue.getName() + " of " + suitValue.getName();
 	}
 
-	public int compareTo(Card otherCard) { /* Returns <0 if card is bigger than otherCard */
-		int suitDiff = suitValue.compareTo(otherCard.suitValue);
-		int rankDiff = rankValue.compareTo(otherCard.rankValue);
+	public int compareRank(Card otherCard) {
+		return this.getRank().compareTo(otherCard.getRank());
+	}
 
-		if (suitDiff != 0)
-			return suitDiff;
-		else
-			return rankDiff;
+	public int compareSuit(Card otherCard) {
+		return this.getSuit().compareTo(otherCard.getSuit());
 	}
 
 	public boolean isMan() {
 		return isJack() || isKing();
 	}
 
-	public boolean isQueen() {
+	public boolean isWoman() {
 		return this.rankValue == Rank.QUEEN;
 	}
 
 	public boolean isHeart() {
 		return this.suitValue == Suit.HEARTS;
-	}
-
-	public boolean isKingOfHearts() {
-		return isKing() && isHeart();
 	}
 
 	public int points() {
@@ -59,6 +53,10 @@ public class Card implements Comparable<Card> {
 		if (this.getRank().compareTo(Rank.JACK) == 0)
 			points = 1;
 		return points;
+	}
+
+	public boolean isKingOfHearts() {
+		return isKing() && isHeart();
 	}
 
 	private boolean isKing() {

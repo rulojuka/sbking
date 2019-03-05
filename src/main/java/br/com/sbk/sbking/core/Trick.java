@@ -52,7 +52,7 @@ public class Trick {
 		for (int i = 1; i < this.getNumberOfCards(); i++) {
 			current = listOfCards.get(i);
 			if (current.getSuit() == leadSuit) {
-				if (highest.compareTo(current) < 0) {
+				if (highest.compareRank(current) < 0) {
 					resp = i;
 					highest = current;
 				}
@@ -67,7 +67,7 @@ public class Trick {
 						resp = i;
 						highest = current;
 						continue;
-					} else if (highest.compareTo(current) < 0) {
+					} else if (highest.compareRank(current) < 0) {
 						resp = i;
 						highest = current;
 					}
@@ -104,7 +104,7 @@ public class Trick {
 	public int getNumberOfWomen() {
 		int women = 0;
 		for (Card c : listOfCards) {
-			if (c.isQueen()) {
+			if (c.isWoman()) {
 				women++;
 			}
 		}

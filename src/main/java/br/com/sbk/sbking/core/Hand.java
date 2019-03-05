@@ -17,7 +17,7 @@ public class Hand {
 	}
 
 	public void sort() {
-		Collections.sort(listOfCards);
+		Collections.sort(listOfCards, new CardInsideHandComparator());
 	}
 
 	public boolean containsCard(Card card) {
