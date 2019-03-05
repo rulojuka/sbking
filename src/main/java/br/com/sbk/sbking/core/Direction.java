@@ -3,7 +3,7 @@ package br.com.sbk.sbking.core;
 public enum Direction {
 
 	// Clockwise order
-	NORTH("North", 'N'), EAST("East", 'E'), SOUTH("South", 'S'), WEST("West", 'E');
+	NORTH("North", 'N'), EAST("East", 'E'), SOUTH("South", 'S'), WEST("West", 'W');
 
 	private final String completeName;
 	private final char abbreviation;
