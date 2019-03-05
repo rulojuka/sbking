@@ -40,12 +40,12 @@ public enum Direction {
 	// Static copy to avoid many copies
 	private static Direction[] vals = values();
 
-	public Direction next() {
-		return vals[(this.ordinal() + 1) % vals.length];
-	}
-
 	public Direction next(int n) {
 		return vals[(this.ordinal() + n) % vals.length];
+	}
+
+	public Direction next() {
+		return this.next(1);
 	}
 
 	public String getCompleteName() {

@@ -3,88 +3,60 @@ package br.com.sbk.sbking.core;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
+
+import br.com.sbk.sbking.core.exceptions.TrickAlreadyFullException;
 
 public class Trick {
 	private static final int COMPLETE_TRICK_NUMBER_OF_CARDS = 4;
-	private List<Card> listOfCards = new ArrayList<Card>();
+	private List<Card> listOfCards;
 	private Direction leader;
-	private Direction winner;
 	private boolean lastTwo;
-	private Suit trumpSuit;
+
+	public Trick(Direction leader) {
+		this.leader = leader;
+		this.listOfCards = new ArrayList<Card>();
+		this.lastTwo = false;
+	}
 
 	public void addCard(Card card) {
 		if (!this.isComplete()) {
 			listOfCards.add(card);
 		} else {
-			throw new RuntimeException("Trying to add card to a complete trick.");
+			throw new TrickAlreadyFullException();
 		}
 	}
 
-	public Suit getLeadSuit() {
-		return this.getLeadCard().getSuit();
-	}
-
-	public void discard() {
-		listOfCards.clear();
-		leader = null;
-		winner = null;
-		lastTwo = false;
-		trumpSuit = null;
-	}
-
-	public void setLeader(Direction direction) {
-		leader = direction;
-	}
-
-	public Direction getLeader() {
-		return this.leader;
-	}
-
-	public Direction getWinner() {
-		if (this.winner != null) {
-			return this.winner;
-		}
-		Suit leadSuit = this.getLeadSuit();
-
-		int resp = 0;
-		Card highest, current;
-		highest = listOfCards.get(0);
-		for (int i = 1; i < this.getNumberOfCards(); i++) {
-			current = listOfCards.get(i);
-			if (current.getSuit() == leadSuit) {
-				if (highest.compareRank(current) < 0) {
-					resp = i;
-					highest = current;
-				}
-			}
-		}
-
-		if (trumpSuit != null) {
-			for (int i = 0; i < this.getNumberOfCards(); i++) {
-				current = listOfCards.get(i);
-				if (current.getSuit() == trumpSuit) {
-					if (highest.getSuit() != trumpSuit) {
-						resp = i;
-						highest = current;
-						continue;
-					} else if (highest.compareRank(current) < 0) {
-						resp = i;
-						highest = current;
-					}
-				}
-			}
-		}
-
-		this.winner = leader.next(resp);
-		return winner;
+	public boolean isEmpty() {
+		return this.listOfCards.isEmpty();
 	}
 
 	public boolean isComplete() {
 		return this.getNumberOfCards() == COMPLETE_TRICK_NUMBER_OF_CARDS;
 	}
 
-	public boolean isEmpty() {
-		return this.listOfCards.isEmpty();
+	public Direction getLeader() {
+		return this.leader;
+	}
+
+	public Suit getLeadSuit() {
+		return this.getLeadCard().getSuit();
+	}
+
+	public Direction getWinnerWithoutTrumpSuit() {
+		Card card = highestCardOfSuit(this.getLeadSuit());
+		return directionOfCard(card);
+	}
+
+	public Direction getWinnerWithTrumpSuit(Suit trumpSuit) {
+		Card card;
+		if (this.hasSuit(trumpSuit)) {
+			card = highestCardOfSuit(trumpSuit);
+		} else {
+			card = highestCardOfSuit(this.getLeadSuit());
+		}
+		return directionOfCard(card);
 	}
 
 	public List<Card> getListOfCards() {
@@ -138,9 +110,35 @@ public class Trick {
 		return hearts;
 	}
 
-	public void setTrumpSuit(Suit trumpSuit) {
-		this.trumpSuit = trumpSuit;
+	private Card highestCardOfSuit(Suit suit) {
+		SortedSet<Card> sortedCardsOfSuit = new TreeSet<Card>(new CardOfSameSuitComparator());
+		for (Card card : this.listOfCards) {
+			if (card.getSuit() == suit) {
+				sortedCardsOfSuit.add(card);
+			}
+		}
+		return sortedCardsOfSuit.last();
+	}
 
+	private Direction directionOfCard(Card card) {
+		Direction current = leader;
+		for (Card cardFromList : listOfCards) {
+			if (card.equals(cardFromList)) {
+				return current;
+			} else {
+				current = current.next();
+			}
+		}
+		throw new RuntimeException("Card not found");
+	}
+
+	private boolean hasSuit(Suit suit) {
+		for (Card card : listOfCards) {
+			if (card.getSuit() == suit) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private Card getLeadCard() {

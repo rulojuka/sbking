@@ -21,13 +21,15 @@ public class Board {
 	private Ruleset ruleset;
 	private Suit trumpSuit;
 
+	private Direction currentTrickWinner;
+
 	public Board(List<Hand> hands, Ruleset ruleset) {
 		this.northHand = hands.get(0);
 		this.eastHand = hands.get(1);
 		this.southHand = hands.get(2);
 		this.westHand = hands.get(3);
-		currentTrick = new Trick();
 		currentPlayer = Direction.NORTH;
+		currentTrick = new Trick(currentPlayer);
 		northSouthPoints = 0;
 		eastWestPoints = 0;
 		completedTricks = 0;
@@ -35,6 +37,8 @@ public class Board {
 		if (ruleset instanceof PositiveWithTrumpRuleset) {
 			PositiveWithTrumpRuleset positiveWithTrumpRuleset = (PositiveWithTrumpRuleset) ruleset;
 			this.trumpSuit = positiveWithTrumpRuleset.getTrumpSuit();
+		} else {
+			this.trumpSuit = null;
 		}
 		sortHands();
 	}
@@ -90,7 +94,7 @@ public class Board {
 			throw new RuntimeException("Trying to play in another players turn.");
 		}
 		if (currentTrick.isComplete()) {
-			currentTrick.discard();
+			currentTrick = new Trick(currentPlayer);
 			if (completedTricks >= (NUMBER_OF_TRICKS_IN_A_COMPLETE_HAND - 2)) {
 				currentTrick.setLastTwo();
 			}
@@ -103,19 +107,19 @@ public class Board {
 		if (!followsSuit(card, handOfCurrentPlayer)) {
 			throw new RuntimeException("Card does not follow suit.");
 		}
-		if (currentTrick.isEmpty()) {
-			currentTrick.setLeader(currentPlayer);
-			currentTrick.setTrumpSuit(trumpSuit);
-		}
 
 		currentTrick.addCard(card);
 		getHandOfCurrentPlayer().removeCard(card);
 
 		if (currentTrick.isComplete()) {
-			Direction winner = currentTrick.getWinner();
+			if(this.trumpSuit == null) {
+				currentTrickWinner = currentTrick.getWinnerWithoutTrumpSuit();
+			}else {
+				currentTrickWinner = currentTrick.getWinnerWithTrumpSuit(trumpSuit);
+			}
 			completedTricks++;
 			updatePoints();
-			currentPlayer = winner;
+			currentPlayer = currentTrickWinner;
 		} else {
 			currentPlayer = currentPlayer.next();
 		}
@@ -145,13 +149,10 @@ public class Board {
 	}
 
 	private void updatePoints() {
-		if (currentTrick.isComplete()) {
-			Direction winner = currentTrick.getWinner();
-			if (winner.isNorthSouth()) {
-				northSouthPoints += this.ruleset.getPoints(currentTrick);
-			} else {
-				eastWestPoints += this.ruleset.getPoints(currentTrick);
-			}
+		if (currentTrickWinner.isNorthSouth()) {
+			northSouthPoints += this.ruleset.getPoints(currentTrick);
+		} else {
+			eastWestPoints += this.ruleset.getPoints(currentTrick);
 		}
 	}
 
