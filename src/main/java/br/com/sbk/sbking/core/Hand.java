@@ -2,6 +2,7 @@ package br.com.sbk.sbking.core;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class Hand {
@@ -33,15 +34,6 @@ public class Hand {
 		return false;
 	}
 
-	@Override
-	public String toString() {
-		StringBuilder stringBuilder = new StringBuilder("| ");
-		for (Card card : listOfCards) {
-			stringBuilder.append(card.getSuit().getSymbol() + card.getRank().getSymbol() + " | ");
-		}
-		return stringBuilder.toString();
-	}
-
 	public int HCP() {
 		int resp = 0;
 		for (Card card : listOfCards) {
@@ -61,6 +53,21 @@ public class Hand {
 			}
 		}
 		return true;
+	}
+
+	private class CardInsideHandComparator implements Comparator<Card> {
+
+		@Override
+		public int compare(Card card1, Card card2) {
+			int suitDiff = card1.compareSuit(card2);
+			if (suitDiff != 0) {
+				return -suitDiff;
+			} else {
+				int rankDiff = card1.compareRank(card2);
+				return -rankDiff;
+			}
+		}
+
 	}
 
 }
