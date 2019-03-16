@@ -2,6 +2,7 @@ package br.com.sbk.sbking.core;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -118,6 +119,13 @@ public class Trick {
 			}
 		}
 		return sortedCardsOfSuit.last();
+	}
+
+	private class CardOfSameSuitComparator implements Comparator<Card> {
+		@Override
+		public int compare(Card card1, Card card2) {
+			return card1.compareRank(card2);
+		}
 	}
 
 	private Direction directionOfCard(Card card) {
