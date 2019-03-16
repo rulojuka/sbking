@@ -17,7 +17,7 @@ import br.com.sbk.sbking.core.rulesets.NegativeMenRuleset;
 import br.com.sbk.sbking.core.rulesets.NegativeTricksRuleset;
 import br.com.sbk.sbking.core.rulesets.NegativeWomenRuleset;
 import br.com.sbk.sbking.core.rulesets.PositiveNoTrumpsRuleset;
-import br.com.sbk.sbking.core.rulesets.PositiveWithTrumpRuleset;
+import br.com.sbk.sbking.core.rulesets.PositiveWithTrumpsRuleset;
 import br.com.sbk.sbking.core.rulesets.Ruleset;
 
 @SuppressWarnings("serial")
@@ -36,10 +36,10 @@ public class GameSelectScreen extends JFrame {
 	private Ruleset negativeLastTwo = new NegativeLastTwoRuleset();
 	private Ruleset negativeKing = new NegativeKingRuleset();
 	private Ruleset positiveNoTrumps = new PositiveNoTrumpsRuleset();
-	private Ruleset positiveClubs = new PositiveWithTrumpRuleset(Suit.CLUBS);
-	private Ruleset positiveDiamonds = new PositiveWithTrumpRuleset(Suit.DIAMONDS);
-	private Ruleset positiveHearts = new PositiveWithTrumpRuleset(Suit.HEARTS);
-	private Ruleset positiveSpades = new PositiveWithTrumpRuleset(Suit.SPADES);
+	private Ruleset positiveClubs = new PositiveWithTrumpsRuleset(Suit.CLUBS);
+	private Ruleset positiveDiamonds = new PositiveWithTrumpsRuleset(Suit.DIAMONDS);
+	private Ruleset positiveHearts = new PositiveWithTrumpsRuleset(Suit.HEARTS);
+	private Ruleset positiveSpades = new PositiveWithTrumpsRuleset(Suit.SPADES);
 	private List<Ruleset> rulesets;
 
 	public GameSelectScreen() {

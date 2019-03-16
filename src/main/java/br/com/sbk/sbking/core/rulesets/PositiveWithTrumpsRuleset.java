@@ -2,11 +2,11 @@ package br.com.sbk.sbking.core.rulesets;
 
 import br.com.sbk.sbking.core.Suit;
 
-public class PositiveWithTrumpRuleset extends PositiveRuleset {
+public class PositiveWithTrumpsRuleset extends PositiveRuleset {
 	
 	private Suit trumpSuit;
 
-	public PositiveWithTrumpRuleset(Suit trumpSuit) {
+	public PositiveWithTrumpsRuleset(Suit trumpSuit) {
 		this.trumpSuit = trumpSuit;
 	}
 

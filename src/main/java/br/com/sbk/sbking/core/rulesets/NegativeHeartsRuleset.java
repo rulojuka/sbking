@@ -4,9 +4,11 @@ import br.com.sbk.sbking.core.Trick;
 
 public class NegativeHeartsRuleset implements Ruleset {
 
+	private final int NEGATIVE_HEARTS_SCORE_MULTIPLIER = 20;
+
 	@Override
 	public int getScoreMultiplier() {
-		return 20;
+		return NEGATIVE_HEARTS_SCORE_MULTIPLIER;
 	}
 
 	@Override

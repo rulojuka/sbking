@@ -2,7 +2,7 @@ package br.com.sbk.sbking.core;
 
 import java.util.List;
 
-import br.com.sbk.sbking.core.rulesets.PositiveWithTrumpRuleset;
+import br.com.sbk.sbking.core.rulesets.PositiveWithTrumpsRuleset;
 import br.com.sbk.sbking.core.rulesets.Ruleset;
 
 public class Board {
@@ -34,8 +34,8 @@ public class Board {
 		eastWestPoints = 0;
 		completedTricks = 0;
 		this.ruleset = ruleset;
-		if (ruleset instanceof PositiveWithTrumpRuleset) {
-			PositiveWithTrumpRuleset positiveWithTrumpRuleset = (PositiveWithTrumpRuleset) ruleset;
+		if (ruleset instanceof PositiveWithTrumpsRuleset) {
+			PositiveWithTrumpsRuleset positiveWithTrumpRuleset = (PositiveWithTrumpsRuleset) ruleset;
 			this.trumpSuit = positiveWithTrumpRuleset.getTrumpSuit();
 		} else {
 			this.trumpSuit = null;
