@@ -4,11 +4,11 @@ import java.awt.Container;
 
 import javax.swing.JButton;
 
-import br.com.sbk.sbking.core.Board;
+import br.com.sbk.sbking.core.Deal;
 
 public class ScoreSummaryElement {
 
-	public ScoreSummaryElement(Board board, Container container) {
+	public ScoreSummaryElement(Deal board, Container container) {
 		int scoreMultiplier = board.getRuleset().getScoreMultiplier();
 		int size = 200;
 

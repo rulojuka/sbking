@@ -5,11 +5,11 @@ import java.awt.Point;
 
 import javax.swing.JButton;
 
-import br.com.sbk.sbking.core.Board;
+import br.com.sbk.sbking.core.Deal;
 
 public class ScoreboardElement {
 
-	public ScoreboardElement(Board board, Container container, Point point) {
+	public ScoreboardElement(Deal board, Container container, Point point) {
 		
 		JButton scoreboardButton = new JButton();
 		scoreboardButton.setText("NS:" + board.getNorthSouthPoints() + " EW:" + board.getEastWestPoints());

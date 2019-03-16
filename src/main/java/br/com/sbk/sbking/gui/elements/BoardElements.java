@@ -4,7 +4,7 @@ import java.awt.Container;
 import java.awt.Point;
 import java.awt.event.ActionListener;
 
-import br.com.sbk.sbking.core.Board;
+import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
 
 public class BoardElements {
@@ -19,20 +19,20 @@ public class BoardElements {
 	private final int EAST_Y = 300;
 	private final int WEST_Y = EAST_Y;
 
-	public BoardElements(Board board, Container container, ActionListener actionListener) {
-		new HandElement(board.getNorthHand(), container, actionListener, new Point(NORTH_X, NORTH_Y));
-		new HandElement(board.getEastHand(), container, actionListener, new Point(EAST_X, EAST_Y));
-		new HandElement(board.getSouthHand(), container, actionListener, new Point(SOUTH_X, SOUTH_Y));
-		new HandElement(board.getWestHand(), container, actionListener, new Point(WEST_X, WEST_Y));
+	public BoardElements(Deal deal, Container container, ActionListener actionListener) {
+		new HandElement(deal.getHandOf(Direction.NORTH), container, actionListener, new Point(NORTH_X, NORTH_Y));
+		new HandElement(deal.getHandOf(Direction.EAST), container, actionListener, new Point(EAST_X, EAST_Y));
+		new HandElement(deal.getHandOf(Direction.SOUTH), container, actionListener, new Point(SOUTH_X, SOUTH_Y));
+		new HandElement(deal.getHandOf(Direction.WEST), container, actionListener, new Point(WEST_X, WEST_Y));
 
-		new CurrentPlayerElement(board.getCurrentPlayer(), container,
-				discoverCurrentPlayerElementLocation(board.getCurrentPlayer()));
+		new CurrentPlayerElement(deal.getCurrentPlayer(), container,
+				discoverCurrentPlayerElementLocation(deal.getCurrentPlayer()));
 		
-		new ScoreboardElement(board,container, new Point(container.getWidth()-150,10));
+		new ScoreboardElement(deal,container, new Point(container.getWidth()-150,10));
 		
-		new TrickElement(board.getCurrentTrick(),container, new Point(container.getWidth()/2, container.getHeight()/2));
+		new TrickElement(deal.getCurrentTrick(),container, new Point(container.getWidth()/2, container.getHeight()/2));
 		
-		new RulesetElement(board.getRuleset(), container, new Point(150,10));
+		new RulesetElement(deal.getRuleset(), container, new Point(150,10));
 	}
 
 	private Point discoverCurrentPlayerElementLocation(Direction direction) {

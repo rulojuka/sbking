@@ -8,9 +8,13 @@ import br.com.sbk.sbking.core.rulesets.Ruleset;
 public class Dealer {
 
 	private final int SIZE_OF_HAND = 13;
+	private Direction leader;
 
-	public Board deal(Ruleset ruleset) {
-		/* Initializing Hands */
+	public Dealer(Direction leader) {
+		this.leader = leader;
+	}
+
+	public Deal deal(Ruleset ruleset) {
 		List<Hand> hands = new ArrayList<Hand>();
 		ShuffledDeck deck = new ShuffledDeck();
 
@@ -21,7 +25,9 @@ public class Dealer {
 			}
 			hands.add(currentHand);
 		}
-		return new Board(hands, ruleset);
+
+		Board board = new Board(hands.get(0), hands.get(1), hands.get(2), hands.get(3), this.leader);
+		return new Deal(board, ruleset);
 	}
 
 }

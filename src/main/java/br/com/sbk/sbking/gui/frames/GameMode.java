@@ -4,8 +4,9 @@ import java.awt.Container;
 
 import javax.swing.JFrame;
 
-import br.com.sbk.sbking.core.Board;
+import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Dealer;
+import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.core.rulesets.Ruleset;
 import br.com.sbk.sbking.gui.JElements.CardButton;
 import br.com.sbk.sbking.gui.elements.BoardElements;
@@ -21,7 +22,7 @@ public class GameMode extends JFrame {
 
 	// Model
 
-	private Board board;
+	private Deal board;
 
 	// GUI model
 
@@ -46,7 +47,7 @@ public class GameMode extends JFrame {
 	}
 
 	private void initializeBoard(Ruleset ruleset) {
-		Dealer dealer = new Dealer();
+		Dealer dealer = new Dealer(Direction.NORTH);
 		board = dealer.deal(ruleset);
 	}
 
