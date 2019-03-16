@@ -67,4 +67,22 @@ public class Card {
 		return this.rankValue == Rank.JACK;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Card other = (Card) obj;
+		if (rankValue != other.getRank())
+			return false;
+		if (suitValue != other.getSuit())
+			return false;
+		return true;
+	}
+	
+
+
 }
