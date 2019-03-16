@@ -12,8 +12,7 @@ public class Dealer {
 	public Board deal(Ruleset ruleset) {
 		/* Initializing Hands */
 		List<Hand> hands = new ArrayList<Hand>();
-		Deck deck = new Deck();
-		deck.shuffle();
+		ShuffledDeck deck = new ShuffledDeck();
 
 		for (Direction direction : Direction.values()) {
 			Hand currentHand = new Hand();

@@ -5,12 +5,12 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-public class Deck {
+public class ShuffledDeck {
 	private List<Card> deck; // List is best because we need to shuffle it
 	private static final int DECK_SIZE = 52;
 	private Iterator<Card> iterator;
 
-	public Deck() {
+	public ShuffledDeck() {
 		deck = new ArrayList<Card>(DECK_SIZE);
 		for (Suit suit : Suit.values()) {
 			for (Rank rank : Rank.values()) {
@@ -18,6 +18,7 @@ public class Deck {
 				deck.add(card);
 			}
 		}
+		Collections.shuffle(deck);
 		iterator = deck.iterator();
 	}
 
@@ -25,21 +26,6 @@ public class Deck {
 		if (iterator.hasNext())
 			return iterator.next();
 		throw new RuntimeException("Trying to deal card from am empty deck.");
-	}
-
-	public void shuffle() {
-		Collections.shuffle(deck);
-		this.iterator = deck.iterator();
-	}
-
-	@Override
-	public String toString() {
-		StringBuilder stringBuilder = new StringBuilder();
-		Iterator<Card> iterator = deck.iterator();
-		while (iterator.hasNext()) {
-			stringBuilder.append(iterator.next().toString() + "\n");
-		}
-		return stringBuilder.toString();
 	}
 
 }
