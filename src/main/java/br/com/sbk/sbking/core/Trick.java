@@ -29,12 +29,12 @@ public class Trick {
 		}
 	}
 
-	public boolean isEmpty() {
-		return this.cards.isEmpty();
-	}
-
 	public boolean isComplete() {
 		return this.getNumberOfCards() == COMPLETE_TRICK_NUMBER_OF_CARDS;
+	}
+
+	public boolean isEmpty() {
+		return this.cards.isEmpty();
 	}
 
 	public Direction getLeader() {
@@ -58,6 +58,23 @@ public class Trick {
 			card = this.highestCardOfSuit(this.getLeadSuit());
 		}
 		return this.directionOfCard(card);
+	}
+
+	private Card highestCardOfSuit(Suit suit) {
+		SortedSet<Card> sortedCardsOfSuit = new TreeSet<Card>(new CardOfSameSuitComparator());
+		for (Card card : this.getCards()) {
+			if (card.getSuit() == suit) {
+				sortedCardsOfSuit.add(card);
+			}
+		}
+		return sortedCardsOfSuit.last();
+	}
+
+	private class CardOfSameSuitComparator implements Comparator<Card> {
+		@Override
+		public int compare(Card card1, Card card2) {
+			return card1.compareRank(card2);
+		}
 	}
 
 	public List<Card> getCards() {
@@ -109,23 +126,6 @@ public class Trick {
 			}
 		}
 		return hearts;
-	}
-
-	private Card highestCardOfSuit(Suit suit) {
-		SortedSet<Card> sortedCardsOfSuit = new TreeSet<Card>(new CardOfSameSuitComparator());
-		for (Card card : this.getCards()) {
-			if (card.getSuit() == suit) {
-				sortedCardsOfSuit.add(card);
-			}
-		}
-		return sortedCardsOfSuit.last();
-	}
-
-	private class CardOfSameSuitComparator implements Comparator<Card> {
-		@Override
-		public int compare(Card card1, Card card2) {
-			return card1.compareRank(card2);
-		}
 	}
 
 	private Direction directionOfCard(Card card) {

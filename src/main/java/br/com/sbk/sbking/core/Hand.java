@@ -29,6 +29,21 @@ public class Hand {
 		Collections.sort(this.cards, new CardInsideHandComparator());
 	}
 
+	private class CardInsideHandComparator implements Comparator<Card> {
+
+		@Override
+		public int compare(Card card1, Card card2) {
+			int suitDifference = card1.compareSuit(card2);
+			if (suitDifference != 0) {
+				return -suitDifference;
+			} else {
+				int rankDifference = card1.compareRank(card2);
+				return -rankDifference;
+			}
+		}
+
+	}
+
 	public boolean containsCard(Card card) {
 		return this.getCards().contains(card);
 	}
@@ -49,21 +64,6 @@ public class Hand {
 			}
 		}
 		return true;
-	}
-
-	private class CardInsideHandComparator implements Comparator<Card> {
-
-		@Override
-		public int compare(Card card1, Card card2) {
-			int suitDifference = card1.compareSuit(card2);
-			if (suitDifference != 0) {
-				return -suitDifference;
-			} else {
-				int rankDifference = card1.compareRank(card2);
-				return -rankDifference;
-			}
-		}
-
 	}
 
 	private List<Card> getCards() {

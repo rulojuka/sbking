@@ -34,20 +34,20 @@ public class Card {
 		return this.getRank() == Rank.QUEEN;
 	}
 
-	public boolean isHeart() {
-		return this.getSuit() == Suit.HEARTS;
-	}
-
 	public boolean isKingOfHearts() {
 		return this.isKing() && this.isHeart();
+	}
+
+	private boolean isJack() {
+		return this.getRank() == Rank.JACK;
 	}
 
 	private boolean isKing() {
 		return this.getRank() == Rank.KING;
 	}
 
-	private boolean isJack() {
-		return this.getRank() == Rank.JACK;
+	public boolean isHeart() {
+		return this.getSuit() == Suit.HEARTS;
 	}
 
 	@Override

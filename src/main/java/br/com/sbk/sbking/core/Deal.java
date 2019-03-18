@@ -105,13 +105,14 @@ public class Deal {
 
 	}
 
-	/**
-	 * 
-	 * @param card Card that is going to be be validated
-	 * @param hand Hand of the player that is playing that card
-	 * @return True if the card that is being played follow the basic trick rules.
-	 *         False if it does not.
-	 */
+	private boolean playedCardIsFromCurrentPlayer(Card card) {
+		return this.getHandOfCurrentPlayer().containsCard(card);
+	}
+
+	private Hand getHandOfCurrentPlayer() {
+		return this.board.getHandOf(this.currentPlayer);
+	}
+
 	private boolean followsSuit(Card card, Hand hand) {
 		Trick trick = this.getCurrentTrick();
 		if (trick.isEmpty())
@@ -133,14 +134,6 @@ public class Deal {
 		} else {
 			eastWestPoints += this.ruleset.getPoints(currentTrick);
 		}
-	}
-
-	private boolean playedCardIsFromCurrentPlayer(Card card) {
-		return this.getHandOfCurrentPlayer().containsCard(card);
-	}
-
-	private Hand getHandOfCurrentPlayer() {
-		return this.board.getHandOf(this.currentPlayer);
 	}
 
 }
