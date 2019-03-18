@@ -88,7 +88,7 @@ public class Deal {
 		}
 
 		currentTrick.addCard(card);
-		getHandOfCurrentPlayer().removeCard(card);
+		handOfCurrentPlayer.removeCard(card);
 
 		if (currentTrick.isComplete()) {
 			if (this.trumpSuit == null) {
