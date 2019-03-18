@@ -2,24 +2,20 @@ package br.com.sbk.sbking.core;
 
 public class Card {
 
-	private Suit suitValue;
-	private Rank rankValue;
+	private Suit suit;
+	private Rank rank;
 
 	public Card(Suit suit, Rank rank) {
-		suitValue = suit;
-		rankValue = rank;
+		this.suit = suit;
+		this.rank = rank;
 	}
 
 	public Suit getSuit() {
-		return suitValue;
+		return this.suit;
 	}
 
 	public Rank getRank() {
-		return rankValue;
-	}
-
-	public String toString() {
-		return rankValue.getName() + " of " + suitValue.getName();
+		return this.rank;
 	}
 
 	public int compareRank(Card otherCard) {
@@ -31,40 +27,27 @@ public class Card {
 	}
 
 	public boolean isMan() {
-		return isJack() || isKing();
+		return this.isJack() || this.isKing();
 	}
 
 	public boolean isWoman() {
-		return this.rankValue == Rank.QUEEN;
+		return this.getRank() == Rank.QUEEN;
 	}
 
 	public boolean isHeart() {
-		return this.suitValue == Suit.HEARTS;
-	}
-
-	public int points() {
-		int points = 0;
-		if (this.getRank().compareTo(Rank.ACE) == 0)
-			points = 4;
-		if (this.getRank().compareTo(Rank.KING) == 0)
-			points = 3;
-		if (this.getRank().compareTo(Rank.QUEEN) == 0)
-			points = 2;
-		if (this.getRank().compareTo(Rank.JACK) == 0)
-			points = 1;
-		return points;
+		return this.getSuit() == Suit.HEARTS;
 	}
 
 	public boolean isKingOfHearts() {
-		return isKing() && isHeart();
+		return this.isKing() && this.isHeart();
 	}
 
 	private boolean isKing() {
-		return this.rankValue == Rank.KING;
+		return this.getRank() == Rank.KING;
 	}
 
 	private boolean isJack() {
-		return this.rankValue == Rank.JACK;
+		return this.getRank() == Rank.JACK;
 	}
 
 	@Override
@@ -73,16 +56,14 @@ public class Card {
 			return true;
 		if (obj == null)
 			return false;
-		if (getClass() != obj.getClass())
+		if (this.getClass() != obj.getClass())
 			return false;
 		Card other = (Card) obj;
-		if (rankValue != other.getRank())
+		if (this.getRank() != other.getRank())
 			return false;
-		if (suitValue != other.getSuit())
+		if (this.getSuit() != other.getSuit())
 			return false;
 		return true;
 	}
-	
-
 
 }

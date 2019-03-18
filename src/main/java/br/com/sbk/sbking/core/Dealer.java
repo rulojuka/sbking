@@ -16,12 +16,12 @@ public class Dealer {
 
 	public Deal deal(Ruleset ruleset) {
 		List<Hand> hands = new ArrayList<Hand>();
-		ShuffledDeck deck = new ShuffledDeck();
+		ShuffledDeck shuffledDeck = new ShuffledDeck();
 
 		for (Direction direction : Direction.values()) {
 			Hand currentHand = new Hand();
 			for (int i = 0; i < SIZE_OF_HAND; i++) {
-				currentHand.addCard(deck.dealCard());
+				currentHand.addCard(shuffledDeck.dealCard());
 			}
 			hands.add(currentHand);
 		}

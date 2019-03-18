@@ -11,26 +11,26 @@ import br.com.sbk.sbking.core.exceptions.TrickAlreadyFullException;
 
 public class Trick {
 	private static final int COMPLETE_TRICK_NUMBER_OF_CARDS = 4;
-	private List<Card> listOfCards;
+	private List<Card> cards;
 	private Direction leader;
 	private boolean lastTwo;
 
 	public Trick(Direction leader) {
 		this.leader = leader;
-		this.listOfCards = new ArrayList<Card>();
+		this.cards = new ArrayList<Card>();
 		this.lastTwo = false;
 	}
 
 	public void addCard(Card card) {
 		if (!this.isComplete()) {
-			listOfCards.add(card);
+			this.cards.add(card);
 		} else {
 			throw new TrickAlreadyFullException();
 		}
 	}
 
 	public boolean isEmpty() {
-		return this.listOfCards.isEmpty();
+		return this.cards.isEmpty();
 	}
 
 	public boolean isComplete() {
@@ -46,27 +46,27 @@ public class Trick {
 	}
 
 	public Direction getWinnerWithoutTrumpSuit() {
-		Card card = highestCardOfSuit(this.getLeadSuit());
-		return directionOfCard(card);
+		Card card = this.highestCardOfSuit(this.getLeadSuit());
+		return this.directionOfCard(card);
 	}
 
 	public Direction getWinnerWithTrumpSuit(Suit trumpSuit) {
 		Card card;
 		if (this.hasSuit(trumpSuit)) {
-			card = highestCardOfSuit(trumpSuit);
+			card = this.highestCardOfSuit(trumpSuit);
 		} else {
-			card = highestCardOfSuit(this.getLeadSuit());
+			card = this.highestCardOfSuit(this.getLeadSuit());
 		}
-		return directionOfCard(card);
+		return this.directionOfCard(card);
 	}
 
-	public List<Card> getListOfCards() {
-		return Collections.unmodifiableList(this.listOfCards);
+	public List<Card> getCards() {
+		return Collections.unmodifiableList(this.cards);
 	}
 
 	public int getNumberOfMen() {
 		int men = 0;
-		for (Card c : listOfCards) {
+		for (Card c : this.getCards()) {
 			if (c.isMan()) {
 				men++;
 			}
@@ -76,7 +76,7 @@ public class Trick {
 
 	public int getNumberOfWomen() {
 		int women = 0;
-		for (Card c : listOfCards) {
+		for (Card c : this.getCards()) {
 			if (c.isWoman()) {
 				women++;
 			}
@@ -93,7 +93,7 @@ public class Trick {
 	}
 
 	public boolean hasKingOfHearts() {
-		for (Card c : listOfCards) {
+		for (Card c : this.getCards()) {
 			if (c.isKingOfHearts()) {
 				return true;
 			}
@@ -103,7 +103,7 @@ public class Trick {
 
 	public int getNumberOfHeartsCards() {
 		int hearts = 0;
-		for (Card c : listOfCards) {
+		for (Card c : this.getCards()) {
 			if (c.isHeart()) {
 				hearts++;
 			}
@@ -113,7 +113,7 @@ public class Trick {
 
 	private Card highestCardOfSuit(Suit suit) {
 		SortedSet<Card> sortedCardsOfSuit = new TreeSet<Card>(new CardOfSameSuitComparator());
-		for (Card card : this.listOfCards) {
+		for (Card card : this.getCards()) {
 			if (card.getSuit() == suit) {
 				sortedCardsOfSuit.add(card);
 			}
@@ -129,19 +129,19 @@ public class Trick {
 	}
 
 	private Direction directionOfCard(Card card) {
-		Direction current = leader;
-		for (Card cardFromList : listOfCards) {
-			if (card.equals(cardFromList)) {
-				return current;
+		Direction currentDirection = leader;
+		for (Card cardFromTrick : this.getCards()) {
+			if (card.equals(cardFromTrick)) {
+				return currentDirection;
 			} else {
-				current = current.next();
+				currentDirection = currentDirection.next();
 			}
 		}
 		throw new RuntimeException("Card not found");
 	}
 
 	private boolean hasSuit(Suit suit) {
-		for (Card card : listOfCards) {
+		for (Card card : this.getCards()) {
 			if (card.getSuit() == suit) {
 				return true;
 			}
@@ -150,11 +150,11 @@ public class Trick {
 	}
 
 	private Card getLeadCard() {
-		return listOfCards.get(0);
+		return this.getCards().get(0);
 	}
 
 	private int getNumberOfCards() {
-		return this.listOfCards.size();
+		return this.getCards().size();
 	}
 
 }

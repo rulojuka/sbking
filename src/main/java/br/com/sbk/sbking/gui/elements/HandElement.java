@@ -3,7 +3,6 @@ package br.com.sbk.sbking.gui.elements;
 import java.awt.Container;
 import java.awt.Point;
 import java.awt.event.ActionListener;
-import java.util.List;
 
 import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Hand;
@@ -14,12 +13,11 @@ public class HandElement {
 
 	private final int BETWEEN_CARDS_WIDTH = 26;
 	private DeckCardImageInformation deckCardImageInformation;
-	
+
 	public HandElement(Hand hand, Container container, ActionListener actionListener, Point handLocation) {
 		deckCardImageInformation = new DeckCardImageInformation();
-		List<Card> listOfCards = hand.getListOfCards();
-		for (int i = listOfCards.size() - 1; i >= 0; i--) { // This way, it draws correctly
-			Card card = listOfCards.get(i);
+		for (int i = hand.size() - 1; i >= 0; i--) { // This way, it draws correctly
+			Card card = hand.get(i);
 			CardButton cardButton = new CardButton(card, deckCardImageInformation.getFrontImage(card),
 					deckCardImageInformation.getBackImage());
 			cardButton.addActionListener(actionListener);

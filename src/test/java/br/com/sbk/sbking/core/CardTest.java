@@ -19,7 +19,6 @@ public class CardTest {
 	private static Card queenOfHearts;
 	private static Card kingOfDiamonds;
 	private static Card queenOfDiamonds;
-	private static Card aceOfSpades;
 	private static Card kingOfHearts;
 
 	@BeforeClass
@@ -34,7 +33,6 @@ public class CardTest {
 		queenOfHearts = new Card(Suit.HEARTS, Rank.QUEEN);
 		queenOfDiamonds = new Card(Suit.DIAMONDS, Rank.QUEEN);
 		kingOfDiamonds = new Card(Suit.DIAMONDS, Rank.KING);
-		aceOfSpades = new Card(Suit.SPADES, Rank.ACE);
 		kingOfHearts = new Card(Suit.HEARTS, Rank.KING);
 	}
 
@@ -54,22 +52,17 @@ public class CardTest {
 	}
 
 	@Test
-	public void shouldBeConvertedToString() {
-		assertEquals("Two of Diamonds", twoOfDiamonds.toString());
-	}
-
-	@Test
 	public void shouldBeRankComparable() {
 		int rankComparison = twoOfDiamonds.getRank().compareTo(threeOfClubs.getRank());
 		int cardComparison = twoOfDiamonds.compareRank(threeOfClubs);
-		assertEquals(rankComparison,cardComparison);
+		assertEquals(rankComparison, cardComparison);
 	}
 
 	@Test
 	public void shouldBeSuitComparable() {
 		int suitComparison = twoOfDiamonds.getSuit().compareTo(threeOfClubs.getSuit());
 		int cardComparison = twoOfDiamonds.compareSuit(threeOfClubs);
-		assertEquals(suitComparison,cardComparison);
+		assertEquals(suitComparison, cardComparison);
 	}
 
 	@Test
@@ -96,15 +89,6 @@ public class CardTest {
 	public void shouldReturnIfItIsTheKingOfHeartsOrNot() {
 		assertFalse(jackOfClubs.isHeart());
 		assertTrue(kingOfHearts.isHeart());
-	}
-
-	@Test
-	public void shouldHavePoints() {
-		assertEquals(0, twoOfDiamonds.points());
-		assertEquals(1, jackOfClubs.points());
-		assertEquals(2, queenOfDiamonds.points());
-		assertEquals(3, kingOfDiamonds.points());
-		assertEquals(4, aceOfSpades.points());
 	}
 
 }

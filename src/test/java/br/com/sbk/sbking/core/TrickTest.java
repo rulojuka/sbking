@@ -232,7 +232,7 @@ public class TrickTest {
 		trick.addCard(aceOfSpades);
 		trick.addCard(kingOfClubs);
 
-		List<Card> receivedList = trick.getListOfCards();
+		List<Card> receivedList = trick.getCards();
 
 		verifyZeroInteractions(jackOfClubs);
 		verifyZeroInteractions(queenOfHearts);
@@ -259,7 +259,7 @@ public class TrickTest {
 		for (int i = 0; i < COMPLETE_TRICK_NUMBER_OF_CARDS; i++) {
 			trick.addCard(jackOfClubs);
 		}
-		List<Card> receivedList = trick.getListOfCards();
+		List<Card> receivedList = trick.getCards();
 		verifyZeroInteractions(jackOfClubs);
 		receivedList.add(0, jackOfClubs);
 

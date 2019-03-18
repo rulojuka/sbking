@@ -6,12 +6,10 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -22,17 +20,18 @@ public class HandTest {
 	public void shouldBeConstructedEmpty() {
 		Hand hand = new Hand();
 
-		assertTrue(hand.getListOfCards().isEmpty());
+		assertEquals(0, hand.size());
 	}
-
+	
 	@Test
-	public void shouldAddCard() {
+	public void shouldAddAndGetACard() {
 		Hand hand = new Hand();
 
 		Card card = Mockito.mock(Card.class);
 		hand.addCard(card);
 
-		assertTrue(hand.getListOfCards().contains(card));
+		assertEquals(1, hand.size());
+		assertEquals(card, hand.get(0));
 	}
 
 	@Test
@@ -46,10 +45,10 @@ public class HandTest {
 
 		hand.removeCard(firstCard);
 
-		assertFalse(hand.getListOfCards().contains(firstCard));
-		assertTrue(hand.getListOfCards().contains(secondCard));
+		assertEquals(1, hand.size());
+		assertEquals(secondCard, hand.get(0));
 	}
-
+	
 	@Test
 	public void shouldSortUsingCardInsideHandRules() {
 		// The rules should be these:
@@ -99,13 +98,12 @@ public class HandTest {
 
 		// Exercise
 		hand.sort();
-		List<Card> listOfCardsInTheHand = hand.getListOfCards();
 
 		// Verify
-		assertEquals(kingOfSpades, listOfCardsInTheHand.get(0));
-		assertEquals(queenOfSpades, listOfCardsInTheHand.get(1));
-		assertEquals(aceOfHearts, listOfCardsInTheHand.get(2));
-		assertEquals(kingOfHearts, listOfCardsInTheHand.get(3));
+		assertEquals(kingOfSpades, hand.get(0));
+		assertEquals(queenOfSpades, hand.get(1));
+		assertEquals(aceOfHearts, hand.get(2));
+		assertEquals(kingOfHearts, hand.get(3));
 
 		verify(kingOfSpades, never()).compareRank(aceOfHearts);
 		verify(kingOfSpades, never()).compareRank(kingOfHearts);
@@ -143,48 +141,18 @@ public class HandTest {
 		Card kingOfHearts = mock(Card.class);
 		when(aceOfSpades.getSuit()).thenReturn(spades);
 		when(kingOfHearts.getSuit()).thenReturn(hearts);
-		
+
 		Hand hand = new Hand();
-		
+
 		hand.addCard(aceOfSpades);
 		hand.addCard(kingOfHearts);
-		
+
 		assertTrue(hand.hasSuit(spades));
 		assertTrue(hand.hasSuit(hearts));
 		assertFalse(hand.hasSuit(clubs));
 		assertFalse(hand.hasSuit(diamonds));
 	}
-	
-	@Test
-	public void shouldReturnItsHCPCount() {
-		final int acePoints = 4;
-		final int kingPoints = 3;
-		final int totalPoints = acePoints + kingPoints;
-		Card aceOfSpades = mock(Card.class);
-		Card kingOfHearts = mock(Card.class);
-		when(aceOfSpades.points()).thenReturn(acePoints);
-		when(kingOfHearts.points()).thenReturn(kingPoints);
-		Hand hand = new Hand();
-		hand.addCard(aceOfSpades);
-		hand.addCard(kingOfHearts);
-		
-		assertEquals(totalPoints, hand.HCP());
-	}
-	
-	@Test(expected = UnsupportedOperationException.class)
-	public void getListOfCardsShouldReturnAnUnmodifiableList() {
-		Card aceOfSpades = mock(Card.class);
-		Card kingOfHearts = mock(Card.class);
-		Hand hand = new Hand();
-		hand.addCard(aceOfSpades);
-		hand.addCard(kingOfHearts);
-		List<Card> receivedList = hand.getListOfCards();
-		verifyZeroInteractions(aceOfSpades);
-		verifyZeroInteractions(kingOfHearts);
-		receivedList.add(0, aceOfSpades);
 
-	}
-	
 	@Test
 	public void shouldReturnIfItOnlyHasHearts() {
 		Card aceOfSpades = mock(Card.class);

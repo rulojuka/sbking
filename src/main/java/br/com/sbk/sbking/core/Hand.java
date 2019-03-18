@@ -7,26 +7,34 @@ import java.util.List;
 
 public class Hand {
 
-	private List<Card> listOfCards = new ArrayList<Card>();
+	private List<Card> cards = new ArrayList<Card>();
 
 	public void addCard(Card card) {
-		listOfCards.add(card);
+		this.cards.add(card);
 	}
 
 	public void removeCard(Card card) {
-		listOfCards.remove(card);
+		this.cards.remove(card);
+	}
+
+	public Card get(int position) {
+		return this.getCards().get(position);
+	}
+
+	public int size() {
+		return this.getCards().size();
 	}
 
 	public void sort() {
-		Collections.sort(listOfCards, new CardInsideHandComparator());
+		Collections.sort(this.cards, new CardInsideHandComparator());
 	}
 
 	public boolean containsCard(Card card) {
-		return this.listOfCards.contains(card);
+		return this.getCards().contains(card);
 	}
 
 	public boolean hasSuit(Suit suit) {
-		for (Card card : listOfCards) {
+		for (Card card : this.getCards()) {
 			if (card.getSuit() == suit) {
 				return true;
 			}
@@ -34,20 +42,8 @@ public class Hand {
 		return false;
 	}
 
-	public int HCP() {
-		int resp = 0;
-		for (Card card : listOfCards) {
-			resp += card.points();
-		}
-		return resp;
-	}
-
-	public List<Card> getListOfCards() {
-		return Collections.unmodifiableList(this.listOfCards);
-	}
-
 	public boolean onlyHasHearts() {
-		for (Card card : listOfCards) {
+		for (Card card : this.getCards()) {
 			if (!card.isHeart()) {
 				return false;
 			}
@@ -59,15 +55,19 @@ public class Hand {
 
 		@Override
 		public int compare(Card card1, Card card2) {
-			int suitDiff = card1.compareSuit(card2);
-			if (suitDiff != 0) {
-				return -suitDiff;
+			int suitDifference = card1.compareSuit(card2);
+			if (suitDifference != 0) {
+				return -suitDifference;
 			} else {
-				int rankDiff = card1.compareRank(card2);
-				return -rankDiff;
+				int rankDifference = card1.compareRank(card2);
+				return -rankDifference;
 			}
 		}
 
+	}
+
+	private List<Card> getCards() {
+		return Collections.unmodifiableList(this.cards);
 	}
 
 }

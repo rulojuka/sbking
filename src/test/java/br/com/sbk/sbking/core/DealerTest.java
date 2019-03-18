@@ -23,7 +23,7 @@ public class DealerTest {
 		// was called
 		// but Mockito can't do that. Coupling this test with Deal instead :(
 		for (Direction direction : Direction.values()) {
-			assertEquals(SIZE_OF_HAND, deal.getHandOf(direction).getListOfCards().size());
+			assertEquals(SIZE_OF_HAND, deal.getHandOf(direction).size());
 		}
 		assertEquals(ruleset, deal.getRuleset());
 

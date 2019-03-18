@@ -11,15 +11,15 @@ public class ShuffledDeck {
 	private Iterator<Card> iterator;
 
 	public ShuffledDeck() {
-		deck = new ArrayList<Card>(DECK_SIZE);
+		this.deck = new ArrayList<Card>(DECK_SIZE);
 		for (Suit suit : Suit.values()) {
 			for (Rank rank : Rank.values()) {
 				Card card = new Card(suit, rank);
-				deck.add(card);
+				this.deck.add(card);
 			}
 		}
-		Collections.shuffle(deck);
-		iterator = deck.iterator();
+		Collections.shuffle(this.deck);
+		iterator = this.deck.iterator();
 	}
 
 	public Card dealCard() {
