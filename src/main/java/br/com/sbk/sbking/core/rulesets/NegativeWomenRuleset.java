@@ -1,8 +1,9 @@
 package br.com.sbk.sbking.core.rulesets;
 
 import br.com.sbk.sbking.core.Trick;
+import br.com.sbk.sbking.core.rulesets.abstractClasses.NonHeartsProhibitableDefaltSuitFollowRuleset;
 
-public class NegativeWomenRuleset implements Ruleset {
+public class NegativeWomenRuleset extends NonHeartsProhibitableDefaltSuitFollowRuleset {
 
 	private final int NEGATIVE_WOMEN_SCORE_MULTIPLIER = 50;
 
@@ -24,11 +25,6 @@ public class NegativeWomenRuleset implements Ruleset {
 	@Override
 	public String getCompleteDescription() {
 		return "Avoid all queens";
-	}
-	
-	@Override
-	public boolean prohibitsHeartsUntilOnlySuitLeft() {
-		return false;
 	}
 
 }

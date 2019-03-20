@@ -20,7 +20,7 @@ public class Board {
 	public Direction getLeader() {
 		return leader;
 	}
-	
+
 	public Hand getHandOf(Direction direction) {
 		if (direction.isNorth()) {
 			return this.northHand;
@@ -36,9 +36,9 @@ public class Board {
 		}
 		throw new RuntimeException("Invalid direction");
 	}
-	
+
 	private void sortAllHands() {
-		for(Direction direction : Direction.values()) {
+		for (Direction direction : Direction.values()) {
 			this.getHandOf(direction).sort();
 		}
 	}

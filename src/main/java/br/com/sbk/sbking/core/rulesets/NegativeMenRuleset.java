@@ -1,8 +1,9 @@
 package br.com.sbk.sbking.core.rulesets;
 
 import br.com.sbk.sbking.core.Trick;
+import br.com.sbk.sbking.core.rulesets.abstractClasses.NonHeartsProhibitableDefaltSuitFollowRuleset;
 
-public class NegativeMenRuleset implements Ruleset {
+public class NegativeMenRuleset extends NonHeartsProhibitableDefaltSuitFollowRuleset {
 
 	private final int NEGATIVE_MEN_SCORE_MULTIPLIER = 30;
 
@@ -24,11 +25,6 @@ public class NegativeMenRuleset implements Ruleset {
 	@Override
 	public String getCompleteDescription() {
 		return "Avoid all jacks and kings";
-	}
-	
-	@Override
-	public boolean prohibitsHeartsUntilOnlySuitLeft() {
-		return false;
 	}
 
 }

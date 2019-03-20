@@ -1,6 +1,8 @@
 package br.com.sbk.sbking.core.rulesets;
 
-public class PositiveNoTrumpsRuleset extends PositiveRuleset{
+import br.com.sbk.sbking.core.rulesets.abstractClasses.PositiveRuleset;
+
+public class PositiveNoTrumpsRuleset extends PositiveRuleset {
 
 	@Override
 	public String getShortDescription() {

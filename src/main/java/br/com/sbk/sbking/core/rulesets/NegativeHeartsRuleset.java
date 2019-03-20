@@ -1,8 +1,9 @@
 package br.com.sbk.sbking.core.rulesets;
 
 import br.com.sbk.sbking.core.Trick;
+import br.com.sbk.sbking.core.rulesets.abstractClasses.HeartsProhibitableDefaultSuitFollowRuleset;
 
-public class NegativeHeartsRuleset implements Ruleset {
+public class NegativeHeartsRuleset extends HeartsProhibitableDefaultSuitFollowRuleset {
 
 	private final int NEGATIVE_HEARTS_SCORE_MULTIPLIER = 20;
 
@@ -26,8 +27,4 @@ public class NegativeHeartsRuleset implements Ruleset {
 		return "Avoid all hearts cards";
 	}
 
-	@Override
-	public boolean prohibitsHeartsUntilOnlySuitLeft() {
-		return true;
-	}
 }

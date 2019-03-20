@@ -1,8 +1,9 @@
 package br.com.sbk.sbking.core.rulesets;
 
 import br.com.sbk.sbking.core.Trick;
+import br.com.sbk.sbking.core.rulesets.abstractClasses.NonHeartsProhibitableDefaltSuitFollowRuleset;
 
-public class NegativeTricksRuleset implements Ruleset {
+public class NegativeTricksRuleset extends NonHeartsProhibitableDefaltSuitFollowRuleset {
 
 	private final int NEGATIVE_TRICKS_SCORE_MULTIPLIER = 20;
 	private final int NEGATIVE_POINTS_PER_TRICK = 1;
@@ -25,11 +26,6 @@ public class NegativeTricksRuleset implements Ruleset {
 	@Override
 	public String getCompleteDescription() {
 		return "Avoid all tricks";
-	}
-	
-	@Override
-	public boolean prohibitsHeartsUntilOnlySuitLeft() {
-		return false;
 	}
 
 }

@@ -3,7 +3,7 @@ package br.com.sbk.sbking.core;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.sbk.sbking.core.rulesets.Ruleset;
+import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
 
 public class Dealer {
 

@@ -7,10 +7,10 @@ import java.awt.Point;
 
 import javax.swing.JLabel;
 
-import br.com.sbk.sbking.core.rulesets.Ruleset;
+import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
 
 public class RulesetElement {
-	
+
 	private java.awt.Color RULESET_ELEMENT_COLOR = new java.awt.Color(255, 0, 0);
 
 	public RulesetElement(Ruleset ruleset, Container container, Point point) {

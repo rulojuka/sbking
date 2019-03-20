@@ -1,9 +1,10 @@
 package br.com.sbk.sbking.core.rulesets;
 
 import br.com.sbk.sbking.core.Suit;
+import br.com.sbk.sbking.core.rulesets.abstractClasses.PositiveRuleset;
 
 public class PositiveWithTrumpsRuleset extends PositiveRuleset {
-	
+
 	private Suit trumpSuit;
 
 	public PositiveWithTrumpsRuleset(Suit trumpSuit) {

@@ -1,9 +1,9 @@
-package br.com.sbk.sbking.core.rulesets;
+package br.com.sbk.sbking.core.rulesets.abstractClasses;
 
 import br.com.sbk.sbking.core.Trick;
 
-public abstract class PositiveRuleset implements Ruleset {
-	
+public abstract class PositiveRuleset extends NonHeartsProhibitableDefaltSuitFollowRuleset {
+
 	private final int POSITIVE_SCORE_MULTIPLIER = 25;
 	private final int POSITIVE_POINTS_PER_TRICK = 1;
 
@@ -11,15 +11,10 @@ public abstract class PositiveRuleset implements Ruleset {
 	public int getScoreMultiplier() {
 		return POSITIVE_SCORE_MULTIPLIER;
 	}
-	
+
 	@Override
 	public int getPoints(Trick trick) {
 		return POSITIVE_POINTS_PER_TRICK;
 	}
 
-	@Override
-	public boolean prohibitsHeartsUntilOnlySuitLeft() {
-		return false;
-	}
-	
 }
