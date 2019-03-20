@@ -5,7 +5,7 @@ import static org.mockito.Mockito.mock;
 
 import org.junit.Test;
 
-import br.com.sbk.sbking.core.rulesets.Ruleset;
+import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
 
 public class DealerTest {
 

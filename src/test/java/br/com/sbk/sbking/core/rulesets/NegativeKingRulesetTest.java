@@ -1,7 +1,7 @@
 package br.com.sbk.sbking.core.rulesets;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.only;
 import static org.mockito.Mockito.when;
@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import br.com.sbk.sbking.core.Trick;
+import br.com.sbk.sbking.core.rulesets.concrete.NegativeKingRuleset;
 
 public class NegativeKingRulesetTest {
 
@@ -60,8 +61,8 @@ public class NegativeKingRulesetTest {
 	}
 
 	@Test
-	public void shouldNotProhibitsHeartsUntilOnlySuitLeft() {
-		assertFalse(this.negativeKingRuleset.prohibitsHeartsUntilOnlySuitLeft());
+	public void shouldProhibitsHeartsUntilOnlySuitLeft() {
+		assertTrue(this.negativeKingRuleset.prohibitsHeartsUntilOnlySuitLeft());
 	}
 
 }

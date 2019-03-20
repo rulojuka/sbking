@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import br.com.sbk.sbking.core.Trick;
+import br.com.sbk.sbking.core.rulesets.concrete.NegativeWomenRuleset;
 
 public class NegativeWomenRulesetTest {
 

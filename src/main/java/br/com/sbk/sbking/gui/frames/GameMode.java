@@ -7,7 +7,7 @@ import javax.swing.JFrame;
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Dealer;
 import br.com.sbk.sbking.core.Direction;
-import br.com.sbk.sbking.core.rulesets.abstractClasses.DefaultSuitFollowRuleset;
+import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
 import br.com.sbk.sbking.gui.JElements.CardButton;
 import br.com.sbk.sbking.gui.elements.BoardElements;
 import br.com.sbk.sbking.gui.elements.ScoreSummaryElement;
@@ -28,7 +28,7 @@ public class GameMode extends JFrame {
 
 	// private BoardElements boardElements;
 
-	public GameMode(DefaultSuitFollowRuleset ruleset) {
+	public GameMode(Ruleset ruleset) {
 		super();
 		initializeJFrame();
 		initializeContentPane();
@@ -46,7 +46,7 @@ public class GameMode extends JFrame {
 		getContentPane().setBackground(TABLE_COLOR);
 	}
 
-	private void initializeBoard(DefaultSuitFollowRuleset ruleset) {
+	private void initializeBoard(Ruleset ruleset) {
 		Dealer dealer = new Dealer(Direction.NORTH);
 		board = dealer.deal(ruleset);
 	}
@@ -54,13 +54,12 @@ public class GameMode extends JFrame {
 	private void paintBoardElements() {
 		Container contentPane = this.getContentPane();
 		contentPane.removeAll();
-		
-		if(board.isFinished()) {
+
+		if (board.isFinished()) {
 			new ScoreSummaryElement(board, this.getContentPane());
-		}else {
+		} else {
 			new BoardElements(board, this.getContentPane(), new PlayCardActionListener());
 		}
-
 
 		contentPane.validate();
 		contentPane.repaint();

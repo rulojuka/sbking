@@ -1,11 +1,12 @@
-package br.com.sbk.sbking.core.rulesets.abstractClasses;
+package br.com.sbk.sbking.core.rulesets.implementations;
 
 import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Hand;
 import br.com.sbk.sbking.core.Suit;
 import br.com.sbk.sbking.core.Trick;
+import br.com.sbk.sbking.core.rulesets.interfaces.SuitFollowable;
 
-public abstract class DefaultSuitFollowRuleset extends Ruleset {
+public class DefaultSuitFollowable implements SuitFollowable {
 
 	@Override
 	public boolean followsSuit(Trick trick, Hand hand, Card card) {

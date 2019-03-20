@@ -3,11 +3,10 @@ package br.com.sbk.sbking.core;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.sbk.sbking.core.exceptions.DoesNotFollowSuitException;
 import br.com.sbk.sbking.core.exceptions.PlayedCardInAnotherPlayersTurnException;
-import br.com.sbk.sbking.core.exceptions.PlayedHeartsInANegativeHeartsWithOtherSuitsLeft;
-import br.com.sbk.sbking.core.rulesets.PositiveWithTrumpsRuleset;
+import br.com.sbk.sbking.core.exceptions.PlayedHeartsWhenProhibitedException;
 import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
-import br.com.sbk.sbking.core.rulesets.interfaces.SuitFollowable;
 
 public class Deal {
 
@@ -16,31 +15,20 @@ public class Deal {
 	private Board board;
 	private int completedTricks;
 	private Direction currentPlayer;
-	private int northSouthPoints;
-	private int eastWestPoints;
-	private Ruleset ruleset;
-	private Suit trumpSuit;
+	private Scoreboard scoreboard;
 
-	private Direction currentTrickWinner;
+	private Ruleset ruleset;
 
 	private List<Trick> tricks;
 	private Trick currentTrick;
-	private SuitFollowable suitFollowRule;
 
 	public Deal(Board board, Ruleset ruleset) {
 		this.board = board;
 		this.ruleset = ruleset;
 		currentPlayer = this.board.getLeader();
-		northSouthPoints = 0;
-		eastWestPoints = 0;
+		this.scoreboard = new Scoreboard(ruleset);
 		completedTricks = 0;
 		tricks = new ArrayList<Trick>();
-		if (ruleset instanceof PositiveWithTrumpsRuleset) {
-			PositiveWithTrumpsRuleset positiveWithTrumpRuleset = (PositiveWithTrumpsRuleset) ruleset;
-			this.trumpSuit = positiveWithTrumpRuleset.getTrumpSuit();
-		} else {
-			this.trumpSuit = null;
-		}
 	}
 
 	public Hand getHandOf(Direction direction) {
@@ -60,11 +48,11 @@ public class Deal {
 	}
 
 	public int getNorthSouthPoints() {
-		return northSouthPoints;
+		return this.scoreboard.getNorthSouthPoints();
 	}
 
 	public int getEastWestPoints() {
-		return eastWestPoints;
+		return this.scoreboard.getEastWestPoints();
 	}
 
 	public Ruleset getRuleset() {
@@ -89,22 +77,21 @@ public class Deal {
 		Hand handOfCurrentPlayer = getHandOfCurrentPlayer();
 
 		throwExceptionIfCardIsNotFromCurrentPlayer(handOfCurrentPlayer, card);
-		startNewTrickIfCurrentTrickIsUninitialized();
 		throwExceptionIfStartingATrickWithHeartsWhenRulesetProhibitsIt(card, handOfCurrentPlayer);
-		throwExceptionIfCardDoesNotFollowSuit(card, handOfCurrentPlayer);
+		if (currentTrickAlreadyHasCards()) {
+			throwExceptionIfCardDoesNotFollowSuit(card, handOfCurrentPlayer);
+		}
+		if (currentTrickNotStartedYet()) {
+			this.currentTrick = startNewTrick();
+		}
 
-		currentTrick.addCard(card);
-		handOfCurrentPlayer.removeCard(card);
+		moveCardFromHandToCurrentTrick(card, handOfCurrentPlayer);
 
 		if (currentTrick.isComplete()) {
-			if (this.trumpSuit == null) {
-				currentTrickWinner = currentTrick.getWinnerWithoutTrumpSuit();
-			} else {
-				currentTrickWinner = currentTrick.getWinnerWithTrumpSuit(trumpSuit);
-			}
-			completedTricks++;
-			updatePoints();
+			Direction currentTrickWinner = this.getWinnerOfCurrentTrick();
 			currentPlayer = currentTrickWinner;
+			updateScoreboard(currentTrickWinner);
+			completedTricks++;
 		} else {
 			currentPlayer = currentPlayer.next();
 		}
@@ -121,9 +108,24 @@ public class Deal {
 		}
 	}
 
-	private void startNewTrickIfCurrentTrickIsUninitialized() {
-		if (this.currentTrick == null) {
-			this.currentTrick = startNewTrick();
+	private void throwExceptionIfStartingATrickWithHeartsWhenRulesetProhibitsIt(Card card, Hand handOfCurrentPlayer) {
+		if (this.currentTrickNotStartedYet() && this.ruleset.prohibitsHeartsUntilOnlySuitLeft() && card.isHeart()
+				&& !handOfCurrentPlayer.onlyHasHearts()) {
+			throw new PlayedHeartsWhenProhibitedException();
+		}
+	}
+
+	private boolean currentTrickNotStartedYet() {
+		return this.currentTrick == null || this.currentTrick.isEmpty() || this.currentTrick.isComplete();
+	}
+
+	private boolean currentTrickAlreadyHasCards() {
+		return !currentTrickNotStartedYet();
+	}
+
+	private void throwExceptionIfCardDoesNotFollowSuit(Card card, Hand handOfCurrentPlayer) {
+		if (!this.ruleset.followsSuit(this.currentTrick, handOfCurrentPlayer, card)) {
+			throw new DoesNotFollowSuitException();
 		}
 	}
 
@@ -137,32 +139,18 @@ public class Deal {
 		return currentTrick;
 	}
 
-	private void throwExceptionIfStartingATrickWithHeartsWhenRulesetProhibitsIt(Card card, Hand handOfCurrentPlayer) {
-		if (this.currentTrick.isEmpty() && this.ruleset.prohibitsHeartsUntilOnlySuitLeft() && card.isHeart()
-				&& !handOfCurrentPlayer.onlyHasHearts()) {
-			throw new PlayedHeartsInANegativeHeartsWithOtherSuitsLeft();
-		}
+	private void moveCardFromHandToCurrentTrick(Card card, Hand handOfCurrentPlayer) {
+		// FIXME Should be a transaction
+		handOfCurrentPlayer.removeCard(card);
+		currentTrick.addCard(card);
 	}
 
-	private void throwExceptionIfCardDoesNotFollowSuit(Card card, Hand handOfCurrentPlayer) {
-		if (!followsSuit(card, handOfCurrentPlayer)) {
-			throw new RuntimeException("Card does not follow suit.");
-		}
+	private Direction getWinnerOfCurrentTrick() {
+		return this.ruleset.getWinner(currentTrick);
 	}
 
-	private boolean followsSuit(Card card, Hand hand) {
-		if (this.currentTrick.isEmpty())
-			return true;
-
-		return this.suitFollowRule.followsSuit(this.currentTrick, hand, card);
-	}
-
-	private void updatePoints() {
-		if (currentTrickWinner.isNorthSouth()) {
-			northSouthPoints += this.ruleset.getPoints(currentTrick);
-		} else {
-			eastWestPoints += this.ruleset.getPoints(currentTrick);
-		}
+	private void updateScoreboard(Direction currentTrickWinner) {
+		this.scoreboard.addTrickToDirection(currentTrick, currentTrickWinner);
 	}
 
 }

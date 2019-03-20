@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import br.com.sbk.sbking.core.Suit;
 import br.com.sbk.sbking.core.Trick;
+import br.com.sbk.sbking.core.rulesets.concrete.PositiveWithTrumpsRuleset;
 
 public class PositiveWithTrumpsRulesetTest {
 

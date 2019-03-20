@@ -2,7 +2,7 @@ package br.com.sbk.sbking.core.rulesets.abstractClasses;
 
 import br.com.sbk.sbking.core.Trick;
 
-public abstract class PositiveRuleset extends NonHeartsProhibitableDefaltSuitFollowRuleset {
+public abstract class PositiveRuleset extends Ruleset {
 
 	private final int POSITIVE_SCORE_MULTIPLIER = 25;
 	private final int POSITIVE_POINTS_PER_TRICK = 1;

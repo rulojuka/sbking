@@ -10,15 +10,15 @@ import javax.swing.JFrame;
 import javax.swing.JRadioButton;
 
 import br.com.sbk.sbking.core.Suit;
-import br.com.sbk.sbking.core.rulesets.NegativeHeartsRuleset;
-import br.com.sbk.sbking.core.rulesets.NegativeKingRuleset;
-import br.com.sbk.sbking.core.rulesets.NegativeLastTwoRuleset;
-import br.com.sbk.sbking.core.rulesets.NegativeMenRuleset;
-import br.com.sbk.sbking.core.rulesets.NegativeTricksRuleset;
-import br.com.sbk.sbking.core.rulesets.NegativeWomenRuleset;
-import br.com.sbk.sbking.core.rulesets.PositiveNoTrumpsRuleset;
-import br.com.sbk.sbking.core.rulesets.PositiveWithTrumpsRuleset;
-import br.com.sbk.sbking.core.rulesets.abstractClasses.DefaultSuitFollowRuleset;
+import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
+import br.com.sbk.sbking.core.rulesets.concrete.NegativeHeartsRuleset;
+import br.com.sbk.sbking.core.rulesets.concrete.NegativeKingRuleset;
+import br.com.sbk.sbking.core.rulesets.concrete.NegativeLastTwoRuleset;
+import br.com.sbk.sbking.core.rulesets.concrete.NegativeMenRuleset;
+import br.com.sbk.sbking.core.rulesets.concrete.NegativeTricksRuleset;
+import br.com.sbk.sbking.core.rulesets.concrete.NegativeWomenRuleset;
+import br.com.sbk.sbking.core.rulesets.concrete.PositiveNoTrumpsRuleset;
+import br.com.sbk.sbking.core.rulesets.concrete.PositiveWithTrumpsRuleset;
 
 @SuppressWarnings("serial")
 public class GameSelectScreen extends JFrame {
@@ -29,18 +29,18 @@ public class GameSelectScreen extends JFrame {
 	private final java.awt.Color TABLE_COLOR = new java.awt.Color(0, 100, 0); // Tablecloth green
 	private List<JRadioButton> gameButtons = new ArrayList<JRadioButton>();
 	private JRadioButton gameButton;
-	private DefaultSuitFollowRuleset negativeTricks = new NegativeTricksRuleset();
-	private DefaultSuitFollowRuleset negativeHearts = new NegativeHeartsRuleset();
-	private DefaultSuitFollowRuleset negativeMen = new NegativeMenRuleset();
-	private DefaultSuitFollowRuleset negativeWomen = new NegativeWomenRuleset();
-	private DefaultSuitFollowRuleset negativeLastTwo = new NegativeLastTwoRuleset();
-	private DefaultSuitFollowRuleset negativeKing = new NegativeKingRuleset();
-	private DefaultSuitFollowRuleset positiveNoTrumps = new PositiveNoTrumpsRuleset();
-	private DefaultSuitFollowRuleset positiveClubs = new PositiveWithTrumpsRuleset(Suit.CLUBS);
-	private DefaultSuitFollowRuleset positiveDiamonds = new PositiveWithTrumpsRuleset(Suit.DIAMONDS);
-	private DefaultSuitFollowRuleset positiveHearts = new PositiveWithTrumpsRuleset(Suit.HEARTS);
-	private DefaultSuitFollowRuleset positiveSpades = new PositiveWithTrumpsRuleset(Suit.SPADES);
-	private List<DefaultSuitFollowRuleset> rulesets;
+	private Ruleset negativeTricks = new NegativeTricksRuleset();
+	private Ruleset negativeHearts = new NegativeHeartsRuleset();
+	private Ruleset negativeMen = new NegativeMenRuleset();
+	private Ruleset negativeWomen = new NegativeWomenRuleset();
+	private Ruleset negativeLastTwo = new NegativeLastTwoRuleset();
+	private Ruleset negativeKing = new NegativeKingRuleset();
+	private Ruleset positiveNoTrumps = new PositiveNoTrumpsRuleset();
+	private Ruleset positiveClubs = new PositiveWithTrumpsRuleset(Suit.CLUBS);
+	private Ruleset positiveDiamonds = new PositiveWithTrumpsRuleset(Suit.DIAMONDS);
+	private Ruleset positiveHearts = new PositiveWithTrumpsRuleset(Suit.HEARTS);
+	private Ruleset positiveSpades = new PositiveWithTrumpsRuleset(Suit.SPADES);
+	private List<Ruleset> rulesets;
 
 	public GameSelectScreen() {
 		super();
@@ -67,7 +67,7 @@ public class GameSelectScreen extends JFrame {
 
 	private void initializeSelectCombobox() {
 
-		rulesets = new ArrayList<DefaultSuitFollowRuleset>();
+		rulesets = new ArrayList<Ruleset>();
 		rulesets.add(negativeTricks);
 		rulesets.add(negativeHearts);
 		rulesets.add(negativeMen);
@@ -87,7 +87,7 @@ public class GameSelectScreen extends JFrame {
 
 		int y = initial_y;
 
-		for (DefaultSuitFollowRuleset ruleset : rulesets) {
+		for (Ruleset ruleset : rulesets) {
 			gameButton = new JRadioButton(ruleset.getShortDescription());
 			gameButton.setBounds(initial_x, y, width, height);
 			gameButtons.add(gameButton);
@@ -111,14 +111,14 @@ public class GameSelectScreen extends JFrame {
 
 	class GameSelectActionListener implements java.awt.event.ActionListener {
 		public void actionPerformed(java.awt.event.ActionEvent event) {
-			DefaultSuitFollowRuleset ruleset = negativeTricks;
+			Ruleset ruleset = negativeTricks;
 			JRadioButton selectedButton = null;
 
 			for (JRadioButton jRadioButton : gameButtons) {
 				if (jRadioButton.isSelected())
 					selectedButton = jRadioButton;
 			}
-			for (DefaultSuitFollowRuleset currentRuleset : rulesets) {
+			for (Ruleset currentRuleset : rulesets) {
 				if (currentRuleset.getShortDescription().equals(selectedButton.getText())) {
 					ruleset = currentRuleset;
 				}
