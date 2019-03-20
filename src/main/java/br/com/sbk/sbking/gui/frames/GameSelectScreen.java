@@ -54,6 +54,17 @@ public class GameSelectScreen extends JFrame {
 		contentPane.repaint();
 	}
 
+	private void initializeJFrame() {
+		this.setVisible(true);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setSize(WIDTH, HEIGHT);
+	}
+
+	private void initializeContentPane() {
+		getContentPane().setLayout(null);
+		getContentPane().setBackground(TABLE_COLOR);
+	}
+
 	private void initializeSelectCombobox() {
 
 		rulesets = new ArrayList<Ruleset>();
@@ -96,17 +107,6 @@ public class GameSelectScreen extends JFrame {
 		playGameButton.addActionListener(new GameSelectActionListener());
 		playGameButton.setBounds(initial_x + width + 10, initial_y, width / 2, height * rulesets.size());
 		playGameButton.setText("Play");
-	}
-
-	private void initializeJFrame() {
-		this.setVisible(true);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setSize(WIDTH, HEIGHT);
-	}
-
-	private void initializeContentPane() {
-		getContentPane().setLayout(null);
-		getContentPane().setBackground(TABLE_COLOR);
 	}
 
 	class GameSelectActionListener implements java.awt.event.ActionListener {
