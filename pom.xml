@@ -10,6 +10,7 @@
 	<name>SBKing</name>
 	<description>More information at https://github.com/rulojuka/sbking</description>
 
+	<!-- Packaging configuration -->
 	<packaging>jar</packaging>
 
 	<properties>
@@ -17,7 +18,6 @@
 	</properties>
 
 	<dependencies>
-		<!-- https://mvnrepository.com/artifact/junit/junit -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -30,7 +30,6 @@
 			<version>1.10.19</version>
 			<scope>test</scope>
 		</dependency>
-
 	</dependencies>
 
 	<build>
@@ -46,6 +45,7 @@
 			</plugin>
 
 			<plugin>
+				<!-- Packaging configuration -->
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
 				<version>3.0.2</version>
@@ -56,6 +56,28 @@
 						</manifest>
 					</archive>
 				</configuration>
+			</plugin>
+
+			<!-- Test Coverage with JaCoCo -->
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.8.3</version>
+				<executions>
+					<execution>
+						<id>jacoco-initialize</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>jacoco-site</id>
+						<phase>package</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 
 		</plugins>
