@@ -15,9 +15,9 @@ import br.com.sbk.sbking.core.rulesets.concrete.NegativeMenRuleset;
 
 public class NegativeMenRulesetTest {
 
-	private final int NEGATIVE_MEN_SCORE_MULTIPLIER = 30;
-	private final String NEGATIVE_MEN_SHORT_DESCRIPTION = "Negative men";
-	private final String NEGATIVE_MEN_COMPLETE_DESCRIPTION = "Avoid all jacks and kings";
+	private static final int NEGATIVE_MEN_SCORE_MULTIPLIER = 30;
+	private static final String NEGATIVE_MEN_SHORT_DESCRIPTION = "Negative men";
+	private static final String NEGATIVE_MEN_COMPLETE_DESCRIPTION = "Avoid all jacks and kings";
 
 	private NegativeMenRuleset negativeMenRuleset;
 

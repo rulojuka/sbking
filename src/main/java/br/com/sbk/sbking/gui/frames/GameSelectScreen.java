@@ -24,9 +24,9 @@ import br.com.sbk.sbking.core.rulesets.concrete.PositiveWithTrumpsRuleset;
 public class GameSelectScreen extends JFrame {
 
 	// Constants
-	private final int WIDTH = 1024;
-	private final int HEIGHT = 768;
-	private final java.awt.Color TABLE_COLOR = new java.awt.Color(0, 100, 0); // Tablecloth green
+	private static final int WIDTH = 1024;
+	private static final int HEIGHT = 768;
+	private static final java.awt.Color TABLE_COLOR = new java.awt.Color(0, 100, 0); // Tablecloth green
 	private List<JRadioButton> gameButtons = new ArrayList<JRadioButton>();
 	private JRadioButton gameButton;
 	private Ruleset negativeTricks = new NegativeTricksRuleset();

@@ -8,7 +8,7 @@ import br.com.sbk.sbking.core.rulesets.implementations.ProhibitsHearts;
 
 public class NegativeHeartsRuleset extends Ruleset {
 
-	private final int NEGATIVE_HEARTS_SCORE_MULTIPLIER = 20;
+	private static final int NEGATIVE_HEARTS_SCORE_MULTIPLIER = 20;
 
 	public NegativeHeartsRuleset() {
 		this.suitFollowable = new DefaultSuitFollowable();

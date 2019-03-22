@@ -13,10 +13,10 @@ import br.com.sbk.sbking.core.rulesets.concrete.NegativeTricksRuleset;
 
 public class NegativeTricksRulesetTest {
 
-	private final int NEGATIVE_TRICKS_SCORE_MULTIPLIER = 20;
-	private final int NEGATIVE_POINTS_PER_TRICK = 1;
-	private final String NEGATIVE_TRICKS_SHORT_DESCRIPTION = "Negative tricks";
-	private final String NEGATIVE_TRICKS_COMPLETE_DESCRIPTION = "Avoid all tricks";
+	private static final int NEGATIVE_TRICKS_SCORE_MULTIPLIER = 20;
+	private static final int NEGATIVE_POINTS_PER_TRICK = 1;
+	private static final String NEGATIVE_TRICKS_SHORT_DESCRIPTION = "Negative tricks";
+	private static final String NEGATIVE_TRICKS_COMPLETE_DESCRIPTION = "Avoid all tricks";
 	private NegativeTricksRuleset negativeTricksRuleset;
 
 	@Before

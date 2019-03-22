@@ -8,7 +8,7 @@ import br.com.sbk.sbking.core.rulesets.implementations.NoTrumpSuitWinnable;
 
 public class NegativeLastTwoRuleset extends Ruleset {
 
-	private final int NEGATIVE_LAST_TWO_SCORE_MULTIPLIER = 90;
+	private static final int NEGATIVE_LAST_TWO_SCORE_MULTIPLIER = 90;
 
 	public NegativeLastTwoRuleset() {
 		this.suitFollowable = new DefaultSuitFollowable();

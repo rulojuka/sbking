@@ -12,8 +12,8 @@ public class CardButton extends JButton {
 	private ImageIcon backImage;
 	private boolean faceUp;
 	private Card card;
-	private final int CARD_WIDTH = 72;
-	private final int CARD_HEIGHT = 96;
+	private static final int CARD_WIDTH = 72;
+	private static final int CARD_HEIGHT = 96;
 
 	public CardButton(Card card, ImageIcon frontImage, ImageIcon backImage) {
 		super();

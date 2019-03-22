@@ -10,7 +10,7 @@ import br.com.sbk.sbking.core.Suit;
 
 public class DeckCardImageInformation {
 
-	private final String directory = "/images/cards/";
+	private static final String directory = "/images/cards/";
 
 	public ImageIcon getBackImage() {
 		String imagePath = directory + "b1fv.png";

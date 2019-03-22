@@ -13,10 +13,10 @@ import br.com.sbk.sbking.core.rulesets.concrete.PositiveNoTrumpsRuleset;
 
 public class PositiveNoTrumpsRulesetTest {
 
-	private final int POSITIVE_NO_TRUMPS_SCORE_MULTIPLIER = 25;
-	private final int POSITIVE_POINTS_PER_TRICK = 1;
-	private final String POSITIVE_NO_TRUMPS_SHORT_DESCRIPTION = "Positive no trumps";
-	private final String POSITIVE_NO_TRUMPS_COMPLETE_DESCRIPTION = "Make the most tricks without a trump suit";
+	private static final int POSITIVE_NO_TRUMPS_SCORE_MULTIPLIER = 25;
+	private static final int POSITIVE_POINTS_PER_TRICK = 1;
+	private static final String POSITIVE_NO_TRUMPS_SHORT_DESCRIPTION = "Positive no trumps";
+	private static final String POSITIVE_NO_TRUMPS_COMPLETE_DESCRIPTION = "Make the most tricks without a trump suit";
 	private PositiveNoTrumpsRuleset positiveNoTrumpsRuleset;
 
 	@Before

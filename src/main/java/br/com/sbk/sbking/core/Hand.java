@@ -29,7 +29,7 @@ public class Hand {
 		Collections.sort(this.cards, new CardInsideHandComparator());
 	}
 
-	private class CardInsideHandComparator implements Comparator<Card> {
+	private static class CardInsideHandComparator implements Comparator<Card> {
 
 		@Override
 		public int compare(Card card1, Card card2) {

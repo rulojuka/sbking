@@ -15,9 +15,9 @@ import br.com.sbk.sbking.core.rulesets.concrete.NegativeKingRuleset;
 
 public class NegativeKingRulesetTest {
 
-	private final int NEGATIVE_KING_SCORE_MULTIPLIER = 160;
-	private final String NEGATIVE_KING_SHORT_DESCRIPTION = "Negative king";
-	private final String NEGATIVE_KING_COMPLETE_DESCRIPTION = "Avoid the King of Hearts";
+	private static final int NEGATIVE_KING_SCORE_MULTIPLIER = 160;
+	private static final String NEGATIVE_KING_SHORT_DESCRIPTION = "Negative king";
+	private static final String NEGATIVE_KING_COMPLETE_DESCRIPTION = "Avoid the King of Hearts";
 
 	private NegativeKingRuleset negativeKingRuleset;
 

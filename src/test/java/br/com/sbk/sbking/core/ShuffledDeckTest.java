@@ -10,7 +10,7 @@ import org.junit.Test;
 
 public class ShuffledDeckTest {
 
-	private final static int DECK_SIZE = Suit.values().length * Rank.values().length;
+	private static final int DECK_SIZE = Suit.values().length * Rank.values().length;
 
 	@Test
 	public void constructorShouldReturnADeckWithAllCards() {

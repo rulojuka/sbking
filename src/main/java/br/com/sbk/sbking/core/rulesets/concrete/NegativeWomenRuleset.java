@@ -8,7 +8,7 @@ import br.com.sbk.sbking.core.rulesets.implementations.NoTrumpSuitWinnable;
 
 public class NegativeWomenRuleset extends Ruleset {
 
-	private final int NEGATIVE_WOMEN_SCORE_MULTIPLIER = 50;
+	private static final int NEGATIVE_WOMEN_SCORE_MULTIPLIER = 50;
 
 	public NegativeWomenRuleset() {
 		this.suitFollowable = new DefaultSuitFollowable();

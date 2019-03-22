@@ -9,15 +9,15 @@ import br.com.sbk.sbking.core.Direction;
 
 public class BoardElements {
 
-	private final int BETWEEN_CARDS_WIDTH = 26; /* 26 is good. 12 pixels to hide pictures */
-	private final int NORTH_X = 1024 / 2 - BETWEEN_CARDS_WIDTH * 7; /* Ideal would be 6,5 (half of the cards) */
-	private final int SOUTH_X = NORTH_X;
-	private final int EAST_X = NORTH_X + 300;
-	private final int WEST_X = NORTH_X - 300;
-	private final int NORTH_Y = 120;
-	private final int SOUTH_Y = 470;
-	private final int EAST_Y = 300;
-	private final int WEST_Y = EAST_Y;
+	private static final int BETWEEN_CARDS_WIDTH = 26; /* 26 is good. 12 pixels to hide pictures */
+	private static final int NORTH_X = 1024 / 2 - BETWEEN_CARDS_WIDTH * 7; /* Ideal would be 6,5 (half of the cards) */
+	private static final int SOUTH_X = NORTH_X;
+	private static final int EAST_X = NORTH_X + 300;
+	private static final int WEST_X = NORTH_X - 300;
+	private static final int NORTH_Y = 120;
+	private static final int SOUTH_Y = 470;
+	private static final int EAST_Y = 300;
+	private static final int WEST_Y = EAST_Y;
 
 	public BoardElements(Deal deal, Container container, ActionListener actionListener) {
 		new HandElement(deal.getHandOf(Direction.NORTH), container, actionListener, new Point(NORTH_X, NORTH_Y));

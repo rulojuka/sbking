@@ -10,7 +10,7 @@ import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
 
 public class Deal {
 
-	private final int NUMBER_OF_TRICKS_IN_A_COMPLETE_HAND = 13;
+	private static final int NUMBER_OF_TRICKS_IN_A_COMPLETE_HAND = 13;
 
 	private Board board;
 	private int completedTricks;

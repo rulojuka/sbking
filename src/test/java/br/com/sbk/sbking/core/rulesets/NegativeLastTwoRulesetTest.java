@@ -15,9 +15,9 @@ import br.com.sbk.sbking.core.rulesets.concrete.NegativeLastTwoRuleset;
 
 public class NegativeLastTwoRulesetTest {
 
-	private final int NEGATIVE_LAST_TWO_SCORE_MULTIPLIER = 90;
-	private final String NEGATIVE_LAST_TWO_SHORT_DESCRIPTION = "Negative last two";
-	private final String NEGATIVE_LAST_TWO_COMPLETE_DESCRIPTION = "Avoid the last two tricks";
+	private static final int NEGATIVE_LAST_TWO_SCORE_MULTIPLIER = 90;
+	private static final String NEGATIVE_LAST_TWO_SHORT_DESCRIPTION = "Negative last two";
+	private static final String NEGATIVE_LAST_TWO_COMPLETE_DESCRIPTION = "Avoid the last two tricks";
 
 	private NegativeLastTwoRuleset negativeLastTwoRuleset;
 

@@ -15,9 +15,9 @@ import br.com.sbk.sbking.core.rulesets.concrete.NegativeWomenRuleset;
 
 public class NegativeWomenRulesetTest {
 
-	private final int NEGATIVE_WOMEN_SCORE_MULTIPLIER = 50;
-	private final String NEGATIVE_WOMEN_SHORT_DESCRIPTION = "Negative women";
-	private final String NEGATIVE_WOMEN_COMPLETE_DESCRIPTION = "Avoid all queens";
+	private static final int NEGATIVE_WOMEN_SCORE_MULTIPLIER = 50;
+	private static final String NEGATIVE_WOMEN_SHORT_DESCRIPTION = "Negative women";
+	private static final String NEGATIVE_WOMEN_COMPLETE_DESCRIPTION = "Avoid all queens";
 
 	private NegativeWomenRuleset negativeWomenRuleset;
 

@@ -7,7 +7,7 @@ import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
 
 public class Dealer {
 
-	private final int SIZE_OF_HAND = 13;
+	private static final int SIZE_OF_HAND = 13;
 	private Direction leader;
 
 	public Dealer(Direction leader) {

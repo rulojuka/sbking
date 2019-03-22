@@ -11,7 +11,7 @@ import br.com.sbk.sbking.gui.JElements.CardButton;
 
 public class HandElement {
 
-	private final int BETWEEN_CARDS_WIDTH = 26;
+	private static final int BETWEEN_CARDS_WIDTH = 26;
 	private DeckCardImageInformation deckCardImageInformation;
 
 	public HandElement(Hand hand, Container container, ActionListener actionListener, Point handLocation) {

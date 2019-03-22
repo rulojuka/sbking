@@ -9,7 +9,7 @@ import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
 
 public class DealerTest {
 
-	private final int SIZE_OF_HAND = 13;
+	private static final int SIZE_OF_HAND = 13;
 
 	@Test
 	public void shouldCallDealConstructorWithABoardWithTheCorrectLeaderAndTheGivenRuleset() {

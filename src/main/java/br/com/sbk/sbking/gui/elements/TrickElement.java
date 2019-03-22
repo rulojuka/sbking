@@ -14,8 +14,8 @@ import br.com.sbk.sbking.gui.JElements.CardButton;
 public class TrickElement {
 
 	private List<CardButton> trick;
-	private final int CARD_WIDTH = 72;
-	private final int CARD_HEIGHT = 96;
+	private static final int CARD_WIDTH = 72;
+	private static final int CARD_HEIGHT = 96;
 	private DeckCardImageInformation deckCardImageInformation;
 	
 	public TrickElement(Trick currentTrick, Container container, Point point) {

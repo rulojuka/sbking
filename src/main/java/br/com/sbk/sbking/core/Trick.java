@@ -70,7 +70,7 @@ public class Trick {
 		return sortedCardsOfSuit.last();
 	}
 
-	private class CardOfSameSuitComparator implements Comparator<Card> {
+	private static class CardOfSameSuitComparator implements Comparator<Card> {
 		@Override
 		public int compare(Card card1, Card card2) {
 			return card1.compareRank(card2);

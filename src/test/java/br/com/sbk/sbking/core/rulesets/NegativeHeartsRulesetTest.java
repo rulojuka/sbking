@@ -15,9 +15,9 @@ import br.com.sbk.sbking.core.rulesets.concrete.NegativeHeartsRuleset;
 
 public class NegativeHeartsRulesetTest {
 
-	private final int NEGATIVE_HEARTS_SCORE_MULTIPLIER = 20;
-	private final String NEGATIVE_HEARTS_SHORT_DESCRIPTION = "Negative hearts";
-	private final String NEGATIVE_HEARTS_COMPLETE_DESCRIPTION = "Avoid all hearts cards";
+	private static final int NEGATIVE_HEARTS_SCORE_MULTIPLIER = 20;
+	private static final String NEGATIVE_HEARTS_SHORT_DESCRIPTION = "Negative hearts";
+	private static final String NEGATIVE_HEARTS_COMPLETE_DESCRIPTION = "Avoid all hearts cards";
 
 	NegativeHeartsRuleset negativeHeartsRuleset;
 
