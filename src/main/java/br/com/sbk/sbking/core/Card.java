@@ -1,5 +1,7 @@
 package br.com.sbk.sbking.core;
 
+import br.com.sbk.sbking.core.exceptions.IllegalCardNameException;
+
 public class Card {
 
 	private Suit suit;
@@ -8,6 +10,35 @@ public class Card {
 	public Card(Suit suit, Rank rank) {
 		this.suit = suit;
 		this.rank = rank;
+	}
+
+	/**
+	 * 
+	 * @param spaceSeparatedName Name of the card in the format
+	 *                           "<suit><space><rank>" Examples: "Clubs Two",
+	 *                           "Diamonds King"
+	 */
+	public Card(String spaceSeparatedName) {
+		String[] split = spaceSeparatedName.split(" ");
+		String suitString = split[0];
+		String rankString = split[1];
+		Suit suit = null;
+		Rank rank = null;
+		for (Suit currentSuit : Suit.values()) {
+			if (currentSuit.getName().equals(suitString)) {
+				suit = currentSuit;
+			}
+		}
+		for (Rank currentRank : Rank.values()) {
+			if (currentRank.getName().equals(rankString)) {
+				rank = currentRank;
+			}
+		}
+		if (suit == null || rank == null) {
+			throw new IllegalCardNameException();
+		}
+		this.rank = rank;
+		this.suit = suit;
 	}
 
 	public Suit getSuit() {
@@ -74,5 +105,14 @@ public class Card {
 		result = prime * result + ((suit == null) ? 0 : suit.hashCode());
 		return result;
 	}
-	
+
+	@Override
+	public String toString() {
+		return this.suit.getSymbol() + this.rank.getSymbol();
+	}
+
+	public String completeName() {
+		return this.suit.getName() + this.rank.getName();
+	}
+
 }

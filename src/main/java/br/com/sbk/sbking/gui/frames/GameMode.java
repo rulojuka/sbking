@@ -22,7 +22,7 @@ public class GameMode extends JFrame {
 
 	// Model
 
-	private Deal board;
+	private Deal deal;
 
 	// GUI model
 
@@ -48,17 +48,17 @@ public class GameMode extends JFrame {
 
 	private void initializeBoard(Ruleset ruleset) {
 		Dealer dealer = new Dealer(Direction.NORTH);
-		board = dealer.deal(ruleset);
+		deal = dealer.deal(ruleset);
 	}
 
 	private void paintBoardElements() {
 		Container contentPane = this.getContentPane();
 		contentPane.removeAll();
 
-		if (board.isFinished()) {
-			new ScoreSummaryElement(board, this.getContentPane());
+		if (deal.isFinished()) {
+			new ScoreSummaryElement(deal, this.getContentPane());
 		} else {
-			new BoardElements(board, this.getContentPane(), new PlayCardActionListener());
+			new BoardElements(deal, this.getContentPane(), new PlayCardActionListener());
 		}
 
 		contentPane.validate();
@@ -69,7 +69,7 @@ public class GameMode extends JFrame {
 		public void actionPerformed(java.awt.event.ActionEvent event) {
 			CardButton clickedCardButton = (CardButton) event.getSource();
 			try {
-				board.playCard(clickedCardButton.getCard());
+				deal.playCard(clickedCardButton.getCard());
 				paintBoardElements();
 			} catch (RuntimeException e) {
 				throw e;

@@ -69,5 +69,15 @@ public class Hand {
 	private List<Card> getCards() {
 		return Collections.unmodifiableList(this.cards);
 	}
+	
+	@Override
+	public String toString() {
+		StringBuilder response = new StringBuilder();
+		for (Card card : cards) {
+			response.append(card.toString());
+			response.append("|");
+		}
+		return response.toString();
+	}
 
 }
