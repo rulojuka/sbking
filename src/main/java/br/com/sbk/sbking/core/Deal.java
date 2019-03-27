@@ -1,5 +1,6 @@
 package br.com.sbk.sbking.core;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +9,8 @@ import br.com.sbk.sbking.core.exceptions.PlayedCardInAnotherPlayersTurnException
 import br.com.sbk.sbking.core.exceptions.PlayedHeartsWhenProhibitedException;
 import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
 
-public class Deal {
+@SuppressWarnings("serial")
+public class Deal implements Serializable{
 
 	private static final int NUMBER_OF_TRICKS_IN_A_COMPLETE_HAND = 13;
 
@@ -153,4 +155,60 @@ public class Deal {
 		this.scoreboard.addTrickToDirection(currentTrick, currentTrickWinner);
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((board == null) ? 0 : board.hashCode());
+		result = prime * result + completedTricks;
+		result = prime * result + ((currentPlayer == null) ? 0 : currentPlayer.hashCode());
+		result = prime * result + ((currentTrick == null) ? 0 : currentTrick.hashCode());
+		result = prime * result + ((ruleset == null) ? 0 : ruleset.hashCode());
+		result = prime * result + ((scoreboard == null) ? 0 : scoreboard.hashCode());
+		result = prime * result + ((tricks == null) ? 0 : tricks.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Deal other = (Deal) obj;
+		if (board == null) {
+			if (other.board != null)
+				return false;
+		} else if (!board.equals(other.board))
+			return false;
+		if (completedTricks != other.completedTricks)
+			return false;
+		if (currentPlayer != other.currentPlayer)
+			return false;
+		if (currentTrick == null) {
+			if (other.currentTrick != null)
+				return false;
+		} else if (!currentTrick.equals(other.currentTrick))
+			return false;
+		if (ruleset == null) {
+			if (other.ruleset != null)
+				return false;
+		} else if (!ruleset.equals(other.ruleset))
+			return false;
+		if (scoreboard == null) {
+			if (other.scoreboard != null)
+				return false;
+		} else if (!scoreboard.equals(other.scoreboard))
+			return false;
+		if (tricks == null) {
+			if (other.tricks != null)
+				return false;
+		} else if (!tricks.equals(other.tricks))
+			return false;
+		return true;
+	}
+
+	
 }

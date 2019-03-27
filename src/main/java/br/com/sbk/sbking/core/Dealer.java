@@ -15,6 +15,11 @@ public class Dealer {
 	}
 
 	public Deal deal(Ruleset ruleset) {
+		Board board = dealBoard();
+		return new Deal(board, ruleset);
+	}
+
+	public Board dealBoard() {
 		List<Hand> hands = new ArrayList<Hand>();
 		ShuffledDeck shuffledDeck = new ShuffledDeck();
 
@@ -27,7 +32,7 @@ public class Dealer {
 		}
 
 		Board board = new Board(hands.get(0), hands.get(1), hands.get(2), hands.get(3), this.leader);
-		return new Deal(board, ruleset);
+		return board;
 	}
 
 }

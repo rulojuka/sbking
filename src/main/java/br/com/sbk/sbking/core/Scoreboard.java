@@ -1,15 +1,18 @@
 package br.com.sbk.sbking.core;
 
-import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
+import java.io.Serializable;
 
-public class Scoreboard {
+import br.com.sbk.sbking.core.rulesets.interfaces.Scoreable;
+
+@SuppressWarnings("serial")
+public class Scoreboard implements Serializable {
 
 	private int northSouthPoints = 0;
 	private int eastWestPoints = 0;
-	private Ruleset ruleset;
+	private Scoreable scoreable;
 
-	public Scoreboard(Ruleset ruleset) {
-		this.ruleset = ruleset;
+	public Scoreboard(Scoreable scoreable) {
+		this.scoreable = scoreable;
 	}
 
 	public int getNorthSouthPoints() {
@@ -19,22 +22,53 @@ public class Scoreboard {
 	public int getEastWestPoints() {
 		return eastWestPoints;
 	}
-	
+
 	public void addTrickToDirection(Trick trick, Direction winner) {
-		if(winner.isNorthSouth()) {
+		if (winner.isNorthSouth()) {
 			addNorthSouth(trick);
-		}
-		else {
+		} else {
 			addEastWest(trick);
 		}
 	}
 
 	private void addNorthSouth(Trick trick) {
-		northSouthPoints += this.ruleset.getPoints(trick);
+		northSouthPoints += this.scoreable.getPoints(trick);
 	}
 
 	private void addEastWest(Trick trick) {
-		eastWestPoints += this.ruleset.getPoints(trick);
+		eastWestPoints += this.scoreable.getPoints(trick);
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + eastWestPoints;
+		result = prime * result + northSouthPoints;
+		result = prime * result + ((scoreable == null) ? 0 : scoreable.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Scoreboard other = (Scoreboard) obj;
+		if (eastWestPoints != other.eastWestPoints)
+			return false;
+		if (northSouthPoints != other.northSouthPoints)
+			return false;
+		if (scoreable == null) {
+			if (other.scoreable != null)
+				return false;
+		} else if (!(scoreable.getClass() == other.scoreable.getClass()))
+			return false;
+		return true;
+	}
+
+	
 }

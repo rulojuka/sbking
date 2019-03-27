@@ -1,8 +1,11 @@
 package br.com.sbk.sbking.core;
 
+import java.io.Serializable;
+
 import br.com.sbk.sbking.core.exceptions.IllegalCardNameException;
 
-public class Card {
+@SuppressWarnings("serial")
+public class Card implements Serializable {
 
 	private Suit suit;
 	private Rank rank;

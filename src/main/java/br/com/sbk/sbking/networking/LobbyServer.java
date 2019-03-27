@@ -1,12 +1,12 @@
 package br.com.sbk.sbking.networking;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -14,7 +14,6 @@ import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Dealer;
 import br.com.sbk.sbking.core.Direction;
-import br.com.sbk.sbking.core.Hand;
 import br.com.sbk.sbking.core.exceptions.PlayedCardInAnotherPlayersTurnException;
 import br.com.sbk.sbking.core.rulesets.concrete.NegativeTricksRuleset;
 
@@ -30,8 +29,12 @@ public class LobbyServer {
 			for (Direction direction : Direction.values()) {
 				game.connectPlayer(listener.accept(), direction);
 			}
+
+			// FIXME wait for last client to setup itself
+			Thread.sleep(1000);
+
 			System.out.println("All players connected, passing control to game");
-			game.play();
+			game.sendCurrentDealAll();
 
 		}
 	}
@@ -48,13 +51,12 @@ class Game {
 		this.pool = pool;
 	}
 
-	public void play() {
-		if (!deal.isFinished()) {
-			for (PlayerSocket playerSocket : playerSockets) {
-				playerSocket.sendDeal(deal);
-			}
-			waitForPlay(deal.getCurrentPlayer());
+	public void sendCurrentDealAll() {
+		if (!this.deal.isFinished()) {
+			System.out.println("Sending everyone the current deal");
+			sendDealAll(this.deal);
 		}
+		System.out.println("Finished sending deals.");
 	}
 
 	public void connectPlayer(Socket socket, Direction direction) {
@@ -63,42 +65,34 @@ class Game {
 		pool.execute(current);
 	}
 
-	private void sendAll(String message) {
+	private void sendDealAll(Deal deal) {
 		for (PlayerSocket playerSocket : playerSockets) {
-			playerSocket.sendMessage(message);
+			playerSocket.sendDeal(this.deal);
 		}
-	}
-
-	private void waitForPlay(Direction currentPlayer) {
-		for (PlayerSocket playerSocket : playerSockets) {
-			playerSocket.sendMessage("Your hand:");
-			playerSocket.sendHand(this.deal.getHandOf(playerSocket.direction));
-		}
-		sendAll("Waiting for " + currentPlayer + " to play a card.");
-
 	}
 
 	public synchronized void playCard(Card card, Direction direction) {
-		System.out.println(direction + " is trying to play the " + card);
-		if (deal.getCurrentPlayer() == direction) {
-			this.deal.playCard(card);
-			this.played(card, direction);
-			this.play();
-		} else {
-			throw new PlayedCardInAnotherPlayersTurnException();
+		try {
+			if (this.deal.getCurrentPlayer() == direction) {
+				this.deal.playCard(card);
+				System.out.println(direction + " sucessfully played the " + card);
+				System.out.println("Current trick of this deal is:");
+				System.out.println(this.deal.getCurrentTrick());
+				this.sendCurrentDealAll();
+			} else {
+				throw new PlayedCardInAnotherPlayersTurnException();
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
 		}
 
 	}
 
-	private void played(Card card, Direction direction) {
-		sendAll(direction + " played the " + card.completeName());
-	}
-
 	class PlayerSocket implements Runnable {
-		private Socket socket;
-		private Scanner input;
-		private PrintWriter output;
 		private Direction direction;
+		private Socket socket;
+
+		private Serializator serializator;
 
 		PlayerSocket(Socket socket, Direction direction) {
 			this.socket = socket;
@@ -110,7 +104,7 @@ class Game {
 			System.out.println("Connected: " + socket);
 			try {
 				setup();
-				processCommands();
+				processCommand();
 			} catch (Exception e) {
 				e.printStackTrace();
 				System.out.println("Error:" + socket);
@@ -123,43 +117,67 @@ class Game {
 			}
 		}
 
-		private void setup() throws IOException {
-			input = new Scanner(socket.getInputStream());
-			output = new PrintWriter(socket.getOutputStream(), true);
-			this.sendMessage("You are " + direction);
+		private void setup() throws IOException, InterruptedException {
+			this.serializator = null;
+			try {
+				ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+				ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
+				this.serializator = new Serializator(objectInputStream, objectOutputStream);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			// FIXME wait for client to setup itself
+			Thread.sleep(500);
+
+			this.sendDirection(direction);
 
 		}
 
-		private void processCommands() {
-			while (input.hasNextLine()) {
-				String nextLine = input.nextLine();
-				System.out.println("Recebi " + nextLine + ". Tentando transformar em uma carta");
-				try {
-					Card card = readCardFromString(nextLine);
-					playCard(card, this.direction);
-				} catch (Exception e) {
-					this.sendMessage(e.getMessage());
-					e.printStackTrace();
-				}
+		private void processCommand() {
+			Object readObject = this.serializator.tryToDeserialize();
+			if (readObject instanceof String) {
+				String string = (String) readObject;
+				System.out.println(this.direction + "sent this message: --" + string + "--");
+			}
+			if (readObject instanceof Card) {
+				Card playedCard = (Card) readObject;
+				System.out.println(this.direction + " is trying to play the " + playedCard);
+				playCard(playedCard, this.direction);
 			}
 		}
-
-		private Card readCardFromString(String receivedLine) {
-			return new Card(receivedLine);
-		}
-
-		private void sendMessage(String message) {
-			System.out.println("Sending --" + message + "-- to " + this.socket);
-			this.output.println(message);
-			this.output.flush();
+		
+		public void sendMessage(String string) {
+			System.out.println("Sending message to " + this.direction);
+			String control = "MESSAGE";
+			this.serializator.tryToSerialize(control);
+			this.serializator.tryToSerialize(string);
 		}
 
 		public void sendDeal(Deal deal) {
-			this.sendMessage(deal.toString());
+			System.out.println("Sending current deal to " + this.direction);
+			String control = "DEAL";
+			this.serializator.tryToSerialize(control);
+			this.serializator.tryToSerialize(deal);
 		}
 
-		public void sendHand(Hand hand) {
-			this.sendMessage(hand.toString());
+		public void sendDirection(Direction direction) {
+			System.out.println("Sending its direction to " + this.direction);
+			String control = "DIRECTION";
+			this.serializator.tryToSerialize(control);
+			this.serializator.tryToSerialize(direction);
+		}
+
+		public void sendWait(Direction direction) {
+			System.out.println("Sending WAIT to " + this.direction);
+			String control = "WAIT";
+			this.serializator.tryToSerialize(control);
+		}
+
+		public void sendContinue(Direction direction) {
+			System.out.println("Sending CONTINUE to " + this.direction);
+			String control = "CONTINUE";
+			this.serializator.tryToSerialize(control);
 		}
 
 	}

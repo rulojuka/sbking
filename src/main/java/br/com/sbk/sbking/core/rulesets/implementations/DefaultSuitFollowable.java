@@ -1,12 +1,15 @@
 package br.com.sbk.sbking.core.rulesets.implementations;
 
+import java.io.Serializable;
+
 import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Hand;
 import br.com.sbk.sbking.core.Suit;
 import br.com.sbk.sbking.core.Trick;
 import br.com.sbk.sbking.core.rulesets.interfaces.SuitFollowable;
 
-public class DefaultSuitFollowable implements SuitFollowable {
+@SuppressWarnings("serial")
+public class DefaultSuitFollowable implements SuitFollowable, Serializable {
 
 	@Override
 	public boolean followsSuit(Trick trick, Hand hand, Card card) {

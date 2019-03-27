@@ -1,5 +1,6 @@
 package br.com.sbk.sbking.core;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -9,7 +10,8 @@ import java.util.TreeSet;
 
 import br.com.sbk.sbking.core.exceptions.TrickAlreadyFullException;
 
-public class Trick {
+@SuppressWarnings("serial")
+public class Trick implements Serializable{
 	private static final int COMPLETE_TRICK_NUMBER_OF_CARDS = 4;
 	private List<Card> cards;
 	private Direction leader;
@@ -156,5 +158,42 @@ public class Trick {
 	private int getNumberOfCards() {
 		return this.getCards().size();
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((cards == null) ? 0 : cards.hashCode());
+		result = prime * result + (lastTwo ? 1231 : 1237);
+		result = prime * result + ((leader == null) ? 0 : leader.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Trick other = (Trick) obj;
+		if (cards == null) {
+			if (other.cards != null)
+				return false;
+		} else if (!cards.equals(other.cards))
+			return false;
+		if (lastTwo != other.lastTwo)
+			return false;
+		if (leader != other.leader)
+			return false;
+		return true;
+	}
+	
+	@Override
+	public String toString() {
+		return this.cards.toString();
+	}
+	
 
 }
