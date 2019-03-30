@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+import org.apache.log4j.Logger;
+
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
 
@@ -11,6 +13,7 @@ public class Serializator {
 
 	ObjectInputStream objectInputStream;
 	ObjectOutputStream objectOutputStream;
+	final static Logger logger = Logger.getLogger(Serializator.class);
 
 	public Serializator(ObjectInputStream objectInputStream, ObjectOutputStream objectOutputStream) {
 		this.objectInputStream = objectInputStream;
@@ -26,13 +29,14 @@ public class Serializator {
 
 	public void tryToSerialize(Object object) {
 		try {
-			//objectOutputStream.reset(); // Seriously, Java??
-			//objectOutputStream.writeObject(object);
-			objectOutputStream.writeUnshared(object);
-			objectOutputStream.flush();
-			System.out.println("Serialized data writen to " + this.objectOutputStream);
+
+			// objectOutputStream.writeUnshared(object);
+			objectOutputStream.reset();
+			objectOutputStream.writeObject(object);
+			//objectOutputStream.flush();
+			logger.info("Serialized data writen to " + this.objectOutputStream);
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.debug(e);
 		}
 	}
 
@@ -40,15 +44,11 @@ public class Serializator {
 		Object deserializedObject = null;
 		try {
 			deserializedObject = objectInputStream.readObject();
-			if (deserializedObject instanceof Deal) {
-				Deal deal = (Deal) deserializedObject;
-				System.out.println("Deserializing a deal. Current trick of this deal is:");
-				System.out.println(deal.getCurrentTrick());
-			}
 		} catch (IOException i) {
-			i.printStackTrace();
+			logger.debug("EOFException!?!?!");
+			logger.debug(i);
 		} catch (ClassNotFoundException c) {
-			c.printStackTrace();
+			logger.debug(c);
 		}
 
 		return deserializedObject;
@@ -61,9 +61,9 @@ public class Serializator {
 			deserializedObject = objectInputStream.readObject();
 			ret = (String) deserializedObject;
 		} catch (IOException i) {
-			i.printStackTrace();
+			logger.debug(i);
 		} catch (ClassNotFoundException c) {
-			c.printStackTrace();
+			logger.debug(c);
 		}
 
 		return ret;
@@ -76,9 +76,9 @@ public class Serializator {
 			deserializedObject = objectInputStream.readObject();
 			ret = (Deal) deserializedObject;
 		} catch (IOException i) {
-			i.printStackTrace();
+			logger.debug(i);
 		} catch (ClassNotFoundException c) {
-			c.printStackTrace();
+			logger.debug(c);
 		}
 
 		return ret;
@@ -91,9 +91,9 @@ public class Serializator {
 			deserializedObject = objectInputStream.readObject();
 			ret = (Direction) deserializedObject;
 		} catch (IOException i) {
-			i.printStackTrace();
+			logger.debug(i);
 		} catch (ClassNotFoundException c) {
-			c.printStackTrace();
+			logger.debug(c);
 		}
 
 		return ret;

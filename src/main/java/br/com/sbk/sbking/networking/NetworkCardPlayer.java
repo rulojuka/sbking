@@ -12,8 +12,6 @@ public class NetworkCardPlayer {
 
 	public void play(Card card) {
 		this.serializator.tryToSerialize(card);
-		System.out.println("NetworkCardPlayer.play isEventDispatchThread: " + javax.swing.SwingUtilities.isEventDispatchThread());
-		System.exit(1);
 	}
 
 }

@@ -4,6 +4,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+import org.apache.log4j.Logger;
+
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
 
@@ -16,18 +18,30 @@ public class SBKingClient {
 	private NetworkGameMode networkGameMode;
 	private Direction direction;
 
-	public SBKingClient() throws Exception {
+	final static Logger logger = Logger.getLogger(LobbyServer.class);
 
+	public SBKingClient() throws Exception {
 		socket = new Socket("localhost", 60000);
 		setupSerializator();
+	}
 
+	private void setupSerializator() {
+		this.serializator = null;
+		try {
+			ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+			ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
+			this.serializator = new Serializator(objectInputStream, objectOutputStream);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		logger.info("Finished serializator setup.");
 	}
 
 	public void run() {
 		initializeDirection();
-		NetworkCardPlayer networkCardPlayer = new NetworkCardPlayer(serializator);
-		networkGameMode = new NetworkGameMode(networkCardPlayer, direction);
-		System.out.println("Entering on the infinite loop to process commands.");
+		NetworkCardPlayer networkCardPlayer = new NetworkCardPlayer(this.serializator);
+		this.networkGameMode = new NetworkGameMode(networkCardPlayer, this.direction);
+		logger.info("Entering on the infinite loop to process commands.");
 		while (true) {
 			processCommand();
 		}
@@ -37,26 +51,11 @@ public class SBKingClient {
 		processCommand();
 	}
 
-	private void setupSerializator() {
-		this.serializator = null;
-		ObjectOutputStream objectOutputStream;
-		ObjectInputStream objectInputStream;
-		try {
-			objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
-			objectInputStream = new ObjectInputStream(socket.getInputStream());
-			this.serializator = new Serializator(objectInputStream, objectOutputStream);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		System.out.println("Finished serializator setup.");
-	}
-
 	private void processCommand() {
-		System.out.println("ProcessCommand isEventDispatchThread: " + javax.swing.SwingUtilities.isEventDispatchThread());
-		System.out.println("Waiting for a command");
+		logger.info("Waiting for a command");
 		Object readObject = this.serializator.tryToDeserialize();
 		String controlMessage = (String) readObject;
-		System.out.println("Read control: --" + controlMessage + "--");
+		logger.info("Read control: --" + controlMessage + "--");
 
 		String MESSAGE = "MESSAGE";
 		String DEAL = "DEAL";
@@ -66,25 +65,35 @@ public class SBKingClient {
 
 		if (MESSAGE.equals(controlMessage)) {
 			String string = this.serializator.tryToDeserializeString();
-			System.out.println("I received a message: --" + string + "--");
+			logger.info("I received a message: --" + string + "--");
 		} else if (DEAL.equals(controlMessage)) {
 			Deal deal = this.serializator.tryToDeserializeDeal();
-			System.out.println("I received a deal and will paint it on screen");
+			logger.info("I received a deal that contains this trick: " + deal.getCurrentTrick()
+					+ " and will paint it on screen");
 			networkGameMode.paintBoardElements(deal);
 		} else if (DIRECTION.equals(controlMessage)) {
 			Direction direction = this.serializator.tryToDeserializeDirection();
-			System.out.println("I received my direction: " + direction);
+			logger.info("I received my direction: " + direction);
 			this.direction = direction;
 		} else if (WAIT.equals(controlMessage)) {
-			System.out.println("Waiting for a CONTINUE message");
+			logger.info("Waiting for a CONTINUE message");
 			do {
 				this.serializator.tryToDeserialize();
 				readObject = this.serializator.tryToDeserialize();
 				controlMessage = (String) readObject;
 			} while (!CONTINUE.equals(controlMessage));
+			logger.info("Received a CONTINUE message");
 
 		} else {
-			System.out.println("Could not understand control.");
+			logger.info("Could not understand control.");
+		}
+
+		// FIXME
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
