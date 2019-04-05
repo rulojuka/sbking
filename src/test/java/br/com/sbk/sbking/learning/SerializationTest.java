@@ -19,7 +19,7 @@ import br.com.sbk.sbking.core.Dealer;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.core.Hand;
 import br.com.sbk.sbking.core.Rank;
-import br.com.sbk.sbking.core.Scoreboard;
+import br.com.sbk.sbking.core.Score;
 import br.com.sbk.sbking.core.Suit;
 import br.com.sbk.sbking.core.Trick;
 import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
@@ -130,12 +130,12 @@ public class SerializationTest {
 
 	@Test
 	public void scoreboardShouldBeSerializableAndDeserializable() {
-		Scoreboard scoreboard = new Scoreboard(new NegativeTricksRuleset());
+		Score scoreboard = new Score(new NegativeTricksRuleset());
 
 		serializator.tryToSerialize(scoreboard);
 
 		Object deserializedObject = serializator.tryToDeserialize();
-		Scoreboard deserializedScoreboard = (Scoreboard) deserializedObject;
+		Score deserializedScoreboard = (Score) deserializedObject;
 		assertEquals(scoreboard, deserializedScoreboard);
 	}
 

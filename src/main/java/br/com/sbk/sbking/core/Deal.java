@@ -10,14 +10,15 @@ import br.com.sbk.sbking.core.exceptions.PlayedHeartsWhenProhibitedException;
 import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
 
 @SuppressWarnings("serial")
-public class Deal implements Serializable{
+public class Deal implements Serializable {
 
 	private static final int NUMBER_OF_TRICKS_IN_A_COMPLETE_HAND = 13;
 
 	private Board board;
 	private int completedTricks;
 	private Direction currentPlayer;
-	private Scoreboard scoreboard;
+	private Score score;
+	private Direction leader;
 
 	private Ruleset ruleset;
 
@@ -27,10 +28,11 @@ public class Deal implements Serializable{
 	public Deal(Board board, Ruleset ruleset) {
 		this.board = board;
 		this.ruleset = ruleset;
-		currentPlayer = this.board.getLeader();
-		this.scoreboard = new Scoreboard(ruleset);
-		completedTricks = 0;
-		tricks = new ArrayList<Trick>();
+		this.leader = this.board.getLeader();
+		this.currentPlayer = this.board.getLeader();
+		this.score = new Score(ruleset);
+		this.completedTricks = 0;
+		this.tricks = new ArrayList<Trick>();
 	}
 
 	public Hand getHandOf(Direction direction) {
@@ -50,11 +52,11 @@ public class Deal implements Serializable{
 	}
 
 	public int getNorthSouthPoints() {
-		return this.scoreboard.getNorthSouthPoints();
+		return this.score.getNorthSouthPoints();
 	}
 
 	public int getEastWestPoints() {
-		return this.scoreboard.getEastWestPoints();
+		return this.score.getEastWestPoints();
 	}
 
 	public Ruleset getRuleset() {
@@ -152,7 +154,7 @@ public class Deal implements Serializable{
 	}
 
 	private void updateScoreboard(Direction currentTrickWinner) {
-		this.scoreboard.addTrickToDirection(currentTrick, currentTrickWinner);
+		this.score.addTrickToDirection(currentTrick, currentTrickWinner);
 	}
 
 	@Override
@@ -164,7 +166,7 @@ public class Deal implements Serializable{
 		result = prime * result + ((currentPlayer == null) ? 0 : currentPlayer.hashCode());
 		result = prime * result + ((currentTrick == null) ? 0 : currentTrick.hashCode());
 		result = prime * result + ((ruleset == null) ? 0 : ruleset.hashCode());
-		result = prime * result + ((scoreboard == null) ? 0 : scoreboard.hashCode());
+		result = prime * result + ((score == null) ? 0 : score.hashCode());
 		result = prime * result + ((tricks == null) ? 0 : tricks.hashCode());
 		return result;
 	}
@@ -197,10 +199,10 @@ public class Deal implements Serializable{
 				return false;
 		} else if (!ruleset.equals(other.ruleset))
 			return false;
-		if (scoreboard == null) {
-			if (other.scoreboard != null)
+		if (score == null) {
+			if (other.score != null)
 				return false;
-		} else if (!scoreboard.equals(other.scoreboard))
+		} else if (!score.equals(other.score))
 			return false;
 		if (tricks == null) {
 			if (other.tricks != null)
@@ -210,5 +212,12 @@ public class Deal implements Serializable{
 		return true;
 	}
 
+	public Direction getLeader() {
+		return this.leader;
+	}
 	
+	public Score getScore() {
+		return this.score;
+	}
+
 }

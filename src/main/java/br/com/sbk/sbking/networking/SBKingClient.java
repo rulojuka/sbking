@@ -1,8 +1,10 @@
 package br.com.sbk.sbking.networking;
 
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.net.UnknownHostException;
 
 import org.apache.log4j.Logger;
 
@@ -20,8 +22,14 @@ public class SBKingClient {
 
 	final static Logger logger = Logger.getLogger(LobbyServer.class);
 
-	public SBKingClient() throws Exception {
-		socket = new Socket("localhost", 60000);
+	public SBKingClient() {
+		try {
+			socket = new Socket("localhost", 60000);
+		} catch (UnknownHostException e) {
+			logger.debug(e);
+		} catch (IOException e) {
+			logger.debug(e);
+		}
 		setupSerializator();
 	}
 

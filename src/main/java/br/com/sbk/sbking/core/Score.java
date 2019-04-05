@@ -5,13 +5,13 @@ import java.io.Serializable;
 import br.com.sbk.sbking.core.rulesets.interfaces.Scoreable;
 
 @SuppressWarnings("serial")
-public class Scoreboard implements Serializable {
+public class Score implements Serializable {
 
 	private int northSouthPoints = 0;
 	private int eastWestPoints = 0;
 	private Scoreable scoreable;
 
-	public Scoreboard(Scoreable scoreable) {
+	public Score(Scoreable scoreable) {
 		this.scoreable = scoreable;
 	}
 
@@ -21,6 +21,11 @@ public class Scoreboard implements Serializable {
 
 	public int getEastWestPoints() {
 		return eastWestPoints;
+	}
+	
+	public String getSummary() {
+		Integer points = getNorthSouthPoints() - getEastWestPoints();
+		return points.toString();
 	}
 
 	public void addTrickToDirection(Trick trick, Direction winner) {
@@ -57,7 +62,7 @@ public class Scoreboard implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Scoreboard other = (Scoreboard) obj;
+		Score other = (Score) obj;
 		if (eastWestPoints != other.eastWestPoints)
 			return false;
 		if (northSouthPoints != other.northSouthPoints)

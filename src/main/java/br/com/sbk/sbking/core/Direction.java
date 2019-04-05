@@ -55,4 +55,8 @@ public enum Direction {
 	public char getAbbreviation() {
 		return abbreviation;
 	}
+	
+	public Direction getChosenByWhenLeader() {
+		return this.next(2);
+	}
 }
