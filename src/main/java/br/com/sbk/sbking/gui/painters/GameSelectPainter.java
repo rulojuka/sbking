@@ -1,4 +1,4 @@
-package br.com.sbk.sbking.gui.frames;
+package br.com.sbk.sbking.gui.painters;
 
 import java.awt.Container;
 import java.util.ArrayList;
@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JRadioButton;
 
 import br.com.sbk.sbking.core.Suit;
@@ -19,14 +18,10 @@ import br.com.sbk.sbking.core.rulesets.concrete.NegativeTricksRuleset;
 import br.com.sbk.sbking.core.rulesets.concrete.NegativeWomenRuleset;
 import br.com.sbk.sbking.core.rulesets.concrete.PositiveNoTrumpsRuleset;
 import br.com.sbk.sbking.core.rulesets.concrete.PositiveWithTrumpsRuleset;
+import br.com.sbk.sbking.gui.frames.GameScreen;
 
-@SuppressWarnings("serial")
-public class GameSelectScreen extends JFrame {
+public class GameSelectPainter {
 
-	// Constants
-	private static final int WIDTH = 1024;
-	private static final int HEIGHT = 768;
-	private static final java.awt.Color TABLE_COLOR = new java.awt.Color(0, 100, 0); // Tablecloth green
 	private List<JRadioButton> gameButtons = new ArrayList<JRadioButton>();
 	private JRadioButton gameButton;
 	private Ruleset negativeTricks = new NegativeTricksRuleset();
@@ -41,31 +36,13 @@ public class GameSelectScreen extends JFrame {
 	private Ruleset positiveHearts = new PositiveWithTrumpsRuleset(Suit.HEARTS);
 	private Ruleset positiveSpades = new PositiveWithTrumpsRuleset(Suit.SPADES);
 	private List<Ruleset> rulesets;
+	private GameScreen gameScreen;
 
-	public GameSelectScreen() {
-		super();
-		initializeJFrame();
-		initializeContentPane();
-		Container contentPane = this.getContentPane();
-
-		initializeSelectCombobox();
-
-		contentPane.validate();
-		contentPane.repaint();
+	public GameSelectPainter(GameScreen gameScreen) {
+		this.gameScreen = gameScreen;
 	}
 
-	private void initializeJFrame() {
-		this.setVisible(true);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setSize(WIDTH, HEIGHT);
-	}
-
-	private void initializeContentPane() {
-		getContentPane().setLayout(null);
-		getContentPane().setBackground(TABLE_COLOR);
-	}
-
-	private void initializeSelectCombobox() {
+	public void paint(Container contentPane) {
 
 		rulesets = new ArrayList<Ruleset>();
 		rulesets.add(negativeTricks);
@@ -96,17 +73,25 @@ public class GameSelectScreen extends JFrame {
 		gameButtons.get(0).setSelected(true);
 
 		ButtonGroup bg = new ButtonGroup();
+
 		for (JRadioButton currentButton : gameButtons) {
 			bg.add(currentButton);
-			this.getContentPane().add(currentButton);
+			contentPane.add(currentButton);
 		}
 
 		JButton playGameButton = new JButton();
-		this.getContentPane().add(playGameButton);
+		contentPane.add(playGameButton);
 
 		playGameButton.addActionListener(new GameSelectActionListener());
 		playGameButton.setBounds(initial_x + width + 10, initial_y, width / 2, height * rulesets.size());
 		playGameButton.setText("Play");
+
+		contentPane.validate();
+		contentPane.repaint();
+	}
+
+	private void callGameModePainter(Ruleset ruleset) {
+		this.gameScreen.selectGame(ruleset);
 	}
 
 	class GameSelectActionListener implements java.awt.event.ActionListener {
@@ -123,7 +108,7 @@ public class GameSelectScreen extends JFrame {
 					ruleset = currentRuleset;
 				}
 			}
-			new GameMode(ruleset);
+			callGameModePainter(ruleset);
 		}
 	}
 
