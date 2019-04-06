@@ -1,5 +1,9 @@
 package br.com.sbk.sbking.gui.frames;
 
+import static br.com.sbk.sbking.gui.constants.FrameConstants.TABLE_COLOR;
+import static br.com.sbk.sbking.gui.constants.FrameConstants.TABLE_HEIGHT;
+import static br.com.sbk.sbking.gui.constants.FrameConstants.TABLE_WIDTH;
+
 import javax.swing.JFrame;
 
 import br.com.sbk.sbking.core.Game;
@@ -10,10 +14,6 @@ import br.com.sbk.sbking.gui.painters.GameSelectPainter;
 @SuppressWarnings("serial")
 public class GameScreen extends JFrame {
 
-	// Constants
-	private static final int WIDTH = 1024;
-	private static final int HEIGHT = 768;
-	private static final java.awt.Color TABLE_COLOR = new java.awt.Color(0, 100, 0); // Tablecloth green
 	private Game game;
 	private boolean gameSelected = false;
 	private Ruleset ruleset;
@@ -28,7 +28,7 @@ public class GameScreen extends JFrame {
 	private void initializeJFrame() {
 		this.setVisible(true);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setSize(WIDTH, HEIGHT);
+		this.setSize(TABLE_WIDTH, TABLE_HEIGHT);
 	}
 
 	private void initializeContentPane() {

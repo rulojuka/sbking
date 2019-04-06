@@ -1,5 +1,14 @@
 package br.com.sbk.sbking.gui.elements;
 
+import static br.com.sbk.sbking.gui.constants.FrameConstants.EAST_X;
+import static br.com.sbk.sbking.gui.constants.FrameConstants.EAST_Y;
+import static br.com.sbk.sbking.gui.constants.FrameConstants.NORTH_X;
+import static br.com.sbk.sbking.gui.constants.FrameConstants.NORTH_Y;
+import static br.com.sbk.sbking.gui.constants.FrameConstants.SOUTH_X;
+import static br.com.sbk.sbking.gui.constants.FrameConstants.SOUTH_Y;
+import static br.com.sbk.sbking.gui.constants.FrameConstants.WEST_X;
+import static br.com.sbk.sbking.gui.constants.FrameConstants.WEST_Y;
+
 import java.awt.Container;
 import java.awt.Point;
 import java.awt.event.ActionListener;
@@ -8,16 +17,6 @@ import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
 
 public class SpecificDirectionBoardElements {
-
-	private static final int BETWEEN_CARDS_WIDTH = 26; /* 26 is good. 12 pixels to hide pictures */
-	private static final int NORTH_X = 1024 / 2 - BETWEEN_CARDS_WIDTH * 7; /* Ideal would be 6,5 (half of the cards) */
-	private static final int SOUTH_X = NORTH_X;
-	private static final int EAST_X = NORTH_X + 300;
-	private static final int WEST_X = NORTH_X - 300;
-	private static final int NORTH_Y = 120;
-	private static final int SOUTH_Y = 470;
-	private static final int EAST_Y = 300;
-	private static final int WEST_Y = EAST_Y;
 
 	public SpecificDirectionBoardElements(Direction direction, Deal deal, Container container,
 			ActionListener actionListener) {

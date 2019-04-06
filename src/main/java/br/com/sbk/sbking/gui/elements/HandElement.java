@@ -1,5 +1,7 @@
 package br.com.sbk.sbking.gui.elements;
 
+import static br.com.sbk.sbking.gui.constants.FrameConstants.BETWEEN_CARDS_WIDTH;
+
 import java.awt.Container;
 import java.awt.Point;
 import java.awt.event.ActionListener;
@@ -11,7 +13,6 @@ import br.com.sbk.sbking.gui.JElements.CardButton;
 
 public class HandElement {
 
-	private static final int BETWEEN_CARDS_WIDTH = 26;
 	private DeckCardImageInformation deckCardImageInformation;
 
 	public HandElement(Hand hand, Container container, ActionListener actionListener, Point handLocation) {

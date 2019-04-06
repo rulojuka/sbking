@@ -1,12 +1,11 @@
 package br.com.sbk.sbking.gui.JElements;
 
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 
 import br.com.sbk.sbking.core.Card;
 
 @SuppressWarnings("serial")
-public class CardButton extends JButton {
+public class CardButton extends SBKingButton {
 
 	private ImageIcon frontImage;
 	private ImageIcon backImage;
@@ -25,11 +24,6 @@ public class CardButton extends JButton {
 		this.setSize(CARD_WIDTH, CARD_HEIGHT);
 		this.faceUp = true;
 		this.setIcon(frontImage);
-
-		this.setFocusPainted(false);
-		this.setRolloverEnabled(false);
-		this.setContentAreaFilled(false); /* Paint always in the same order??? */
-		this.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 	}
 
 	public void flip() {
