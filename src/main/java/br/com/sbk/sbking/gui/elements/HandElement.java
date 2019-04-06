@@ -8,8 +8,8 @@ import java.awt.event.ActionListener;
 
 import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Hand;
-import br.com.sbk.sbking.gui.DeckCardImageInformation;
 import br.com.sbk.sbking.gui.JElements.CardButton;
+import br.com.sbk.sbking.gui.models.DeckCardImageInformation;
 
 public class HandElement {
 

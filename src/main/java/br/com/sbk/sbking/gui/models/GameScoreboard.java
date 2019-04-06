@@ -1,5 +1,9 @@
-package br.com.sbk.sbking.core;
+package br.com.sbk.sbking.gui.models;
 
+import br.com.sbk.sbking.core.Deal;
+import br.com.sbk.sbking.core.Direction;
+import br.com.sbk.sbking.core.GameModeSummary;
+import br.com.sbk.sbking.core.Score;
 import br.com.sbk.sbking.core.exceptions.DealNotFinishedException;
 import br.com.sbk.sbking.core.rulesets.abstractClasses.PositiveRuleset;
 import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;

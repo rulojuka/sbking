@@ -1,4 +1,4 @@
-package br.com.sbk.sbking.gui;
+package br.com.sbk.sbking.gui.models;
 
 import java.net.URL;
 
