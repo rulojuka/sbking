@@ -21,6 +21,8 @@ public class SBKingClient implements Runnable{
 	private Direction direction;
 	private boolean allPlayersConnected;
 
+	private Direction chooserDirection;
+
 	final static Logger logger = Logger.getLogger(SBKingClient.class);
 
 	public SBKingClient() {
@@ -48,17 +50,14 @@ public class SBKingClient implements Runnable{
 
 	@Override
 	public void run() {
-		initializeDirection();
-		NetworkCardPlayer networkCardPlayer = new NetworkCardPlayer(this.serializator);
-		//this.networkGameMode = new NetworkGameMode(networkCardPlayer, this.direction);
 		logger.info("Entering on the infinite loop to process commands.");
 		while (true) {
 			processCommand();
 		}
 	}
 
-	private void initializeDirection() {
-		processCommand();
+	private void initializeDirection(Direction direction) {
+		this.direction = direction;
 	}
 
 	private void processCommand() {
@@ -73,22 +72,23 @@ public class SBKingClient implements Runnable{
 		String WAIT = "WAIT";
 		String CONTINUE = "CONTINUE";
 		String ALLCONNECTED = "ALLCONNECTED";
+		String CHOOSER = "CHOOSER";
 
 		if (MESSAGE.equals(controlMessage)) {
 			String string = this.serializator.tryToDeserializeString();
 			logger.info("I received a message: --" + string + "--");
 			if (ALLCONNECTED.equals(string)) {
-				allPlayersConnected = true;
+				setAllPlayersConnected();
 			}
 		} else if (DEAL.equals(controlMessage)) {
 			Deal deal = this.serializator.tryToDeserializeDeal();
 			logger.info("I received a deal that contains this trick: " + deal.getCurrentTrick()
 					+ " and will paint it on screen");
-			networkGameMode.paintBoardElements(deal);
+			paintBoardWithDeal(deal);
 		} else if (DIRECTION.equals(controlMessage)) {
 			Direction direction = this.serializator.tryToDeserializeDirection();
 			logger.info("I received my direction: " + direction);
-			this.direction = direction;
+			this.initializeDirection(direction);
 		} else if (WAIT.equals(controlMessage)) {
 			logger.info("Waiting for a CONTINUE message");
 			do {
@@ -98,9 +98,19 @@ public class SBKingClient implements Runnable{
 			} while (!CONTINUE.equals(controlMessage));
 			logger.info("Received a CONTINUE message");
 
-		} else {
+		}else if(CHOOSER.equals(controlMessage)) {
+			Direction direction = this.serializator.tryToDeserializeDirection();
+			logger.info("Received choosers direction: " + direction);
+			
+			setChooserDirection(direction);
+		}
+		else {
 			logger.info("Could not understand control.");
 		}
+		
+		// Run these when received an order to start game from server.
+		//NetworkCardPlayer networkCardPlayer = new NetworkCardPlayer(this.serializator);
+		//this.networkGameMode = new NetworkGameMode(networkCardPlayer, this.direction);
 
 		// FIXME
 		try {
@@ -109,6 +119,18 @@ public class SBKingClient implements Runnable{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	private void setAllPlayersConnected() {
+		allPlayersConnected = true;
+	}
+
+	private void paintBoardWithDeal(Deal deal) {
+		networkGameMode.paintBoardElements(deal);
+	}
+
+	private void setChooserDirection(Direction direction) {
+		this.chooserDirection = direction;
 	}
 
 	public boolean isEveryoneConnected() {

@@ -13,14 +13,14 @@ public class PlayerSocket implements Runnable {
 	private Direction direction;
 	private Socket socket;
 	private Serializator serializator;
-	private NetworkGame networkGame;
+	private GameServer gameServer;
 	final static Logger logger = Logger.getLogger(PlayerSocket.class);
 
-	public PlayerSocket(Serializator serializator, Socket socket, Direction direction, NetworkGame networkGame) {
+	public PlayerSocket(Serializator serializator, Socket socket, Direction direction, GameServer gameServer) {
 		this.serializator = serializator;
 		this.socket = socket;
 		this.direction = direction;
-		this.networkGame = networkGame;
+		this.gameServer = gameServer;
 	}
 
 	@Override
@@ -40,7 +40,7 @@ public class PlayerSocket implements Runnable {
 				logger.debug(e);
 			}
 			logger.info("Closed: " + socket + ". Removing (myself) from playerSocketList");
-			networkGame.removePlayerSocket(this);
+			gameServer.removePlayerSocket(this);
 		}
 	}
 
@@ -59,7 +59,7 @@ public class PlayerSocket implements Runnable {
 		if (readObject instanceof Card) {
 			Card playedCard = (Card) readObject;
 			logger.info(this.direction + " is trying to play the " + playedCard);
-			networkGame.notifyPlayCard(playedCard, this.direction);
+			gameServer.notifyPlayCard(playedCard, this.direction);
 		}
 	}
 
@@ -84,6 +84,14 @@ public class PlayerSocket implements Runnable {
 		logger.info("Sending " + control + " control to " + this.direction);
 		this.serializator.tryToSerialize(control);
 		logger.info("Sending its direction to " + this.direction);
+		this.serializator.tryToSerialize(direction);
+	}
+	
+	public void sendChooser(Direction direction) {
+		String control = "CHOOSER";
+		logger.info("Sending " + control + " control to " + this.direction);
+		this.serializator.tryToSerialize(control);
+		logger.info("Sending chooser direction to " + this.direction);
 		this.serializator.tryToSerialize(direction);
 	}
 

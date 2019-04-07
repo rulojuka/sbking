@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import org.apache.log4j.Logger;
 
 import br.com.sbk.sbking.gui.painters.ConnectToServerPainter;
+import br.com.sbk.sbking.gui.painters.WaitingForChoosingPainter;
 import br.com.sbk.sbking.gui.painters.WaitingForPlayersPainter;
 import br.com.sbk.sbking.networking.SBKingClient;
 
@@ -81,6 +82,14 @@ public class NetworkClientScreen extends JFrame {
 				e.printStackTrace();
 			}
 		}
+		
+		//while(true) { //FIXME Should last 10 deals - a complete king game
+			logger.info("Starting to paint WaitingForChoosingScreen");
+			paintWaitingForChoosingScreen();
+			logger.info("Finished painting WaitingForChoosingScreen");
+		//}
+		
+		
 		logger.info("Acabou!");
 	}
 
@@ -94,6 +103,12 @@ public class NetworkClientScreen extends JFrame {
 		cleanContentPane();
 		WaitingForPlayersPainter waitingForPlayersPainter = new WaitingForPlayersPainter(sbKingClient.getDirection());
 		waitingForPlayersPainter.paint(this.getContentPane());
+	}
+	
+	private void paintWaitingForChoosingScreen() {
+		cleanContentPane();
+		WaitingForChoosingPainter waitingForChoosingPainter = new WaitingForChoosingPainter();
+		waitingForChoosingPainter.paint(this.getContentPane());
 	}
 
 	private void cleanContentPane() {

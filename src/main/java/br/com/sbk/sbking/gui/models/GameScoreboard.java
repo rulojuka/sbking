@@ -30,7 +30,7 @@ public class GameScoreboard {
 			Score score = deal.getScore();
 			GameModeSummary current = new GameModeSummary(chosenBy, ruleset, orderOfPlay, score);
 			games[getPositionOfRuleset(ruleset)] = current;
-			if(ruleset instanceof PositiveRuleset) {
+			if (ruleset instanceof PositiveRuleset) {
 				positivesPlayed++;
 			}
 		}
@@ -44,10 +44,10 @@ public class GameScoreboard {
 		GameModeSummary currentGameModeSummary = games[line - 1];
 		String response;
 
-		String name = "";
-		String score = "";
-		String chosenBy = "";
-		String orderOfPlay = "";
+		String name = "-";
+		String score = "----";
+		String chosenBy = "----";
+		String orderOfPlay = "--";
 
 		if (currentGameModeSummary != null) {
 			name = currentGameModeSummary.getName();
@@ -57,7 +57,7 @@ public class GameScoreboard {
 		} else {
 			name = getNameOfGameNumber(line);
 		}
-		response = String.format("%20s %4s %4s %2s", name, score, chosenBy, orderOfPlay);
+		response = String.format("%-20s %-4s %-4s %-2s", name, score, chosenBy, orderOfPlay);
 		return response;
 
 	}

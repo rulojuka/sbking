@@ -1,12 +1,5 @@
 package br.com.sbk.sbking.networking;
 
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ExecutorService;
-
 import org.apache.log4j.Logger;
 
 import br.com.sbk.sbking.core.Card;
@@ -17,30 +10,13 @@ import br.com.sbk.sbking.core.exceptions.PlayedCardInAnotherPlayersTurnException
 public class NetworkGame {
 
 	private Deal deal;
-	private List<PlayerSocket> playerSockets = new ArrayList<PlayerSocket>();
-	private ExecutorService pool;
 	final static Logger logger = Logger.getLogger(NetworkGame.class);
 	private CardPlayNotification event = new CardPlayNotification();
+	private GameServer gameServer;
 
-	public NetworkGame(ExecutorService pool, Deal deal) {
+	public NetworkGame(GameServer gameServer, Deal deal) {
+		this.gameServer = gameServer;
 		this.deal = deal;
-		this.pool = pool;
-	}
-
-	public void connectPlayer(Socket socket, Direction direction) {
-
-		Serializator serializator = null;
-		try {
-			ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
-			ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
-			serializator = new Serializator(objectInputStream, objectOutputStream);
-		} catch (Exception e) {
-			logger.debug(e);
-		}
-
-		PlayerSocket current = new PlayerSocket(serializator, socket, direction, this);
-		playerSockets.add(current);
-		pool.execute(current);
 	}
 
 	public void run() {
@@ -53,7 +29,7 @@ public class NetworkGame {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			sendDealAll(this.deal);
+			this.gameServer.sendDealAll(this.deal);
 			synchronized (event) {
 				// wait until object notifies - which relinquishes the lock on the object too
 				try {
@@ -69,14 +45,6 @@ public class NetworkGame {
 			logger.info("Received notification that " + directionToBePlayed + " wants to play the " + cardToBePlayed);
 			this.playCard(cardToBePlayed, directionToBePlayed);
 		}
-	}
-
-	private void sendDealAll(Deal deal) {
-		logger.info("Sending everyone the current deal");
-		for (PlayerSocket playerSocket : playerSockets) {
-			playerSocket.sendDeal(this.deal);
-		}
-		logger.info("Finished sending deals.");
 	}
 
 	private void playCard(Card card, Direction direction) {
@@ -97,10 +65,6 @@ public class NetworkGame {
 		logger.info("Entering synchronized play card");
 		this.deal.playCard(card);
 		logger.info("Leaving synchronized play card");
-	}
-
-	public synchronized void removePlayerSocket(PlayerSocket playerSocket) {
-		this.playerSockets.remove(playerSocket);
 	}
 
 	public void notifyPlayCard(Card card, Direction direction) {
