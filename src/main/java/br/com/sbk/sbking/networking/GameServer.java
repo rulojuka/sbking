@@ -10,8 +10,8 @@ import br.com.sbk.sbking.core.Dealer;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.core.rulesets.concrete.NegativeTricksRuleset;
 
-public class LobbyServer {
-	final static Logger logger = Logger.getLogger(LobbyServer.class);
+public class GameServer {
+	final static Logger logger = Logger.getLogger(GameServer.class);
 	public static void main(String[] args) throws Exception {
 		
 		NetworkGame game;
@@ -20,7 +20,7 @@ public class LobbyServer {
 		game = new NetworkGame(pool, dealer.deal(new NegativeTricksRuleset()));
 
 		try (ServerSocket listener = new ServerSocket(60000)) {
-			logger.info("Lobby Server is Running...");
+			logger.info("Game Server is Running...");
 			for (Direction direction : Direction.values()) {
 				game.connectPlayer(listener.accept(), direction);
 			}

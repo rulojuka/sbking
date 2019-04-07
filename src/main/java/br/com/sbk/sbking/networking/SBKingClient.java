@@ -20,7 +20,7 @@ public class SBKingClient {
 	private NetworkGameMode networkGameMode;
 	private Direction direction;
 
-	final static Logger logger = Logger.getLogger(LobbyServer.class);
+	final static Logger logger = Logger.getLogger(GameServer.class);
 
 	public SBKingClient() {
 		try {
