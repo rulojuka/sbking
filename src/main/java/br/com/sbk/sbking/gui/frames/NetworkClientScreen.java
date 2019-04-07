@@ -4,21 +4,32 @@ import static br.com.sbk.sbking.gui.constants.FrameConstants.TABLE_COLOR;
 import static br.com.sbk.sbking.gui.constants.FrameConstants.TABLE_HEIGHT;
 import static br.com.sbk.sbking.gui.constants.FrameConstants.TABLE_WIDTH;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import javax.swing.JFrame;
 
+import org.apache.log4j.Logger;
+
 import br.com.sbk.sbking.gui.painters.ConnectToServerPainter;
+import br.com.sbk.sbking.gui.painters.WaitingForPlayersPainter;
 import br.com.sbk.sbking.networking.SBKingClient;
 
 @SuppressWarnings("serial")
 public class NetworkClientScreen extends JFrame {
 
+	final static Logger logger = Logger.getLogger(NetworkClientScreen.class);
+
 	private boolean connectedToServer = false;
 	private SBKingClient sbKingClient;
+
+	private ExecutorService pool;
 
 	public NetworkClientScreen() {
 		super();
 		initializeJFrame();
 		initializeContentPane();
+		pool = Executors.newFixedThreadPool(4);
 	}
 
 	private void initializeJFrame() {
@@ -33,30 +44,56 @@ public class NetworkClientScreen extends JFrame {
 	}
 
 	public void run() {
+		logger.info("Starting to paint ConnectToServerScreen");
 		paintConnectToServerScreen();
+		logger.info("Finished painting ConnectToServerScreen");
+
+		logger.info("Waiting for connectedToServer to be true");
 		while (!connectedToServer) {
 			try {
-				Thread.sleep(10);
+				Thread.sleep(100);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-		System.out.println("Acabou!");
+
+		logger.info("Waiting for sbKingClient.isDirectionSet() to be true");
+		while (!sbKingClient.isDirectionSet()) {
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		logger.info("Starting to paint WaitingForPlayersScreen");
+		paintWaitingForPlayersScreen();
+		logger.info("Finished painting WaitingForPlayersScreen");
+
+		logger.info("Waiting for sbKingClient.isEveryoneConnected() to be true");
+		while (!sbKingClient.isEveryoneConnected()) {
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		logger.info("Acabou!");
 	}
 
 	private void paintConnectToServerScreen() {
 		cleanContentPane();
 		ConnectToServerPainter connectToServerPainter = new ConnectToServerPainter(this);
 		connectToServerPainter.paint(this.getContentPane());
+	}
 
-//		JButton connectToServerButton = new JButton();
-//		this.getContentPane().add(connectToServerButton);
-//
-//		connectToServerButton.addActionListener(new GameSelectActionListener());
-//		connectToServerButton.setBounds(TABLE_WIDTH / 2 - 100, TABLE_HEIGHT / 2 - 50, 200, 100);
-//		connectToServerButton.setText("Connect to server");
-
+	private void paintWaitingForPlayersScreen() {
+		cleanContentPane();
+		WaitingForPlayersPainter waitingForPlayersPainter = new WaitingForPlayersPainter(sbKingClient.getDirection());
+		waitingForPlayersPainter.paint(this.getContentPane());
 	}
 
 	private void cleanContentPane() {
@@ -64,14 +101,15 @@ public class NetworkClientScreen extends JFrame {
 	}
 
 	private void initializeWaitingForPlayerElement() {
-		this.setVisible(false);
-		this.dispose();
+		logger.info("Entrou initializeWaitingForPlayerElement");
+//		this.setVisible(false);
+//		this.dispose();
 	}
 
 	public void connectToServer() {
-		sbKingClient = new SBKingClient();
-		connectedToServer = true;
-		sbKingClient.run();
+		this.sbKingClient = new SBKingClient();
+		this.connectedToServer = true;
+		pool.execute(this.sbKingClient);
 	}
 
 	class GameSelectActionListener implements java.awt.event.ActionListener {

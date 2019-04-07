@@ -11,7 +11,7 @@ import org.apache.log4j.Logger;
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
 
-public class SBKingClient {
+public class SBKingClient implements Runnable{
 
 	private Socket socket;
 
@@ -19,8 +19,9 @@ public class SBKingClient {
 
 	private NetworkGameMode networkGameMode;
 	private Direction direction;
+	private boolean allPlayersConnected;
 
-	final static Logger logger = Logger.getLogger(GameServer.class);
+	final static Logger logger = Logger.getLogger(SBKingClient.class);
 
 	public SBKingClient() {
 		try {
@@ -45,10 +46,11 @@ public class SBKingClient {
 		logger.info("Finished serializator setup.");
 	}
 
+	@Override
 	public void run() {
 		initializeDirection();
 		NetworkCardPlayer networkCardPlayer = new NetworkCardPlayer(this.serializator);
-		this.networkGameMode = new NetworkGameMode(networkCardPlayer, this.direction);
+		//this.networkGameMode = new NetworkGameMode(networkCardPlayer, this.direction);
 		logger.info("Entering on the infinite loop to process commands.");
 		while (true) {
 			processCommand();
@@ -70,10 +72,14 @@ public class SBKingClient {
 		String DIRECTION = "DIRECTION";
 		String WAIT = "WAIT";
 		String CONTINUE = "CONTINUE";
+		String ALLCONNECTED = "ALLCONNECTED";
 
 		if (MESSAGE.equals(controlMessage)) {
 			String string = this.serializator.tryToDeserializeString();
 			logger.info("I received a message: --" + string + "--");
+			if (ALLCONNECTED.equals(string)) {
+				allPlayersConnected = true;
+			}
 		} else if (DEAL.equals(controlMessage)) {
 			Deal deal = this.serializator.tryToDeserializeDeal();
 			logger.info("I received a deal that contains this trick: " + deal.getCurrentTrick()
@@ -103,6 +109,18 @@ public class SBKingClient {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	public boolean isEveryoneConnected() {
+		return allPlayersConnected;
+	}
+
+	public Direction getDirection() {
+		return this.direction;
+	}
+
+	public boolean isDirectionSet() {
+		return this.direction != null;
 	}
 
 }
