@@ -10,8 +10,9 @@ import org.apache.log4j.Logger;
 
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
+import br.com.sbk.sbking.gui.models.PositiveOrNegative;
 
-public class SBKingClient implements Runnable{
+public class SBKingClient implements Runnable {
 
 	private Socket socket;
 
@@ -22,6 +23,7 @@ public class SBKingClient implements Runnable{
 	private boolean allPlayersConnected;
 
 	private Direction chooserDirection;
+	private PositiveOrNegative positiveOrNegative;
 
 	final static Logger logger = Logger.getLogger(SBKingClient.class);
 
@@ -73,6 +75,7 @@ public class SBKingClient implements Runnable{
 		String CONTINUE = "CONTINUE";
 		String ALLCONNECTED = "ALLCONNECTED";
 		String CHOOSER = "CHOOSER";
+		String POSITIVEORNEGATIVE = "POSITIVEORNEGATIVE";
 
 		if (MESSAGE.equals(controlMessage)) {
 			String string = this.serializator.tryToDeserializeString();
@@ -98,19 +101,29 @@ public class SBKingClient implements Runnable{
 			} while (!CONTINUE.equals(controlMessage));
 			logger.info("Received a CONTINUE message");
 
-		}else if(CHOOSER.equals(controlMessage)) {
+		} else if (CHOOSER.equals(controlMessage)) {
 			Direction direction = this.serializator.tryToDeserializeDirection();
 			logger.info("Received choosers direction: " + direction);
-			
+
 			setChooserDirection(direction);
-		}
-		else {
+		} else if (POSITIVEORNEGATIVE.equals(controlMessage)) {
+			String positiveOrNegative = this.serializator.tryToDeserializeString();
+			if ("POSITIVE".equals(positiveOrNegative)) {
+				this.selectedPositive();
+			} else if ("NEGATIVE".equals(positiveOrNegative)) {
+				this.selectedNegative();
+			} else {
+				logger.info("Could not understand POSITIVE or NEGATIVE.");
+			}
+		} else {
 			logger.info("Could not understand control.");
 		}
-		
+
 		// Run these when received an order to start game from server.
-		//NetworkCardPlayer networkCardPlayer = new NetworkCardPlayer(this.serializator);
-		//this.networkGameMode = new NetworkGameMode(networkCardPlayer, this.direction);
+		// NetworkCardPlayer networkCardPlayer = new
+		// NetworkCardPlayer(this.serializator);
+		// this.networkGameMode = new NetworkGameMode(networkCardPlayer,
+		// this.direction);
 
 		// FIXME
 		try {
@@ -119,6 +132,18 @@ public class SBKingClient implements Runnable{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	public void sendPositive() {
+		logger.debug("Sending positive to server");
+		String positive = "POSITIVE";
+		this.serializator.tryToSerialize(positive);
+	}
+
+	public void sendNegative() {
+		logger.debug("Sending negative to server");
+		String negative = "NEGATIVE";
+		this.serializator.tryToSerialize(negative);
 	}
 
 	private void setAllPlayersConnected() {
@@ -143,6 +168,38 @@ public class SBKingClient implements Runnable{
 
 	public boolean isDirectionSet() {
 		return this.direction != null;
+	}
+
+	public boolean isChooserSet() {
+		return this.chooserDirection != null;
+	}
+
+	public Direction getChooser() {
+		return this.chooserDirection;
+	}
+
+	public void selectedPositive() {
+		this.positiveOrNegative = new PositiveOrNegative();
+		this.positiveOrNegative.setPositive();
+	}
+
+	public void selectedNegative() {
+		this.positiveOrNegative = new PositiveOrNegative();
+		this.positiveOrNegative.setNegative();
+	}
+
+	public boolean isPositiveOrNegativeSelected() {
+		if(this.positiveOrNegative==null)
+			return false;
+		return this.positiveOrNegative.isSelected();
+	}
+
+	public boolean isPositive() {
+		return this.positiveOrNegative.isPositive();
+	}
+
+	public boolean isNegative() {
+		return this.positiveOrNegative.isNegative();
 	}
 
 }

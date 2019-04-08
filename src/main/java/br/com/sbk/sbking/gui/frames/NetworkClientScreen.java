@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 
 import org.apache.log4j.Logger;
 
+import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.gui.painters.ConnectToServerPainter;
 import br.com.sbk.sbking.gui.painters.WaitingForChoosingPainter;
 import br.com.sbk.sbking.gui.painters.WaitingForPlayersPainter;
@@ -82,15 +83,42 @@ public class NetworkClientScreen extends JFrame {
 				e.printStackTrace();
 			}
 		}
+
+		// while(true) { //FIXME Should last 10 deals - a complete king game
+		while (!sbKingClient.isChooserSet()) {
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		logger.info("Starting to paint WaitingForChoosingScreen");
+		paintWaitingForChoosingScreen(sbKingClient.getDirection(), sbKingClient.getChooser());
+		logger.info("Finished painting WaitingForChoosingScreen");
 		
-		//while(true) { //FIXME Should last 10 deals - a complete king game
-			logger.info("Starting to paint WaitingForChoosingScreen");
-			paintWaitingForChoosingScreen();
-			logger.info("Finished painting WaitingForChoosingScreen");
-		//}
+		while (!sbKingClient.isPositiveOrNegativeSelected()) {
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		boolean isPositive = this.sbKingClient.isPositive();
+		
+		logger.info("Received PositiveOrNegative from server.");
+		
+		if(isPositive) {
+			logger.debug("It is positive.");
+		}else {
+			logger.debug("It is negative.");
+		}
 		
 		
-		logger.info("Acabou!");
+		// }
+
+		logger.info("Finished!");
 	}
 
 	private void paintConnectToServerScreen() {
@@ -104,10 +132,10 @@ public class NetworkClientScreen extends JFrame {
 		WaitingForPlayersPainter waitingForPlayersPainter = new WaitingForPlayersPainter(sbKingClient.getDirection());
 		waitingForPlayersPainter.paint(this.getContentPane());
 	}
-	
-	private void paintWaitingForChoosingScreen() {
+
+	private void paintWaitingForChoosingScreen(Direction myDirection, Direction chooserDirection) {
 		cleanContentPane();
-		WaitingForChoosingPainter waitingForChoosingPainter = new WaitingForChoosingPainter();
+		WaitingForChoosingPainter waitingForChoosingPainter = new WaitingForChoosingPainter(myDirection, chooserDirection, this.sbKingClient);
 		waitingForChoosingPainter.paint(this.getContentPane());
 	}
 

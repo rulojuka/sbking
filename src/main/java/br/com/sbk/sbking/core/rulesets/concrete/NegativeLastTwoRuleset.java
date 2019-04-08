@@ -1,12 +1,12 @@
 package br.com.sbk.sbking.core.rulesets.concrete;
 
 import br.com.sbk.sbking.core.Trick;
-import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
+import br.com.sbk.sbking.core.rulesets.abstractClasses.NegativeRuleset;
 import br.com.sbk.sbking.core.rulesets.implementations.DefaultSuitFollowable;
 import br.com.sbk.sbking.core.rulesets.implementations.DontProhibitsHearts;
 import br.com.sbk.sbking.core.rulesets.implementations.NoTrumpSuitWinnable;
 
-public class NegativeLastTwoRuleset extends Ruleset {
+public class NegativeLastTwoRuleset extends NegativeRuleset {
 
 	private static final int NEGATIVE_LAST_TWO_SCORE_MULTIPLIER = 90;
 

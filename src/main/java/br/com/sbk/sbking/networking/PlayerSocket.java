@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
+import br.com.sbk.sbking.gui.models.PositiveOrNegative;
 
 public class PlayerSocket implements Runnable {
 	private Direction direction;
@@ -28,7 +29,7 @@ public class PlayerSocket implements Runnable {
 		logger.info("Connected: " + socket);
 		try {
 			setup();
-			while(true) {
+			while (true) {
 				processCommand();
 			}
 		} catch (Exception e) {
@@ -54,7 +55,18 @@ public class PlayerSocket implements Runnable {
 		Object readObject = this.serializator.tryToDeserialize();
 		if (readObject instanceof String) {
 			String string = (String) readObject;
-			logger.info(this.direction + "sent this message: --" + string + "--");
+			logger.info(this.direction + " sent this message: --" + string + "--");
+			String POSITIVE = "POSITIVE";
+			String NEGATIVE = "NEGATIVE";
+			if (POSITIVE.equals(string) || NEGATIVE.equals(string)) {
+				PositiveOrNegative positiveOrNegative = new PositiveOrNegative();
+				if (POSITIVE.equals(string)) {
+					positiveOrNegative.setPositive();
+				} else {
+					positiveOrNegative.setNegative();
+				}
+				gameServer.notifyChoosePositiveOrNegative(positiveOrNegative, this.direction);
+			}
 		}
 		if (readObject instanceof Card) {
 			Card playedCard = (Card) readObject;
@@ -86,13 +98,21 @@ public class PlayerSocket implements Runnable {
 		logger.info("Sending its direction to " + this.direction);
 		this.serializator.tryToSerialize(direction);
 	}
-	
+
 	public void sendChooser(Direction direction) {
 		String control = "CHOOSER";
 		logger.info("Sending " + control + " control to " + this.direction);
 		this.serializator.tryToSerialize(control);
 		logger.info("Sending chooser direction to " + this.direction);
 		this.serializator.tryToSerialize(direction);
+	}
+
+	public void sendPositiveOrNegative(String message) {
+		String control = "POSITIVEORNEGATIVE";
+		logger.info("Sending " + control + " control to " + this.direction);
+		this.serializator.tryToSerialize(control);
+		logger.info("Sending positive or negative to " + this.direction);
+		this.serializator.tryToSerialize(message);
 	}
 
 }
