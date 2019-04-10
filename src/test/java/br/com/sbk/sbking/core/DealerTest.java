@@ -14,7 +14,7 @@ public class DealerTest {
 	@Test
 	public void shouldCallDealConstructorWithABoardWithTheCorrectDealerAndTheGivenRuleset() {
 		Direction dealer = Direction.NORTH;
-		BoardDealer boardDealer = new BoardDealer(dealer);
+		CompleteDealDealer boardDealer = new CompleteDealDealer(dealer);
 		Ruleset ruleset = mock(Ruleset.class);
 
 		Deal deal = boardDealer.deal(ruleset);

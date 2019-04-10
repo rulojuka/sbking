@@ -78,6 +78,7 @@ public class SBKingClient implements Runnable {
 		final String CHOOSERPOSITIVENEGATIVE = "CHOOSERPOSITIVENEGATIVE";
 		final String CHOOSERGAMEMODEORSTRAIN = "CHOOSERGAMEMODEORSTRAIN";
 		final String POSITIVEORNEGATIVE = "POSITIVEORNEGATIVE";
+		final String GAMEMODEORSTRAIN = "GAMEMODEORSTRAIN";
 
 		if (MESSAGE.equals(controlMessage)) {
 			String string = this.serializator.tryToDeserializeString();
@@ -121,15 +122,16 @@ public class SBKingClient implements Runnable {
 			Direction direction = this.serializator.tryToDeserializeDirection();
 			logger.info("Received GameModeOrStrain choosers direction: " + direction);
 			setGameModeOrStrainChooser(direction);
+		} else if (GAMEMODEORSTRAIN.equals(controlMessage)) {
+			String gameModeOrStrain = this.serializator.tryToDeserializeString();
+			logger.info("Received GameModeOrStrain: " + gameModeOrStrain);
+			logger.info("Starting network player");
+			this.initializeNetworkGameMode();
 		} else {
 			logger.info("Could not understand control.");
 		}
 
-		// Run these when received an order to start game from server.
-		// NetworkCardPlayer networkCardPlayer = new
-		// NetworkCardPlayer(this.serializator);
-		// this.networkGameMode = new NetworkGameMode(networkCardPlayer,
-		// this.direction);
+		
 
 		// FIXME
 		try {
@@ -224,5 +226,11 @@ public class SBKingClient implements Runnable {
 		logger.debug("Sending Game Mode or Strain to server");
 		this.serializator.tryToSerialize(gameModeOrStrain);
 	}
+	
+	private void initializeNetworkGameMode() {
+		NetworkCardPlayer networkCardPlayer = new NetworkCardPlayer(this.serializator);
+		this.networkGameMode = new NetworkGameMode(networkCardPlayer, this.direction);
+	}
+	
 
 }

@@ -12,9 +12,11 @@ import java.util.concurrent.Executors;
 import org.apache.log4j.Logger;
 
 import br.com.sbk.sbking.core.Card;
+import br.com.sbk.sbking.core.CompleteDealDealer;
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.core.exceptions.SelectedPositiveOrNegativeInAnotherPlayersTurnException;
+import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
 import br.com.sbk.sbking.gui.models.PositiveOrNegative;
 
 public class GameServer {
@@ -23,9 +25,11 @@ public class GameServer {
 	private List<PlayerSocket> playerSockets = new ArrayList<PlayerSocket>();
 	private ExecutorService pool;
 	private NetworkGame networkGame;
-	private Direction currentChooser = Direction.EAST;
-	private PositiveOrNegativeNotification event = new PositiveOrNegativeNotification();
+	private Direction currentDealer = Direction.NORTH;
+	private PositiveOrNegativeNotification positiveOrNegativeNotification = new PositiveOrNegativeNotification();
 	private PositiveOrNegative currentPositiveOrNegative;
+	private GameModeOrStrainNotification gameModeOrStrainNotification = new GameModeOrStrainNotification();
+	private Ruleset currentGameModeOrStrain;
 
 	public GameServer() {
 		pool = Executors.newFixedThreadPool(4);
@@ -43,42 +47,59 @@ public class GameServer {
 
 			this.sendMessageAll("ALLCONNECTED");
 
-			while (true) {
-				this.sendChooserPositiveNegativeAll(currentChooser);
+			for (int i = 0; i < 10; i++) {
+				this.sendChooserPositiveNegativeAll(currentDealer.getPositiveOrNegativeChooserWhenDealer());
 
-				synchronized (event) {
+				synchronized (positiveOrNegativeNotification) {
 					// wait until object notifies - which relinquishes the lock on the object too
 					try {
 						logger.info(
 								"I am waiting for some thread to notify that it wants to choose positive or negative");
-						event.wait();
+						positiveOrNegativeNotification.wait();
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
 
-				logger.info("I received that is going to be " + event.getPositiveOrNegative().toString());
-				this.currentPositiveOrNegative = event.getPositiveOrNegative();
+				logger.info("I received that is going to be "
+						+ positiveOrNegativeNotification.getPositiveOrNegative().toString());
+				this.currentPositiveOrNegative = positiveOrNegativeNotification.getPositiveOrNegative();
 				this.sendPositiveOrNegativeAll(this.currentPositiveOrNegative);
 
-				this.currentChooser = this.currentChooser.getPartner();
-				this.sendChooserGameModeOrStrainAll(this.currentChooser);
+				this.sendChooserGameModeOrStrainAll(this.currentDealer.getGameModeOrStrainChooserWhenDealer());
 
-				logger.debug("Sleeping for 100 seconds");
-				Thread.sleep(100000);
+				synchronized (gameModeOrStrainNotification) {
+					// wait until object notifies - which relinquishes the lock on the object too
+					try {
+						logger.info(
+								"I am waiting for some thread to notify that it wants to choose game Mode Or Strain");
+						gameModeOrStrainNotification.wait();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				logger.info("I received that is going to be "
+						+ gameModeOrStrainNotification.getGameModeOrStrain().getShortDescription());
+				this.currentGameModeOrStrain = gameModeOrStrainNotification.getGameModeOrStrain();
+				this.sendGameModeOrStrainShortDescriptionAll(this.currentGameModeOrStrain.getShortDescription());
+
+				logger.info("Sleeping for 500ms waiting for everything come out right.");
+				Thread.sleep(500);
+
+				logger.info("Everything selected! Game commencing!");
+				CompleteDealDealer dealer = new CompleteDealDealer(this.currentDealer);
+				Deal deal = dealer.deal(currentGameModeOrStrain);
+				NetworkGame game = new NetworkGame(this, deal);
+				game.run();
+
+				logger.info("Game finished!");
 			}
 
-//			logger.info("All players connected, passing control to game");
-//			NetworkGame game;
-//			Dealer dealer = new Dealer(Direction.NORTH);
-//			game = new NetworkGame(pool, dealer.deal(new NegativeTricksRuleset()));
-//			game.run();
-//			logger.info("Game has ended. Exiting main thread.");
+			logger.info("Game has ended. Exiting main thread.");
 		}
 	}
-
-	
 
 	private void connectPlayer(Socket socket, Direction direction) {
 
@@ -105,9 +126,19 @@ public class GameServer {
 	}
 
 	public void notifyChoosePositiveOrNegative(PositiveOrNegative positiveOrNegative, Direction direction) {
-		synchronized (event) {
-			if (this.currentChooser == direction) {
-				this.event.notifyAllWithPositiveOrNegative(positiveOrNegative);
+		synchronized (positiveOrNegativeNotification) {
+			if (this.getCurrentPositiveOrNegativeChooser() == direction) {
+				this.positiveOrNegativeNotification.notifyAllWithPositiveOrNegative(positiveOrNegative);
+			} else {
+				throw new SelectedPositiveOrNegativeInAnotherPlayersTurnException();
+			}
+		}
+	}
+
+	public void notifyChooseGameModeOrStrain(Ruleset gameModeOrStrain, Direction direction) {
+		synchronized (gameModeOrStrainNotification) {
+			if (this.getCurrentGameModeOrStrainChooser() == direction) {
+				this.gameModeOrStrainNotification.notifyAllWithGameModeOrStrain(gameModeOrStrain);
 			} else {
 				throw new SelectedPositiveOrNegativeInAnotherPlayersTurnException();
 			}
@@ -137,7 +168,7 @@ public class GameServer {
 		}
 		logger.info("Finished sending messages.");
 	}
-	
+
 	private void sendChooserGameModeOrStrainAll(Direction chooser) {
 		logger.info("Sending everyone the chooser of GameMode or Strain: --" + chooser + "--");
 		for (PlayerSocket playerSocket : playerSockets) {
@@ -153,6 +184,23 @@ public class GameServer {
 			playerSocket.sendPositiveOrNegative(message);
 		}
 		logger.info("Finished sending messages.");
+	}
+
+	private void sendGameModeOrStrainShortDescriptionAll(String currentGameModeOrStrain) {
+		String message = currentGameModeOrStrain;
+		logger.info("Sending everyone : --" + message + "--");
+		for (PlayerSocket playerSocket : playerSockets) {
+			playerSocket.sendGameModeOrStrain(message);
+		}
+		logger.info("Finished sending messages.");
+	}
+
+	private Direction getCurrentPositiveOrNegativeChooser() {
+		return this.currentDealer.getPositiveOrNegativeChooserWhenDealer();
+	}
+
+	private Direction getCurrentGameModeOrStrainChooser() {
+		return this.currentDealer.getGameModeOrStrainChooserWhenDealer();
 	}
 
 }

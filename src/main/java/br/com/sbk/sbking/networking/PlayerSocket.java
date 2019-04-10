@@ -8,6 +8,8 @@ import org.apache.log4j.Logger;
 import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
+import br.com.sbk.sbking.core.rulesets.RulesetFromShortDescriptionIdentifier;
+import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
 import br.com.sbk.sbking.gui.models.PositiveOrNegative;
 
 public class PlayerSocket implements Runnable {
@@ -66,6 +68,11 @@ public class PlayerSocket implements Runnable {
 					positiveOrNegative.setNegative();
 				}
 				gameServer.notifyChoosePositiveOrNegative(positiveOrNegative, this.direction);
+			} else {
+				Ruleset gameModeOrStrain = RulesetFromShortDescriptionIdentifier.identify(string);
+				if (gameModeOrStrain != null) {
+					gameServer.notifyChooseGameModeOrStrain(gameModeOrStrain, direction);
+				}
 			}
 		}
 		if (readObject instanceof Card) {
@@ -121,6 +128,14 @@ public class PlayerSocket implements Runnable {
 		this.serializator.tryToSerialize(control);
 		logger.info("Sending chooser direction to " + this.direction);
 		this.serializator.tryToSerialize(chooser);
+	}
+
+	public void sendGameModeOrStrain(String message) {
+		String control = "GAMEMODEORSTRAIN";
+		logger.info("Sending " + control + " control to " + this.direction);
+		this.serializator.tryToSerialize(control);
+		logger.info("Sending chooser direction to " + this.direction);
+		this.serializator.tryToSerialize(message);
 	}
 
 }

@@ -3,7 +3,7 @@ package br.com.sbk.sbking.gui.painters;
 import java.awt.Container;
 
 import br.com.sbk.sbking.core.Deal;
-import br.com.sbk.sbking.core.Dealer;
+import br.com.sbk.sbking.core.CompleteDealDealer;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
 import br.com.sbk.sbking.gui.JElements.CardButton;
@@ -17,7 +17,7 @@ public class GameModePainter {
 	private Container lastContentPane;
 
 	public GameModePainter(GameScreen gameScreen, Ruleset ruleset) {
-		Dealer dealer = new Dealer(Direction.NORTH);
+		CompleteDealDealer dealer = new CompleteDealDealer(Direction.NORTH);
 		deal = dealer.deal(ruleset);
 	}
 

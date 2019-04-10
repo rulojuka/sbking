@@ -86,7 +86,6 @@ public class ChooseGameModeOrStrainElement {
 		radioButtons = new ArrayList<JRadioButton>();
 		for (String text : texts) {
 			currentButton = new JRadioButton(text);
-			System.out.println("bounds:" + initial_x + "**" + y + "**" + width + "**" + height);
 			currentButton.setBounds(initial_x, y, width, height);
 			container.add(currentButton);
 			radioButtons.add(currentButton);

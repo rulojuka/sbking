@@ -5,12 +5,12 @@ import java.util.List;
 
 import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
 
-public class BoardDealer {
+public class CompleteDealDealer {
 
 	private static final int SIZE_OF_HAND = 13;
 	private Direction dealer;
 
-	public BoardDealer(Direction dealer) {
+	public CompleteDealDealer(Direction dealer) {
 		this.dealer = dealer;
 	}
 
@@ -19,7 +19,7 @@ public class BoardDealer {
 		return new Deal(board, ruleset);
 	}
 
-	public Board dealBoard() {
+	private Board dealBoard() {
 		List<Hand> hands = new ArrayList<Hand>();
 		ShuffledDeck shuffledDeck = new ShuffledDeck();
 

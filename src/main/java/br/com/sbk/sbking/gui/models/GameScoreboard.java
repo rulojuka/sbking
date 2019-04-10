@@ -24,7 +24,7 @@ public class GameScoreboard {
 		if (!deal.isFinished()) {
 			throw new DealNotFinishedException();
 		} else {
-			Direction chosenBy = deal.getLeader().getChosenByWhenLeader();
+			Direction chosenBy = deal.getDealer().getPositiveOrNegativeChooserWhenDealer();
 			Ruleset ruleset = deal.getRuleset();
 			int orderOfPlay = ++gamesPlayed;
 			Score score = deal.getScore();

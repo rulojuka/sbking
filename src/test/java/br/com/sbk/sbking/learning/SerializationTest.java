@@ -15,7 +15,7 @@ import org.junit.Test;
 import br.com.sbk.sbking.core.Board;
 import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Deal;
-import br.com.sbk.sbking.core.Dealer;
+import br.com.sbk.sbking.core.CompleteDealDealer;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.core.Hand;
 import br.com.sbk.sbking.core.Rank;
@@ -116,19 +116,6 @@ public class SerializationTest {
 	}
 
 	@Test
-	public void boardShouldBeSerializableAndDeserializable() {
-		Direction east = Direction.EAST;
-		Dealer dealer = new Dealer(east);
-		Board board = dealer.dealBoard();
-
-		serializator.tryToSerialize(board);
-
-		Object deserializedObject = serializator.tryToDeserialize();
-		Board deserializedBoard = (Board) deserializedObject;
-		assertEquals(board, deserializedBoard);
-	}
-
-	@Test
 	public void scoreboardShouldBeSerializableAndDeserializable() {
 		Score scoreboard = new Score(new NegativeTricksRuleset());
 
@@ -167,7 +154,7 @@ public class SerializationTest {
 
 	@Test
 	public void dealShouldBeSerializableAndDeserializable() {
-		Dealer dealer = new Dealer(Direction.SOUTH);
+		CompleteDealDealer dealer = new CompleteDealDealer(Direction.SOUTH);
 		Deal deal = dealer.deal(new NegativeTricksRuleset());
 
 		serializator.tryToSerialize(deal);
@@ -179,7 +166,7 @@ public class SerializationTest {
 	
 	@Test
 	public void dealWithCurrentTrickShouldBeSerializableAndDeserializable() {
-		Dealer dealer = new Dealer(Direction.SOUTH);
+		CompleteDealDealer dealer = new CompleteDealDealer(Direction.SOUTH);
 		Deal deal = dealer.deal(new NegativeTricksRuleset());
 		Card anyCardOfCurrentPlayer = deal.getHandOf(deal.getCurrentPlayer()).get(0);
 		deal.playCard(anyCardOfCurrentPlayer);

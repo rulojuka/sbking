@@ -11,7 +11,6 @@ public class NetworkingTest {
 	@Test
 	public void shouldGetHelloWorldViaSocket() {
 		HelloWorldClient client = new HelloWorldClient();
-		HelloWorldServer server = new HelloWorldServer();
 		try {
 			// server.initialize();
 			client.connect();
@@ -26,7 +25,6 @@ public class NetworkingTest {
 	
 	@Test
 	public void shouldCapitalizeToManyClientsAtOnce() {
-		CapitalizeToManyClientsServer server = new CapitalizeToManyClientsServer();
 		CapitalizeClient capitalizeClient1 = new CapitalizeClient();
 		CapitalizeClient capitalizeClient2 = new CapitalizeClient();
 		String message1 = "Hello world";
