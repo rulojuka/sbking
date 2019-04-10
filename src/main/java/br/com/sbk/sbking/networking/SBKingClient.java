@@ -10,7 +10,6 @@ import org.apache.log4j.Logger;
 
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
-import br.com.sbk.sbking.core.rulesets.abstractClasses.NegativeRuleset;
 import br.com.sbk.sbking.gui.models.PositiveOrNegative;
 
 public class SBKingClient implements Runnable {
@@ -221,9 +220,9 @@ public class SBKingClient implements Runnable {
 		return this.positiveOrNegative.isNegative();
 	}
 
-	public void sendNegativeRuleset(NegativeRuleset negativeRuleset) {
-		logger.debug("Sending --" + negativeRuleset.getShortDescription() + "-- game mode to server");
-		this.serializator.tryToSerialize(negativeRuleset.getShortDescription());
+	public void sendGameModeOrStrain(String gameModeOrStrain) {
+		logger.debug("Sending Game Mode or Strain to server");
+		this.serializator.tryToSerialize(gameModeOrStrain);
 	}
 
 }

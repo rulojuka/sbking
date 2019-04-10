@@ -20,8 +20,8 @@ import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 
 import br.com.sbk.sbking.core.Direction;
+import br.com.sbk.sbking.core.Strain;
 import br.com.sbk.sbking.core.rulesets.NegativeRulesetsEnum;
-import br.com.sbk.sbking.core.rulesets.abstractClasses.NegativeRuleset;
 import br.com.sbk.sbking.networking.SBKingClient;
 
 public class ChooseGameModeOrStrainElement {
@@ -71,38 +71,42 @@ public class ChooseGameModeOrStrainElement {
 		initial_y += 25;
 		ButtonGroup bg = new ButtonGroup();
 
+		List<String> texts = new ArrayList<String>();
 		if (this.isPositive) {
-
-		} else {
-			int y = initial_y;
-			radioButtons = new ArrayList<JRadioButton>();
-			for (NegativeRulesetsEnum negativeRulesetEnumElement : NegativeRulesetsEnum.values()) {
-				NegativeRuleset current = negativeRulesetEnumElement.getNegativeRuleset();
-				currentButton = new JRadioButton(current.getShortDescription());
-				System.out.println("bounds:" + initial_x + "**" + y + "**" + width + "**" + height);
-				currentButton.setBounds(initial_x, y, width, height);
-				container.add(currentButton);
-				radioButtons.add(currentButton);
-
-				y += 20;
-
-				bg.add(currentButton);
-
+			for (Strain strain : Strain.values()) {
+				texts.add(strain.getPositiveRuleset().getShortDescription());
 			}
+		} else {
+			for (NegativeRulesetsEnum negativeRulesetEnumElement : NegativeRulesetsEnum.values()) {
+				texts.add(negativeRulesetEnumElement.getNegativeRuleset().getShortDescription());
+			}
+		}
+
+		int y = initial_y;
+		radioButtons = new ArrayList<JRadioButton>();
+		for (String text : texts) {
+			currentButton = new JRadioButton(text);
+			System.out.println("bounds:" + initial_x + "**" + y + "**" + width + "**" + height);
+			currentButton.setBounds(initial_x, y, width, height);
+			container.add(currentButton);
+			radioButtons.add(currentButton);
+
+			y += 20;
+
+			bg.add(currentButton);
 
 		}
 
 		JButton selectGameModeOrStrandButton = new JButton();
-		selectGameModeOrStrandButton.addActionListener(new NegativeSelectActionListener());
+		selectGameModeOrStrandButton.addActionListener(new GameModeOrStrainSelectActionListener());
 		selectGameModeOrStrandButton.setBounds(initial_x + width + 10, initial_y, 80, height * 6);
 		selectGameModeOrStrandButton.setText("Select");
 		container.add(selectGameModeOrStrandButton);
 
 	}
 
-	class NegativeSelectActionListener implements java.awt.event.ActionListener {
+	class GameModeOrStrainSelectActionListener implements java.awt.event.ActionListener {
 		public void actionPerformed(java.awt.event.ActionEvent event) {
-
 			JRadioButton selectedOnRadio = null;
 			for (JRadioButton jRadioButton : radioButtons) {
 				if (jRadioButton.isSelected()) {
@@ -110,19 +114,10 @@ public class ChooseGameModeOrStrainElement {
 					break;
 				}
 			}
-			String text = selectedOnRadio.getText();
-			NegativeRuleset negativeRuleset = null;
-			for (NegativeRulesetsEnum negativeRulesetEnumElement : NegativeRulesetsEnum.values()) {
-				NegativeRuleset current = negativeRulesetEnumElement.getNegativeRuleset();
-				if (text.equals(current.getShortDescription())) {
-					negativeRuleset = current;
-					break;
-				}
-			}
-
-			sbKingClient.sendNegativeRuleset(negativeRuleset);
+			sbKingClient.sendGameModeOrStrain(selectedOnRadio.getText());
 
 		}
+
 	}
 
 	private void addLabel() {
