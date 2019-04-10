@@ -12,12 +12,12 @@ public class DealerTest {
 	private static final int SIZE_OF_HAND = 13;
 
 	@Test
-	public void shouldCallDealConstructorWithABoardWithTheCorrectLeaderAndTheGivenRuleset() {
-		Direction leader = Direction.NORTH;
-		Dealer dealer = new Dealer(leader);
+	public void shouldCallDealConstructorWithABoardWithTheCorrectDealerAndTheGivenRuleset() {
+		Direction dealer = Direction.NORTH;
+		BoardDealer boardDealer = new BoardDealer(dealer);
 		Ruleset ruleset = mock(Ruleset.class);
 
-		Deal deal = dealer.deal(ruleset);
+		Deal deal = boardDealer.deal(ruleset);
 
 		// The correct test should verify if new Deal(anyBoardWithSameDealer, ruleset)
 		// was called

@@ -11,7 +11,7 @@ import org.mockito.Mockito;
 
 public class BoardTest {
 
-	private Direction leader;
+	private Direction dealer;
 	private Hand northHand;
 	private Hand eastHand;
 	private Hand southHand;
@@ -20,17 +20,17 @@ public class BoardTest {
 
 	@Before
 	public void createNorthBoard() {
-		leader = Direction.NORTH;
+		dealer = Direction.NORTH;
 		northHand = Mockito.mock(Hand.class);
 		eastHand = Mockito.mock(Hand.class);
 		southHand = Mockito.mock(Hand.class);
 		westHand = Mockito.mock(Hand.class);
 
-		board = new Board(northHand, eastHand, southHand, westHand, leader);
+		board = new Board(northHand, eastHand, southHand, westHand, dealer);
 	}
 
 	@Test
-	public void shouldBeConstructedWith4HandsAndALeader() {
+	public void shouldBeConstructedWith4HandsAndADealer() {
 		assertNotNull(this.board);
 	}
 
@@ -43,8 +43,8 @@ public class BoardTest {
 	}
 
 	@Test
-	public void shouldGetCorrectLeader() {
-		assertEquals(this.leader, this.board.getLeader());
+	public void shouldGetCorrectDealer() {
+		assertEquals(this.dealer, this.board.getDealer());
 	}
 
 	@Test

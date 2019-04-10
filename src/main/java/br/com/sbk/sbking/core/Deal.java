@@ -16,9 +16,9 @@ public class Deal implements Serializable {
 
 	private Board board;
 	private int completedTricks;
+	private Direction dealer;
 	private Direction currentPlayer;
 	private Score score;
-	private Direction leader;
 
 	private Ruleset ruleset;
 
@@ -28,8 +28,8 @@ public class Deal implements Serializable {
 	public Deal(Board board, Ruleset ruleset) {
 		this.board = board;
 		this.ruleset = ruleset;
-		this.leader = this.board.getLeader();
-		this.currentPlayer = this.board.getLeader();
+		this.dealer = this.board.getDealer();
+		this.currentPlayer = this.dealer.getLeaderWhenDealer();
 		this.score = new Score(ruleset);
 		this.completedTricks = 0;
 		this.tricks = new ArrayList<Trick>();
@@ -212,8 +212,8 @@ public class Deal implements Serializable {
 		return true;
 	}
 
-	public Direction getLeader() {
-		return this.leader;
+	public Direction getDealer() {
+		return this.dealer;
 	}
 	
 	public Score getScore() {

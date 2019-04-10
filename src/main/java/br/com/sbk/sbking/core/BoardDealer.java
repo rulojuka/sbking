@@ -5,13 +5,13 @@ import java.util.List;
 
 import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
 
-public class Dealer {
+public class BoardDealer {
 
 	private static final int SIZE_OF_HAND = 13;
-	private Direction leader;
+	private Direction dealer;
 
-	public Dealer(Direction leader) {
-		this.leader = leader;
+	public BoardDealer(Direction dealer) {
+		this.dealer = dealer;
 	}
 
 	public Deal deal(Ruleset ruleset) {
@@ -31,7 +31,7 @@ public class Dealer {
 			hands.add(currentHand);
 		}
 
-		Board board = new Board(hands.get(0), hands.get(1), hands.get(2), hands.get(3), this.leader);
+		Board board = new Board(hands.get(0), hands.get(1), hands.get(2), hands.get(3), this.dealer);
 		return board;
 	}
 

@@ -9,19 +9,19 @@ public class Board implements Serializable {
 	private Hand eastHand;
 	private Hand southHand;
 	private Hand westHand;
-	private Direction leader;
+	private Direction dealer;
 
-	public Board(Hand northHand, Hand eastHand, Hand southHand, Hand westHand, Direction leader) {
+	public Board(Hand northHand, Hand eastHand, Hand southHand, Hand westHand, Direction dealer) {
 		this.northHand = northHand;
 		this.eastHand = eastHand;
 		this.southHand = southHand;
 		this.westHand = westHand;
 		this.sortAllHands();
-		this.leader = leader;
+		this.dealer = dealer;
 	}
 
-	public Direction getLeader() {
-		return leader;
+	public Direction getDealer() {
+		return dealer;
 	}
 
 	public Hand getHandOf(Direction direction) {
@@ -51,7 +51,7 @@ public class Board implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((eastHand == null) ? 0 : eastHand.hashCode());
-		result = prime * result + ((leader == null) ? 0 : leader.hashCode());
+		result = prime * result + ((dealer == null) ? 0 : dealer.hashCode());
 		result = prime * result + ((northHand == null) ? 0 : northHand.hashCode());
 		result = prime * result + ((southHand == null) ? 0 : southHand.hashCode());
 		result = prime * result + ((westHand == null) ? 0 : westHand.hashCode());
@@ -72,7 +72,7 @@ public class Board implements Serializable {
 				return false;
 		} else if (!eastHand.equals(other.eastHand))
 			return false;
-		if (leader != other.leader)
+		if (dealer != other.dealer)
 			return false;
 		if (northHand == null) {
 			if (other.northHand != null)

@@ -20,20 +20,22 @@ public class DealTest {
 	private static final int COMPLETE_TRICK_NUMBER_OF_CARDS = 4;
 
 	@Test
-	public void shouldConstructADealWithTheLeaderFromTheBoard() {
+	public void shouldConstructADealWithTheDealerFromTheBoard() {
 		Board board = mock(Board.class);
 		Ruleset ruleset = mock(Ruleset.class);
-		Direction leader = Direction.NORTH;
-		when(board.getLeader()).thenReturn(leader);
+		Direction dealer = Direction.NORTH;
+		when(board.getDealer()).thenReturn(dealer);
 		Deal deal = new Deal(board, ruleset);
 
-		assertEquals(leader, deal.getCurrentPlayer());
+		assertEquals(dealer.getLeaderWhenDealer(), deal.getCurrentPlayer());
 	}
 
 	@Test
 	public void shouldConstructADealWithTheGivenRuleset() {
 		Board board = mock(Board.class);
 		Ruleset ruleset = mock(Ruleset.class);
+		Direction dealer = Direction.NORTH;
+		when(board.getDealer()).thenReturn(dealer);
 		Deal deal = new Deal(board, ruleset);
 
 		assertEquals(ruleset, deal.getRuleset());
@@ -43,6 +45,7 @@ public class DealTest {
 	public void shouldConstructADealWithNoPoints() {
 		int noPoints = 0;
 		Board board = mock(Board.class);
+		when(board.getDealer()).thenReturn(Direction.NORTH);
 		Ruleset ruleset = mock(Ruleset.class);
 		Deal deal = new Deal(board, ruleset);
 		assertEquals(noPoints, deal.getNorthSouthPoints());
@@ -50,15 +53,16 @@ public class DealTest {
 	}
 
 	@Test
-	public void shouldConstructADealWithACurrentTrickWithTheCorrectLeader() {
+	public void shouldConstructADealWithACurrentTrickWithTheCorrectDealer() {
 		Board board = mock(Board.class);
 		Ruleset ruleset = mock(Ruleset.class);
-		Direction leader = Direction.NORTH;
-		when(board.getLeader()).thenReturn(leader);
+		Direction dealer = Direction.NORTH;
+		Direction trickLeader = dealer.getLeaderWhenDealer();
+		when(board.getDealer()).thenReturn(dealer);
 		Deal deal = new Deal(board, ruleset);
-		// The correct test would be verifying if new Trick(leader) was called
+		// The correct test would be verifying if new Trick(dealer) was called
 		// but Mockito doesn't do that. So, coupling the test with Trick :(
-		assertEquals(leader, deal.getCurrentTrick().getLeader());
+		assertEquals(trickLeader, deal.getCurrentTrick().getLeader());
 	}
 
 	@Test
@@ -70,18 +74,21 @@ public class DealTest {
 	public void shouldGetHandOfACertainDirection() {
 		Board board = mock(Board.class);
 		Ruleset ruleset = mock(Ruleset.class);
-		Direction west = Direction.WEST;
-		Hand westHand = mock(Hand.class);
-		when(board.getHandOf(west)).thenReturn(westHand);
+		Direction dealer = Direction.WEST;
+		Direction currentPlayer = dealer.getLeaderWhenDealer();
+		Hand currentPlayerHand = mock(Hand.class);
+		when(board.getHandOf(currentPlayer)).thenReturn(currentPlayerHand);
+		when(board.getDealer()).thenReturn(dealer);
 		Deal deal = new Deal(board, ruleset);
 
-		assertEquals(westHand, deal.getHandOf(west));
+		assertEquals(currentPlayerHand, deal.getHandOf(currentPlayer));
 	}
 
 	@Test
 	public void shouldAlwaysGetCurrentTrickEvenWhenEmpty() {
 		Board board = mock(Board.class);
 		Ruleset ruleset = mock(Ruleset.class);
+		when(board.getDealer()).thenReturn(Direction.NORTH);
 		Deal deal = new Deal(board, ruleset);
 
 		deal.getCurrentTrick();
@@ -89,13 +96,14 @@ public class DealTest {
 
 	@Test(expected = PlayedCardInAnotherPlayersTurnException.class)
 	public void playCardShouldThrowExceptionWhenCardIsNotFromCurrentPlayer() {
-		Direction currentPlayer = Direction.NORTH;
+		Direction dealer = Direction.NORTH;
+		Direction currentPlayer = dealer.getLeaderWhenDealer();
 		Hand handOfCurrentPlayer = mock(Hand.class);
 		Board board = mock(Board.class);
 		Ruleset ruleset = mock(Ruleset.class);
 		Card card = mock(Card.class);
 
-		when(board.getLeader()).thenReturn(currentPlayer);
+		when(board.getDealer()).thenReturn(dealer);
 		when(board.getHandOf(currentPlayer)).thenReturn(handOfCurrentPlayer);
 		when(handOfCurrentPlayer.containsCard(card)).thenReturn(false);
 
@@ -105,20 +113,21 @@ public class DealTest {
 
 	@Test(expected = PlayedHeartsWhenProhibitedException.class)
 	public void playCardShouldThrowExceptionIfStartingATrickWithHeartsWhenRulesetProhibitsIt() {
-		Direction currentPlayer = Direction.NORTH;
+		Direction dealer = Direction.NORTH;
+		Direction currentPlayer = dealer.getLeaderWhenDealer();
 		Hand handOfCurrentPlayer = mock(Hand.class);
 		Board board = mock(Board.class);
 		Ruleset ruleset = mock(Ruleset.class);
 		Card card = mock(Card.class);
 
-		when(board.getLeader()).thenReturn(currentPlayer);
+		when(board.getDealer()).thenReturn(dealer);
 		when(board.getHandOf(currentPlayer)).thenReturn(handOfCurrentPlayer);
 		when(handOfCurrentPlayer.containsCard(card)).thenReturn(true);
 
 		when(ruleset.prohibitsHeartsUntilOnlySuitLeft()).thenReturn(true);
 		when(card.isHeart()).thenReturn(true);
 		when(handOfCurrentPlayer.onlyHasHearts()).thenReturn(false);
-
+		
 		Deal deal = new Deal(board, ruleset);
 		deal.playCard(card);
 	}
@@ -131,7 +140,7 @@ public class DealTest {
 		Ruleset ruleset = mock(Ruleset.class);
 		Card card = mock(Card.class);
 
-		when(board.getLeader()).thenReturn(currentPlayer);
+		when(board.getDealer()).thenReturn(currentPlayer);
 		when(board.getHandOf(any(Direction.class))).thenReturn(handOfCurrentPlayer);
 		when(handOfCurrentPlayer.containsCard(card)).thenReturn(true);
 
@@ -151,7 +160,7 @@ public class DealTest {
 		Ruleset ruleset = mock(Ruleset.class);
 		Card card = mock(Card.class);
 
-		when(board.getLeader()).thenReturn(currentPlayer);
+		when(board.getDealer()).thenReturn(currentPlayer);
 		when(board.getHandOf(any(Direction.class))).thenReturn(handOfCurrentPlayer);
 		when(handOfCurrentPlayer.containsCard(card)).thenReturn(true);
 
@@ -172,7 +181,7 @@ public class DealTest {
 		Ruleset ruleset = mock(Ruleset.class);
 		Card card = mock(Card.class);
 
-		when(board.getLeader()).thenReturn(currentPlayer);
+		when(board.getDealer()).thenReturn(currentPlayer);
 		when(board.getHandOf(any(Direction.class))).thenReturn(handOfCurrentPlayer);
 		when(handOfCurrentPlayer.containsCard(card)).thenReturn(true);
 
@@ -193,7 +202,7 @@ public class DealTest {
 		Card card = mock(Card.class);
 		int numberOfCardsInTheTrick;
 
-		when(board.getLeader()).thenReturn(currentPlayer);
+		when(board.getDealer()).thenReturn(currentPlayer);
 		when(board.getHandOf(any(Direction.class))).thenReturn(handOfCurrentPlayer);
 		when(handOfCurrentPlayer.containsCard(card)).thenReturn(true);
 
@@ -207,14 +216,15 @@ public class DealTest {
 
 	@Test
 	public void playCardShouldMoveTurnToNextPlayerIfTrickHasNotEnded() {
-		Direction currentPlayer = Direction.NORTH;
+		Direction dealer = Direction.NORTH;
+		Direction currentPlayer = dealer.getLeaderWhenDealer();
 		Direction nextPlayer = currentPlayer.next();
 		Hand handOfCurrentPlayer = mock(Hand.class);
 		Board board = mock(Board.class);
 		Ruleset ruleset = mock(Ruleset.class);
 		Card card = mock(Card.class);
 
-		when(board.getLeader()).thenReturn(currentPlayer);
+		when(board.getDealer()).thenReturn(dealer);
 		when(board.getHandOf(any(Direction.class))).thenReturn(handOfCurrentPlayer);
 		when(handOfCurrentPlayer.containsCard(card)).thenReturn(true);
 
@@ -233,7 +243,7 @@ public class DealTest {
 		Ruleset ruleset = mock(Ruleset.class);
 		Card card = mock(Card.class);
 
-		when(board.getLeader()).thenReturn(currentPlayer);
+		when(board.getDealer()).thenReturn(currentPlayer);
 		when(board.getHandOf(any(Direction.class))).thenReturn(handOfCurrentPlayer);
 		when(handOfCurrentPlayer.containsCard(card)).thenReturn(true);
 
@@ -261,7 +271,7 @@ public class DealTest {
 		Card card = mock(Card.class);
 		int trickPoints = 1;
 
-		when(board.getLeader()).thenReturn(currentPlayer);
+		when(board.getDealer()).thenReturn(currentPlayer);
 		when(board.getHandOf(any(Direction.class))).thenReturn(handOfCurrentPlayer);
 		when(handOfCurrentPlayer.containsCard(card)).thenReturn(true);
 
@@ -291,7 +301,7 @@ public class DealTest {
 		int noCompletedTricks = 0;
 		int oneCompletedTricks = noCompletedTricks + 1;
 
-		when(board.getLeader()).thenReturn(currentPlayer);
+		when(board.getDealer()).thenReturn(currentPlayer);
 		when(board.getHandOf(any(Direction.class))).thenReturn(handOfCurrentPlayer);
 		when(handOfCurrentPlayer.containsCard(card)).thenReturn(true);
 
