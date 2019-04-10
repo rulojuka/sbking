@@ -57,6 +57,10 @@ public enum Direction {
 	}
 	
 	public Direction getChosenByWhenLeader() {
+		return this.next(3);
+	}
+
+	public Direction getPartner() {
 		return this.next(2);
 	}
 }

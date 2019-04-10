@@ -25,6 +25,7 @@ public class GameServer {
 	private NetworkGame networkGame;
 	private Direction currentChooser = Direction.EAST;
 	private PositiveOrNegativeNotification event = new PositiveOrNegativeNotification();
+	private PositiveOrNegative currentPositiveOrNegative;
 
 	public GameServer() {
 		pool = Executors.newFixedThreadPool(4);
@@ -43,7 +44,7 @@ public class GameServer {
 			this.sendMessageAll("ALLCONNECTED");
 
 			while (true) {
-				this.sendChooserAll(currentChooser);
+				this.sendChooserPositiveNegativeAll(currentChooser);
 
 				synchronized (event) {
 					// wait until object notifies - which relinquishes the lock on the object too
@@ -58,7 +59,11 @@ public class GameServer {
 				}
 
 				logger.info("I received that is going to be " + event.getPositiveOrNegative().toString());
-				this.sendPositiveOrNegativeAll(event.getPositiveOrNegative());
+				this.currentPositiveOrNegative = event.getPositiveOrNegative();
+				this.sendPositiveOrNegativeAll(this.currentPositiveOrNegative);
+
+				this.currentChooser = this.currentChooser.getPartner();
+				this.sendChooserGameModeOrStrainAll(this.currentChooser);
 
 				logger.debug("Sleeping for 100 seconds");
 				Thread.sleep(100000);
@@ -72,6 +77,8 @@ public class GameServer {
 //			logger.info("Game has ended. Exiting main thread.");
 		}
 	}
+
+	
 
 	private void connectPlayer(Socket socket, Direction direction) {
 
@@ -123,14 +130,22 @@ public class GameServer {
 		logger.info("Finished sending messages.");
 	}
 
-	private void sendChooserAll(Direction chooser) {
-		logger.info("Sending everyone the chooser: --" + chooser + "--");
+	private void sendChooserPositiveNegativeAll(Direction chooser) {
+		logger.info("Sending everyone the chooser of Positive or Negative: --" + chooser + "--");
 		for (PlayerSocket playerSocket : playerSockets) {
-			playerSocket.sendChooser(chooser);
+			playerSocket.sendChooserPositiveNegative(chooser);
 		}
 		logger.info("Finished sending messages.");
 	}
 	
+	private void sendChooserGameModeOrStrainAll(Direction chooser) {
+		logger.info("Sending everyone the chooser of GameMode or Strain: --" + chooser + "--");
+		for (PlayerSocket playerSocket : playerSockets) {
+			playerSocket.sendChooserGameModeOrStrain(chooser);
+		}
+		logger.info("Finished sending messages.");
+	}
+
 	private void sendPositiveOrNegativeAll(PositiveOrNegative positiveOrNegative) {
 		String message = positiveOrNegative.toString().toUpperCase();
 		logger.info("Sending everyone : --" + message + "--");

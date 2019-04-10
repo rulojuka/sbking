@@ -11,6 +11,8 @@ import static br.com.sbk.sbking.gui.constants.FrameConstants.WEST_Y;
 import static javax.swing.SwingConstants.CENTER;
 
 import java.awt.Container;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -18,20 +20,29 @@ import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 
 import br.com.sbk.sbking.core.Direction;
+import br.com.sbk.sbking.core.rulesets.NegativeRulesetsEnum;
+import br.com.sbk.sbking.core.rulesets.abstractClasses.NegativeRuleset;
 import br.com.sbk.sbking.networking.SBKingClient;
 
-public class ChoosePositiveOrNegativeElement {
+public class ChooseGameModeOrStrainElement {
 
 	private Container container;
 	private Direction direction;
-	private JRadioButton positiveButton;
-	private JRadioButton negativeButton;
+	private JRadioButton currentButton;
+	private List<JRadioButton> radioButtons;
 	private SBKingClient sbKingClient;
+	private int initial_y;
+	private int initial_x;
+	private int width;
+	private int height;
+	private boolean isPositive;
 
-	public ChoosePositiveOrNegativeElement(Container container, Direction direction, SBKingClient sbKingClient) {
+	public ChooseGameModeOrStrainElement(Container container, Direction direction, SBKingClient sbKingClient,
+			boolean isPositive) {
 		this.container = container;
 		this.direction = direction;
 		this.sbKingClient = sbKingClient;
+		this.isPositive = isPositive;
 	}
 
 	public void add() {
@@ -40,10 +51,8 @@ public class ChoosePositiveOrNegativeElement {
 	}
 
 	private void addRadioButtons() {
-		int initial_y = 50;
-		int initial_x = 75;
-		int width = 100;
-		int height = 20;
+		width = 160;
+		height = 20;
 
 		if (Direction.NORTH == direction) {
 			initial_x = NORTH_X;
@@ -60,40 +69,58 @@ public class ChoosePositiveOrNegativeElement {
 		}
 
 		initial_y += 25;
-
 		ButtonGroup bg = new ButtonGroup();
-		int y = initial_y;
 
-		positiveButton = new JRadioButton("Positive");
-		positiveButton.setBounds(initial_x, y, width, height);
-		container.add(positiveButton);
-		bg.add(positiveButton);
+		if (this.isPositive) {
 
-		y += 20;
+		} else {
+			int y = initial_y;
+			radioButtons = new ArrayList<JRadioButton>();
+			for (NegativeRulesetsEnum negativeRulesetEnumElement : NegativeRulesetsEnum.values()) {
+				NegativeRuleset current = negativeRulesetEnumElement.getNegativeRuleset();
+				currentButton = new JRadioButton(current.getShortDescription());
+				System.out.println("bounds:" + initial_x + "**" + y + "**" + width + "**" + height);
+				currentButton.setBounds(initial_x, y, width, height);
+				container.add(currentButton);
+				radioButtons.add(currentButton);
 
-		negativeButton = new JRadioButton("Negative");
-		negativeButton.setBounds(initial_x, y, width, height);
-		container.add(negativeButton);
+				y += 20;
 
-		bg.add(negativeButton);
+				bg.add(currentButton);
 
-		JButton selectPositiveOrNegativeButton = new JButton();
+			}
 
-		selectPositiveOrNegativeButton.addActionListener(new PositiveOrNegativeSelectActionListener());
-		selectPositiveOrNegativeButton.setBounds(initial_x + width + 10, initial_y, width, height * 2);
-		selectPositiveOrNegativeButton.setText("Select");
-		container.add(selectPositiveOrNegativeButton);
+		}
+
+		JButton selectGameModeOrStrandButton = new JButton();
+		selectGameModeOrStrandButton.addActionListener(new NegativeSelectActionListener());
+		selectGameModeOrStrandButton.setBounds(initial_x + width + 10, initial_y, 80, height * 6);
+		selectGameModeOrStrandButton.setText("Select");
+		container.add(selectGameModeOrStrandButton);
 
 	}
 
-	class PositiveOrNegativeSelectActionListener implements java.awt.event.ActionListener {
+	class NegativeSelectActionListener implements java.awt.event.ActionListener {
 		public void actionPerformed(java.awt.event.ActionEvent event) {
 
-			if (positiveButton.isSelected()) {
-				sbKingClient.sendPositive();
-			} else {
-				sbKingClient.sendNegative();
+			JRadioButton selectedOnRadio = null;
+			for (JRadioButton jRadioButton : radioButtons) {
+				if (jRadioButton.isSelected()) {
+					selectedOnRadio = jRadioButton;
+					break;
+				}
 			}
+			String text = selectedOnRadio.getText();
+			NegativeRuleset negativeRuleset = null;
+			for (NegativeRulesetsEnum negativeRulesetEnumElement : NegativeRulesetsEnum.values()) {
+				NegativeRuleset current = negativeRulesetEnumElement.getNegativeRuleset();
+				if (text.equals(current.getShortDescription())) {
+					negativeRuleset = current;
+					break;
+				}
+			}
+
+			sbKingClient.sendNegativeRuleset(negativeRuleset);
 
 		}
 	}

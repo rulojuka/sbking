@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
+import br.com.sbk.sbking.core.rulesets.abstractClasses.NegativeRuleset;
 import br.com.sbk.sbking.gui.models.PositiveOrNegative;
 
 public class SBKingClient implements Runnable {
@@ -22,7 +23,8 @@ public class SBKingClient implements Runnable {
 	private Direction direction;
 	private boolean allPlayersConnected;
 
-	private Direction chooserDirection;
+	private Direction positiveOrNegativeChooser;
+	private Direction GameModeOrStrainChooser;
 	private PositiveOrNegative positiveOrNegative;
 
 	final static Logger logger = Logger.getLogger(SBKingClient.class);
@@ -68,14 +70,15 @@ public class SBKingClient implements Runnable {
 		String controlMessage = (String) readObject;
 		logger.info("Read control: --" + controlMessage + "--");
 
-		String MESSAGE = "MESSAGE";
-		String DEAL = "DEAL";
-		String DIRECTION = "DIRECTION";
-		String WAIT = "WAIT";
-		String CONTINUE = "CONTINUE";
-		String ALLCONNECTED = "ALLCONNECTED";
-		String CHOOSER = "CHOOSER";
-		String POSITIVEORNEGATIVE = "POSITIVEORNEGATIVE";
+		final String MESSAGE = "MESSAGE";
+		final String DEAL = "DEAL";
+		final String DIRECTION = "DIRECTION";
+		final String WAIT = "WAIT";
+		final String CONTINUE = "CONTINUE";
+		final String ALLCONNECTED = "ALLCONNECTED";
+		final String CHOOSERPOSITIVENEGATIVE = "CHOOSERPOSITIVENEGATIVE";
+		final String CHOOSERGAMEMODEORSTRAIN = "CHOOSERGAMEMODEORSTRAIN";
+		final String POSITIVEORNEGATIVE = "POSITIVEORNEGATIVE";
 
 		if (MESSAGE.equals(controlMessage)) {
 			String string = this.serializator.tryToDeserializeString();
@@ -101,11 +104,11 @@ public class SBKingClient implements Runnable {
 			} while (!CONTINUE.equals(controlMessage));
 			logger.info("Received a CONTINUE message");
 
-		} else if (CHOOSER.equals(controlMessage)) {
+		} else if (CHOOSERPOSITIVENEGATIVE.equals(controlMessage)) {
 			Direction direction = this.serializator.tryToDeserializeDirection();
-			logger.info("Received choosers direction: " + direction);
+			logger.info("Received PositiveOrNegative choosers direction: " + direction);
 
-			setChooserDirection(direction);
+			setPositiveOrNegativeChooser(direction);
 		} else if (POSITIVEORNEGATIVE.equals(controlMessage)) {
 			String positiveOrNegative = this.serializator.tryToDeserializeString();
 			if ("POSITIVE".equals(positiveOrNegative)) {
@@ -115,6 +118,10 @@ public class SBKingClient implements Runnable {
 			} else {
 				logger.info("Could not understand POSITIVE or NEGATIVE.");
 			}
+		} else if (CHOOSERGAMEMODEORSTRAIN.equals(controlMessage)) {
+			Direction direction = this.serializator.tryToDeserializeDirection();
+			logger.info("Received GameModeOrStrain choosers direction: " + direction);
+			setGameModeOrStrainChooser(direction);
 		} else {
 			logger.info("Could not understand control.");
 		}
@@ -154,10 +161,6 @@ public class SBKingClient implements Runnable {
 		networkGameMode.paintBoardElements(deal);
 	}
 
-	private void setChooserDirection(Direction direction) {
-		this.chooserDirection = direction;
-	}
-
 	public boolean isEveryoneConnected() {
 		return allPlayersConnected;
 	}
@@ -170,12 +173,28 @@ public class SBKingClient implements Runnable {
 		return this.direction != null;
 	}
 
-	public boolean isChooserSet() {
-		return this.chooserDirection != null;
+	private void setPositiveOrNegativeChooser(Direction direction) {
+		this.positiveOrNegativeChooser = direction;
 	}
 
-	public Direction getChooser() {
-		return this.chooserDirection;
+	public boolean isPositiveOrNegativeChooserSet() {
+		return this.positiveOrNegativeChooser != null;
+	}
+
+	public Direction getPositiveOrNegativeChooser() {
+		return this.positiveOrNegativeChooser;
+	}
+
+	private void setGameModeOrStrainChooser(Direction direction) {
+		this.GameModeOrStrainChooser = direction;
+	}
+
+	public boolean isGameModeOrStrainChooserSet() {
+		return this.GameModeOrStrainChooser != null;
+	}
+
+	public Direction getGameModeOrStrainChooser() {
+		return this.GameModeOrStrainChooser;
 	}
 
 	public void selectedPositive() {
@@ -189,7 +208,7 @@ public class SBKingClient implements Runnable {
 	}
 
 	public boolean isPositiveOrNegativeSelected() {
-		if(this.positiveOrNegative==null)
+		if (this.positiveOrNegative == null)
 			return false;
 		return this.positiveOrNegative.isSelected();
 	}
@@ -200,6 +219,11 @@ public class SBKingClient implements Runnable {
 
 	public boolean isNegative() {
 		return this.positiveOrNegative.isNegative();
+	}
+
+	public void sendNegativeRuleset(NegativeRuleset negativeRuleset) {
+		logger.debug("Sending --" + negativeRuleset.getShortDescription() + "-- game mode to server");
+		this.serializator.tryToSerialize(negativeRuleset.getShortDescription());
 	}
 
 }

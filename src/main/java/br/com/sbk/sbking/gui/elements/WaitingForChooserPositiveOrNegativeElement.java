@@ -16,10 +16,11 @@ import javax.swing.JLabel;
 
 import br.com.sbk.sbking.core.Direction;
 
-public class WaitingForChooserElement {
+public class WaitingForChooserPositiveOrNegativeElement {
 
 	public static void add(Container container, Direction direction) {
-		JLabel waitingLabel = new JLabel("<html>Waiting for " + direction.toString() + " to choose<br/>Positive or Negative.</html>");
+		JLabel waitingLabel = new JLabel(
+				"<html>Waiting for " + direction.toString() + " to choose<br/>Positive or Negative.</html>");
 		waitingLabel.setHorizontalAlignment(CENTER);
 		int width = 300;
 		int height = 30;

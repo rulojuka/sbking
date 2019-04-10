@@ -9,31 +9,30 @@ import java.awt.Point;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.gui.elements.ChoosePositiveOrNegativeElement;
 import br.com.sbk.sbking.gui.elements.GameScoreboardElement;
-import br.com.sbk.sbking.gui.elements.WaitingForChooserElement;
+import br.com.sbk.sbking.gui.elements.WaitingForChooserPositiveOrNegativeElement;
 import br.com.sbk.sbking.gui.elements.YouArePlayerElement;
 import br.com.sbk.sbking.gui.models.GameScoreboard;
 import br.com.sbk.sbking.networking.SBKingClient;
 
-public class WaitingForChoosingPainter {
+public class WaitingForChoosingPositiveOrNegativePainter {
 
 	private Direction myDirection;
 	private Direction chooserDirection;
 	private SBKingClient sbKingClient;
 
-	public WaitingForChoosingPainter(Direction myDirection, Direction chooserDirection, SBKingClient sbKingClient) {
+	public WaitingForChoosingPositiveOrNegativePainter(Direction myDirection, Direction chooserDirection, SBKingClient sbKingClient) {
 		this.myDirection = myDirection;
 		this.chooserDirection = chooserDirection;
 		this.sbKingClient = sbKingClient;
 	}
 
-	public void paint(Container contentPane) {
+	public void paint(Container contentPane, GameScoreboard gameScoreboard) {
 		Point middleOfScreen = new Point(TABLE_WIDTH / 2, TABLE_HEIGHT / 2);
-		new GameScoreboardElement(new GameScoreboard(), contentPane, middleOfScreen);
+		new GameScoreboardElement(gameScoreboard, contentPane, middleOfScreen);
 		if (myDirection != chooserDirection) {
 			YouArePlayerElement.add(this.myDirection, contentPane);
-			WaitingForChooserElement.add(contentPane, chooserDirection);
+			WaitingForChooserPositiveOrNegativeElement.add(contentPane, chooserDirection);
 		} else {
-			System.out.println("Entrou no botao radio");
 			ChoosePositiveOrNegativeElement choosePositiveOrNegativeElement = new ChoosePositiveOrNegativeElement(
 					contentPane, this.chooserDirection, this.sbKingClient);
 			choosePositiveOrNegativeElement.add();

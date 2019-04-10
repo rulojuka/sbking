@@ -12,8 +12,10 @@ import javax.swing.JFrame;
 import org.apache.log4j.Logger;
 
 import br.com.sbk.sbking.core.Direction;
+import br.com.sbk.sbking.gui.models.GameScoreboard;
 import br.com.sbk.sbking.gui.painters.ConnectToServerPainter;
-import br.com.sbk.sbking.gui.painters.WaitingForChoosingPainter;
+import br.com.sbk.sbking.gui.painters.WaitingForChoosingGameModeOrStrainPainter;
+import br.com.sbk.sbking.gui.painters.WaitingForChoosingPositiveOrNegativePainter;
 import br.com.sbk.sbking.gui.painters.WaitingForPlayersPainter;
 import br.com.sbk.sbking.networking.SBKingClient;
 
@@ -85,7 +87,9 @@ public class NetworkClientScreen extends JFrame {
 		}
 
 		// while(true) { //FIXME Should last 10 deals - a complete king game
-		while (!sbKingClient.isChooserSet()) {
+		
+		logger.info("Waiting for sbKingClient.isPositiveOrNegativeChooserSet() to be true");
+		while (!sbKingClient.isPositiveOrNegativeChooserSet()) {
 			try {
 				Thread.sleep(100);
 			} catch (InterruptedException e) {
@@ -93,10 +97,12 @@ public class NetworkClientScreen extends JFrame {
 				e.printStackTrace();
 			}
 		}
+
 		logger.info("Starting to paint WaitingForChoosingScreen");
-		paintWaitingForChoosingScreen(sbKingClient.getDirection(), sbKingClient.getChooser());
+		paintWaitingForChoosingPositiveOrNegativeScreen(sbKingClient.getDirection(), sbKingClient.getPositiveOrNegativeChooser());
 		logger.info("Finished painting WaitingForChoosingScreen");
-		
+
+		logger.info("Waiting for sbKingClient.isPositiveOrNegativeSelected() to be true");
 		while (!sbKingClient.isPositiveOrNegativeSelected()) {
 			try {
 				Thread.sleep(100);
@@ -106,16 +112,23 @@ public class NetworkClientScreen extends JFrame {
 			}
 		}
 		boolean isPositive = this.sbKingClient.isPositive();
-		
 		logger.info("Received PositiveOrNegative from server.");
 		
-		if(isPositive) {
-			logger.debug("It is positive.");
-		}else {
-			logger.debug("It is negative.");
+		logger.info("Waiting for sbKingClient.isGameModeOrStrainChooserSet() to be true");
+		while (!sbKingClient.isGameModeOrStrainChooserSet()) {
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
-		
-		
+
+		logger.info("Starting to paint WaitingForChoosingGameModeOrStrainScreen");
+		paintWaitingForChoosingGameModeOrStrainScreen(sbKingClient.getDirection(), sbKingClient.getGameModeOrStrainChooser(),
+				isPositive);
+		logger.info("Finished painting WaitingForChoosingGameModeOrStrainScreen");
+
 		// }
 
 		logger.info("Finished!");
@@ -133,10 +146,19 @@ public class NetworkClientScreen extends JFrame {
 		waitingForPlayersPainter.paint(this.getContentPane());
 	}
 
-	private void paintWaitingForChoosingScreen(Direction myDirection, Direction chooserDirection) {
+	private void paintWaitingForChoosingPositiveOrNegativeScreen(Direction myDirection, Direction chooserDirection) {
 		cleanContentPane();
-		WaitingForChoosingPainter waitingForChoosingPainter = new WaitingForChoosingPainter(myDirection, chooserDirection, this.sbKingClient);
-		waitingForChoosingPainter.paint(this.getContentPane());
+		WaitingForChoosingPositiveOrNegativePainter waitingForChoosingPainter = new WaitingForChoosingPositiveOrNegativePainter(myDirection,
+				chooserDirection, this.sbKingClient);
+		waitingForChoosingPainter.paint(this.getContentPane(), new GameScoreboard()); //FIXME should receive from server.
+	}
+
+	private void paintWaitingForChoosingGameModeOrStrainScreen(Direction direction, Direction chooser,
+			boolean isPositive) {
+		cleanContentPane();
+		WaitingForChoosingGameModeOrStrainPainter waitingForChoosingGameModeOrStrainPainter = new WaitingForChoosingGameModeOrStrainPainter(
+				direction, chooser, isPositive, this.sbKingClient);
+		waitingForChoosingGameModeOrStrainPainter.paint(this.getContentPane(), new GameScoreboard());
 	}
 
 	private void cleanContentPane() {

@@ -99,8 +99,8 @@ public class PlayerSocket implements Runnable {
 		this.serializator.tryToSerialize(direction);
 	}
 
-	public void sendChooser(Direction direction) {
-		String control = "CHOOSER";
+	public void sendChooserPositiveNegative(Direction direction) {
+		String control = "CHOOSERPOSITIVENEGATIVE";
 		logger.info("Sending " + control + " control to " + this.direction);
 		this.serializator.tryToSerialize(control);
 		logger.info("Sending chooser direction to " + this.direction);
@@ -113,6 +113,14 @@ public class PlayerSocket implements Runnable {
 		this.serializator.tryToSerialize(control);
 		logger.info("Sending positive or negative to " + this.direction);
 		this.serializator.tryToSerialize(message);
+	}
+
+	public void sendChooserGameModeOrStrain(Direction chooser) {
+		String control = "CHOOSERGAMEMODEORSTRAIN";
+		logger.info("Sending " + control + " control to " + this.direction);
+		this.serializator.tryToSerialize(control);
+		logger.info("Sending chooser direction to " + this.direction);
+		this.serializator.tryToSerialize(chooser);
 	}
 
 }
