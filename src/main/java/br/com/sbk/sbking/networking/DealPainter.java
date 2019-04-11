@@ -2,8 +2,6 @@ package br.com.sbk.sbking.networking;
 
 import java.awt.Container;
 
-import javax.swing.JFrame;
-
 import org.apache.log4j.Logger;
 
 import br.com.sbk.sbking.core.Card;
@@ -13,52 +11,26 @@ import br.com.sbk.sbking.gui.JElements.CardButton;
 import br.com.sbk.sbking.gui.elements.ScoreSummaryElement;
 import br.com.sbk.sbking.gui.elements.SpecificDirectionBoardElements;
 
-@SuppressWarnings("serial")
-public class NetworkGameMode extends JFrame {
+public class DealPainter {
 
-	// Constants
-	private static final int WIDTH = 1024;
-	private static final int HEIGHT = 768;
-	private static final java.awt.Color TABLE_COLOR = new java.awt.Color(0, 100, 0); // Tablecloth green
-
-	final static Logger logger = Logger.getLogger(NetworkGameMode.class);
-
-	// Model
+	final static Logger logger = Logger.getLogger(DealPainter.class);
 
 	private Direction direction;
 	private NetworkCardPlayer networkCardPlayer;
 
-	// GUI model
-
-	public NetworkGameMode(NetworkCardPlayer networkCardPlayer, Direction direction) {
-		super();
+	public DealPainter(NetworkCardPlayer networkCardPlayer, Direction direction) {
 		this.networkCardPlayer = networkCardPlayer;
 		this.direction = direction;
-		initializeJFrame();
-		initializeContentPane();
 	}
 
-	private void initializeJFrame() {
-		this.setVisible(true);
-		this.setSize(WIDTH, HEIGHT);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	}
-
-	private void initializeContentPane() {
-		getContentPane().setLayout(null);
-		getContentPane().setBackground(TABLE_COLOR);
-	}
-
-	public void paintBoardElements(Deal deal) {
+	public void paint(Container contentPane, Deal deal) {
 		logger.info("Painting deal that contains this trick: " + deal.getCurrentTrick());
-		Container contentPane = this.getContentPane();
 		contentPane.removeAll();
 
 		if (deal.isFinished()) {
-			new ScoreSummaryElement(deal, this.getContentPane());
+			new ScoreSummaryElement(deal, contentPane);
 		} else {
-			new SpecificDirectionBoardElements(this.direction, deal, this.getContentPane(),
-					new PlayCardActionListener());
+			new SpecificDirectionBoardElements(this.direction, deal, contentPane, new PlayCardActionListener());
 		}
 
 		contentPane.validate();

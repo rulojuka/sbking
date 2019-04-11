@@ -13,6 +13,7 @@ public class NetworkGame {
 	final static Logger logger = Logger.getLogger(NetworkGame.class);
 	private CardPlayNotification event = new CardPlayNotification();
 	private GameServer gameServer;
+	private boolean dealHasChanged;
 
 	public NetworkGame(GameServer gameServer, Deal deal) {
 		this.gameServer = gameServer;
@@ -20,8 +21,8 @@ public class NetworkGame {
 	}
 
 	public void run() {
+		this.dealHasChanged = true;
 		while (!this.deal.isFinished()) {
-			logger.info("Starting new 'round' of deals");
 			logger.info("Sleeping for 500ms waiting for all clients to prepare themselves.");
 			try {
 				Thread.sleep(500);
@@ -29,7 +30,11 @@ public class NetworkGame {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			this.gameServer.sendDealAll(this.deal);
+			if(this.dealHasChanged) {
+				logger.info("Sending new 'round' of deals");
+				this.gameServer.sendDealAll(this.deal);
+				this.dealHasChanged = false;
+			}
 			synchronized (event) {
 				// wait until object notifies - which relinquishes the lock on the object too
 				try {
@@ -43,7 +48,11 @@ public class NetworkGame {
 			Direction directionToBePlayed = event.getDirection();
 			Card cardToBePlayed = event.getCard();
 			logger.info("Received notification that " + directionToBePlayed + " wants to play the " + cardToBePlayed);
-			this.playCard(cardToBePlayed, directionToBePlayed);
+			try {
+				this.playCard(cardToBePlayed, directionToBePlayed);
+			}catch (Exception e) {
+				throw e;
+			}
 		}
 	}
 
@@ -52,6 +61,7 @@ public class NetworkGame {
 		try {
 			if (this.deal.getCurrentPlayer() == direction) {
 				syncPlayCard(card);
+				this.dealHasChanged = true;
 			} else {
 				throw new PlayedCardInAnotherPlayersTurnException();
 			}
@@ -64,6 +74,7 @@ public class NetworkGame {
 	private synchronized void syncPlayCard(Card card) {
 		logger.info("Entering synchronized play card");
 		this.deal.playCard(card);
+		logger.info("Finished playing the " + card);
 		logger.info("Leaving synchronized play card");
 	}
 

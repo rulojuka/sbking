@@ -10,7 +10,6 @@ import br.com.sbk.sbking.gui.models.GameScoreboard;
 
 public class GameScoreboardElement {
 	public GameScoreboardElement(GameScoreboard gameScoreboard, Container container, Point point) {
-
 		int x_size = 400;
 		int y_size = 400;
 

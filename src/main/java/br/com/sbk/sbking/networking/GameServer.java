@@ -21,6 +21,7 @@ import br.com.sbk.sbking.gui.models.PositiveOrNegative;
 
 public class GameServer {
 
+	private static final int NUMBER_OF_DEALS = 1; // FIXME should come from the game and equal 10
 	final static Logger logger = Logger.getLogger(GameServer.class);
 	private List<PlayerSocket> playerSockets = new ArrayList<PlayerSocket>();
 	private ExecutorService pool;
@@ -39,6 +40,7 @@ public class GameServer {
 		try (ServerSocket listener = new ServerSocket(60000)) {
 			logger.info("Game Server is Running...");
 			for (Direction direction : Direction.values()) {
+				logger.debug("Current direction is :" + direction);
 				this.connectPlayer(listener.accept(), direction);
 			}
 
@@ -47,7 +49,13 @@ public class GameServer {
 
 			this.sendMessageAll("ALLCONNECTED");
 
-			for (int i = 0; i < 10; i++) {
+			for (int i = 0; i < NUMBER_OF_DEALS; i++) {
+				logger.debug("Starting deal " + (i + 1) + "of" + NUMBER_OF_DEALS);
+
+				this.sendInitializeDealAll();
+				logger.info("Sleeping for 500ms waiting for everything come out right.");
+				Thread.sleep(500);
+
 				this.sendChooserPositiveNegativeAll(currentDealer.getPositiveOrNegativeChooserWhenDealer());
 
 				synchronized (positiveOrNegativeNotification) {
@@ -91,11 +99,15 @@ public class GameServer {
 				logger.info("Everything selected! Game commencing!");
 				CompleteDealDealer dealer = new CompleteDealDealer(this.currentDealer);
 				Deal deal = dealer.deal(currentGameModeOrStrain);
-				NetworkGame game = new NetworkGame(this, deal);
-				game.run();
 
-				logger.info("Game finished!");
+				this.networkGame = new NetworkGame(this, deal);
+				networkGame.run();
+				this.sendFinishDealAll();
+				logger.info("Deal finished!");
+
 			}
+
+			this.sendFinishGameAll();
 
 			logger.info("Game has ended. Exiting main thread.");
 		}
@@ -193,6 +205,24 @@ public class GameServer {
 			playerSocket.sendGameModeOrStrain(message);
 		}
 		logger.info("Finished sending messages.");
+	}
+
+	private void sendInitializeDealAll() {
+		for (PlayerSocket playerSocket : playerSockets) {
+			playerSocket.sendInitializeDeal();
+		}
+	}
+
+	private void sendFinishDealAll() {
+		for (PlayerSocket playerSocket : playerSockets) {
+			playerSocket.sendFinishDeal();
+		}
+	}
+
+	private void sendFinishGameAll() {
+		for (PlayerSocket playerSocket : playerSockets) {
+			playerSocket.sendFinishGame();
+		}
 	}
 
 	private Direction getCurrentPositiveOrNegativeChooser() {

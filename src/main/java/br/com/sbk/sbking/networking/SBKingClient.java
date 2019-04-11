@@ -17,14 +17,19 @@ public class SBKingClient implements Runnable {
 	private Socket socket;
 
 	private Serializator serializator;
+	private NetworkCardPlayer networkCardPlayer;
 
-	private NetworkGameMode networkGameMode;
 	private Direction direction;
 	private boolean allPlayersConnected;
 
 	private Direction positiveOrNegativeChooser;
 	private Direction GameModeOrStrainChooser;
 	private PositiveOrNegative positiveOrNegative;
+	private Deal currentDeal;
+
+	private boolean dealFinished;
+
+	private boolean gameFinished = false;
 
 	final static Logger logger = Logger.getLogger(SBKingClient.class);
 
@@ -37,6 +42,7 @@ public class SBKingClient implements Runnable {
 			logger.debug(e);
 		}
 		setupSerializator();
+		this.networkCardPlayer = new NetworkCardPlayer(this.serializator);
 	}
 
 	private void setupSerializator() {
@@ -71,6 +77,8 @@ public class SBKingClient implements Runnable {
 
 		final String MESSAGE = "MESSAGE";
 		final String DEAL = "DEAL";
+		final String INITIALIZEDEAL = "INITIALIZEDEAL";
+		final String FINISHDEAL = "FINISHDEAL";
 		final String DIRECTION = "DIRECTION";
 		final String WAIT = "WAIT";
 		final String CONTINUE = "CONTINUE";
@@ -79,6 +87,7 @@ public class SBKingClient implements Runnable {
 		final String CHOOSERGAMEMODEORSTRAIN = "CHOOSERGAMEMODEORSTRAIN";
 		final String POSITIVEORNEGATIVE = "POSITIVEORNEGATIVE";
 		final String GAMEMODEORSTRAIN = "GAMEMODEORSTRAIN";
+		final String FINISHGAME = "FINISHGAME";
 
 		if (MESSAGE.equals(controlMessage)) {
 			String string = this.serializator.tryToDeserializeString();
@@ -90,7 +99,7 @@ public class SBKingClient implements Runnable {
 			Deal deal = this.serializator.tryToDeserializeDeal();
 			logger.info("I received a deal that contains this trick: " + deal.getCurrentTrick()
 					+ " and will paint it on screen");
-			paintBoardWithDeal(deal);
+			this.setCurrentDeal(deal);
 		} else if (DIRECTION.equals(controlMessage)) {
 			Direction direction = this.serializator.tryToDeserializeDirection();
 			logger.info("I received my direction: " + direction);
@@ -125,13 +134,15 @@ public class SBKingClient implements Runnable {
 		} else if (GAMEMODEORSTRAIN.equals(controlMessage)) {
 			String gameModeOrStrain = this.serializator.tryToDeserializeString();
 			logger.info("Received GameModeOrStrain: " + gameModeOrStrain);
-			logger.info("Starting network player");
-			this.initializeNetworkGameMode();
+		} else if (INITIALIZEDEAL.equals(controlMessage)) {
+			this.initializeDeal();
+		} else if (FINISHDEAL.equals(controlMessage)) {
+			this.finishDeal();
+		} else if (FINISHGAME.equals(controlMessage)) {
+			this.finishGame();
 		} else {
 			logger.info("Could not understand control.");
 		}
-
-		
 
 		// FIXME
 		try {
@@ -140,6 +151,26 @@ public class SBKingClient implements Runnable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	private void finishDeal() {
+		this.initializeEverythingToNextDeal();
+		this.dealFinished = true;
+	}
+
+	private void initializeDeal() {
+		this.dealFinished = false;
+	}
+
+	private void initializeEverythingToNextDeal() {
+		this.unsetPositiveOrNegativeChooser();
+		this.unsetPositiveOrNegative();
+		this.unsetGameModeOrStrainChooser();
+		this.unsetCurrentDeal();
+	}
+
+	public NetworkCardPlayer getNetworkCardPlayer() {
+		return this.networkCardPlayer;
 	}
 
 	public void sendPositive() {
@@ -156,10 +187,6 @@ public class SBKingClient implements Runnable {
 
 	private void setAllPlayersConnected() {
 		allPlayersConnected = true;
-	}
-
-	private void paintBoardWithDeal(Deal deal) {
-		networkGameMode.paintBoardElements(deal);
 	}
 
 	public boolean isEveryoneConnected() {
@@ -182,12 +209,20 @@ public class SBKingClient implements Runnable {
 		return this.positiveOrNegativeChooser != null;
 	}
 
+	private void unsetPositiveOrNegativeChooser() {
+		this.positiveOrNegativeChooser = null;
+	}
+
 	public Direction getPositiveOrNegativeChooser() {
 		return this.positiveOrNegativeChooser;
 	}
 
 	private void setGameModeOrStrainChooser(Direction direction) {
 		this.GameModeOrStrainChooser = direction;
+	}
+
+	private void unsetGameModeOrStrainChooser() {
+		this.GameModeOrStrainChooser = null;
 	}
 
 	public boolean isGameModeOrStrainChooserSet() {
@@ -222,15 +257,43 @@ public class SBKingClient implements Runnable {
 		return this.positiveOrNegative.isNegative();
 	}
 
+	private void unsetPositiveOrNegative() {
+		this.positiveOrNegative = null;
+	}
+
 	public void sendGameModeOrStrain(String gameModeOrStrain) {
 		logger.debug("Sending Game Mode or Strain to server");
 		this.serializator.tryToSerialize(gameModeOrStrain);
 	}
-	
-	private void initializeNetworkGameMode() {
-		NetworkCardPlayer networkCardPlayer = new NetworkCardPlayer(this.serializator);
-		this.networkGameMode = new NetworkGameMode(networkCardPlayer, this.direction);
+
+	public boolean newDealAvailable() {
+		return currentDeal != null;
 	}
-	
+
+	private void setCurrentDeal(Deal deal) {
+		this.currentDeal = deal;
+	}
+
+	private void unsetCurrentDeal() {
+		this.currentDeal = null;
+	}
+
+	public Deal getDeal() {
+		Deal deal = this.currentDeal;
+		this.currentDeal = null;
+		return deal;
+	}
+
+	public boolean isDealFinished() {
+		return this.dealFinished;
+	}
+
+	public boolean isGameFinished() {
+		return this.gameFinished;
+	}
+
+	private void finishGame() {
+		this.gameFinished = true;
+	}
 
 }

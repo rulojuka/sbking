@@ -20,16 +20,18 @@ public class WaitingForChoosingGameModeOrStrainPainter {
 	private Direction chooserDirection;
 	private boolean isPositive;
 	private SBKingClient sbKingClient;
+	private GameScoreboard gameScoreboard;
 
 	public WaitingForChoosingGameModeOrStrainPainter(Direction myDirection, Direction chooserDirection,
-			boolean isPositive, SBKingClient sbKingClient) {
+			boolean isPositive, SBKingClient sbKingClient, GameScoreboard gameScoreboard) {
 		this.myDirection = myDirection;
 		this.chooserDirection = chooserDirection;
 		this.isPositive = isPositive;
 		this.sbKingClient = sbKingClient;
+		this.gameScoreboard = gameScoreboard;
 	}
 
-	public void paint(Container contentPane, GameScoreboard gameScoreboard) {
+	public void paint(Container contentPane) {
 		Point middleOfScreen = new Point(TABLE_WIDTH / 2, TABLE_HEIGHT / 2);
 		new GameScoreboardElement(gameScoreboard, contentPane, middleOfScreen);
 		if (myDirection != chooserDirection) {

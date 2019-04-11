@@ -138,4 +138,22 @@ public class PlayerSocket implements Runnable {
 		this.serializator.tryToSerialize(message);
 	}
 
+	public void sendInitializeDeal() {
+		String control = "INITIALIZEDEAL";
+		logger.info("Sending " + control + " control to " + this.direction);
+		this.serializator.tryToSerialize(control);
+	}
+
+	public void sendFinishDeal() {
+		String control = "FINISHDEAL";
+		logger.info("Sending " + control + " control to " + this.direction);
+		this.serializator.tryToSerialize(control);
+	}
+
+	public void sendFinishGame() {
+		String control = "FINISHGAME";
+		logger.info("Sending " + control + " control to " + this.direction);
+		this.serializator.tryToSerialize(control);
+	}
+
 }

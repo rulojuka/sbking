@@ -12,7 +12,9 @@ import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
 @SuppressWarnings("serial")
 public class Deal implements Serializable {
 
-	private static final int NUMBER_OF_TRICKS_IN_A_COMPLETE_HAND = 13;
+	//private static final int NUMBER_OF_TRICKS_IN_A_COMPLETE_HAND = 13;
+	//FIXME lowered for debug purposes
+	private static final int NUMBER_OF_TRICKS_IN_A_COMPLETE_HAND = 1;
 
 	private Board board;
 	private int completedTricks;
