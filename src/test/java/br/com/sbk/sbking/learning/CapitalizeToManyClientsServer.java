@@ -1,6 +1,7 @@
 package br.com.sbk.sbking.learning;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -30,8 +31,11 @@ public class CapitalizeToManyClientsServer {
 		@Override
 		public void run() {
 			System.out.println("Connected: " + socket);
+			Scanner in = null;
+			InputStream socketInputStream;
 			try {
-				Scanner in = new Scanner(socket.getInputStream());
+				socketInputStream = socket.getInputStream();
+				in = new Scanner(socketInputStream);
 				PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
 				while (in.hasNextLine()) {
 					out.println(in.nextLine().toUpperCase());
@@ -39,6 +43,9 @@ public class CapitalizeToManyClientsServer {
 			} catch (Exception e) {
 				System.out.println("Error:" + socket);
 			} finally {
+				if (in != null) {
+					in.close();
+				}
 				try {
 					socket.close();
 				} catch (IOException e) {

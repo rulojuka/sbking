@@ -5,6 +5,7 @@ import br.com.sbk.sbking.core.rulesets.implementations.DefaultSuitFollowable;
 import br.com.sbk.sbking.core.rulesets.implementations.DontProhibitsHearts;
 import br.com.sbk.sbking.core.rulesets.implementations.NoTrumpSuitWinnable;
 
+@SuppressWarnings("serial")
 public class PositiveNoTrumpsRuleset extends PositiveRuleset {
 
 	public PositiveNoTrumpsRuleset() {

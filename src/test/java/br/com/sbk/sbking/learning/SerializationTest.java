@@ -12,10 +12,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import br.com.sbk.sbking.core.Board;
 import br.com.sbk.sbking.core.Card;
-import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.CompleteDealDealer;
+import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.core.Hand;
 import br.com.sbk.sbking.core.Rank;
@@ -163,7 +162,7 @@ public class SerializationTest {
 		Deal deserializedDeal = (Deal) deserializedObject;
 		assertEquals(deal, deserializedDeal);
 	}
-	
+
 	@Test
 	public void dealWithCurrentTrickShouldBeSerializableAndDeserializable() {
 		CompleteDealDealer dealer = new CompleteDealDealer(Direction.SOUTH);
@@ -176,7 +175,7 @@ public class SerializationTest {
 		Object deserializedObject = serializator.tryToDeserialize();
 		Deal deserializedDeal = (Deal) deserializedObject;
 		assertEquals(deal, deserializedDeal);
-		assertEquals(anyCardOfCurrentPlayer,deserializedDeal.getCurrentTrick().getCards().get(0));
+		assertEquals(anyCardOfCurrentPlayer, deserializedDeal.getCurrentTrick().getCards().get(0));
 	}
 
 }

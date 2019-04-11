@@ -6,6 +6,7 @@ import br.com.sbk.sbking.core.rulesets.implementations.DefaultSuitFollowable;
 import br.com.sbk.sbking.core.rulesets.implementations.NoTrumpSuitWinnable;
 import br.com.sbk.sbking.core.rulesets.implementations.ProhibitsHearts;
 
+@SuppressWarnings("serial")
 public class NegativeHeartsRuleset extends NegativeRuleset {
 
 	private static final int NEGATIVE_HEARTS_SCORE_MULTIPLIER = 20;

@@ -2,6 +2,7 @@ package br.com.sbk.sbking.core.rulesets.abstractClasses;
 
 import br.com.sbk.sbking.core.Trick;
 
+@SuppressWarnings("serial")
 public abstract class PositiveRuleset extends Ruleset {
 
 	private static final int POSITIVE_SCORE_MULTIPLIER = 25;
