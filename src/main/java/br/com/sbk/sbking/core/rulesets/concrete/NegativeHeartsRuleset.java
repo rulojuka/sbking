@@ -10,6 +10,7 @@ import br.com.sbk.sbking.core.rulesets.implementations.ProhibitsHearts;
 public class NegativeHeartsRuleset extends NegativeRuleset {
 
 	private static final int NEGATIVE_HEARTS_SCORE_MULTIPLIER = 20;
+	private static final int NUMBER_OF_HEART_CARDS = 13;
 
 	public NegativeHeartsRuleset() {
 		this.suitFollowable = new DefaultSuitFollowable();
@@ -35,6 +36,11 @@ public class NegativeHeartsRuleset extends NegativeRuleset {
 	@Override
 	public String getCompleteDescription() {
 		return "Avoid all hearts cards";
+	}
+
+	@Override
+	public int getTotalPoints() {
+		return NUMBER_OF_HEART_CARDS;
 	}
 
 }

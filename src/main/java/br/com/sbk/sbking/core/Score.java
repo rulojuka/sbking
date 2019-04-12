@@ -43,6 +43,10 @@ public class Score implements Serializable {
 	private void addEastWest(Trick trick) {
 		eastWestPoints += this.scoreable.getPoints(trick);
 	}
+	
+	public int getAllPoints() {
+		return this.eastWestPoints + this.northSouthPoints;
+	}
 
 	@Override
 	public int hashCode() {

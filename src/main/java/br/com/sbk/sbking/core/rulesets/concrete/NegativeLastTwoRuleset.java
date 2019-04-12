@@ -10,6 +10,7 @@ import br.com.sbk.sbking.core.rulesets.implementations.NoTrumpSuitWinnable;
 public class NegativeLastTwoRuleset extends NegativeRuleset {
 
 	private static final int NEGATIVE_LAST_TWO_SCORE_MULTIPLIER = 90;
+	private static final int NUMBER_OF_LAST_TWO_TRICKS = 2;
 
 	public NegativeLastTwoRuleset() {
 		this.suitFollowable = new DefaultSuitFollowable();
@@ -39,6 +40,11 @@ public class NegativeLastTwoRuleset extends NegativeRuleset {
 	@Override
 	public String getCompleteDescription() {
 		return "Avoid the last two tricks";
+	}
+
+	@Override
+	public int getTotalPoints() {
+		return NUMBER_OF_LAST_TWO_TRICKS;
 	}
 
 }

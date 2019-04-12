@@ -11,6 +11,7 @@ public class NegativeTricksRuleset extends NegativeRuleset {
 
 	private static final int NEGATIVE_TRICKS_SCORE_MULTIPLIER = 20;
 	private static final int NEGATIVE_POINTS_PER_TRICK = 1;
+	private static final int NUMBER_OF_TRICKS = 13;
 
 	public NegativeTricksRuleset() {
 		this.suitFollowable = new DefaultSuitFollowable();
@@ -36,6 +37,11 @@ public class NegativeTricksRuleset extends NegativeRuleset {
 	@Override
 	public String getCompleteDescription() {
 		return "Avoid all tricks";
+	}
+
+	@Override
+	public int getTotalPoints() {
+		return NUMBER_OF_TRICKS;
 	}
 
 }

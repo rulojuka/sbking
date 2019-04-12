@@ -10,6 +10,7 @@ import br.com.sbk.sbking.core.rulesets.implementations.NoTrumpSuitWinnable;
 public class NegativeMenRuleset extends NegativeRuleset {
 
 	private static final int NEGATIVE_MEN_SCORE_MULTIPLIER = 30;
+	private static final int NUMBER_OF_MEN = 8;
 
 	public NegativeMenRuleset() {
 		this.suitFollowable = new DefaultSuitFollowable();
@@ -35,6 +36,11 @@ public class NegativeMenRuleset extends NegativeRuleset {
 	@Override
 	public String getCompleteDescription() {
 		return "Avoid all jacks and kings";
+	}
+
+	@Override
+	public int getTotalPoints() {
+		return NUMBER_OF_MEN;
 	}
 
 }

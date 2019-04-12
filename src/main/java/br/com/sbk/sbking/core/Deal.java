@@ -12,9 +12,7 @@ import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
 @SuppressWarnings("serial")
 public class Deal implements Serializable {
 
-	//private static final int NUMBER_OF_TRICKS_IN_A_COMPLETE_HAND = 13;
-	//FIXME lowered for debug purposes
-	private static final int NUMBER_OF_TRICKS_IN_A_COMPLETE_HAND = 1;
+	private static final int NUMBER_OF_TRICKS_IN_A_COMPLETE_HAND = 13;
 
 	private Board board;
 	private int completedTricks;
@@ -66,7 +64,17 @@ public class Deal implements Serializable {
 	}
 
 	public boolean isFinished() {
+		return allPointsPlayed() || allTricksPlayed();
+	}
+
+	private boolean allTricksPlayed() {
 		return this.completedTricks == NUMBER_OF_TRICKS_IN_A_COMPLETE_HAND;
+	}
+
+	private boolean allPointsPlayed() {
+		int totalPoints = this.ruleset.getTotalPoints();
+		int pointsPlayed = this.score.getAllPoints();
+		return pointsPlayed == totalPoints;
 	}
 
 	public int getCompletedTricks() {
@@ -217,7 +225,7 @@ public class Deal implements Serializable {
 	public Direction getDealer() {
 		return this.dealer;
 	}
-	
+
 	public Score getScore() {
 		return this.score;
 	}

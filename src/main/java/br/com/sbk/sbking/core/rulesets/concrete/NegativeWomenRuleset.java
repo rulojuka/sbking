@@ -10,6 +10,7 @@ import br.com.sbk.sbking.core.rulesets.implementations.NoTrumpSuitWinnable;
 public class NegativeWomenRuleset extends NegativeRuleset {
 
 	private static final int NEGATIVE_WOMEN_SCORE_MULTIPLIER = 50;
+	private static final int NUMBER_OF_WOMEN = 4;
 
 	public NegativeWomenRuleset() {
 		this.suitFollowable = new DefaultSuitFollowable();
@@ -35,6 +36,11 @@ public class NegativeWomenRuleset extends NegativeRuleset {
 	@Override
 	public String getCompleteDescription() {
 		return "Avoid all queens";
+	}
+
+	@Override
+	public int getTotalPoints() {
+		return NUMBER_OF_WOMEN;
 	}
 
 }
