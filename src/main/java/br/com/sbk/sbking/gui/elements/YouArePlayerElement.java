@@ -41,7 +41,7 @@ public class YouArePlayerElement {
 		}
 		if (Direction.SOUTH == direction) {
 			x = SOUTH_X;
-			y = SOUTH_Y;
+			y = SOUTH_Y + 100;
 		}
 		if (Direction.WEST == direction) {
 			x = WEST_X;

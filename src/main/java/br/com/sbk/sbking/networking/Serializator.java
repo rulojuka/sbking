@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
+import br.com.sbk.sbking.gui.models.GameScoreboard;
 
 public class Serializator {
 
@@ -90,6 +91,21 @@ public class Serializator {
 		try {
 			deserializedObject = objectInputStream.readObject();
 			ret = (Direction) deserializedObject;
+		} catch (IOException i) {
+			logger.debug(i);
+		} catch (ClassNotFoundException c) {
+			logger.debug(c);
+		}
+
+		return ret;
+	}
+
+	public GameScoreboard tryToDeserializeGameScoreboard() {
+		Object deserializedObject = null;
+		GameScoreboard ret = null;
+		try {
+			deserializedObject = objectInputStream.readObject();
+			ret = (GameScoreboard) deserializedObject;
 		} catch (IOException i) {
 			logger.debug(i);
 		} catch (ClassNotFoundException c) {

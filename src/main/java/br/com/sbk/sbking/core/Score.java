@@ -22,11 +22,6 @@ public class Score implements Serializable {
 	public int getEastWestPoints() {
 		return eastWestPoints;
 	}
-	
-	public String getSummary() {
-		Integer points = getNorthSouthPoints() - getEastWestPoints();
-		return points.toString();
-	}
 
 	public void addTrickToDirection(Trick trick, Direction winner) {
 		if (winner.isNorthSouth()) {
@@ -43,9 +38,17 @@ public class Score implements Serializable {
 	private void addEastWest(Trick trick) {
 		eastWestPoints += this.scoreable.getPoints(trick);
 	}
-	
+
 	public int getAllPoints() {
 		return this.eastWestPoints + this.northSouthPoints;
+	}
+	
+	public int getFinalPunctuation() {
+		int points = (getNorthSouthPoints() - getEastWestPoints()) * scoreable.getScoreMultiplier();
+		if (scoreable.isNegative()) {
+			points *= -1;
+		}
+		return points;
 	}
 
 	@Override
@@ -79,5 +82,4 @@ public class Score implements Serializable {
 		return true;
 	}
 
-	
 }

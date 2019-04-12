@@ -1,5 +1,7 @@
 package br.com.sbk.sbking.gui.models;
 
+import java.io.Serializable;
+
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.core.GameModeSummary;
@@ -14,13 +16,14 @@ import br.com.sbk.sbking.core.rulesets.concrete.NegativeMenRuleset;
 import br.com.sbk.sbking.core.rulesets.concrete.NegativeTricksRuleset;
 import br.com.sbk.sbking.core.rulesets.concrete.NegativeWomenRuleset;
 
-public class GameScoreboard {
+@SuppressWarnings("serial")
+public class GameScoreboard implements Serializable {
 
 	private GameModeSummary[] games = new GameModeSummary[10];
 	private int gamesPlayed = 0;
 	int positivesPlayed = 0;
 
-	public void addGame(Deal deal) {
+	public void addFinishedDeal(Deal deal) {
 		if (!deal.isFinished()) {
 			throw new DealNotFinishedException();
 		} else {
@@ -51,7 +54,7 @@ public class GameScoreboard {
 
 		if (currentGameModeSummary != null) {
 			name = currentGameModeSummary.getName();
-			score = currentGameModeSummary.getScore();
+			score = String.valueOf(currentGameModeSummary.getScore());
 			chosenBy = currentGameModeSummary.getChosenBy();
 			orderOfPlay = currentGameModeSummary.getOrderOfPlay();
 		} else {
@@ -60,6 +63,25 @@ public class GameScoreboard {
 		response = String.format("%-20s %-4s %-4s %-2s", name, score, chosenBy, orderOfPlay);
 		return response;
 
+	}
+
+	public String getSummary() {
+		String response;
+
+		String name = "Total score:";
+		String score = "----";
+		String chosenBy = "";
+		String orderOfPlay = "";
+
+		int totalScore = 0;
+		for (GameModeSummary gameModeSummary : games) {
+			if (gameModeSummary != null) {
+				totalScore += gameModeSummary.getScore();
+			}
+		}
+		score = String.valueOf(totalScore);
+		response = String.format("%-20s %-4s %-4s %-2s", name, score, chosenBy, orderOfPlay);
+		return response;
 	}
 
 	private String getNameOfGameNumber(int number) {

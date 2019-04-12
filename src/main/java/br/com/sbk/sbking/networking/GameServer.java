@@ -15,22 +15,24 @@ import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.CompleteDealDealer;
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
+import br.com.sbk.sbking.core.Game;
 import br.com.sbk.sbking.core.exceptions.SelectedPositiveOrNegativeInAnotherPlayersTurnException;
 import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
+import br.com.sbk.sbking.gui.models.GameScoreboard;
 import br.com.sbk.sbking.gui.models.PositiveOrNegative;
 
 public class GameServer {
 
-	private static final int NUMBER_OF_DEALS = 1; // FIXME should come from the game and equal 10
 	final static Logger logger = Logger.getLogger(GameServer.class);
 	private List<PlayerSocket> playerSockets = new ArrayList<PlayerSocket>();
 	private ExecutorService pool;
 	private NetworkGame networkGame;
-	private Direction currentDealer = Direction.NORTH;
 	private PositiveOrNegativeNotification positiveOrNegativeNotification = new PositiveOrNegativeNotification();
 	private PositiveOrNegative currentPositiveOrNegative;
 	private GameModeOrStrainNotification gameModeOrStrainNotification = new GameModeOrStrainNotification();
 	private Ruleset currentGameModeOrStrain;
+
+	private Game game;
 
 	public GameServer() {
 		pool = Executors.newFixedThreadPool(4);
@@ -49,14 +51,16 @@ public class GameServer {
 
 			this.sendMessageAll("ALLCONNECTED");
 
-			for (int i = 0; i < NUMBER_OF_DEALS; i++) {
-				logger.debug("Starting deal " + (i + 1) + "of" + NUMBER_OF_DEALS);
+			this.game = new Game();
+
+			while (!game.isFinished()) {
+				// logger.debug("Starting deal " + (i + 1) + "of" + NUMBER_OF_DEALS);
 
 				this.sendInitializeDealAll();
 				logger.info("Sleeping for 500ms waiting for everything come out right.");
 				Thread.sleep(500);
 
-				this.sendChooserPositiveNegativeAll(currentDealer.getPositiveOrNegativeChooserWhenDealer());
+				this.sendChooserPositiveNegativeAll(this.getCurrentPositiveOrNegativeChooser());
 
 				synchronized (positiveOrNegativeNotification) {
 					// wait until object notifies - which relinquishes the lock on the object too
@@ -75,7 +79,7 @@ public class GameServer {
 				this.currentPositiveOrNegative = positiveOrNegativeNotification.getPositiveOrNegative();
 				this.sendPositiveOrNegativeAll(this.currentPositiveOrNegative);
 
-				this.sendChooserGameModeOrStrainAll(this.currentDealer.getGameModeOrStrainChooserWhenDealer());
+				this.sendChooserGameModeOrStrainAll(this.getCurrentGameModeOrStrainChooser());
 
 				synchronized (gameModeOrStrainNotification) {
 					// wait until object notifies - which relinquishes the lock on the object too
@@ -91,17 +95,33 @@ public class GameServer {
 				logger.info("I received that is going to be "
 						+ gameModeOrStrainNotification.getGameModeOrStrain().getShortDescription());
 				this.currentGameModeOrStrain = gameModeOrStrainNotification.getGameModeOrStrain();
+
+				boolean isRulesetPermitted = this.game.isGameModePermitted(this.currentGameModeOrStrain,
+						this.getCurrentGameModeOrStrainChooser());
+
+				if (!isRulesetPermitted) {
+					logger.info("This ruleset is not permitted. Restarting choose procedure");
+					this.sendInvalidRulesetAll();
+					continue;
+				} else {
+					this.sendValidRulesetAll();
+				}
+
 				this.sendGameModeOrStrainShortDescriptionAll(this.currentGameModeOrStrain.getShortDescription());
 
 				logger.info("Sleeping for 500ms waiting for everything come out right.");
 				Thread.sleep(500);
 
 				logger.info("Everything selected! Game commencing!");
-				CompleteDealDealer dealer = new CompleteDealDealer(this.currentDealer);
+				CompleteDealDealer dealer = new CompleteDealDealer(this.game.getDealer());
 				Deal deal = dealer.deal(currentGameModeOrStrain);
 
 				this.networkGame = new NetworkGame(this, deal);
 				networkGame.run();
+
+				this.game.addFinishedDeal(deal);
+				this.sendGameScoreboardAll(this.game.getGameScoreboard());
+
 				this.sendFinishDealAll();
 				logger.info("Deal finished!");
 
@@ -219,18 +239,36 @@ public class GameServer {
 		}
 	}
 
+	private void sendGameScoreboardAll(GameScoreboard gameScoreboard) {
+		for (PlayerSocket playerSocket : playerSockets) {
+			playerSocket.sendGameScoreboard(gameScoreboard);
+		}
+	}
+
 	private void sendFinishGameAll() {
 		for (PlayerSocket playerSocket : playerSockets) {
 			playerSocket.sendFinishGame();
 		}
 	}
 
+	private void sendInvalidRulesetAll() {
+		for (PlayerSocket playerSocket : playerSockets) {
+			playerSocket.sendInvalidRuleset();
+		}
+	}
+
+	private void sendValidRulesetAll() {
+		for (PlayerSocket playerSocket : playerSockets) {
+			playerSocket.sendValidRuleset();
+		}
+	}
+
 	private Direction getCurrentPositiveOrNegativeChooser() {
-		return this.currentDealer.getPositiveOrNegativeChooserWhenDealer();
+		return this.game.getDealer().getPositiveOrNegativeChooserWhenDealer();
 	}
 
 	private Direction getCurrentGameModeOrStrainChooser() {
-		return this.currentDealer.getGameModeOrStrainChooserWhenDealer();
+		return this.game.getDealer().getGameModeOrStrainChooserWhenDealer();
 	}
 
 }

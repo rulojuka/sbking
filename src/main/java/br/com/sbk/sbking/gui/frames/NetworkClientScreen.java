@@ -13,7 +13,6 @@ import org.apache.log4j.Logger;
 
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
-import br.com.sbk.sbking.gui.models.GameScoreboard;
 import br.com.sbk.sbking.gui.painters.ConnectToServerPainter;
 import br.com.sbk.sbking.gui.painters.FinalScoreboardPainter;
 import br.com.sbk.sbking.gui.painters.WaitingForChoosingGameModeOrStrainPainter;
@@ -139,6 +138,28 @@ public class NetworkClientScreen extends JFrame {
 			paintWaitingForChoosingGameModeOrStrainScreen(sbKingClient.getDirection(),
 					sbKingClient.getGameModeOrStrainChooser(), isPositive);
 			logger.info("Finished painting WaitingForChoosingGameModeOrStrainScreen");
+			
+			
+			logger.info("Waiting for server to valid chosen Ruleset");
+			while(!sbKingClient.isRulesetValidSet()) {
+				try {
+					Thread.sleep(100);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			if(!sbKingClient.isRulesetValid()) {
+				logger.info("Chosen Ruleset is invalid, sleeping for 2 seconds while client cleans itself");
+				try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				logger.info("Returning to beginning of loop");
+				continue;
+			}
 
 			while (!sbKingClient.isDealFinished() && !sbKingClient.newDealAvailable()) {
 				try {
@@ -195,15 +216,15 @@ public class NetworkClientScreen extends JFrame {
 		cleanContentPane();
 		WaitingForChoosingPositiveOrNegativePainter waitingForChoosingPainter = new WaitingForChoosingPositiveOrNegativePainter(
 				myDirection, chooserDirection, this.sbKingClient);
-		waitingForChoosingPainter.paint(this.getContentPane(), new GameScoreboard()); // FIXME should receive from
-																						// server.
+		waitingForChoosingPainter.paint(this.getContentPane(), this.sbKingClient.getCurrentGameScoreboard());
+
 	}
 
 	private void paintWaitingForChoosingGameModeOrStrainScreen(Direction direction, Direction chooser,
 			boolean isPositive) {
 		cleanContentPane();
 		WaitingForChoosingGameModeOrStrainPainter waitingForChoosingGameModeOrStrainPainter = new WaitingForChoosingGameModeOrStrainPainter(
-				direction, chooser, isPositive, this.sbKingClient, new GameScoreboard());
+				direction, chooser, isPositive, this.sbKingClient, this.sbKingClient.getCurrentGameScoreboard());
 		waitingForChoosingGameModeOrStrainPainter.paint(this.getContentPane());
 	}
 
@@ -215,7 +236,8 @@ public class NetworkClientScreen extends JFrame {
 
 	private void paintFinalScoreboardScreen() {
 		cleanContentPane();
-		FinalScoreboardPainter finalScoreboardPainter = new FinalScoreboardPainter(new GameScoreboard());
+		FinalScoreboardPainter finalScoreboardPainter = new FinalScoreboardPainter(
+				this.sbKingClient.getCurrentGameScoreboard());
 		finalScoreboardPainter.paint(this.getContentPane());
 	}
 

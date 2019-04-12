@@ -23,5 +23,10 @@ public abstract class PositiveRuleset extends Ruleset {
 	public int getTotalPoints() {
 		return NUMBER_OF_TRICKS;
 	}
+	
+	@Override
+	public boolean isNegative() {
+		return false;
+	}
 
 }

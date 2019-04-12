@@ -34,7 +34,7 @@ public class WaitingForChooserPositiveOrNegativeElement {
 			y = EAST_Y;
 		} else if (Direction.SOUTH == direction) {
 			x = SOUTH_X;
-			y = SOUTH_Y;
+			y = SOUTH_Y + 100;
 		} else {
 			x = WEST_X;
 			y = WEST_Y;

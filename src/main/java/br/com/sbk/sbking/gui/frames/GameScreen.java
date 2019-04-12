@@ -6,7 +6,6 @@ import static br.com.sbk.sbking.gui.constants.FrameConstants.TABLE_WIDTH;
 
 import javax.swing.JFrame;
 
-import br.com.sbk.sbking.core.Game;
 import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
 import br.com.sbk.sbking.gui.painters.GameModePainter;
 import br.com.sbk.sbking.gui.painters.GameSelectPainter;
@@ -14,7 +13,6 @@ import br.com.sbk.sbking.gui.painters.GameSelectPainter;
 @SuppressWarnings("serial")
 public class GameScreen extends JFrame {
 
-	private Game game;
 	private boolean gameSelected = false;
 	private Ruleset ruleset;
 
@@ -22,7 +20,6 @@ public class GameScreen extends JFrame {
 		super();
 		initializeJFrame();
 		initializeContentPane();
-		this.game = new Game();
 	}
 
 	private void initializeJFrame() {

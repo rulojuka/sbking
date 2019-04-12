@@ -53,7 +53,7 @@ public class ChoosePositiveOrNegativeElement {
 			initial_y = EAST_Y;
 		} else if (Direction.SOUTH == direction) {
 			initial_x = SOUTH_X;
-			initial_y = SOUTH_Y;
+			initial_y = SOUTH_Y + 100;
 		} else {
 			initial_x = WEST_X;
 			initial_y = WEST_Y;

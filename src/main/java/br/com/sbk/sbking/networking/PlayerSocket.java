@@ -10,6 +10,7 @@ import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.core.rulesets.RulesetFromShortDescriptionIdentifier;
 import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
+import br.com.sbk.sbking.gui.models.GameScoreboard;
 import br.com.sbk.sbking.gui.models.PositiveOrNegative;
 
 public class PlayerSocket implements Runnable {
@@ -152,6 +153,26 @@ public class PlayerSocket implements Runnable {
 
 	public void sendFinishGame() {
 		String control = "FINISHGAME";
+		logger.info("Sending " + control + " control to " + this.direction);
+		this.serializator.tryToSerialize(control);
+	}
+	
+	public void sendGameScoreboard(GameScoreboard gameScoreboard) {
+		String control = "GAMESCOREBOARD";
+		logger.info("Sending " + control + " control to " + this.direction);
+		this.serializator.tryToSerialize(control);
+		logger.info("Sending gameScoreboard to " + this.direction);
+		this.serializator.tryToSerialize(gameScoreboard);
+	}
+
+	public void sendInvalidRuleset() {
+		String control = "INVALIDRULESET";
+		logger.info("Sending " + control + " control to " + this.direction);
+		this.serializator.tryToSerialize(control);
+	}
+
+	public void sendValidRuleset() {
+		String control = "VALIDRULESET";
 		logger.info("Sending " + control + " control to " + this.direction);
 		this.serializator.tryToSerialize(control);
 	}

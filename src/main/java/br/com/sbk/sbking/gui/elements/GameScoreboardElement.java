@@ -22,6 +22,10 @@ public class GameScoreboardElement {
 			text.append("</span>");
 			text.append("<br/>");
 		}
+		text.append("<span>");
+		text.append(gameScoreboard.getSummary());
+		text.append("</span>");
+		text.append("<br/>");
 		text.append("</html>");
 		String string = text.toString();
 		// System.out.println("Full html is: **"+string+"**");

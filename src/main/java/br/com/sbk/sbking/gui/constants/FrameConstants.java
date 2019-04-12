@@ -6,7 +6,7 @@ public final class FrameConstants {
 	public static final int TABLE_HEIGHT = 768;
 	public static final int BETWEEN_CARDS_WIDTH = 26; /* 26 is good. 12 pixels to hide pictures */
 	
-	public static final int NORTH_X = 1024 / 2 - BETWEEN_CARDS_WIDTH * 7; /* Ideal would be 6,5 (half of the cards) */
+	public static final int NORTH_X = TABLE_WIDTH / 2 - BETWEEN_CARDS_WIDTH * 7; /* Ideal would be 6,5 (half of the cards) */
 	public static final int SOUTH_X = NORTH_X;
 	public static final int EAST_X = NORTH_X + 300;
 	public static final int WEST_X = NORTH_X - 300;

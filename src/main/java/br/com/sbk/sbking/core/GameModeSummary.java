@@ -1,8 +1,11 @@
 package br.com.sbk.sbking.core;
 
+import java.io.Serializable;
+
 import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
 
-public class GameModeSummary {
+@SuppressWarnings("serial")
+public class GameModeSummary implements Serializable {
 
 	private Direction chosenBy;
 	private Ruleset ruleset;
@@ -21,8 +24,8 @@ public class GameModeSummary {
 		return this.ruleset.getShortDescription();
 	}
 
-	public String getScore() {
-		return score.getSummary();
+	public int getScore() {
+		return score.getFinalPunctuation();
 	}
 
 	public String getChosenBy() {

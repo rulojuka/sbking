@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
+import br.com.sbk.sbking.gui.models.GameScoreboard;
 import br.com.sbk.sbking.gui.models.PositiveOrNegative;
 
 public class SBKingClient implements Runnable {
@@ -28,8 +29,11 @@ public class SBKingClient implements Runnable {
 	private Deal currentDeal;
 
 	private boolean dealFinished;
+	private Boolean rulesetValid = null;
 
 	private boolean gameFinished = false;
+
+	private GameScoreboard currentGameScoreboard = new GameScoreboard();
 
 	final static Logger logger = Logger.getLogger(SBKingClient.class);
 
@@ -88,6 +92,9 @@ public class SBKingClient implements Runnable {
 		final String POSITIVEORNEGATIVE = "POSITIVEORNEGATIVE";
 		final String GAMEMODEORSTRAIN = "GAMEMODEORSTRAIN";
 		final String FINISHGAME = "FINISHGAME";
+		final String GAMESCOREBOARD = "GAMESCOREBOARD";
+		final String INVALIDRULESET = "INVALIDRULESET";
+		final String VALIDRULESET = "VALIDRULESET";
 
 		if (MESSAGE.equals(controlMessage)) {
 			String string = this.serializator.tryToDeserializeString();
@@ -140,6 +147,13 @@ public class SBKingClient implements Runnable {
 			this.finishDeal();
 		} else if (FINISHGAME.equals(controlMessage)) {
 			this.finishGame();
+		} else if (INVALIDRULESET.equals(controlMessage)) {
+			this.setRulesetValid(false);
+		} else if (VALIDRULESET.equals(controlMessage)) {
+			this.setRulesetValid(true);
+		} else if (GAMESCOREBOARD.equals(controlMessage)) {
+			this.currentGameScoreboard = this.serializator.tryToDeserializeGameScoreboard();
+			logger.info("Received GameScoreboard." + this.currentGameScoreboard.toString());
 		} else {
 			logger.info("Could not understand control.");
 		}
@@ -160,6 +174,7 @@ public class SBKingClient implements Runnable {
 
 	private void initializeDeal() {
 		this.dealFinished = false;
+		this.initializeEverythingToNextDeal();
 	}
 
 	private void initializeEverythingToNextDeal() {
@@ -167,6 +182,7 @@ public class SBKingClient implements Runnable {
 		this.unsetPositiveOrNegative();
 		this.unsetGameModeOrStrainChooser();
 		this.unsetCurrentDeal();
+		this.unsetRulesetValid();
 	}
 
 	public NetworkCardPlayer getNetworkCardPlayer() {
@@ -260,6 +276,14 @@ public class SBKingClient implements Runnable {
 	private void unsetPositiveOrNegative() {
 		this.positiveOrNegative = null;
 	}
+	
+	private void setRulesetValid(boolean valid) {
+		this.rulesetValid = valid;
+	}
+
+	private void unsetRulesetValid() {
+		this.rulesetValid = null;
+	}
 
 	public void sendGameModeOrStrain(String gameModeOrStrain) {
 		logger.debug("Sending Game Mode or Strain to server");
@@ -294,6 +318,18 @@ public class SBKingClient implements Runnable {
 
 	private void finishGame() {
 		this.gameFinished = true;
+	}
+
+	public GameScoreboard getCurrentGameScoreboard() {
+		return this.currentGameScoreboard;
+	}
+
+	public boolean isRulesetValidSet() {
+		return this.rulesetValid != null;
+	}
+
+	public boolean isRulesetValid() {
+		return this.rulesetValid;
 	}
 
 }
