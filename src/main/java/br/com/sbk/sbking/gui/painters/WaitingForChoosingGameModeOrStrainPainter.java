@@ -9,7 +9,7 @@ import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.gui.elements.ChooseGameModeOrStrainElement;
 import br.com.sbk.sbking.gui.elements.GameScoreboardElement;
 import br.com.sbk.sbking.gui.elements.HandWhileChoosingElement;
-import br.com.sbk.sbking.gui.elements.WaitingForChooserGameModeOrStrainElement;
+import br.com.sbk.sbking.gui.elements.WaitingForChooserElement;
 import br.com.sbk.sbking.gui.elements.YouArePlayerElement;
 import br.com.sbk.sbking.gui.models.GameScoreboard;
 import br.com.sbk.sbking.networking.client.SBKingClient;
@@ -38,10 +38,10 @@ public class WaitingForChoosingGameModeOrStrainPainter {
 		new GameScoreboardElement(gameScoreboard, contentPane, centerOfScoreboardPosition);
 		if (myDirection != chooserDirection) {
 			YouArePlayerElement.add(this.myDirection, contentPane);
-			WaitingForChooserGameModeOrStrainElement.add(contentPane, chooserDirection);
+			WaitingForChooserElement.add(contentPane, chooserDirection, "Game Mode or Strain.");
 		} else {
 			ChooseGameModeOrStrainElement chooseGameModeOrStrainElement = new ChooseGameModeOrStrainElement(contentPane,
-					this.chooserDirection, this.sbKingClient, this.isPositive);
+					this.sbKingClient, this.isPositive);
 			chooseGameModeOrStrainElement.add();
 		}
 

@@ -9,7 +9,7 @@ import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.gui.elements.ChoosePositiveOrNegativeElement;
 import br.com.sbk.sbking.gui.elements.GameScoreboardElement;
 import br.com.sbk.sbking.gui.elements.HandWhileChoosingElement;
-import br.com.sbk.sbking.gui.elements.WaitingForChooserPositiveOrNegativeElement;
+import br.com.sbk.sbking.gui.elements.WaitingForChooserElement;
 import br.com.sbk.sbking.gui.elements.YouArePlayerElement;
 import br.com.sbk.sbking.gui.models.GameScoreboard;
 import br.com.sbk.sbking.networking.client.SBKingClient;
@@ -34,10 +34,10 @@ public class WaitingForChoosingPositiveOrNegativePainter {
 		new GameScoreboardElement(gameScoreboard, contentPane, centerOfScoreboardPosition);
 		if (myDirection != chooserDirection) {
 			YouArePlayerElement.add(this.myDirection, contentPane);
-			WaitingForChooserPositiveOrNegativeElement.add(contentPane, chooserDirection);
+			WaitingForChooserElement.add(contentPane, chooserDirection, "Positive or Negative.");
 		} else {
 			ChoosePositiveOrNegativeElement choosePositiveOrNegativeElement = new ChoosePositiveOrNegativeElement(
-					contentPane, this.chooserDirection, this.sbKingClient);
+					contentPane, this.sbKingClient);
 			choosePositiveOrNegativeElement.add();
 		}
 
@@ -46,7 +46,5 @@ public class WaitingForChoosingPositiveOrNegativePainter {
 		contentPane.validate();
 		contentPane.repaint();
 	}
-
-	
 
 }

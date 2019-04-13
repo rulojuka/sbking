@@ -22,22 +22,26 @@ public class SpecificDirectionBoardElements {
 			ActionListener actionListener) {
 		switch (direction) {
 		case NORTH:
-			new HandElement(deal.getHandOf(Direction.NORTH), container, actionListener, new Point(NORTH_X_CENTER, NORTH_Y_CENTER));
+			new HandElement(deal.getHandOf(Direction.NORTH), container, actionListener,
+					new Point(NORTH_X_CENTER, NORTH_Y_CENTER));
 			break;
 		case EAST:
-			new HandElement(deal.getHandOf(Direction.EAST), container, actionListener, new Point(EAST_X_CENTER, EAST_Y_CENTER));
+			new HandElement(deal.getHandOf(Direction.EAST), container, actionListener,
+					new Point(EAST_X_CENTER, EAST_Y_CENTER));
 			break;
 		case SOUTH:
-			new HandElement(deal.getHandOf(Direction.SOUTH), container, actionListener, new Point(SOUTH_X_CENTER, SOUTH_Y_CENTER));
+			new HandElement(deal.getHandOf(Direction.SOUTH), container, actionListener,
+					new Point(SOUTH_X_CENTER, SOUTH_Y_CENTER));
 			break;
 		case WEST:
-			new HandElement(deal.getHandOf(Direction.WEST), container, actionListener, new Point(WEST_X_CENTER, WEST_Y_CENTER));
+			new HandElement(deal.getHandOf(Direction.WEST), container, actionListener,
+					new Point(WEST_X_CENTER, WEST_Y_CENTER));
 			break;
 
 		}
 
-		new CurrentPlayerElement(deal.getCurrentPlayer(), container,
-				discoverCurrentPlayerElementLocation(deal.getCurrentPlayer()));
+		boolean isMyTurn = deal.getCurrentPlayer().equals(direction);
+		new CurrentPlayerElement(deal.getCurrentPlayer(), container, isMyTurn);
 
 		new ScoreboardElement(deal, container, new Point(container.getWidth() - 150, 10));
 
@@ -45,19 +49,6 @@ public class SpecificDirectionBoardElements {
 				new Point(container.getWidth() / 2, container.getHeight() / 2));
 
 		new RulesetElement(deal.getRuleset(), container, new Point(150, 10));
-	}
-
-	private Point discoverCurrentPlayerElementLocation(Direction direction) {
-		if (direction.isNorth()) {
-			return new Point(NORTH_X_CENTER, NORTH_Y_CENTER - 30);
-		} else if (direction.isEast()) {
-			return new Point(EAST_X_CENTER, EAST_Y_CENTER - 30);
-		} else if (direction.isSouth()) {
-			return new Point(SOUTH_X_CENTER, SOUTH_Y_CENTER - 30);
-		} else {
-			return new Point(WEST_X_CENTER, WEST_Y_CENTER - 30);
-		}
-
 	}
 
 }

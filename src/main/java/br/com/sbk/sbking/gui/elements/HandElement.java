@@ -11,7 +11,7 @@ import br.com.sbk.sbking.gui.models.DeckCardImageInformation;
 
 public class HandElement {
 
-	private static final int BETWEEN_CARDS_WIDTH = 24; /* 26 is good. 12 pixels to hide pictures */
+	private static final int BETWEEN_CARDS_WIDTH = 22; /* 26 is good for the eyes. 22 to fit everything */
 	private DeckCardImageInformation deckCardImageInformation;
 
 	public HandElement(Hand hand, Container container, ActionListener actionListener, Point handCenter) {

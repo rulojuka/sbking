@@ -1,16 +1,10 @@
 package br.com.sbk.sbking.gui.elements;
 
-import static br.com.sbk.sbking.gui.constants.FrameConstants.EAST_X_CENTER;
-import static br.com.sbk.sbking.gui.constants.FrameConstants.EAST_Y_CENTER;
-import static br.com.sbk.sbking.gui.constants.FrameConstants.NORTH_X_CENTER;
-import static br.com.sbk.sbking.gui.constants.FrameConstants.NORTH_Y_CENTER;
-import static br.com.sbk.sbking.gui.constants.FrameConstants.SOUTH_X_CENTER;
-import static br.com.sbk.sbking.gui.constants.FrameConstants.SOUTH_Y_CENTER;
-import static br.com.sbk.sbking.gui.constants.FrameConstants.WEST_X_CENTER;
-import static br.com.sbk.sbking.gui.constants.FrameConstants.WEST_Y_CENTER;
-import static javax.swing.SwingConstants.CENTER;
+import static br.com.sbk.sbking.gui.constants.FrameConstants.HALF_HEIGHT;
+import static br.com.sbk.sbking.gui.constants.FrameConstants.HALF_WIDTH;
 
 import java.awt.Container;
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +13,6 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 
-import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.core.Strain;
 import br.com.sbk.sbking.core.rulesets.NegativeRulesetsEnum;
 import br.com.sbk.sbking.networking.client.SBKingClient;
@@ -27,48 +20,55 @@ import br.com.sbk.sbking.networking.client.SBKingClient;
 public class ChooseGameModeOrStrainElement {
 
 	private Container container;
-	private Direction direction;
 	private JRadioButton currentButton;
 	private List<JRadioButton> radioButtons;
 	private SBKingClient sbKingClient;
-	private int initial_y;
-	private int initial_x;
-	private int width;
-	private int height;
 	private boolean isPositive;
 
-	public ChooseGameModeOrStrainElement(Container container, Direction direction, SBKingClient sbKingClient,
-			boolean isPositive) {
+	private int numberOfElements;
+	private int elementWidth;
+	private int elementHeight;
+	private int xSpacing;
+	private int yLabelOffset;
+
+	private static int BUTTON_WIDTH = 80;
+
+	public ChooseGameModeOrStrainElement(Container container, SBKingClient sbKingClient, boolean isPositive) {
 		this.container = container;
-		this.direction = direction;
 		this.sbKingClient = sbKingClient;
 		this.isPositive = isPositive;
+		if (isPositive) {
+			this.numberOfElements = Strain.values().length;
+		} else {
+			this.numberOfElements = NegativeRulesetsEnum.values().length;
+		}
+		this.elementWidth = 160;
 	}
 
 	public void add() {
-		addLabel();
-		addRadioButtons();
+		int initialX = HALF_WIDTH;
+		int initialY = HALF_HEIGHT;
+
+		elementHeight = 20;
+		xSpacing = 5;
+		yLabelOffset = -elementHeight;
+
+		int totalWidth = elementWidth + xSpacing + BUTTON_WIDTH;
+		int totalHeight = elementHeight * numberOfElements;
+		initialX -= totalWidth / 2;
+		initialY -= totalHeight / 2;
+
+		Point buttonPosition = new Point(initialX, initialY);
+		this.addRadioButtons(buttonPosition);
+		Point labelPosition = new Point(initialX, initialY);
+		labelPosition.translate(0, yLabelOffset);
+		this.addLabel(labelPosition);
 	}
 
-	private void addRadioButtons() {
-		width = 160;
-		height = 20;
+	private void addRadioButtons(Point buttonsPosition) {
+		int y = buttonsPosition.y;
+		int x = buttonsPosition.x;
 
-		if (Direction.NORTH == direction) {
-			initial_x = NORTH_X_CENTER;
-			initial_y = NORTH_Y_CENTER;
-		} else if (Direction.EAST == direction) {
-			initial_x = EAST_X_CENTER;
-			initial_y = EAST_Y_CENTER;
-		} else if (Direction.SOUTH == direction) {
-			initial_x = SOUTH_X_CENTER;
-			initial_y = SOUTH_Y_CENTER;
-		} else {
-			initial_x = WEST_X_CENTER;
-			initial_y = WEST_Y_CENTER;
-		}
-
-		initial_y += 25;
 		ButtonGroup bg = new ButtonGroup();
 
 		List<String> texts = new ArrayList<String>();
@@ -82,26 +82,27 @@ public class ChooseGameModeOrStrainElement {
 			}
 		}
 
-		int y = initial_y;
 		radioButtons = new ArrayList<JRadioButton>();
 		for (String text : texts) {
 			currentButton = new JRadioButton(text);
-			currentButton.setBounds(initial_x, y, width, height);
+			currentButton.setBounds(x, y, elementWidth, elementHeight);
 			container.add(currentButton);
 			radioButtons.add(currentButton);
 
-			y += 20;
+			y += elementHeight;
 
 			bg.add(currentButton);
 
 		}
 
 		JButton selectGameModeOrStrandButton = new JButton();
+		Point selectButtonPosition = new Point(buttonsPosition);
+		selectButtonPosition.translate(elementWidth + xSpacing, 0);
 		selectGameModeOrStrandButton.addActionListener(new GameModeOrStrainSelectActionListener());
-		selectGameModeOrStrandButton.setBounds(initial_x + width + 10, initial_y, 80, height * 6);
+		selectGameModeOrStrandButton.setLocation(selectButtonPosition);
+		selectGameModeOrStrandButton.setSize(BUTTON_WIDTH, elementHeight * numberOfElements);
 		selectGameModeOrStrandButton.setText("Select");
 		container.add(selectGameModeOrStrandButton);
-
 	}
 
 	class GameModeOrStrainSelectActionListener implements java.awt.event.ActionListener {
@@ -114,34 +115,14 @@ public class ChooseGameModeOrStrainElement {
 				}
 			}
 			sbKingClient.sendGameModeOrStrain(selectedOnRadio.getText());
-
 		}
-
 	}
 
-	private void addLabel() {
-		JLabel waitingLabel = new JLabel("<html>Please choose:</html>");
-		waitingLabel.setHorizontalAlignment(CENTER);
-		int width = 300;
-		int height = 15;
-		int x;
-		int y;
-		if (Direction.NORTH == direction) {
-			x = NORTH_X_CENTER;
-			y = NORTH_Y_CENTER;
-		} else if (Direction.EAST == direction) {
-			x = EAST_X_CENTER;
-			y = EAST_Y_CENTER;
-		} else if (Direction.SOUTH == direction) {
-			x = SOUTH_X_CENTER;
-			y = SOUTH_Y_CENTER;
-		} else {
-			x = WEST_X_CENTER;
-			y = WEST_Y_CENTER;
-		}
-		waitingLabel.setSize(width, height);
-		waitingLabel.setLocation(x, y);
-		// rulesetLabel.setForeground(RULESET_ELEMENT_COLOR);
+	private void addLabel(Point labelPosition) {
+		int labelWidth = 120;
+		JLabel waitingLabel = new JLabel("Please choose:");
+		waitingLabel.setSize(labelWidth, elementHeight);
+		waitingLabel.setLocation(labelPosition);
 		container.add(waitingLabel);
 	}
 
