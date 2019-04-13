@@ -1,5 +1,7 @@
 package br.com.sbk.sbking.gui.painters;
 
+import static br.com.sbk.sbking.gui.constants.FrameConstants.EAST_X_CENTER;
+import static br.com.sbk.sbking.gui.constants.FrameConstants.NORTH_Y_CENTER;
 import static br.com.sbk.sbking.gui.constants.FrameConstants.TABLE_HEIGHT;
 import static br.com.sbk.sbking.gui.constants.FrameConstants.TABLE_WIDTH;
 
@@ -27,8 +29,10 @@ public class WaitingForChoosingPositiveOrNegativePainter {
 	}
 
 	public void paint(Container contentPane, GameScoreboard gameScoreboard) {
-		Point middleOfScreen = new Point(TABLE_WIDTH / 2, TABLE_HEIGHT / 2);
-		new GameScoreboardElement(gameScoreboard, contentPane, middleOfScreen);
+		int xCenterLocation = TABLE_WIDTH - 160;
+		int yCenterLocation = 110;
+		Point centerOfScoreboardPosition = new Point(xCenterLocation, yCenterLocation);
+		new GameScoreboardElement(gameScoreboard, contentPane, centerOfScoreboardPosition);
 		if (myDirection != chooserDirection) {
 			YouArePlayerElement.add(this.myDirection, contentPane);
 			WaitingForChooserPositiveOrNegativeElement.add(contentPane, chooserDirection);

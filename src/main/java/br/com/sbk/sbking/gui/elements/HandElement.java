@@ -1,7 +1,5 @@
 package br.com.sbk.sbking.gui.elements;
 
-import static br.com.sbk.sbking.gui.constants.FrameConstants.BETWEEN_CARDS_WIDTH;
-
 import java.awt.Container;
 import java.awt.Point;
 import java.awt.event.ActionListener;
@@ -13,23 +11,31 @@ import br.com.sbk.sbking.gui.models.DeckCardImageInformation;
 
 public class HandElement {
 
+	private static final int BETWEEN_CARDS_WIDTH = 24; /* 26 is good. 12 pixels to hide pictures */
 	private DeckCardImageInformation deckCardImageInformation;
 
-	public HandElement(Hand hand, Container container, ActionListener actionListener, Point handLocation) {
-		deckCardImageInformation = new DeckCardImageInformation();
+	public HandElement(Hand hand, Container container, ActionListener actionListener, Point handCenter) {
+		this.deckCardImageInformation = new DeckCardImageInformation();
+
+		int x_offset = ((hand.size()+1) * BETWEEN_CARDS_WIDTH) / 2;
+		x_offset *= -1;
+		int y_offset = deckCardImageInformation.getCardHeight() / 2;
+		y_offset *= -1;
+		Point handTopLeftCorner = new Point(handCenter);
+		handTopLeftCorner.translate(x_offset, y_offset);
+
 		for (int i = hand.size() - 1; i >= 0; i--) { // This way, it draws correctly
 			Card card = hand.get(i);
-			CardButton cardButton = new CardButton(card, deckCardImageInformation.getFrontImage(card),
-					deckCardImageInformation.getBackImage());
+			CardButton cardButton = new CardButton(card, deckCardImageInformation);
 			cardButton.addActionListener(actionListener);
 			container.add(cardButton); // This line needs to go before setting the button location
-			cardButton.setLocation(locationOfCard(i, handLocation)); // This line needs to go after adding the button to
-																		// the container
+			cardButton.setLocation(locationOfCard(i, handTopLeftCorner)); // This line needs to go after adding the button to
+																	// the container
 		}
 	}
 
-	private Point locationOfCard(int index, Point handLocation) {
-		Point cardLocation = (Point) handLocation.clone();
+	private Point locationOfCard(int index, Point handTopLeftCorner) {
+		Point cardLocation = (Point) handTopLeftCorner.clone();
 		cardLocation.translate(index * BETWEEN_CARDS_WIDTH, 0);
 		return cardLocation;
 	}

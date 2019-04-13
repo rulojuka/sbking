@@ -25,8 +25,7 @@ public class TrickElement {
 		List<Card> listOfCards = currentTrick.getCards();
 		for (int i = listOfCards.size() - 1; i >= 0; i--) {
 			Card card = listOfCards.get(i);
-			CardButton cardButton = new CardButton(card, deckCardImageInformation.getFrontImage(card),
-					deckCardImageInformation.getBackImage());
+			CardButton cardButton = new CardButton(card, deckCardImageInformation);
 			trick.add(cardButton);
 			container.add(cardButton); // This line needs to go before setting the button location
 			cardButton.setLocation(cardLocation(leader.next(i), point)); // This line needs to go after adding the

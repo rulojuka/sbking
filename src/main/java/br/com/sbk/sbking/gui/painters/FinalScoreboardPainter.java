@@ -1,7 +1,7 @@
 package br.com.sbk.sbking.gui.painters;
 
-import static br.com.sbk.sbking.gui.constants.FrameConstants.TABLE_HEIGHT;
-import static br.com.sbk.sbking.gui.constants.FrameConstants.TABLE_WIDTH;
+import static br.com.sbk.sbking.gui.constants.FrameConstants.HALF_HEIGHT;
+import static br.com.sbk.sbking.gui.constants.FrameConstants.HALF_WIDTH;
 
 import java.awt.Container;
 import java.awt.Point;
@@ -18,8 +18,11 @@ public class FinalScoreboardPainter {
 	}
 
 	public void paint(Container contentPane) {
-		Point middleOfScreen = new Point(TABLE_WIDTH / 2, TABLE_HEIGHT / 2);
-		new GameScoreboardElement(gameScoreboard, contentPane, middleOfScreen);
+		int xCenterLocation = HALF_WIDTH;
+		int yCenterLocation = HALF_HEIGHT;
+		Point centerOfScoreboardPosition = new Point(xCenterLocation, yCenterLocation);
+
+		new GameScoreboardElement(gameScoreboard, contentPane, centerOfScoreboardPosition);
 		contentPane.validate();
 		contentPane.repaint();
 	}

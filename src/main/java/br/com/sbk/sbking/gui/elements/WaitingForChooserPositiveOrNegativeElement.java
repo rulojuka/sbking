@@ -1,13 +1,13 @@
 package br.com.sbk.sbking.gui.elements;
 
-import static br.com.sbk.sbking.gui.constants.FrameConstants.EAST_X;
-import static br.com.sbk.sbking.gui.constants.FrameConstants.EAST_Y;
-import static br.com.sbk.sbking.gui.constants.FrameConstants.NORTH_X;
-import static br.com.sbk.sbking.gui.constants.FrameConstants.NORTH_Y;
-import static br.com.sbk.sbking.gui.constants.FrameConstants.SOUTH_X;
-import static br.com.sbk.sbking.gui.constants.FrameConstants.SOUTH_Y;
-import static br.com.sbk.sbking.gui.constants.FrameConstants.WEST_X;
-import static br.com.sbk.sbking.gui.constants.FrameConstants.WEST_Y;
+import static br.com.sbk.sbking.gui.constants.FrameConstants.EAST_X_CENTER;
+import static br.com.sbk.sbking.gui.constants.FrameConstants.EAST_Y_CENTER;
+import static br.com.sbk.sbking.gui.constants.FrameConstants.NORTH_X_CENTER;
+import static br.com.sbk.sbking.gui.constants.FrameConstants.NORTH_Y_CENTER;
+import static br.com.sbk.sbking.gui.constants.FrameConstants.SOUTH_X_CENTER;
+import static br.com.sbk.sbking.gui.constants.FrameConstants.SOUTH_Y_CENTER;
+import static br.com.sbk.sbking.gui.constants.FrameConstants.WEST_X_CENTER;
+import static br.com.sbk.sbking.gui.constants.FrameConstants.WEST_Y_CENTER;
 import static javax.swing.SwingConstants.CENTER;
 
 import java.awt.Container;
@@ -27,17 +27,17 @@ public class WaitingForChooserPositiveOrNegativeElement {
 		int x;
 		int y;
 		if (Direction.NORTH == direction) {
-			x = NORTH_X;
-			y = NORTH_Y;
+			x = NORTH_X_CENTER;
+			y = NORTH_Y_CENTER;
 		} else if (Direction.EAST == direction) {
-			x = EAST_X;
-			y = EAST_Y;
+			x = EAST_X_CENTER;
+			y = EAST_Y_CENTER;
 		} else if (Direction.SOUTH == direction) {
-			x = SOUTH_X;
-			y = SOUTH_Y + 100;
+			x = SOUTH_X_CENTER;
+			y = SOUTH_Y_CENTER + 100;
 		} else {
-			x = WEST_X;
-			y = WEST_Y;
+			x = WEST_X_CENTER;
+			y = WEST_Y_CENTER;
 		}
 		waitingLabel.setSize(width, height);
 		waitingLabel.setLocation(x, y);

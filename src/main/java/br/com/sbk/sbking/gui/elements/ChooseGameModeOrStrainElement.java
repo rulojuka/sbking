@@ -1,13 +1,13 @@
 package br.com.sbk.sbking.gui.elements;
 
-import static br.com.sbk.sbking.gui.constants.FrameConstants.EAST_X;
-import static br.com.sbk.sbking.gui.constants.FrameConstants.EAST_Y;
-import static br.com.sbk.sbking.gui.constants.FrameConstants.NORTH_X;
-import static br.com.sbk.sbking.gui.constants.FrameConstants.NORTH_Y;
-import static br.com.sbk.sbking.gui.constants.FrameConstants.SOUTH_X;
-import static br.com.sbk.sbking.gui.constants.FrameConstants.SOUTH_Y;
-import static br.com.sbk.sbking.gui.constants.FrameConstants.WEST_X;
-import static br.com.sbk.sbking.gui.constants.FrameConstants.WEST_Y;
+import static br.com.sbk.sbking.gui.constants.FrameConstants.EAST_X_CENTER;
+import static br.com.sbk.sbking.gui.constants.FrameConstants.EAST_Y_CENTER;
+import static br.com.sbk.sbking.gui.constants.FrameConstants.NORTH_X_CENTER;
+import static br.com.sbk.sbking.gui.constants.FrameConstants.NORTH_Y_CENTER;
+import static br.com.sbk.sbking.gui.constants.FrameConstants.SOUTH_X_CENTER;
+import static br.com.sbk.sbking.gui.constants.FrameConstants.SOUTH_Y_CENTER;
+import static br.com.sbk.sbking.gui.constants.FrameConstants.WEST_X_CENTER;
+import static br.com.sbk.sbking.gui.constants.FrameConstants.WEST_Y_CENTER;
 import static javax.swing.SwingConstants.CENTER;
 
 import java.awt.Container;
@@ -55,17 +55,17 @@ public class ChooseGameModeOrStrainElement {
 		height = 20;
 
 		if (Direction.NORTH == direction) {
-			initial_x = NORTH_X;
-			initial_y = NORTH_Y;
+			initial_x = NORTH_X_CENTER;
+			initial_y = NORTH_Y_CENTER;
 		} else if (Direction.EAST == direction) {
-			initial_x = EAST_X;
-			initial_y = EAST_Y;
+			initial_x = EAST_X_CENTER;
+			initial_y = EAST_Y_CENTER;
 		} else if (Direction.SOUTH == direction) {
-			initial_x = SOUTH_X;
-			initial_y = SOUTH_Y;
+			initial_x = SOUTH_X_CENTER;
+			initial_y = SOUTH_Y_CENTER;
 		} else {
-			initial_x = WEST_X;
-			initial_y = WEST_Y;
+			initial_x = WEST_X_CENTER;
+			initial_y = WEST_Y_CENTER;
 		}
 
 		initial_y += 25;
@@ -127,17 +127,17 @@ public class ChooseGameModeOrStrainElement {
 		int x;
 		int y;
 		if (Direction.NORTH == direction) {
-			x = NORTH_X;
-			y = NORTH_Y;
+			x = NORTH_X_CENTER;
+			y = NORTH_Y_CENTER;
 		} else if (Direction.EAST == direction) {
-			x = EAST_X;
-			y = EAST_Y;
+			x = EAST_X_CENTER;
+			y = EAST_Y_CENTER;
 		} else if (Direction.SOUTH == direction) {
-			x = SOUTH_X;
-			y = SOUTH_Y;
+			x = SOUTH_X_CENTER;
+			y = SOUTH_Y_CENTER;
 		} else {
-			x = WEST_X;
-			y = WEST_Y;
+			x = WEST_X_CENTER;
+			y = WEST_Y_CENTER;
 		}
 		waitingLabel.setSize(width, height);
 		waitingLabel.setLocation(x, y);

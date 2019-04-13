@@ -11,6 +11,8 @@ import br.com.sbk.sbking.core.Suit;
 public class DeckCardImageInformation {
 
 	private static final String directory = "/images/cards/";
+	private static final int CARD_WIDTH = 72;
+	private static final int CARD_HEIGHT = 96;
 
 	public ImageIcon getBackImage() {
 		String imagePath = directory + "b1fv.png";
@@ -26,6 +28,14 @@ public class DeckCardImageInformation {
 
 	private String getFilename(Suit suit, Rank rank) {
 		return suit.getSymbol() + rank.getSymbol().toLowerCase() + ".png";
+	}
+
+	public int getCardWidth() {
+		return CARD_WIDTH;
+	}
+
+	public int getCardHeight() {
+		return CARD_HEIGHT;
 	}
 
 }

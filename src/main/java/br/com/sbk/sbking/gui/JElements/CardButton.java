@@ -3,6 +3,7 @@ package br.com.sbk.sbking.gui.JElements;
 import javax.swing.ImageIcon;
 
 import br.com.sbk.sbking.core.Card;
+import br.com.sbk.sbking.gui.models.DeckCardImageInformation;
 
 @SuppressWarnings("serial")
 public class CardButton extends SBKingButton {
@@ -11,17 +12,15 @@ public class CardButton extends SBKingButton {
 	private ImageIcon backImage;
 	private boolean faceUp;
 	private Card card;
-	private static final int CARD_WIDTH = 72;
-	private static final int CARD_HEIGHT = 96;
 
-	public CardButton(Card card, ImageIcon frontImage, ImageIcon backImage) {
+	public CardButton(Card card, DeckCardImageInformation deckCardImageInformation) {
 		super();
 
 		this.card = card;
-		this.frontImage = frontImage;
-		this.backImage = backImage;
+		this.frontImage = deckCardImageInformation.getFrontImage(card);
+		this.backImage = deckCardImageInformation.getBackImage();
 
-		this.setSize(CARD_WIDTH, CARD_HEIGHT);
+		this.setSize(deckCardImageInformation.getCardWidth(), deckCardImageInformation.getCardHeight());
 		this.faceUp = true;
 		this.setIcon(frontImage);
 	}

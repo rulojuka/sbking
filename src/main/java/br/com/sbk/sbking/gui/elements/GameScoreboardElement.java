@@ -9,9 +9,17 @@ import javax.swing.JLabel;
 import br.com.sbk.sbking.gui.models.GameScoreboard;
 
 public class GameScoreboardElement {
-	public GameScoreboardElement(GameScoreboard gameScoreboard, Container container, Point point) {
-		int x_size = 400;
-		int y_size = 400;
+	public GameScoreboardElement(GameScoreboard gameScoreboard, Container container, Point gameScoreboardCenter) {
+		int width = 300;
+		int height = 220;
+
+		int x_offset = width / 2;
+		x_offset *= -1;
+		int y_offset = height / 2;
+		y_offset *= -1;
+
+		Point gameScoreboardTopLeftCorner = new Point(gameScoreboardCenter);
+		gameScoreboardTopLeftCorner.translate(x_offset, y_offset);
 
 		StringBuilder text = new StringBuilder();
 		text.append("<html>");
@@ -36,7 +44,8 @@ public class GameScoreboardElement {
 
 		JLabel label = new JLabel(stringWithoutSpaces);
 		label.setFont(font);
-		label.setBounds(point.x - x_size / 2, point.y - y_size / 2, x_size, y_size);
+		label.setLocation(gameScoreboardTopLeftCorner);
+		label.setSize(width, height);
 		container.add(label);
 	}
 }
