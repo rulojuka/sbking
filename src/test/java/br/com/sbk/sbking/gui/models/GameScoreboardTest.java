@@ -10,7 +10,7 @@ public class GameScoreboardTest {
 	public void getLineShouldReturnFormattedString() {
 		GameScoreboard gameScoreboard = new GameScoreboard();
 		String firstLine = gameScoreboard.getLine(1);
-		assertEquals("Negative tricks      ---- ---- --",firstLine);
+		assertEquals("Negative tricks      ---- --- --",firstLine);
 	}
 
 }

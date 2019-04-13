@@ -55,15 +55,18 @@ public class GameScoreboard implements Serializable {
 		if (currentGameModeSummary != null) {
 			name = currentGameModeSummary.getName();
 			score = String.valueOf(currentGameModeSummary.getScore());
+			if (score.charAt(0) != '-') {
+				score = "+" + score;
+			}
 			chosenBy = currentGameModeSummary.getChosenBy();
 			orderOfPlay = currentGameModeSummary.getOrderOfPlay();
 		} else {
 			name = getNameOfGameNumber(line);
 			score = "----";
-			chosenBy = "----";
+			chosenBy = "---";
 			orderOfPlay = "--";
 		}
-		response = String.format("%-20s %-4s %-4s %-2s", name, score, chosenBy, orderOfPlay);
+		response = String.format("%-20s %-4s %-3s %-2s", name, score, chosenBy, orderOfPlay);
 		return response;
 
 	}
@@ -83,7 +86,7 @@ public class GameScoreboard implements Serializable {
 			}
 		}
 		score = String.valueOf(totalScore);
-		response = String.format("%-20s %-4s %-4s %-2s", name, score, chosenBy, orderOfPlay);
+		response = String.format("%-20s %-4s %-3s %-2s", name, score, chosenBy, orderOfPlay);
 		return response;
 	}
 
