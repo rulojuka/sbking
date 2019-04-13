@@ -17,7 +17,7 @@ public class HandElement {
 	public HandElement(Hand hand, Container container, ActionListener actionListener, Point handCenter) {
 		this.deckCardImageInformation = new DeckCardImageInformation();
 
-		int x_offset = ((hand.size()+1) * BETWEEN_CARDS_WIDTH) / 2;
+		int x_offset = ((hand.size() + 1) * BETWEEN_CARDS_WIDTH) / 2;
 		x_offset *= -1;
 		int y_offset = deckCardImageInformation.getCardHeight() / 2;
 		y_offset *= -1;
@@ -27,10 +27,13 @@ public class HandElement {
 		for (int i = hand.size() - 1; i >= 0; i--) { // This way, it draws correctly
 			Card card = hand.get(i);
 			CardButton cardButton = new CardButton(card, deckCardImageInformation);
-			cardButton.addActionListener(actionListener);
+			if (actionListener != null) {
+				cardButton.addActionListener(actionListener);
+			}
 			container.add(cardButton); // This line needs to go before setting the button location
-			cardButton.setLocation(locationOfCard(i, handTopLeftCorner)); // This line needs to go after adding the button to
-																	// the container
+			cardButton.setLocation(locationOfCard(i, handTopLeftCorner)); // This line needs to go after adding the
+																			// button to
+			// the container
 		}
 	}
 

@@ -8,6 +8,7 @@ import java.awt.Point;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.gui.elements.ChooseGameModeOrStrainElement;
 import br.com.sbk.sbking.gui.elements.GameScoreboardElement;
+import br.com.sbk.sbking.gui.elements.HandWhileChoosingElement;
 import br.com.sbk.sbking.gui.elements.WaitingForChooserGameModeOrStrainElement;
 import br.com.sbk.sbking.gui.elements.YouArePlayerElement;
 import br.com.sbk.sbking.gui.models.GameScoreboard;
@@ -43,6 +44,9 @@ public class WaitingForChoosingGameModeOrStrainPainter {
 					this.chooserDirection, this.sbKingClient, this.isPositive);
 			chooseGameModeOrStrainElement.add();
 		}
+
+		new HandWhileChoosingElement(contentPane, this.sbKingClient.getCurrentBoard(), this.myDirection);
+
 		contentPane.validate();
 		contentPane.repaint();
 
