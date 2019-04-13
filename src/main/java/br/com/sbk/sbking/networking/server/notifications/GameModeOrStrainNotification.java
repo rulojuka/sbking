@@ -1,4 +1,4 @@
-package br.com.sbk.sbking.networking;
+package br.com.sbk.sbking.networking.server.notifications;
 
 import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
 

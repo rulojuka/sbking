@@ -6,6 +6,7 @@ import java.io.ObjectOutputStream;
 
 import org.apache.log4j.Logger;
 
+import br.com.sbk.sbking.core.Board;
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.gui.models.GameScoreboard;
@@ -34,8 +35,8 @@ public class Serializator {
 			// objectOutputStream.writeUnshared(object);
 			objectOutputStream.reset();
 			objectOutputStream.writeObject(object);
-			//objectOutputStream.flush();
-			logger.info("Serialized data writen to " + this.objectOutputStream);
+			// objectOutputStream.flush();
+			//logger.info("Serialized data writen to " + this.objectOutputStream);
 		} catch (IOException e) {
 			logger.debug(e);
 		}
@@ -106,6 +107,21 @@ public class Serializator {
 		try {
 			deserializedObject = objectInputStream.readObject();
 			ret = (GameScoreboard) deserializedObject;
+		} catch (IOException i) {
+			logger.debug(i);
+		} catch (ClassNotFoundException c) {
+			logger.debug(c);
+		}
+
+		return ret;
+	}
+
+	public Board tryToDeserializeBoard() {
+		Object deserializedObject = null;
+		Board ret = null;
+		try {
+			deserializedObject = objectInputStream.readObject();
+			ret = (Board) deserializedObject;
 		} catch (IOException i) {
 			logger.debug(i);
 		} catch (ClassNotFoundException c) {

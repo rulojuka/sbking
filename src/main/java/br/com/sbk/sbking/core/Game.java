@@ -21,20 +21,31 @@ public class Game {
 	private int eastWestPositives = 0;
 	private int playedHands = 0;
 
+	private Board currentBoard;
+	private Deal currentDeal;
+
 	private Direction dealer = Direction.NORTH;
 
 	public Game() {
 		this.gameScoreboard = new GameScoreboard();
+	}
+	
+	public void initializeBoard() {
+		this.currentBoard = BoardDealer.dealBoard(this.dealer);
+	}
+
+	public void addRuleset(Ruleset currentGameModeOrStrain) {
+		this.currentDeal = new Deal(this.currentBoard, currentGameModeOrStrain);
 	}
 
 	public boolean isFinished() {
 		return playedHands == TOTAL_GAMES;
 	}
 
-	public void addFinishedDeal(Deal deal) {
-		this.getGameScoreboard().addFinishedDeal(deal);
-		if (deal.getRuleset() instanceof NegativeRuleset) {
-			NegativeRuleset negativeRuleset = (NegativeRuleset) deal.getRuleset();
+	public void finishDeal() {
+		this.getGameScoreboard().addFinishedDeal(this.getCurrentDeal());
+		if (this.getCurrentDeal().getRuleset() instanceof NegativeRuleset) {
+			NegativeRuleset negativeRuleset = (NegativeRuleset) this.getCurrentDeal().getRuleset();
 			this.chosenNegativeRulesets.add(negativeRuleset);
 
 		}
@@ -71,7 +82,15 @@ public class Game {
 	}
 
 	public Direction getDealer() {
-		return dealer;
+		return this.dealer;
+	}
+
+	public Board getCurrentBoard() {
+		return this.currentBoard;
+	}
+
+	public Deal getCurrentDeal() {
+		return this.currentDeal;
 	}
 
 }

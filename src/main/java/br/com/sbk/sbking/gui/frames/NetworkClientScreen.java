@@ -14,13 +14,13 @@ import org.apache.log4j.Logger;
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.gui.painters.ConnectToServerPainter;
+import br.com.sbk.sbking.gui.painters.DealPainter;
 import br.com.sbk.sbking.gui.painters.FinalScoreboardPainter;
 import br.com.sbk.sbking.gui.painters.WaitingForChoosingGameModeOrStrainPainter;
 import br.com.sbk.sbking.gui.painters.WaitingForChoosingPositiveOrNegativePainter;
 import br.com.sbk.sbking.gui.painters.WaitingForPlayersPainter;
-import br.com.sbk.sbking.networking.DealPainter;
-import br.com.sbk.sbking.networking.NetworkCardPlayer;
-import br.com.sbk.sbking.networking.SBKingClient;
+import br.com.sbk.sbking.networking.client.NetworkCardPlayer;
+import br.com.sbk.sbking.networking.client.SBKingClient;
 
 @SuppressWarnings("serial")
 public class NetworkClientScreen extends JFrame {

@@ -3,23 +3,11 @@ package br.com.sbk.sbking.core;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
-
-public class CompleteDealDealer {
+public class BoardDealer {
 
 	private static final int SIZE_OF_HAND = 13;
-	private Direction dealer;
 
-	public CompleteDealDealer(Direction dealer) {
-		this.dealer = dealer;
-	}
-
-	public Deal deal(Ruleset ruleset) {
-		Board board = dealBoard();
-		return new Deal(board, ruleset);
-	}
-
-	private Board dealBoard() {
+	public static Board dealBoard(Direction dealer) {
 		List<Hand> hands = new ArrayList<Hand>();
 		ShuffledDeck shuffledDeck = new ShuffledDeck();
 
@@ -31,8 +19,7 @@ public class CompleteDealDealer {
 			hands.add(currentHand);
 		}
 
-		Board board = new Board(hands.get(0), hands.get(1), hands.get(2), hands.get(3), this.dealer);
-		return board;
+		return new Board(hands.get(0), hands.get(1), hands.get(2), hands.get(3), dealer);
 	}
 
 }

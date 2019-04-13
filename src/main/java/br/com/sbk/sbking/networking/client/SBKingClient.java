@@ -1,4 +1,4 @@
-package br.com.sbk.sbking.networking;
+package br.com.sbk.sbking.networking.client;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -8,10 +8,12 @@ import java.net.UnknownHostException;
 
 import org.apache.log4j.Logger;
 
+import br.com.sbk.sbking.core.Board;
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.gui.models.GameScoreboard;
 import br.com.sbk.sbking.gui.models.PositiveOrNegative;
+import br.com.sbk.sbking.networking.Serializator;
 
 public class SBKingClient implements Runnable {
 
@@ -34,6 +36,8 @@ public class SBKingClient implements Runnable {
 	private boolean gameFinished = false;
 
 	private GameScoreboard currentGameScoreboard = new GameScoreboard();
+
+	private Board currentBoard;
 
 	final static Logger logger = Logger.getLogger(SBKingClient.class);
 
@@ -81,6 +85,7 @@ public class SBKingClient implements Runnable {
 
 		final String MESSAGE = "MESSAGE";
 		final String DEAL = "DEAL";
+		final String BOARD = "BOARD";
 		final String INITIALIZEDEAL = "INITIALIZEDEAL";
 		final String FINISHDEAL = "FINISHDEAL";
 		final String DIRECTION = "DIRECTION";
@@ -102,6 +107,10 @@ public class SBKingClient implements Runnable {
 			if (ALLCONNECTED.equals(string)) {
 				setAllPlayersConnected();
 			}
+		} else if (BOARD.equals(controlMessage)) {
+			Board board = this.serializator.tryToDeserializeBoard();
+			logger.info("I received a board.");
+			this.setCurrentBoard(board);
 		} else if (DEAL.equals(controlMessage)) {
 			Deal deal = this.serializator.tryToDeserializeDeal();
 			logger.info("I received a deal that contains this trick: " + deal.getCurrentTrick()
@@ -155,7 +164,7 @@ public class SBKingClient implements Runnable {
 			this.currentGameScoreboard = this.serializator.tryToDeserializeGameScoreboard();
 			logger.info("Received GameScoreboard." + this.currentGameScoreboard.toString());
 		} else {
-			logger.info("Could not understand control.");
+			logger.error("Could not understand control.");
 		}
 
 		// FIXME
@@ -165,6 +174,11 @@ public class SBKingClient implements Runnable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	private void setCurrentBoard(Board board) {
+		this.currentBoard = board;
+		
 	}
 
 	private void finishDeal() {
@@ -276,7 +290,7 @@ public class SBKingClient implements Runnable {
 	private void unsetPositiveOrNegative() {
 		this.positiveOrNegative = null;
 	}
-	
+
 	private void setRulesetValid(boolean valid) {
 		this.rulesetValid = valid;
 	}
@@ -330,6 +344,10 @@ public class SBKingClient implements Runnable {
 
 	public boolean isRulesetValid() {
 		return this.rulesetValid;
+	}
+	
+	public Board getCurrentBoard() {
+		return this.currentBoard;
 	}
 
 }

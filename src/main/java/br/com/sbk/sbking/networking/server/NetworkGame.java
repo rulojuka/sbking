@@ -1,4 +1,4 @@
-package br.com.sbk.sbking.networking;
+package br.com.sbk.sbking.networking.server;
 
 import org.apache.log4j.Logger;
 
@@ -6,6 +6,7 @@ import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.core.exceptions.PlayedCardInAnotherPlayersTurnException;
+import br.com.sbk.sbking.networking.server.notifications.CardPlayNotification;
 
 public class NetworkGame {
 

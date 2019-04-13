@@ -1,4 +1,4 @@
-package br.com.sbk.sbking.networking;
+package br.com.sbk.sbking.gui.painters;
 
 import java.awt.Container;
 
@@ -10,6 +10,7 @@ import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.gui.JElements.CardButton;
 import br.com.sbk.sbking.gui.elements.ScoreSummaryElement;
 import br.com.sbk.sbking.gui.elements.SpecificDirectionBoardElements;
+import br.com.sbk.sbking.networking.client.NetworkCardPlayer;
 
 public class DealPainter {
 

@@ -47,10 +47,10 @@ public class GameScoreboard implements Serializable {
 		GameModeSummary currentGameModeSummary = games[line - 1];
 		String response;
 
-		String name = "-";
-		String score = "----";
-		String chosenBy = "----";
-		String orderOfPlay = "--";
+		String name;
+		String score;
+		String chosenBy;
+		String orderOfPlay;
 
 		if (currentGameModeSummary != null) {
 			name = currentGameModeSummary.getName();
@@ -59,6 +59,9 @@ public class GameScoreboard implements Serializable {
 			orderOfPlay = currentGameModeSummary.getOrderOfPlay();
 		} else {
 			name = getNameOfGameNumber(line);
+			score = "----";
+			chosenBy = "----";
+			orderOfPlay = "--";
 		}
 		response = String.format("%-20s %-4s %-4s %-2s", name, score, chosenBy, orderOfPlay);
 		return response;
@@ -96,6 +99,8 @@ public class GameScoreboard implements Serializable {
 			return new NegativeWomenRuleset().getShortDescription();
 		case 5:
 			return new NegativeLastTwoRuleset().getShortDescription();
+		case 6:
+			return new NegativeKingRuleset().getShortDescription();
 		default:
 			return "Positive";
 		}

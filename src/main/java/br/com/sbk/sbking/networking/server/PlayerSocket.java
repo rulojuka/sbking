@@ -1,10 +1,11 @@
-package br.com.sbk.sbking.networking;
+package br.com.sbk.sbking.networking.server;
 
 import java.io.IOException;
 import java.net.Socket;
 
 import org.apache.log4j.Logger;
 
+import br.com.sbk.sbking.core.Board;
 import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
@@ -12,6 +13,7 @@ import br.com.sbk.sbking.core.rulesets.RulesetFromShortDescriptionIdentifier;
 import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
 import br.com.sbk.sbking.gui.models.GameScoreboard;
 import br.com.sbk.sbking.gui.models.PositiveOrNegative;
+import br.com.sbk.sbking.networking.Serializator;
 
 public class PlayerSocket implements Runnable {
 	private Direction direction;
@@ -85,96 +87,85 @@ public class PlayerSocket implements Runnable {
 
 	public void sendMessage(String string) {
 		String control = "MESSAGE";
-		logger.info("Sending " + control + " control to " + this.direction);
 		this.serializator.tryToSerialize(control);
-		logger.info("Sending message --" + string + "-- to " + this.direction);
 		this.serializator.tryToSerialize(string);
+	}
+	
+	public void sendBoard(Board board) {
+		String control = "BOARD";
+		this.serializator.tryToSerialize(control);
+		this.serializator.tryToSerialize(board);
 	}
 
 	public void sendDeal(Deal deal) {
 		String control = "DEAL";
-		logger.info("Sending " + control + " control to " + this.direction);
 		this.serializator.tryToSerialize(control);
-		logger.info("Sending current deal to " + this.direction);
 		this.serializator.tryToSerialize(deal);
 	}
 
 	public void sendDirection(Direction direction) {
 		String control = "DIRECTION";
-		logger.info("Sending " + control + " control to " + this.direction);
-		this.serializator.tryToSerialize(control);
 		logger.info("Sending its direction to " + this.direction);
+		this.serializator.tryToSerialize(control);
 		this.serializator.tryToSerialize(direction);
+		logger.info("Finished sending its direction to " + this.direction);
 	}
 
 	public void sendChooserPositiveNegative(Direction direction) {
 		String control = "CHOOSERPOSITIVENEGATIVE";
-		logger.info("Sending " + control + " control to " + this.direction);
 		this.serializator.tryToSerialize(control);
-		logger.info("Sending chooser direction to " + this.direction);
 		this.serializator.tryToSerialize(direction);
 	}
 
 	public void sendPositiveOrNegative(String message) {
 		String control = "POSITIVEORNEGATIVE";
-		logger.info("Sending " + control + " control to " + this.direction);
 		this.serializator.tryToSerialize(control);
-		logger.info("Sending positive or negative to " + this.direction);
 		this.serializator.tryToSerialize(message);
 	}
 
 	public void sendChooserGameModeOrStrain(Direction chooser) {
 		String control = "CHOOSERGAMEMODEORSTRAIN";
-		logger.info("Sending " + control + " control to " + this.direction);
 		this.serializator.tryToSerialize(control);
-		logger.info("Sending chooser direction to " + this.direction);
 		this.serializator.tryToSerialize(chooser);
 	}
 
 	public void sendGameModeOrStrain(String message) {
 		String control = "GAMEMODEORSTRAIN";
-		logger.info("Sending " + control + " control to " + this.direction);
 		this.serializator.tryToSerialize(control);
-		logger.info("Sending chooser direction to " + this.direction);
 		this.serializator.tryToSerialize(message);
 	}
 
 	public void sendInitializeDeal() {
 		String control = "INITIALIZEDEAL";
-		logger.info("Sending " + control + " control to " + this.direction);
 		this.serializator.tryToSerialize(control);
 	}
 
 	public void sendFinishDeal() {
 		String control = "FINISHDEAL";
-		logger.info("Sending " + control + " control to " + this.direction);
 		this.serializator.tryToSerialize(control);
 	}
 
 	public void sendFinishGame() {
 		String control = "FINISHGAME";
-		logger.info("Sending " + control + " control to " + this.direction);
 		this.serializator.tryToSerialize(control);
 	}
 	
 	public void sendGameScoreboard(GameScoreboard gameScoreboard) {
 		String control = "GAMESCOREBOARD";
-		logger.info("Sending " + control + " control to " + this.direction);
 		this.serializator.tryToSerialize(control);
-		logger.info("Sending gameScoreboard to " + this.direction);
 		this.serializator.tryToSerialize(gameScoreboard);
 	}
 
 	public void sendInvalidRuleset() {
 		String control = "INVALIDRULESET";
-		logger.info("Sending " + control + " control to " + this.direction);
 		this.serializator.tryToSerialize(control);
 	}
 
 	public void sendValidRuleset() {
 		String control = "VALIDRULESET";
-		logger.info("Sending " + control + " control to " + this.direction);
 		this.serializator.tryToSerialize(control);
 	}
+
+	
 
 }

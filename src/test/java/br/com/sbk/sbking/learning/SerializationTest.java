@@ -12,8 +12,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import br.com.sbk.sbking.core.Board;
+import br.com.sbk.sbking.core.BoardDealer;
 import br.com.sbk.sbking.core.Card;
-import br.com.sbk.sbking.core.CompleteDealDealer;
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.core.Hand;
@@ -25,6 +26,8 @@ import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
 import br.com.sbk.sbking.core.rulesets.concrete.NegativeTricksRuleset;
 import br.com.sbk.sbking.networking.Serializator;
 
+
+//FIXME This is an integration test.
 public class SerializationTest {
 
 	private Serializator serializator;
@@ -153,8 +156,9 @@ public class SerializationTest {
 
 	@Test
 	public void dealShouldBeSerializableAndDeserializable() {
-		CompleteDealDealer dealer = new CompleteDealDealer(Direction.SOUTH);
-		Deal deal = dealer.deal(new NegativeTricksRuleset());
+		Board anyBoard = BoardDealer.dealBoard(Direction.SOUTH);
+		NegativeTricksRuleset anyRuleset = new NegativeTricksRuleset();
+		Deal deal = new Deal(anyBoard, anyRuleset);
 
 		serializator.tryToSerialize(deal);
 
@@ -165,8 +169,9 @@ public class SerializationTest {
 
 	@Test
 	public void dealWithCurrentTrickShouldBeSerializableAndDeserializable() {
-		CompleteDealDealer dealer = new CompleteDealDealer(Direction.SOUTH);
-		Deal deal = dealer.deal(new NegativeTricksRuleset());
+		Board anyBoard = BoardDealer.dealBoard(Direction.SOUTH);
+		NegativeTricksRuleset anyRuleset = new NegativeTricksRuleset();
+		Deal deal = new Deal(anyBoard, anyRuleset);
 		Card anyCardOfCurrentPlayer = deal.getHandOf(deal.getCurrentPlayer()).get(0);
 		deal.playCard(anyCardOfCurrentPlayer);
 

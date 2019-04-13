@@ -12,7 +12,7 @@ import br.com.sbk.sbking.gui.elements.GameScoreboardElement;
 import br.com.sbk.sbking.gui.elements.WaitingForChooserPositiveOrNegativeElement;
 import br.com.sbk.sbking.gui.elements.YouArePlayerElement;
 import br.com.sbk.sbking.gui.models.GameScoreboard;
-import br.com.sbk.sbking.networking.SBKingClient;
+import br.com.sbk.sbking.networking.client.SBKingClient;
 
 public class WaitingForChoosingPositiveOrNegativePainter {
 
