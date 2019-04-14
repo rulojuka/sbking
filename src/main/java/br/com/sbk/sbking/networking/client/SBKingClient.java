@@ -13,6 +13,7 @@ import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.gui.models.GameScoreboard;
 import br.com.sbk.sbking.gui.models.PositiveOrNegative;
+import br.com.sbk.sbking.networking.NetworkingProperties;
 import br.com.sbk.sbking.networking.Serializator;
 
 public class SBKingClient implements Runnable {
@@ -42,8 +43,11 @@ public class SBKingClient implements Runnable {
 	final static Logger logger = Logger.getLogger(SBKingClient.class);
 
 	public SBKingClient() {
+		NetworkingProperties networkingProperties = new NetworkingProperties();
+		String host = networkingProperties.getHost();
+		int port = networkingProperties.getPort();
 		try {
-			socket = new Socket("localhost", 60000);
+			socket = new Socket(host, port);
 		} catch (UnknownHostException e) {
 			logger.debug(e);
 		} catch (IOException e) {

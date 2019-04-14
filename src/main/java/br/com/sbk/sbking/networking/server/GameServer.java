@@ -20,6 +20,7 @@ import br.com.sbk.sbking.core.exceptions.SelectedPositiveOrNegativeInAnotherPlay
 import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
 import br.com.sbk.sbking.gui.models.GameScoreboard;
 import br.com.sbk.sbking.gui.models.PositiveOrNegative;
+import br.com.sbk.sbking.networking.NetworkingProperties;
 import br.com.sbk.sbking.networking.Serializator;
 import br.com.sbk.sbking.networking.server.notifications.GameModeOrStrainNotification;
 import br.com.sbk.sbking.networking.server.notifications.PositiveOrNegativeNotification;
@@ -43,8 +44,13 @@ public class GameServer {
 	}
 
 	public void run() throws Exception {
-		try (ServerSocket listener = new ServerSocket(60000)) {
+		NetworkingProperties networkingProperties = new NetworkingProperties();
+		int port = networkingProperties.getPort();
+		
+		try (ServerSocket listener = new ServerSocket(port)) {
 			logger.info("Game Server is Running...");
+			logger.info("My InetAddress is: " + listener.getInetAddress());
+			logger.info("Listening for connections on port: " + port);
 			for (Direction direction : Direction.values()) {
 				this.connectPlayer(listener.accept(), direction);
 			}
