@@ -21,12 +21,22 @@ public class NetworkingProperties {
 	}
 
 	public String getHost() {
-		return this.getProperty("HOST");
+		String hostFromParameters = System.getProperty("host");
+		if (hostFromParameters != null) {
+			return hostFromParameters;
+		} else {
+			return this.getProperty("HOST");
+		}
 	}
 
 	public int getPort() {
-		String port = this.getProperty("PORT");
-		return new Integer(port);
+		String portFromParameters = System.getProperty("port");
+		if (portFromParameters != null) {
+			return new Integer(portFromParameters);
+		} else {
+			String port = this.getProperty("PORT");
+			return new Integer(port);
+		}
 	}
 
 }

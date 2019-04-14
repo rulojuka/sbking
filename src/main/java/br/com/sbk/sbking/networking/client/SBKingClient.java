@@ -46,6 +46,8 @@ public class SBKingClient implements Runnable {
 		NetworkingProperties networkingProperties = new NetworkingProperties();
 		String host = networkingProperties.getHost();
 		int port = networkingProperties.getPort();
+		logger.info("Trying to connect to host: " + host);
+		logger.info("On port: " + port);
 		try {
 			socket = new Socket(host, port);
 		} catch (UnknownHostException e) {
