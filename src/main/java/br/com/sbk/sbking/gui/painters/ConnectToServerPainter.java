@@ -5,7 +5,7 @@ import java.awt.Container;
 import br.com.sbk.sbking.gui.elements.ConnectToServerElement;
 import br.com.sbk.sbking.gui.frames.NetworkClientScreen;
 
-public class ConnectToServerPainter {
+public class ConnectToServerPainter implements Painter {
 
 	private NetworkClientScreen networkClientScreen;
 
@@ -13,6 +13,7 @@ public class ConnectToServerPainter {
 		this.networkClientScreen = networkClientScreen;
 	}
 
+	@Override
 	public void paint(Container contentPane) {
 		ConnectToServerElement.add(contentPane, new ConnectToScreenActionListener());
 

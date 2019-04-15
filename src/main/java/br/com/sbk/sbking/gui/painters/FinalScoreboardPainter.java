@@ -9,7 +9,7 @@ import java.awt.Point;
 import br.com.sbk.sbking.gui.elements.GameScoreboardElement;
 import br.com.sbk.sbking.gui.models.GameScoreboard;
 
-public class FinalScoreboardPainter {
+public class FinalScoreboardPainter implements Painter {
 
 	private GameScoreboard gameScoreboard;
 
@@ -17,6 +17,7 @@ public class FinalScoreboardPainter {
 		this.gameScoreboard = gameScoreboard;
 	}
 
+	@Override
 	public void paint(Container contentPane) {
 		int xCenterLocation = HALF_WIDTH;
 		int yCenterLocation = HALF_HEIGHT;

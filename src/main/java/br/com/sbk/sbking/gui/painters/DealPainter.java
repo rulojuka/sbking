@@ -12,19 +12,22 @@ import br.com.sbk.sbking.gui.elements.ScoreSummaryElement;
 import br.com.sbk.sbking.gui.elements.SpecificDirectionBoardElements;
 import br.com.sbk.sbking.networking.client.NetworkCardPlayer;
 
-public class DealPainter {
+public class DealPainter implements Painter {
 
 	final static Logger logger = Logger.getLogger(DealPainter.class);
 
 	private Direction direction;
 	private NetworkCardPlayer networkCardPlayer;
+	private Deal deal;
 
-	public DealPainter(NetworkCardPlayer networkCardPlayer, Direction direction) {
+	public DealPainter(NetworkCardPlayer networkCardPlayer, Direction direction, Deal deal) {
 		this.networkCardPlayer = networkCardPlayer;
 		this.direction = direction;
+		this.deal = deal;
 	}
 
-	public void paint(Container contentPane, Deal deal) {
+	@Override
+	public void paint(Container contentPane) {
 		logger.info("Painting deal that contains this trick: " + deal.getCurrentTrick());
 		contentPane.removeAll();
 

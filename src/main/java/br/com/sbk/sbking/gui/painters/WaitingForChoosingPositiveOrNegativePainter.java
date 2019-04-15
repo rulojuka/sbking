@@ -14,20 +14,23 @@ import br.com.sbk.sbking.gui.elements.YouArePlayerElement;
 import br.com.sbk.sbking.gui.models.GameScoreboard;
 import br.com.sbk.sbking.networking.client.SBKingClient;
 
-public class WaitingForChoosingPositiveOrNegativePainter {
+public class WaitingForChoosingPositiveOrNegativePainter implements Painter {
 
 	private Direction myDirection;
 	private Direction chooserDirection;
 	private SBKingClient sbKingClient;
+	private GameScoreboard gameScoreboard;
 
 	public WaitingForChoosingPositiveOrNegativePainter(Direction myDirection, Direction chooserDirection,
-			SBKingClient sbKingClient) {
+			SBKingClient sbKingClient, GameScoreboard gameScoreboard) {
 		this.myDirection = myDirection;
 		this.chooserDirection = chooserDirection;
 		this.sbKingClient = sbKingClient;
+		this.gameScoreboard = gameScoreboard;
 	}
 
-	public void paint(Container contentPane, GameScoreboard gameScoreboard) {
+	@Override
+	public void paint(Container contentPane) {
 		int xCenterLocation = TABLE_WIDTH - 160;
 		int yCenterLocation = 110;
 		Point centerOfScoreboardPosition = new Point(xCenterLocation, yCenterLocation);

@@ -14,7 +14,7 @@ import br.com.sbk.sbking.gui.elements.YouArePlayerElement;
 import br.com.sbk.sbking.gui.models.GameScoreboard;
 import br.com.sbk.sbking.networking.client.SBKingClient;
 
-public class WaitingForChoosingGameModeOrStrainPainter {
+public class WaitingForChoosingGameModeOrStrainPainter implements Painter {
 
 	private Direction myDirection;
 	private Direction chooserDirection;
@@ -31,6 +31,7 @@ public class WaitingForChoosingGameModeOrStrainPainter {
 		this.gameScoreboard = gameScoreboard;
 	}
 
+	@Override
 	public void paint(Container contentPane) {
 		int xCenterLocation = TABLE_WIDTH - 160;
 		int yCenterLocation = 110;

@@ -16,6 +16,7 @@ import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.gui.painters.ConnectToServerPainter;
 import br.com.sbk.sbking.gui.painters.DealPainter;
 import br.com.sbk.sbking.gui.painters.FinalScoreboardPainter;
+import br.com.sbk.sbking.gui.painters.Painter;
 import br.com.sbk.sbking.gui.painters.WaitingForChoosingGameModeOrStrainPainter;
 import br.com.sbk.sbking.gui.painters.WaitingForChoosingPositiveOrNegativePainter;
 import br.com.sbk.sbking.gui.painters.WaitingForPlayersPainter;
@@ -108,13 +109,12 @@ public class NetworkClientScreen extends JFrame {
 			paintWaitingForChoosingGameModeOrStrainScreen(sbKingClient.getDirection(),
 					sbKingClient.getGameModeOrStrainChooser(), isPositive);
 			logger.info("Finished painting WaitingForChoosingGameModeOrStrainScreen");
-			
-			
+
 			logger.info("Waiting for server to valid chosen Ruleset");
-			while(!sbKingClient.isRulesetValidSet()) {
+			while (!sbKingClient.isRulesetValidSet()) {
 				sleepFor(100);
 			}
-			if(!sbKingClient.isRulesetValid()) {
+			if (!sbKingClient.isRulesetValid()) {
 				logger.info("Chosen Ruleset is invalid, sleeping for 2 seconds while client cleans itself");
 				sleepFor(2000);
 				logger.info("Returning to beginning of loop");
@@ -155,49 +155,43 @@ public class NetworkClientScreen extends JFrame {
 		}
 	}
 
+	private void paintPainter(Painter painter) {
+		this.getContentPane().removeAll();
+		painter.paint(this.getContentPane());
+	}
+
 	private void paintConnectToServerScreen() {
-		cleanContentPane();
-		ConnectToServerPainter connectToServerPainter = new ConnectToServerPainter(this);
-		connectToServerPainter.paint(this.getContentPane());
+		Painter connectToServerPainter = new ConnectToServerPainter(this);
+		paintPainter(connectToServerPainter);
 	}
 
 	private void paintWaitingForPlayersScreen() {
-		cleanContentPane();
-		WaitingForPlayersPainter waitingForPlayersPainter = new WaitingForPlayersPainter(sbKingClient.getDirection());
-		waitingForPlayersPainter.paint(this.getContentPane());
+		Painter waitingForPlayersPainter = new WaitingForPlayersPainter(sbKingClient.getDirection());
+		paintPainter(waitingForPlayersPainter);
 	}
 
 	private void paintWaitingForChoosingPositiveOrNegativeScreen(Direction myDirection, Direction chooserDirection) {
-		cleanContentPane();
-		WaitingForChoosingPositiveOrNegativePainter waitingForChoosingPainter = new WaitingForChoosingPositiveOrNegativePainter(
-				myDirection, chooserDirection, this.sbKingClient);
-		waitingForChoosingPainter.paint(this.getContentPane(), this.sbKingClient.getCurrentGameScoreboard());
+		Painter waitingForChoosingPainter = new WaitingForChoosingPositiveOrNegativePainter(myDirection,
+				chooserDirection, this.sbKingClient, this.sbKingClient.getCurrentGameScoreboard());
+		paintPainter(waitingForChoosingPainter);
 
 	}
 
 	private void paintWaitingForChoosingGameModeOrStrainScreen(Direction direction, Direction chooser,
 			boolean isPositive) {
-		cleanContentPane();
-		WaitingForChoosingGameModeOrStrainPainter waitingForChoosingGameModeOrStrainPainter = new WaitingForChoosingGameModeOrStrainPainter(
-				direction, chooser, isPositive, this.sbKingClient, this.sbKingClient.getCurrentGameScoreboard());
-		waitingForChoosingGameModeOrStrainPainter.paint(this.getContentPane());
+		Painter waitingForChoosingGameModeOrStrainPainter = new WaitingForChoosingGameModeOrStrainPainter(direction,
+				chooser, isPositive, this.sbKingClient, this.sbKingClient.getCurrentGameScoreboard());
+		paintPainter(waitingForChoosingGameModeOrStrainPainter);
 	}
 
 	private void paintDeal(Deal deal, Direction direction, NetworkCardPlayer networkCardPlayer) {
-		cleanContentPane();
-		DealPainter dealPainter = new DealPainter(networkCardPlayer, direction);
-		dealPainter.paint(this.getContentPane(), deal);
+		Painter dealPainter = new DealPainter(networkCardPlayer, direction, deal);
+		paintPainter(dealPainter);
 	}
 
 	private void paintFinalScoreboardScreen() {
-		cleanContentPane();
-		FinalScoreboardPainter finalScoreboardPainter = new FinalScoreboardPainter(
-				this.sbKingClient.getCurrentGameScoreboard());
-		finalScoreboardPainter.paint(this.getContentPane());
-	}
-
-	private void cleanContentPane() {
-		this.getContentPane().removeAll();
+		Painter finalScoreboardPainter = new FinalScoreboardPainter(this.sbKingClient.getCurrentGameScoreboard());
+		paintPainter(finalScoreboardPainter);
 	}
 
 	public void connectToServer() {
