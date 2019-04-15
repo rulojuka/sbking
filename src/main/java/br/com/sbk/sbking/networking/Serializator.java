@@ -23,20 +23,23 @@ public class Serializator {
 	}
 
 	@Override
-	protected void finalize() throws Throwable {
-		super.finalize();
-		objectOutputStream.close();
-		objectInputStream.close();
+	protected void finalize() {
+		try {
+			objectOutputStream.close();
+			objectInputStream.close();
+		} catch (IOException e) {
+			logger.error("Error closing objectOutputStream or objectInputStream");
+			logger.debug(e);
+		}
 	}
 
 	public void tryToSerialize(Object object) {
 		try {
-
 			// objectOutputStream.writeUnshared(object);
 			objectOutputStream.reset();
 			objectOutputStream.writeObject(object);
 			// objectOutputStream.flush();
-			//logger.info("Serialized data writen to " + this.objectOutputStream);
+			// logger.info("Serialized data writen to " + this.objectOutputStream);
 		} catch (IOException e) {
 			logger.debug(e);
 		}
@@ -49,6 +52,7 @@ public class Serializator {
 		} catch (IOException i) {
 			logger.debug("EOFException!?!?!");
 			logger.debug(i);
+			this.finalize();
 		} catch (ClassNotFoundException c) {
 			logger.debug(c);
 		}
@@ -57,78 +61,33 @@ public class Serializator {
 	}
 
 	public String tryToDeserializeString() {
-		Object deserializedObject = null;
-		String ret = null;
-		try {
-			deserializedObject = objectInputStream.readObject();
-			ret = (String) deserializedObject;
-		} catch (IOException i) {
-			logger.debug(i);
-		} catch (ClassNotFoundException c) {
-			logger.debug(c);
-		}
-
-		return ret;
+		Object deserializedObject = tryToDeserialize();
+		String deserializedString = (String) deserializedObject;
+		return deserializedString;
 	}
 
 	public Deal tryToDeserializeDeal() {
-		Object deserializedObject = null;
-		Deal ret = null;
-		try {
-			deserializedObject = objectInputStream.readObject();
-			ret = (Deal) deserializedObject;
-		} catch (IOException i) {
-			logger.debug(i);
-		} catch (ClassNotFoundException c) {
-			logger.debug(c);
-		}
-
-		return ret;
+		Object deserializedObject = tryToDeserialize();
+		Deal deserializedDeal = (Deal) deserializedObject;
+		return deserializedDeal;
 	}
 
 	public Direction tryToDeserializeDirection() {
-		Object deserializedObject = null;
-		Direction ret = null;
-		try {
-			deserializedObject = objectInputStream.readObject();
-			ret = (Direction) deserializedObject;
-		} catch (IOException i) {
-			logger.debug(i);
-		} catch (ClassNotFoundException c) {
-			logger.debug(c);
-		}
-
-		return ret;
+		Object deserializedObject = tryToDeserialize();
+		Direction deserializedDirection = (Direction) deserializedObject;
+		return deserializedDirection;
 	}
 
 	public GameScoreboard tryToDeserializeGameScoreboard() {
-		Object deserializedObject = null;
-		GameScoreboard ret = null;
-		try {
-			deserializedObject = objectInputStream.readObject();
-			ret = (GameScoreboard) deserializedObject;
-		} catch (IOException i) {
-			logger.debug(i);
-		} catch (ClassNotFoundException c) {
-			logger.debug(c);
-		}
-
-		return ret;
+		Object deserializedObject = tryToDeserialize();
+		GameScoreboard deserializedGameScoreboard = (GameScoreboard) deserializedObject;
+		return deserializedGameScoreboard;
 	}
 
 	public Board tryToDeserializeBoard() {
-		Object deserializedObject = null;
-		Board ret = null;
-		try {
-			deserializedObject = objectInputStream.readObject();
-			ret = (Board) deserializedObject;
-		} catch (IOException i) {
-			logger.debug(i);
-		} catch (ClassNotFoundException c) {
-			logger.debug(c);
-		}
-
-		return ret;
+		Object deserializedObject = tryToDeserialize();
+		Board deserializedBoard = (Board) deserializedObject;
+		return deserializedBoard;
 	}
 
 }
