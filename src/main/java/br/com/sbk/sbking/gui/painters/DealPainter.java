@@ -1,27 +1,25 @@
 package br.com.sbk.sbking.gui.painters;
 
 import java.awt.Container;
+import java.awt.event.ActionListener;
 
 import org.apache.log4j.Logger;
 
-import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
-import br.com.sbk.sbking.gui.JElements.CardButton;
 import br.com.sbk.sbking.gui.elements.ScoreSummaryElement;
 import br.com.sbk.sbking.gui.elements.SpecificDirectionBoardElements;
-import br.com.sbk.sbking.networking.client.NetworkCardPlayer;
 
 public class DealPainter implements Painter {
 
 	final static Logger logger = Logger.getLogger(DealPainter.class);
 
 	private Direction direction;
-	private NetworkCardPlayer networkCardPlayer;
+	private ActionListener actionListener;
 	private Deal deal;
 
-	public DealPainter(NetworkCardPlayer networkCardPlayer, Direction direction, Deal deal) {
-		this.networkCardPlayer = networkCardPlayer;
+	public DealPainter(ActionListener actionListener, Direction direction, Deal deal) {
+		this.actionListener = actionListener;
 		this.direction = direction;
 		this.deal = deal;
 	}
@@ -34,24 +32,11 @@ public class DealPainter implements Painter {
 		if (deal.isFinished()) {
 			new ScoreSummaryElement(deal, contentPane);
 		} else {
-			new SpecificDirectionBoardElements(this.direction, deal, contentPane, new PlayCardActionListener());
+			new SpecificDirectionBoardElements(this.direction, deal, contentPane, actionListener);
 		}
 
 		contentPane.validate();
 		contentPane.repaint();
-	}
-
-	class PlayCardActionListener implements java.awt.event.ActionListener {
-		public void actionPerformed(java.awt.event.ActionEvent event) {
-			CardButton clickedCardButton = (CardButton) event.getSource();
-			Card card = clickedCardButton.getCard();
-			try {
-				logger.info("Clicked on " + card);
-				networkCardPlayer.play(card);
-			} catch (RuntimeException e) {
-				throw e;
-			}
-		}
 	}
 
 }

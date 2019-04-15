@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 import br.com.sbk.sbking.core.Board;
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
+import br.com.sbk.sbking.gui.listeners.PlayCardActionListener;
 import br.com.sbk.sbking.gui.models.GameScoreboard;
 import br.com.sbk.sbking.gui.models.PositiveOrNegative;
 import br.com.sbk.sbking.networking.NetworkingProperties;
@@ -21,7 +22,6 @@ public class SBKingClient implements Runnable {
 	private Socket socket;
 
 	private Serializator serializator;
-	private NetworkCardPlayer networkCardPlayer;
 
 	private Direction direction;
 	private boolean allPlayersConnected;
@@ -40,6 +40,8 @@ public class SBKingClient implements Runnable {
 
 	private Board currentBoard;
 
+	private PlayCardActionListener playCardActionListener;
+
 	final static Logger logger = Logger.getLogger(SBKingClient.class);
 
 	public SBKingClient() {
@@ -56,7 +58,8 @@ public class SBKingClient implements Runnable {
 			logger.debug(e);
 		}
 		setupSerializator();
-		this.networkCardPlayer = new NetworkCardPlayer(this.serializator);
+		NetworkCardPlayer networkCardPlayer = new NetworkCardPlayer(this.serializator);
+		this.playCardActionListener = new PlayCardActionListener(networkCardPlayer);
 	}
 
 	private void setupSerializator() {
@@ -184,7 +187,7 @@ public class SBKingClient implements Runnable {
 
 	private void setCurrentBoard(Board board) {
 		this.currentBoard = board;
-		
+
 	}
 
 	private void finishDeal() {
@@ -203,10 +206,6 @@ public class SBKingClient implements Runnable {
 		this.unsetGameModeOrStrainChooser();
 		this.unsetCurrentDeal();
 		this.unsetRulesetValid();
-	}
-
-	public NetworkCardPlayer getNetworkCardPlayer() {
-		return this.networkCardPlayer;
 	}
 
 	public void sendPositive() {
@@ -351,9 +350,13 @@ public class SBKingClient implements Runnable {
 	public boolean isRulesetValid() {
 		return this.rulesetValid;
 	}
-	
+
 	public Board getCurrentBoard() {
 		return this.currentBoard;
+	}
+
+	public PlayCardActionListener getPlayCardActionListener() {
+		return this.playCardActionListener;
 	}
 
 }

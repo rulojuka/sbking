@@ -4,6 +4,7 @@ import static br.com.sbk.sbking.gui.constants.FrameConstants.TABLE_COLOR;
 import static br.com.sbk.sbking.gui.constants.FrameConstants.TABLE_HEIGHT;
 import static br.com.sbk.sbking.gui.constants.FrameConstants.TABLE_WIDTH;
 
+import java.awt.event.ActionListener;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -20,7 +21,6 @@ import br.com.sbk.sbking.gui.painters.Painter;
 import br.com.sbk.sbking.gui.painters.WaitingForChoosingGameModeOrStrainPainter;
 import br.com.sbk.sbking.gui.painters.WaitingForChoosingPositiveOrNegativePainter;
 import br.com.sbk.sbking.gui.painters.WaitingForPlayersPainter;
-import br.com.sbk.sbking.networking.client.NetworkCardPlayer;
 import br.com.sbk.sbking.networking.client.SBKingClient;
 
 @SuppressWarnings("serial")
@@ -127,7 +127,7 @@ public class NetworkClientScreen extends JFrame {
 					Deal currentDeal = sbKingClient.getDeal();
 
 					logger.info("Starting to paint Deal");
-					paintDeal(currentDeal, sbKingClient.getDirection(), sbKingClient.getNetworkCardPlayer());
+					paintDeal(currentDeal, sbKingClient.getDirection(), sbKingClient.getPlayCardActionListener());
 					logger.info("Finished painting Deal");
 				}
 
@@ -184,8 +184,8 @@ public class NetworkClientScreen extends JFrame {
 		paintPainter(waitingForChoosingGameModeOrStrainPainter);
 	}
 
-	private void paintDeal(Deal deal, Direction direction, NetworkCardPlayer networkCardPlayer) {
-		Painter dealPainter = new DealPainter(networkCardPlayer, direction, deal);
+	private void paintDeal(Deal deal, Direction direction, ActionListener playCardActionListener) {
+		Painter dealPainter = new DealPainter(playCardActionListener, direction, deal);
 		paintPainter(dealPainter);
 	}
 
