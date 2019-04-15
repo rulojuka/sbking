@@ -6,11 +6,6 @@ import java.io.ObjectOutputStream;
 
 import org.apache.log4j.Logger;
 
-import br.com.sbk.sbking.core.Board;
-import br.com.sbk.sbking.core.Deal;
-import br.com.sbk.sbking.core.Direction;
-import br.com.sbk.sbking.gui.models.GameScoreboard;
-
 public class Serializator {
 
 	ObjectInputStream objectInputStream;
@@ -45,7 +40,7 @@ public class Serializator {
 		}
 	}
 
-	public Object tryToDeserialize() {
+	private Object tryToDeserializeObject() {
 		Object deserializedObject = null;
 		try {
 			deserializedObject = objectInputStream.readObject();
@@ -60,34 +55,11 @@ public class Serializator {
 		return deserializedObject;
 	}
 
-	public String tryToDeserializeString() {
-		Object deserializedObject = tryToDeserialize();
-		String deserializedString = (String) deserializedObject;
-		return deserializedString;
-	}
-
-	public Deal tryToDeserializeDeal() {
-		Object deserializedObject = tryToDeserialize();
-		Deal deserializedDeal = (Deal) deserializedObject;
-		return deserializedDeal;
-	}
-
-	public Direction tryToDeserializeDirection() {
-		Object deserializedObject = tryToDeserialize();
-		Direction deserializedDirection = (Direction) deserializedObject;
-		return deserializedDirection;
-	}
-
-	public GameScoreboard tryToDeserializeGameScoreboard() {
-		Object deserializedObject = tryToDeserialize();
-		GameScoreboard deserializedGameScoreboard = (GameScoreboard) deserializedObject;
-		return deserializedGameScoreboard;
-	}
-
-	public Board tryToDeserializeBoard() {
-		Object deserializedObject = tryToDeserialize();
-		Board deserializedBoard = (Board) deserializedObject;
-		return deserializedBoard;
+	public <T> T tryToDeserialize(Class<T> clazz) {
+		Object deserializedObject = tryToDeserializeObject();
+		@SuppressWarnings("unchecked")
+		T deserializedType = (T) deserializedObject;
+		return deserializedType;
 	}
 
 }

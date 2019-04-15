@@ -26,7 +26,6 @@ import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
 import br.com.sbk.sbking.core.rulesets.concrete.NegativeTricksRuleset;
 import br.com.sbk.sbking.networking.Serializator;
 
-
 //FIXME This is an integration test.
 public class SerializationTest {
 
@@ -68,8 +67,7 @@ public class SerializationTest {
 	public void suitShouldBeSerializableAndDeserializable() {
 		Suit diamonds = Suit.DIAMONDS;
 		serializator.tryToSerialize(diamonds);
-		Object deserializedObject = serializator.tryToDeserialize();
-		Suit deserializedSuit = (Suit) deserializedObject;
+		Suit deserializedSuit = serializator.tryToDeserialize(Suit.class);
 		assertEquals(diamonds, deserializedSuit);
 	}
 
@@ -77,8 +75,7 @@ public class SerializationTest {
 	public void rankShouldBeSerializableAndDeserializable() {
 		Rank king = Rank.KING;
 		serializator.tryToSerialize(king);
-		Object deserializedObject = serializator.tryToDeserialize();
-		Rank deserializedRank = (Rank) deserializedObject;
+		Rank deserializedRank = serializator.tryToDeserialize(Rank.class);
 		assertEquals(king, deserializedRank);
 	}
 
@@ -86,8 +83,7 @@ public class SerializationTest {
 	public void directionShouldBeSerializableAndDeserializable() {
 		Direction east = Direction.EAST;
 		serializator.tryToSerialize(east);
-		Object deserializedObject = serializator.tryToDeserialize();
-		Direction deserializedDirection = (Direction) deserializedObject;
+		Direction deserializedDirection = serializator.tryToDeserialize(Direction.class);
 		assertEquals(east, deserializedDirection);
 	}
 
@@ -97,8 +93,7 @@ public class SerializationTest {
 		Rank king = Rank.KING;
 		Card kingOfDiamonds = new Card(diamonds, king);
 		serializator.tryToSerialize(kingOfDiamonds);
-		Object deserializedObject = serializator.tryToDeserialize();
-		Card deserializedCard = (Card) deserializedObject;
+		Card deserializedCard = serializator.tryToDeserialize(Card.class);
 		assertEquals(kingOfDiamonds, deserializedCard);
 	}
 
@@ -112,8 +107,7 @@ public class SerializationTest {
 
 		serializator.tryToSerialize(hand);
 
-		Object deserializedObject = serializator.tryToDeserialize();
-		Hand deserializedHand = (Hand) deserializedObject;
+		Hand deserializedHand = serializator.tryToDeserialize(Hand.class);
 		assertEquals(hand, deserializedHand);
 	}
 
@@ -123,8 +117,7 @@ public class SerializationTest {
 
 		serializator.tryToSerialize(scoreboard);
 
-		Object deserializedObject = serializator.tryToDeserialize();
-		Score deserializedScoreboard = (Score) deserializedObject;
+		Score deserializedScoreboard = serializator.tryToDeserialize(Score.class);
 		assertEquals(scoreboard, deserializedScoreboard);
 	}
 
@@ -134,8 +127,7 @@ public class SerializationTest {
 
 		serializator.tryToSerialize(ruleset);
 
-		Object deserializedObject = serializator.tryToDeserialize();
-		Ruleset deserializedRuleset = (Ruleset) deserializedObject;
+		Ruleset deserializedRuleset = serializator.tryToDeserialize(Ruleset.class);
 		assertEquals(ruleset, deserializedRuleset);
 	}
 
@@ -149,8 +141,7 @@ public class SerializationTest {
 
 		serializator.tryToSerialize(trick);
 
-		Object deserializedObject = serializator.tryToDeserialize();
-		Trick deserializedTrick = (Trick) deserializedObject;
+		Trick deserializedTrick = serializator.tryToDeserialize(Trick.class);
 		assertEquals(trick, deserializedTrick);
 	}
 
@@ -162,8 +153,7 @@ public class SerializationTest {
 
 		serializator.tryToSerialize(deal);
 
-		Object deserializedObject = serializator.tryToDeserialize();
-		Deal deserializedDeal = (Deal) deserializedObject;
+		Deal deserializedDeal = serializator.tryToDeserialize(Deal.class);
 		assertEquals(deal, deserializedDeal);
 	}
 
@@ -177,8 +167,7 @@ public class SerializationTest {
 
 		serializator.tryToSerialize(deal);
 
-		Object deserializedObject = serializator.tryToDeserialize();
-		Deal deserializedDeal = (Deal) deserializedObject;
+		Deal deserializedDeal = serializator.tryToDeserialize(Deal.class);
 		assertEquals(deal, deserializedDeal);
 		assertEquals(anyCardOfCurrentPlayer, deserializedDeal.getCurrentTrick().getCards().get(0));
 	}

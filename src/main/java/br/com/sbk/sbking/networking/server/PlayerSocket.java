@@ -57,7 +57,7 @@ public class PlayerSocket implements Runnable {
 	}
 
 	private void processCommand() {
-		Object readObject = this.serializator.tryToDeserialize();
+		Object readObject = this.serializator.tryToDeserialize(Object.class);
 		if (readObject instanceof String) {
 			String string = (String) readObject;
 			logger.info(this.direction + " sent this message: --" + string + "--");
@@ -90,7 +90,7 @@ public class PlayerSocket implements Runnable {
 		this.serializator.tryToSerialize(control);
 		this.serializator.tryToSerialize(string);
 	}
-	
+
 	public void sendBoard(Board board) {
 		String control = "BOARD";
 		this.serializator.tryToSerialize(control);
@@ -149,7 +149,7 @@ public class PlayerSocket implements Runnable {
 		String control = "FINISHGAME";
 		this.serializator.tryToSerialize(control);
 	}
-	
+
 	public void sendGameScoreboard(GameScoreboard gameScoreboard) {
 		String control = "GAMESCOREBOARD";
 		this.serializator.tryToSerialize(control);
@@ -165,7 +165,5 @@ public class PlayerSocket implements Runnable {
 		String control = "VALIDRULESET";
 		this.serializator.tryToSerialize(control);
 	}
-
-	
 
 }

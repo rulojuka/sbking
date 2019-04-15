@@ -88,7 +88,7 @@ public class SBKingClient implements Runnable {
 
 	private void processCommand() {
 		logger.info("Waiting for a command");
-		Object readObject = this.serializator.tryToDeserialize();
+		Object readObject = this.serializator.tryToDeserialize(Object.class);
 		String controlMessage = (String) readObject;
 		logger.info("Read control: --" + controlMessage + "--");
 
@@ -111,40 +111,38 @@ public class SBKingClient implements Runnable {
 		final String VALIDRULESET = "VALIDRULESET";
 
 		if (MESSAGE.equals(controlMessage)) {
-			String string = this.serializator.tryToDeserializeString();
+			String string = this.serializator.tryToDeserialize(String.class);
 			logger.info("I received a message: --" + string + "--");
 			if (ALLCONNECTED.equals(string)) {
 				setAllPlayersConnected();
 			}
 		} else if (BOARD.equals(controlMessage)) {
-			Board board = this.serializator.tryToDeserializeBoard();
+			Board board = this.serializator.tryToDeserialize(Board.class);
 			logger.info("I received a board.");
 			this.setCurrentBoard(board);
 		} else if (DEAL.equals(controlMessage)) {
-			Deal deal = this.serializator.tryToDeserializeDeal();
+			Deal deal = this.serializator.tryToDeserialize(Deal.class);
 			logger.info("I received a deal that contains this trick: " + deal.getCurrentTrick()
 					+ " and will paint it on screen");
 			this.setCurrentDeal(deal);
 		} else if (DIRECTION.equals(controlMessage)) {
-			Direction direction = this.serializator.tryToDeserializeDirection();
+			Direction direction = this.serializator.tryToDeserialize(Direction.class);
 			logger.info("I received my direction: " + direction);
 			this.initializeDirection(direction);
 		} else if (WAIT.equals(controlMessage)) {
 			logger.info("Waiting for a CONTINUE message");
 			do {
-				this.serializator.tryToDeserialize();
-				readObject = this.serializator.tryToDeserialize();
-				controlMessage = (String) readObject;
+				controlMessage = this.serializator.tryToDeserialize(String.class);
 			} while (!CONTINUE.equals(controlMessage));
 			logger.info("Received a CONTINUE message");
 
 		} else if (CHOOSERPOSITIVENEGATIVE.equals(controlMessage)) {
-			Direction direction = this.serializator.tryToDeserializeDirection();
+			Direction direction = this.serializator.tryToDeserialize(Direction.class);
 			logger.info("Received PositiveOrNegative choosers direction: " + direction);
 
 			setPositiveOrNegativeChooser(direction);
 		} else if (POSITIVEORNEGATIVE.equals(controlMessage)) {
-			String positiveOrNegative = this.serializator.tryToDeserializeString();
+			String positiveOrNegative = this.serializator.tryToDeserialize(String.class);
 			if ("POSITIVE".equals(positiveOrNegative)) {
 				this.selectedPositive();
 			} else if ("NEGATIVE".equals(positiveOrNegative)) {
@@ -153,11 +151,11 @@ public class SBKingClient implements Runnable {
 				logger.info("Could not understand POSITIVE or NEGATIVE.");
 			}
 		} else if (CHOOSERGAMEMODEORSTRAIN.equals(controlMessage)) {
-			Direction direction = this.serializator.tryToDeserializeDirection();
+			Direction direction = this.serializator.tryToDeserialize(Direction.class);
 			logger.info("Received GameModeOrStrain choosers direction: " + direction);
 			setGameModeOrStrainChooser(direction);
 		} else if (GAMEMODEORSTRAIN.equals(controlMessage)) {
-			String gameModeOrStrain = this.serializator.tryToDeserializeString();
+			String gameModeOrStrain = this.serializator.tryToDeserialize(String.class);
 			logger.info("Received GameModeOrStrain: " + gameModeOrStrain);
 		} else if (INITIALIZEDEAL.equals(controlMessage)) {
 			this.initializeDeal();
@@ -170,7 +168,7 @@ public class SBKingClient implements Runnable {
 		} else if (VALIDRULESET.equals(controlMessage)) {
 			this.setRulesetValid(true);
 		} else if (GAMESCOREBOARD.equals(controlMessage)) {
-			this.currentGameScoreboard = this.serializator.tryToDeserializeGameScoreboard();
+			this.currentGameScoreboard = this.serializator.tryToDeserialize(GameScoreboard.class);
 			logger.info("Received GameScoreboard." + this.currentGameScoreboard.toString());
 		} else {
 			logger.error("Could not understand control.");
