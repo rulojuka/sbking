@@ -57,22 +57,12 @@ public class NetworkClientScreen extends JFrame {
 
 		logger.info("Waiting for connectedToServer to be true");
 		while (!connectedToServer) {
-			try {
-				Thread.sleep(100);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			sleepFor(100);
 		}
 
 		logger.info("Waiting for sbKingClient.isDirectionSet() to be true");
 		while (!sbKingClient.isDirectionSet()) {
-			try {
-				Thread.sleep(100);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			sleepFor(100);
 		}
 
 		logger.info("Starting to paint WaitingForPlayersScreen");
@@ -81,12 +71,7 @@ public class NetworkClientScreen extends JFrame {
 
 		logger.info("Waiting for sbKingClient.isEveryoneConnected() to be true");
 		while (!sbKingClient.isEveryoneConnected()) {
-			try {
-				Thread.sleep(100);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			sleepFor(100);
 		}
 
 		while (true) {
@@ -94,12 +79,7 @@ public class NetworkClientScreen extends JFrame {
 			logger.info(
 					"Waiting for sbKingClient.isPositiveOrNegativeChooserSet() or sbKingClient.isGameFinished() to be true");
 			while (!sbKingClient.isPositiveOrNegativeChooserSet() && !sbKingClient.isGameFinished()) {
-				try {
-					Thread.sleep(100);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				sleepFor(100);
 			}
 
 			if (sbKingClient.isGameFinished()) {
@@ -114,24 +94,14 @@ public class NetworkClientScreen extends JFrame {
 
 			logger.info("Waiting for sbKingClient.isPositiveOrNegativeSelected() to be true");
 			while (!sbKingClient.isPositiveOrNegativeSelected()) {
-				try {
-					Thread.sleep(100);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				sleepFor(100);
 			}
 			boolean isPositive = this.sbKingClient.isPositive();
 			logger.info("Received PositiveOrNegative from server.");
 
 			logger.info("Waiting for sbKingClient.isGameModeOrStrainChooserSet() to be true");
 			while (!sbKingClient.isGameModeOrStrainChooserSet()) {
-				try {
-					Thread.sleep(100);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				sleepFor(100);
 			}
 
 			logger.info("Starting to paint WaitingForChoosingGameModeOrStrainScreen");
@@ -142,32 +112,17 @@ public class NetworkClientScreen extends JFrame {
 			
 			logger.info("Waiting for server to valid chosen Ruleset");
 			while(!sbKingClient.isRulesetValidSet()) {
-				try {
-					Thread.sleep(100);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				sleepFor(100);
 			}
 			if(!sbKingClient.isRulesetValid()) {
 				logger.info("Chosen Ruleset is invalid, sleeping for 2 seconds while client cleans itself");
-				try {
-					Thread.sleep(2000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				sleepFor(2000);
 				logger.info("Returning to beginning of loop");
 				continue;
 			}
 
 			while (!sbKingClient.isDealFinished() && !sbKingClient.newDealAvailable()) {
-				try {
-					Thread.sleep(100);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				sleepFor(100);
 				if (sbKingClient.newDealAvailable()) {
 					Deal currentDeal = sbKingClient.getDeal();
 
@@ -179,11 +134,7 @@ public class NetworkClientScreen extends JFrame {
 			}
 
 			logger.info("Sleeping for 2000 ms to wait for FINISHGAME");
-			try {
-				Thread.sleep(2000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+			sleepFor(2000);
 
 		}
 
@@ -192,12 +143,16 @@ public class NetworkClientScreen extends JFrame {
 		logger.info("Finished painting paintFinalScoreboardScreen");
 
 		logger.info("Final scoreboard painted. Waiting for 10 seconds before exiting.");
-		try {
-			Thread.sleep(10000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+		sleepFor(10000);
 		logger.info("Game finished!");
+	}
+
+	private void sleepFor(int miliseconds) {
+		try {
+			Thread.sleep(miliseconds);
+		} catch (InterruptedException e) {
+			logger.debug(e);
+		}
 	}
 
 	private void paintConnectToServerScreen() {
