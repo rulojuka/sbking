@@ -1,4 +1,6 @@
-package br.com.sbk.sbking.networking.server;
+package br.com.sbk.sbking.networking.server.main;
+
+import br.com.sbk.sbking.networking.server.GameServer;
 
 public class GameServerStarter {
 
