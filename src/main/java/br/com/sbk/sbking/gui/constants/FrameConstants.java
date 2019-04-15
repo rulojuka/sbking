@@ -7,8 +7,6 @@ public final class FrameConstants {
 
 	public static final int HALF_WIDTH = TABLE_WIDTH / 2;
 	public static final int HALF_HEIGHT = TABLE_HEIGHT / 2;
-	private static final int QUARTER_WIDTH = TABLE_WIDTH / 4;
-	private static final int QUARTER_HEIGHT = TABLE_HEIGHT / 4;
 	private static final int FIFTH_WIDTH = TABLE_WIDTH / 5;
 	private static final int FIFTH_HEIGHT = TABLE_HEIGHT / 5;
 
