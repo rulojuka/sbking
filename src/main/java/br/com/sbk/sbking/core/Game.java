@@ -29,7 +29,7 @@ public class Game {
 	public Game() {
 		this.gameScoreboard = new GameScoreboard();
 	}
-	
+
 	public void initializeBoard() {
 		this.currentBoard = BoardDealer.dealBoard(this.dealer);
 	}
@@ -43,11 +43,27 @@ public class Game {
 	}
 
 	public void finishDeal() {
-		this.getGameScoreboard().addFinishedDeal(this.getCurrentDeal());
-		if (this.getCurrentDeal().getRuleset() instanceof NegativeRuleset) {
-			NegativeRuleset negativeRuleset = (NegativeRuleset) this.getCurrentDeal().getRuleset();
-			this.chosenNegativeRulesets.add(negativeRuleset);
+		Deal currentDeal = this.getCurrentDeal();
+		Direction currentChooser = currentDeal.getDealer().getPositiveOrNegativeChooserWhenDealer();
+		boolean isNorthSouth = currentChooser.isNorthSouth();
+		Ruleset currentRuleset = currentDeal.getRuleset();
+		boolean isPositive = currentRuleset instanceof PositiveRuleset;
 
+		this.getGameScoreboard().addFinishedDeal(currentDeal);
+		if (isPositive) {
+			if (isNorthSouth) {
+				northSouthPositives++;
+			} else {
+				eastWestPositives++;
+			}
+		} else {
+			NegativeRuleset negativeRuleset = (NegativeRuleset) currentRuleset;
+			this.chosenNegativeRulesets.add(negativeRuleset);
+			if (isNorthSouth) {
+				northSouthNegatives++;
+			} else {
+				eastWestNegatives++;
+			}
 		}
 		this.dealer = this.dealer.next();
 		this.playedHands++;
