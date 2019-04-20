@@ -12,9 +12,9 @@ import java.util.concurrent.Executors;
 import org.apache.log4j.Logger;
 
 import br.com.sbk.sbking.core.Card;
-import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.core.Game;
+import br.com.sbk.sbking.core.exceptions.PlayedCardInAnotherPlayersTurnException;
 import br.com.sbk.sbking.core.exceptions.SelectedPositiveOrNegativeInAnotherPlayersTurnException;
 import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
 import br.com.sbk.sbking.gui.models.PositiveOrNegative;
@@ -22,6 +22,7 @@ import br.com.sbk.sbking.networking.core.properties.FileProperties;
 import br.com.sbk.sbking.networking.core.properties.NetworkingProperties;
 import br.com.sbk.sbking.networking.core.properties.SystemProperties;
 import br.com.sbk.sbking.networking.core.serialization.Serializator;
+import br.com.sbk.sbking.networking.server.notifications.CardPlayNotification;
 import br.com.sbk.sbking.networking.server.notifications.GameModeOrStrainNotification;
 import br.com.sbk.sbking.networking.server.notifications.PositiveOrNegativeNotification;
 
@@ -32,11 +33,12 @@ public class GameServer {
 
 	final static Logger logger = Logger.getLogger(GameServer.class);
 
-	private NetworkGame networkGame;
 	private PositiveOrNegativeNotification positiveOrNegativeNotification = new PositiveOrNegativeNotification();
 	private PositiveOrNegative currentPositiveOrNegative;
 	private GameModeOrStrainNotification gameModeOrStrainNotification = new GameModeOrStrainNotification();
 	private Ruleset currentGameModeOrStrain;
+	private boolean dealHasChanged;
+	private CardPlayNotification cardPlayNotification = new CardPlayNotification();
 
 	private Game game;
 	private boolean isRulesetPermitted;
@@ -153,8 +155,40 @@ public class GameServer {
 				logger.info("Everything selected! Game commencing!");
 				this.game.addRuleset(currentGameModeOrStrain);
 
-				this.networkGame = new NetworkGame(this, this.game.getCurrentDeal());
-				networkGame.run();
+				this.dealHasChanged = true;
+				while (!this.game.getCurrentDeal().isFinished()) {
+					logger.info("Sleeping for 500ms waiting for all clients to prepare themselves.");
+					try {
+						Thread.sleep(500);
+					} catch (InterruptedException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					if (this.dealHasChanged) {
+						logger.info("Sending new 'round' of deals");
+						this.messageSender.sendDealAll(this.game.getCurrentDeal());
+						this.dealHasChanged = false;
+					}
+					synchronized (cardPlayNotification) {
+						// wait until object notifies - which relinquishes the lock on the object too
+						try {
+							logger.info("I am waiting for some thread to notify that it wants to play a card.");
+							cardPlayNotification.wait();
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					Direction directionToBePlayed = cardPlayNotification.getDirection();
+					Card cardToBePlayed = cardPlayNotification.getCard();
+					logger.info("Received notification that " + directionToBePlayed + " wants to play the "
+							+ cardToBePlayed);
+					try {
+						this.playCard(cardToBePlayed, directionToBePlayed);
+					} catch (Exception e) {
+						throw e;
+					}
+				}
 
 				this.game.finishDeal();
 				this.messageSender.sendGameScoreboardAll(this.game.getGameScoreboard());
@@ -172,10 +206,6 @@ public class GameServer {
 
 	public void removePlayerSocket(PlayerSocket playerSocket) {
 		this.playerSockets.remove(playerSocket);
-	}
-
-	public void notifyPlayCard(Card playedCard, Direction direction) {
-		this.networkGame.notifyPlayCard(playedCard, direction);
 	}
 
 	public void notifyChoosePositiveOrNegative(PositiveOrNegative positiveOrNegative, Direction direction) {
@@ -222,11 +252,33 @@ public class GameServer {
 		return port;
 	}
 
-	// FIXME Refactor this method out of here ASAP
-	// Whoever is calling him, should be calling the messageSender directly in this
-	// case
-	public void sendDealAll(Deal deal) {
-		this.messageSender.sendDealAll(deal);
+	private void playCard(Card card, Direction direction) {
+		logger.info("It is currently the " + this.game.getCurrentDeal().getCurrentPlayer() + " turn");
+		try {
+			if (this.game.getCurrentDeal().getCurrentPlayer() == direction) {
+				syncPlayCard(card);
+				this.dealHasChanged = true;
+			} else {
+				throw new PlayedCardInAnotherPlayersTurnException();
+			}
+		} catch (Exception e) {
+			logger.debug(e);
+		}
+	}
+
+	private synchronized void syncPlayCard(Card card) {
+		logger.info("Entering synchronized play card");
+		this.game.getCurrentDeal().playCard(card);
+		logger.info("Leaving synchronized play card");
+	}
+
+	public void notifyPlayCard(Card card, Direction direction) {
+		synchronized (cardPlayNotification) {
+			logger.info("Started notifying main thread that I(" + direction + ") want to play the " + card);
+			// release all waiters
+			cardPlayNotification.notifyAllWithCardAndDirection(card, direction);
+			logger.info("Finished notifying main thread that I(" + direction + ") want to play the " + card);
+		}
 	}
 
 }
