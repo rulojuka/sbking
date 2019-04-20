@@ -1,4 +1,4 @@
-package br.com.sbk.sbking.networking;
+package br.com.sbk.sbking.networking.core.serialization;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;

@@ -14,10 +14,14 @@ import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.gui.listeners.PlayCardActionListener;
 import br.com.sbk.sbking.gui.models.GameScoreboard;
 import br.com.sbk.sbking.gui.models.PositiveOrNegative;
-import br.com.sbk.sbking.networking.NetworkingProperties;
-import br.com.sbk.sbking.networking.Serializator;
+import br.com.sbk.sbking.networking.core.properties.FileProperties;
+import br.com.sbk.sbking.networking.core.properties.NetworkingProperties;
+import br.com.sbk.sbking.networking.core.properties.SystemProperties;
+import br.com.sbk.sbking.networking.core.serialization.Serializator;
 
 public class SBKingClient implements Runnable {
+
+	private static final String NETWORKING_CONFIGURATION_FILENAME = "networkConfiguration.cfg";
 
 	private Socket socket;
 
@@ -44,14 +48,17 @@ public class SBKingClient implements Runnable {
 
 	final static Logger logger = Logger.getLogger(SBKingClient.class);
 
+	private String host;
+	private int port;
+
 	public SBKingClient() {
-		NetworkingProperties networkingProperties = new NetworkingProperties();
-		String host = networkingProperties.getHost();
-		int port = networkingProperties.getPort();
-		logger.info("Trying to connect to host: " + host);
-		logger.info("On port: " + port);
+
+		initializeNetworkingProperties();
+
 		try {
-			socket = new Socket(host, port);
+			logger.info("Trying to connect to host: " + this.host);
+			logger.info("On port: " + this.port);
+			socket = new Socket(this.host, this.port);
 		} catch (UnknownHostException e) {
 			logger.debug(e);
 		} catch (IOException e) {
@@ -60,6 +67,14 @@ public class SBKingClient implements Runnable {
 		setupSerializator();
 		NetworkCardPlayer networkCardPlayer = new NetworkCardPlayer(this.serializator);
 		this.playCardActionListener = new PlayCardActionListener(networkCardPlayer);
+	}
+
+	private void initializeNetworkingProperties() {
+		FileProperties configFile = new FileProperties(NETWORKING_CONFIGURATION_FILENAME);
+		NetworkingProperties networkingProperties = new NetworkingProperties(configFile, new SystemProperties());
+
+		this.host = networkingProperties.getHost();
+		this.port = networkingProperties.getPort();
 	}
 
 	private void setupSerializator() {

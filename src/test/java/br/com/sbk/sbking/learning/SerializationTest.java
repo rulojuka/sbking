@@ -24,7 +24,7 @@ import br.com.sbk.sbking.core.Suit;
 import br.com.sbk.sbking.core.Trick;
 import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
 import br.com.sbk.sbking.core.rulesets.concrete.NegativeTricksRuleset;
-import br.com.sbk.sbking.networking.Serializator;
+import br.com.sbk.sbking.networking.core.serialization.Serializator;
 
 //FIXME This is an integration test.
 public class SerializationTest {

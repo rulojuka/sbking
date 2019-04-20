@@ -13,7 +13,7 @@ import br.com.sbk.sbking.core.rulesets.RulesetFromShortDescriptionIdentifier;
 import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
 import br.com.sbk.sbking.gui.models.GameScoreboard;
 import br.com.sbk.sbking.gui.models.PositiveOrNegative;
-import br.com.sbk.sbking.networking.Serializator;
+import br.com.sbk.sbking.networking.core.serialization.Serializator;
 
 public class PlayerSocket implements Runnable {
 	private Direction direction;

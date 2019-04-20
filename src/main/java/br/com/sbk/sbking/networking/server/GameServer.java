@@ -20,12 +20,17 @@ import br.com.sbk.sbking.core.exceptions.SelectedPositiveOrNegativeInAnotherPlay
 import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
 import br.com.sbk.sbking.gui.models.GameScoreboard;
 import br.com.sbk.sbking.gui.models.PositiveOrNegative;
-import br.com.sbk.sbking.networking.NetworkingProperties;
-import br.com.sbk.sbking.networking.Serializator;
+import br.com.sbk.sbking.networking.core.properties.FileProperties;
+import br.com.sbk.sbking.networking.core.properties.NetworkingProperties;
+import br.com.sbk.sbking.networking.core.properties.SystemProperties;
+import br.com.sbk.sbking.networking.core.serialization.Serializator;
 import br.com.sbk.sbking.networking.server.notifications.GameModeOrStrainNotification;
 import br.com.sbk.sbking.networking.server.notifications.PositiveOrNegativeNotification;
 
 public class GameServer {
+
+	private static final String NETWORKING_CONFIGURATION_FILENAME = "networkConfiguration.cfg";
+	private static final int COULD_NOT_GET_PORT_FROM_PROPERTIES_ERROR = 1;
 
 	final static Logger logger = Logger.getLogger(GameServer.class);
 	private List<PlayerSocket> playerSockets = new ArrayList<PlayerSocket>();
@@ -44,9 +49,8 @@ public class GameServer {
 	}
 
 	public void run() throws Exception {
-		NetworkingProperties networkingProperties = new NetworkingProperties();
-		int port = networkingProperties.getPort();
-		
+		int port = this.getPortFromNetworkingProperties();
+
 		try (ServerSocket listener = new ServerSocket(port)) {
 			logger.info("Game Server is Running...");
 			logger.info("My InetAddress is: " + listener.getInetAddress());
@@ -70,7 +74,7 @@ public class GameServer {
 					this.sendInitializeDealAll();
 					logger.info("Sleeping for 500ms waiting for clients to initialize its deals.");
 					Thread.sleep(500);
-					
+
 					this.sendBoardAll(this.game.getCurrentBoard());
 
 					this.sendChooserPositiveNegativeAll(this.getCurrentPositiveOrNegativeChooser());
@@ -197,7 +201,7 @@ public class GameServer {
 		}
 		logger.info("Finished sending deals.");
 	}
-	
+
 	public void sendBoardAll(Board board) {
 		logger.info("Sending everyone the current board");
 		for (PlayerSocket playerSocket : playerSockets) {
@@ -302,6 +306,19 @@ public class GameServer {
 
 	private Direction getCurrentGameModeOrStrainChooser() {
 		return this.game.getDealer().getGameModeOrStrainChooserWhenDealer();
+	}
+
+	private int getPortFromNetworkingProperties() {
+		FileProperties fileProperties = new FileProperties(NETWORKING_CONFIGURATION_FILENAME);
+		NetworkingProperties networkingProperties = new NetworkingProperties(fileProperties, new SystemProperties());
+		int port = 0;
+		try {
+			port = networkingProperties.getPort();
+		} catch (Exception e) {
+			System.exit(COULD_NOT_GET_PORT_FROM_PROPERTIES_ERROR);
+		}
+
+		return port;
 	}
 
 }

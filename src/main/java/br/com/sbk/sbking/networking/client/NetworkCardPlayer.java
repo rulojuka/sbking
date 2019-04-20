@@ -1,7 +1,7 @@
 package br.com.sbk.sbking.networking.client;
 
 import br.com.sbk.sbking.core.Card;
-import br.com.sbk.sbking.networking.Serializator;
+import br.com.sbk.sbking.networking.core.serialization.Serializator;
 
 public class NetworkCardPlayer {
 
