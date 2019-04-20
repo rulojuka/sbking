@@ -15,14 +15,14 @@ import br.com.sbk.sbking.gui.models.GameScoreboard;
 import br.com.sbk.sbking.gui.models.PositiveOrNegative;
 import br.com.sbk.sbking.networking.core.serialization.Serializator;
 
-public class PlayerSocket implements Runnable {
+public class PlayerGameSocket implements Runnable {
 	private Direction direction;
 	private Socket socket;
 	private Serializator serializator;
 	private GameServer gameServer;
-	final static Logger logger = Logger.getLogger(PlayerSocket.class);
+	final static Logger logger = Logger.getLogger(PlayerGameSocket.class);
 
-	public PlayerSocket(Serializator serializator, Socket socket, Direction direction, GameServer gameServer) {
+	public PlayerGameSocket(Serializator serializator, Socket socket, Direction direction, GameServer gameServer) {
 		this.serializator = serializator;
 		this.socket = socket;
 		this.direction = direction;

@@ -1,11 +1,7 @@
 package br.com.sbk.sbking.networking.server;
 
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.ServerSocket;
-import java.net.Socket;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -18,20 +14,15 @@ import br.com.sbk.sbking.core.exceptions.PlayedCardInAnotherPlayersTurnException
 import br.com.sbk.sbking.core.exceptions.SelectedPositiveOrNegativeInAnotherPlayersTurnException;
 import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
 import br.com.sbk.sbking.gui.models.PositiveOrNegative;
-import br.com.sbk.sbking.networking.core.properties.FileProperties;
-import br.com.sbk.sbking.networking.core.properties.NetworkingProperties;
-import br.com.sbk.sbking.networking.core.properties.SystemProperties;
-import br.com.sbk.sbking.networking.core.serialization.Serializator;
 import br.com.sbk.sbking.networking.server.notifications.CardPlayNotification;
 import br.com.sbk.sbking.networking.server.notifications.GameModeOrStrainNotification;
 import br.com.sbk.sbking.networking.server.notifications.PositiveOrNegativeNotification;
 
-public class GameServer {
-
-	private static final String NETWORKING_CONFIGURATION_FILENAME = "networkConfiguration.cfg";
-	private static final int COULD_NOT_GET_PORT_FROM_PROPERTIES_ERROR = 1;
+public class GameServer implements Runnable {
 
 	final static Logger logger = Logger.getLogger(GameServer.class);
+
+	private static final int NUMBER_OF_PLAYERS_IN_A_GAME = 4;
 
 	private PositiveOrNegativeNotification positiveOrNegativeNotification = new PositiveOrNegativeNotification();
 	private PositiveOrNegative currentPositiveOrNegative;
@@ -43,168 +34,153 @@ public class GameServer {
 	private Game game;
 	private boolean isRulesetPermitted;
 
-	private static final int MAXIMUM_NUMBER_OF_PLAYERS_IN_THE_LOBBY = 20;
-	private ExecutorService pool;
-	private List<PlayerSocket> playerSockets = new ArrayList<PlayerSocket>();
+	private Collection<PlayerGameSocket> playerSockets = new ArrayList<PlayerGameSocket>();
 	private MessageSender messageSender;
 
+	private ExecutorService pool;
+	private Direction nextDirection = Direction.values()[0];
+
 	public GameServer() {
-		pool = Executors.newFixedThreadPool(MAXIMUM_NUMBER_OF_PLAYERS_IN_THE_LOBBY);
+		this.pool = Executors.newFixedThreadPool(NUMBER_OF_PLAYERS_IN_A_GAME);
 	}
 
-	private void connectPlayer(Socket socket, Direction direction) {
-
-		Serializator serializator = null;
-		try {
-			ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
-			ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
-			serializator = new Serializator(objectInputStream, objectOutputStream);
-		} catch (Exception e) {
-			logger.debug(e);
-		}
-
-		PlayerSocket current = new PlayerSocket(serializator, socket, direction, this);
-		playerSockets.add(current);
-		pool.execute(current);
+	public void addPlayer(PlayerNetworkInformation playerNetworkInformation) {
+		PlayerGameSocket currentPlayerGameSocket = new PlayerGameSocket(playerNetworkInformation.getSerializator(),
+				playerNetworkInformation.getSocket(), getNextDirection(), this);
+		this.playerSockets.add(currentPlayerGameSocket);
+		pool.execute(currentPlayerGameSocket);
 	}
 
-	public void run() throws Exception {
-		int port = this.getPortFromNetworkingProperties();
+	private Direction getNextDirection() {
+		Direction nextDirection = this.nextDirection;
+		this.nextDirection = this.nextDirection.next();
+		return nextDirection;
+	}
 
-		try (ServerSocket listener = new ServerSocket(port)) {
-			logger.info("Game Server is Running...");
-			logger.info("My InetAddress is: " + listener.getInetAddress());
-			logger.info("Listening for connections on port: " + port);
-			for (Direction direction : Direction.values()) {
-				this.connectPlayer(listener.accept(), direction);
-			}
+	@Override
+	public void run() {
+		this.messageSender = new MessageSender(playerSockets);
 
-			logger.info("Sleeping for 1000ms waiting for last client to setup itself");
-			Thread.sleep(1000);
-			this.messageSender = new MessageSender(playerSockets);
+		logger.info("Sleeping for 1000ms waiting for last client to setup itself");
+		sleepFor(1000);
 
-			this.messageSender.sendMessageAll("ALLCONNECTED");
+		this.messageSender.sendMessageAll("ALLCONNECTED");
 
-			this.game = new Game();
+		this.game = new Game();
 
-			while (!game.isFinished()) {
-				this.game.initializeBoard();
+		while (!game.isFinished()) {
+			this.game.initializeBoard();
 
-				do {
+			do {
 
-					this.messageSender.sendInitializeDealAll();
-					logger.info("Sleeping for 500ms waiting for clients to initialize its deals.");
-					Thread.sleep(500);
+				this.messageSender.sendInitializeDealAll();
+				logger.info("Sleeping for 500ms waiting for clients to initialize its deals.");
+				sleepFor(500);
 
-					this.messageSender.sendBoardAll(this.game.getCurrentBoard());
+				this.messageSender.sendBoardAll(this.game.getCurrentBoard());
 
-					this.messageSender.sendChooserPositiveNegativeAll(this.getCurrentPositiveOrNegativeChooser());
+				this.messageSender.sendChooserPositiveNegativeAll(this.getCurrentPositiveOrNegativeChooser());
 
-					synchronized (positiveOrNegativeNotification) {
-						// wait until object notifies - which relinquishes the lock on the object too
-						try {
-							logger.info(
-									"I am waiting for some thread to notify that it wants to choose positive or negative");
-							positiveOrNegativeNotification.wait();
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-
-					logger.info("I received that is going to be "
-							+ positiveOrNegativeNotification.getPositiveOrNegative().toString());
-					this.currentPositiveOrNegative = positiveOrNegativeNotification.getPositiveOrNegative();
-					this.messageSender.sendPositiveOrNegativeAll(this.currentPositiveOrNegative);
-
-					this.messageSender.sendChooserGameModeOrStrainAll(this.getCurrentGameModeOrStrainChooser());
-
-					synchronized (gameModeOrStrainNotification) {
-						// wait until object notifies - which relinquishes the lock on the object too
-						try {
-							logger.info(
-									"I am waiting for some thread to notify that it wants to choose game Mode Or Strain");
-							gameModeOrStrainNotification.wait();
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-					logger.info("I received that is going to be "
-							+ gameModeOrStrainNotification.getGameModeOrStrain().getShortDescription());
-					this.currentGameModeOrStrain = gameModeOrStrainNotification.getGameModeOrStrain();
-
-					isRulesetPermitted = this.game.isGameModePermitted(this.currentGameModeOrStrain,
-							this.getCurrentGameModeOrStrainChooser());
-
-					if (!isRulesetPermitted) {
-						logger.info("This ruleset is not permitted. Restarting choose procedure");
-						this.messageSender.sendInvalidRulesetAll();
-					} else {
-						this.messageSender.sendValidRulesetAll();
-					}
-
-				} while (!isRulesetPermitted);
-
-				this.messageSender
-						.sendGameModeOrStrainShortDescriptionAll(this.currentGameModeOrStrain.getShortDescription());
-
-				logger.info("Sleeping for 500ms waiting for everything come out right.");
-				Thread.sleep(500);
-
-				logger.info("Everything selected! Game commencing!");
-				this.game.addRuleset(currentGameModeOrStrain);
-
-				this.dealHasChanged = true;
-				while (!this.game.getCurrentDeal().isFinished()) {
-					logger.info("Sleeping for 500ms waiting for all clients to prepare themselves.");
+				synchronized (positiveOrNegativeNotification) {
+					// wait until object notifies - which relinquishes the lock on the object too
 					try {
-						Thread.sleep(500);
-					} catch (InterruptedException e1) {
+						logger.info(
+								"I am waiting for some thread to notify that it wants to choose positive or negative");
+						positiveOrNegativeNotification.wait();
+					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-					if (this.dealHasChanged) {
-						logger.info("Sending new 'round' of deals");
-						this.messageSender.sendDealAll(this.game.getCurrentDeal());
-						this.dealHasChanged = false;
-					}
-					synchronized (cardPlayNotification) {
-						// wait until object notifies - which relinquishes the lock on the object too
-						try {
-							logger.info("I am waiting for some thread to notify that it wants to play a card.");
-							cardPlayNotification.wait();
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-					Direction directionToBePlayed = cardPlayNotification.getDirection();
-					Card cardToBePlayed = cardPlayNotification.getCard();
-					logger.info("Received notification that " + directionToBePlayed + " wants to play the "
-							+ cardToBePlayed);
-					try {
-						this.playCard(cardToBePlayed, directionToBePlayed);
-					} catch (Exception e) {
-						throw e;
+						e.printStackTrace();
 					}
 				}
 
-				this.game.finishDeal();
-				this.messageSender.sendGameScoreboardAll(this.game.getGameScoreboard());
+				logger.info("I received that is going to be "
+						+ positiveOrNegativeNotification.getPositiveOrNegative().toString());
+				this.currentPositiveOrNegative = positiveOrNegativeNotification.getPositiveOrNegative();
+				this.messageSender.sendPositiveOrNegativeAll(this.currentPositiveOrNegative);
 
-				this.messageSender.sendFinishDealAll();
-				logger.info("Deal finished!");
+				this.messageSender.sendChooserGameModeOrStrainAll(this.getCurrentGameModeOrStrainChooser());
 
+				synchronized (gameModeOrStrainNotification) {
+					// wait until object notifies - which relinquishes the lock on the object too
+					try {
+						logger.info(
+								"I am waiting for some thread to notify that it wants to choose game Mode Or Strain");
+						gameModeOrStrainNotification.wait();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				logger.info("I received that is going to be "
+						+ gameModeOrStrainNotification.getGameModeOrStrain().getShortDescription());
+				this.currentGameModeOrStrain = gameModeOrStrainNotification.getGameModeOrStrain();
+
+				isRulesetPermitted = this.game.isGameModePermitted(this.currentGameModeOrStrain,
+						this.getCurrentGameModeOrStrainChooser());
+
+				if (!isRulesetPermitted) {
+					logger.info("This ruleset is not permitted. Restarting choose procedure");
+					this.messageSender.sendInvalidRulesetAll();
+				} else {
+					this.messageSender.sendValidRulesetAll();
+				}
+
+			} while (!isRulesetPermitted);
+
+			this.messageSender
+					.sendGameModeOrStrainShortDescriptionAll(this.currentGameModeOrStrain.getShortDescription());
+
+			logger.info("Sleeping for 500ms waiting for everything come out right.");
+			sleepFor(500);
+
+			logger.info("Everything selected! Game commencing!");
+			this.game.addRuleset(currentGameModeOrStrain);
+
+			this.dealHasChanged = true;
+			while (!this.game.getCurrentDeal().isFinished()) {
+				logger.info("Sleeping for 500ms waiting for all clients to prepare themselves.");
+				sleepFor(500);
+				if (this.dealHasChanged) {
+					logger.info("Sending new 'round' of deals");
+					this.messageSender.sendDealAll(this.game.getCurrentDeal());
+					this.dealHasChanged = false;
+				}
+				synchronized (cardPlayNotification) {
+					// wait until object notifies - which relinquishes the lock on the object too
+					try {
+						logger.info("I am waiting for some thread to notify that it wants to play a card.");
+						cardPlayNotification.wait();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				Direction directionToBePlayed = cardPlayNotification.getDirection();
+				Card cardToBePlayed = cardPlayNotification.getCard();
+				logger.info(
+						"Received notification that " + directionToBePlayed + " wants to play the " + cardToBePlayed);
+				try {
+					this.playCard(cardToBePlayed, directionToBePlayed);
+				} catch (Exception e) {
+					throw e;
+				}
 			}
 
-			this.messageSender.sendFinishGameAll();
+			this.game.finishDeal();
+			this.messageSender.sendGameScoreboardAll(this.game.getGameScoreboard());
 
-			logger.info("Game has ended. Exiting main thread.");
+			this.messageSender.sendFinishDealAll();
+			logger.info("Deal finished!");
+
 		}
+
+		this.messageSender.sendFinishGameAll();
+
+		logger.info("Game has ended.");
+
 	}
 
-	public void removePlayerSocket(PlayerSocket playerSocket) {
+	public void removePlayerSocket(PlayerGameSocket playerSocket) {
 		this.playerSockets.remove(playerSocket);
 	}
 
@@ -236,22 +212,6 @@ public class GameServer {
 		return this.game.getDealer().getGameModeOrStrainChooserWhenDealer();
 	}
 
-	private int getPortFromNetworkingProperties() {
-		FileProperties fileProperties = new FileProperties(NETWORKING_CONFIGURATION_FILENAME);
-		int port = 0;
-		try {
-			NetworkingProperties networkingProperties = new NetworkingProperties(fileProperties,
-					new SystemProperties());
-			port = networkingProperties.getPort();
-		} catch (Exception e) {
-			logger.fatal("Could not get port from properties.");
-			logger.debug(e);
-			System.exit(COULD_NOT_GET_PORT_FROM_PROPERTIES_ERROR);
-		}
-
-		return port;
-	}
-
 	private void playCard(Card card, Direction direction) {
 		logger.info("It is currently the " + this.game.getCurrentDeal().getCurrentPlayer() + " turn");
 		try {
@@ -281,4 +241,11 @@ public class GameServer {
 		}
 	}
 
+	private void sleepFor(int miliseconds) {
+		try {
+			Thread.sleep(miliseconds);
+		} catch (InterruptedException e) {
+			logger.debug(e);
+		}
+	}
 }

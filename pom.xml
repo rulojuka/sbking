@@ -52,7 +52,7 @@
 						<configuration>
 							<archive>
 								<manifest>
-									<mainClass>br.com.sbk.sbking.networking.server.main.GameServerStarter</mainClass>
+									<mainClass>br.com.sbk.sbking.networking.server.main.LobbyServerStarter</mainClass>
 								</manifest>
 							</archive>
 							<descriptorRefs>
