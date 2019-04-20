@@ -1,4 +1,4 @@
-package br.com.sbk.sbking.core.rulesets;
+package br.com.sbk.sbking.core.rulesets.concrete;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

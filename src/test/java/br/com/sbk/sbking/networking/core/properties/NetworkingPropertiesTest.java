@@ -1,4 +1,4 @@
-package br.com.sbk.sbking.networking;
+package br.com.sbk.sbking.networking.core.properties;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
