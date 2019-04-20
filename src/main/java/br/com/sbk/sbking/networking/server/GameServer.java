@@ -310,11 +310,14 @@ public class GameServer {
 
 	private int getPortFromNetworkingProperties() {
 		FileProperties fileProperties = new FileProperties(NETWORKING_CONFIGURATION_FILENAME);
-		NetworkingProperties networkingProperties = new NetworkingProperties(fileProperties, new SystemProperties());
 		int port = 0;
 		try {
+			NetworkingProperties networkingProperties = new NetworkingProperties(fileProperties,
+					new SystemProperties());
 			port = networkingProperties.getPort();
 		} catch (Exception e) {
+			logger.fatal("Could not get port from properties.");
+			logger.debug(e);
 			System.exit(COULD_NOT_GET_PORT_FROM_PROPERTIES_ERROR);
 		}
 

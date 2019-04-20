@@ -3,7 +3,6 @@ package br.com.sbk.sbking.networking.core.properties;
 import static br.com.sbk.sbking.networking.core.properties.PropertiesConstants.HOST;
 import static br.com.sbk.sbking.networking.core.properties.PropertiesConstants.PORT;
 
-import java.io.IOException;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
@@ -17,9 +16,9 @@ public class FileProperties {
 		this.configFile = new Properties();
 		try {
 			configFile.load(this.getClass().getClassLoader().getResourceAsStream(filename));
-		} catch (IOException e) {
+		} catch (Exception e) {
 			logger.error("Error trying to load configuration file: " + filename);
-			logger.error(e);
+			logger.debug(e);
 		}
 	}
 

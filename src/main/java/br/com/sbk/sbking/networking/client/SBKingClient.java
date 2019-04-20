@@ -1,10 +1,8 @@
 package br.com.sbk.sbking.networking.client;
 
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.net.UnknownHostException;
 
 import org.apache.log4j.Logger;
 
@@ -22,10 +20,10 @@ import br.com.sbk.sbking.networking.core.serialization.Serializator;
 public class SBKingClient implements Runnable {
 
 	private static final String NETWORKING_CONFIGURATION_FILENAME = "networkConfiguration.cfg";
-
-	private Socket socket;
-
-	private Serializator serializator;
+	private static final int COULD_NOT_GET_NETWORK_INFORMATION_FROM_PROPERTIES_ERROR = 1;
+	private static final int COULD_NOT_CREATE_SOCKET_ERROR = 2;
+	private static final int COULD_NOT_CREATE_SERIALIZATOR_ERROR = 3;
+	private final Serializator serializator;
 
 	private Direction direction;
 	private boolean allPlayersConnected;
@@ -48,45 +46,55 @@ public class SBKingClient implements Runnable {
 
 	final static Logger logger = Logger.getLogger(SBKingClient.class);
 
-	private String host;
-	private int port;
-
 	public SBKingClient() {
-
-		initializeNetworkingProperties();
-
-		try {
-			logger.info("Trying to connect to host: " + this.host);
-			logger.info("On port: " + this.port);
-			socket = new Socket(this.host, this.port);
-		} catch (UnknownHostException e) {
-			logger.debug(e);
-		} catch (IOException e) {
-			logger.debug(e);
-		}
-		setupSerializator();
+		Socket socket = initializeSocketOrExit();
+		logger.info("Socket initialized.");
+		this.serializator = initializeSerializatorOrExit(socket);
+		logger.info("Serializator initialized.");
 		NetworkCardPlayer networkCardPlayer = new NetworkCardPlayer(this.serializator);
 		this.playCardActionListener = new PlayCardActionListener(networkCardPlayer);
 	}
 
-	private void initializeNetworkingProperties() {
-		FileProperties configFile = new FileProperties(NETWORKING_CONFIGURATION_FILENAME);
-		NetworkingProperties networkingProperties = new NetworkingProperties(configFile, new SystemProperties());
+	private Socket initializeSocketOrExit() {
+		String host = null;
+		int port = 0;
+		try {
+			FileProperties configFile = new FileProperties(NETWORKING_CONFIGURATION_FILENAME);
+			NetworkingProperties networkingProperties = new NetworkingProperties(configFile, new SystemProperties());
+			host = networkingProperties.getHost();
+			port = networkingProperties.getPort();
+		} catch (Exception e) {
+			logger.fatal("Could not get network information from properties.");
+			logger.debug(e);
+			System.exit(COULD_NOT_GET_NETWORK_INFORMATION_FROM_PROPERTIES_ERROR);
+		}
 
-		this.host = networkingProperties.getHost();
-		this.port = networkingProperties.getPort();
+		try {
+			logger.info("Trying to create socket to: " + host + ":" + port);
+			return new Socket(host, port);
+		} catch (Exception e) {
+			logger.fatal("Could not create socket.");
+			logger.debug(e);
+			System.exit(COULD_NOT_CREATE_SOCKET_ERROR);
+		}
+
+		// Unreachable code
+		return null;
 	}
 
-	private void setupSerializator() {
-		this.serializator = null;
+	private Serializator initializeSerializatorOrExit(Socket socket) {
 		try {
 			ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
 			ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
-			this.serializator = new Serializator(objectInputStream, objectOutputStream);
+			return new Serializator(objectInputStream, objectOutputStream);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.fatal("Could not create serializator.");
+			logger.debug(e);
+			System.exit(COULD_NOT_CREATE_SERIALIZATOR_ERROR);
 		}
-		logger.info("Finished serializator setup.");
+
+		// Unreachable code
+		return null;
 	}
 
 	@Override
