@@ -11,14 +11,12 @@ import java.util.concurrent.Executors;
 
 import org.apache.log4j.Logger;
 
-import br.com.sbk.sbking.core.Board;
 import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.core.Game;
 import br.com.sbk.sbking.core.exceptions.SelectedPositiveOrNegativeInAnotherPlayersTurnException;
 import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
-import br.com.sbk.sbking.gui.models.GameScoreboard;
 import br.com.sbk.sbking.gui.models.PositiveOrNegative;
 import br.com.sbk.sbking.networking.core.properties.FileProperties;
 import br.com.sbk.sbking.networking.core.properties.NetworkingProperties;
@@ -33,8 +31,7 @@ public class GameServer {
 	private static final int COULD_NOT_GET_PORT_FROM_PROPERTIES_ERROR = 1;
 
 	final static Logger logger = Logger.getLogger(GameServer.class);
-	private List<PlayerSocket> playerSockets = new ArrayList<PlayerSocket>();
-	private ExecutorService pool;
+
 	private NetworkGame networkGame;
 	private PositiveOrNegativeNotification positiveOrNegativeNotification = new PositiveOrNegativeNotification();
 	private PositiveOrNegative currentPositiveOrNegative;
@@ -44,8 +41,29 @@ public class GameServer {
 	private Game game;
 	private boolean isRulesetPermitted;
 
+	private static final int MAXIMUM_NUMBER_OF_PLAYERS_IN_THE_LOBBY = 20;
+	private ExecutorService pool;
+	private List<PlayerSocket> playerSockets = new ArrayList<PlayerSocket>();
+	private MessageSender messageSender;
+
 	public GameServer() {
-		pool = Executors.newFixedThreadPool(4);
+		pool = Executors.newFixedThreadPool(MAXIMUM_NUMBER_OF_PLAYERS_IN_THE_LOBBY);
+	}
+
+	private void connectPlayer(Socket socket, Direction direction) {
+
+		Serializator serializator = null;
+		try {
+			ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+			ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
+			serializator = new Serializator(objectInputStream, objectOutputStream);
+		} catch (Exception e) {
+			logger.debug(e);
+		}
+
+		PlayerSocket current = new PlayerSocket(serializator, socket, direction, this);
+		playerSockets.add(current);
+		pool.execute(current);
 	}
 
 	public void run() throws Exception {
@@ -61,8 +79,9 @@ public class GameServer {
 
 			logger.info("Sleeping for 1000ms waiting for last client to setup itself");
 			Thread.sleep(1000);
+			this.messageSender = new MessageSender(playerSockets);
 
-			this.sendMessageAll("ALLCONNECTED");
+			this.messageSender.sendMessageAll("ALLCONNECTED");
 
 			this.game = new Game();
 
@@ -71,13 +90,13 @@ public class GameServer {
 
 				do {
 
-					this.sendInitializeDealAll();
+					this.messageSender.sendInitializeDealAll();
 					logger.info("Sleeping for 500ms waiting for clients to initialize its deals.");
 					Thread.sleep(500);
 
-					this.sendBoardAll(this.game.getCurrentBoard());
+					this.messageSender.sendBoardAll(this.game.getCurrentBoard());
 
-					this.sendChooserPositiveNegativeAll(this.getCurrentPositiveOrNegativeChooser());
+					this.messageSender.sendChooserPositiveNegativeAll(this.getCurrentPositiveOrNegativeChooser());
 
 					synchronized (positiveOrNegativeNotification) {
 						// wait until object notifies - which relinquishes the lock on the object too
@@ -94,9 +113,9 @@ public class GameServer {
 					logger.info("I received that is going to be "
 							+ positiveOrNegativeNotification.getPositiveOrNegative().toString());
 					this.currentPositiveOrNegative = positiveOrNegativeNotification.getPositiveOrNegative();
-					this.sendPositiveOrNegativeAll(this.currentPositiveOrNegative);
+					this.messageSender.sendPositiveOrNegativeAll(this.currentPositiveOrNegative);
 
-					this.sendChooserGameModeOrStrainAll(this.getCurrentGameModeOrStrainChooser());
+					this.messageSender.sendChooserGameModeOrStrainAll(this.getCurrentGameModeOrStrainChooser());
 
 					synchronized (gameModeOrStrainNotification) {
 						// wait until object notifies - which relinquishes the lock on the object too
@@ -118,14 +137,15 @@ public class GameServer {
 
 					if (!isRulesetPermitted) {
 						logger.info("This ruleset is not permitted. Restarting choose procedure");
-						this.sendInvalidRulesetAll();
+						this.messageSender.sendInvalidRulesetAll();
 					} else {
-						this.sendValidRulesetAll();
+						this.messageSender.sendValidRulesetAll();
 					}
 
 				} while (!isRulesetPermitted);
 
-				this.sendGameModeOrStrainShortDescriptionAll(this.currentGameModeOrStrain.getShortDescription());
+				this.messageSender
+						.sendGameModeOrStrainShortDescriptionAll(this.currentGameModeOrStrain.getShortDescription());
 
 				logger.info("Sleeping for 500ms waiting for everything come out right.");
 				Thread.sleep(500);
@@ -137,33 +157,17 @@ public class GameServer {
 				networkGame.run();
 
 				this.game.finishDeal();
-				this.sendGameScoreboardAll(this.game.getGameScoreboard());
+				this.messageSender.sendGameScoreboardAll(this.game.getGameScoreboard());
 
-				this.sendFinishDealAll();
+				this.messageSender.sendFinishDealAll();
 				logger.info("Deal finished!");
 
 			}
 
-			this.sendFinishGameAll();
+			this.messageSender.sendFinishGameAll();
 
 			logger.info("Game has ended. Exiting main thread.");
 		}
-	}
-
-	private void connectPlayer(Socket socket, Direction direction) {
-
-		Serializator serializator = null;
-		try {
-			ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
-			ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
-			serializator = new Serializator(objectInputStream, objectOutputStream);
-		} catch (Exception e) {
-			logger.debug(e);
-		}
-
-		PlayerSocket current = new PlayerSocket(serializator, socket, direction, this);
-		playerSockets.add(current);
-		pool.execute(current);
 	}
 
 	public void removePlayerSocket(PlayerSocket playerSocket) {
@@ -194,112 +198,6 @@ public class GameServer {
 		}
 	}
 
-	public void sendDealAll(Deal deal) {
-		logger.info("Sending everyone the current deal");
-		for (PlayerSocket playerSocket : playerSockets) {
-			playerSocket.sendDeal(deal);
-		}
-		logger.info("Finished sending deals.");
-	}
-
-	public void sendBoardAll(Board board) {
-		logger.info("Sending everyone the current board");
-		for (PlayerSocket playerSocket : playerSockets) {
-			playerSocket.sendBoard(board);
-		}
-		logger.info("Finished sending boards.");
-	}
-
-	private void sendMessageAll(String message) {
-		logger.info("Sending everyone the following message: --" + message + "--");
-		for (PlayerSocket playerSocket : playerSockets) {
-			playerSocket.sendMessage(message);
-		}
-		logger.info("Finished sending messages.");
-	}
-
-	private void sendChooserPositiveNegativeAll(Direction chooser) {
-		logger.info("Sending everyone the chooser of Positive or Negative: --" + chooser + "--");
-		for (PlayerSocket playerSocket : playerSockets) {
-			playerSocket.sendChooserPositiveNegative(chooser);
-		}
-		logger.info("Finished sending messages.");
-	}
-
-	private void sendChooserGameModeOrStrainAll(Direction chooser) {
-		logger.info("Sending everyone the chooser of GameMode or Strain: --" + chooser + "--");
-		for (PlayerSocket playerSocket : playerSockets) {
-			playerSocket.sendChooserGameModeOrStrain(chooser);
-		}
-		logger.info("Finished sending messages.");
-	}
-
-	private void sendPositiveOrNegativeAll(PositiveOrNegative positiveOrNegative) {
-		String message = positiveOrNegative.toString().toUpperCase();
-		logger.info("Sending everyone : --" + message + "--");
-		for (PlayerSocket playerSocket : playerSockets) {
-			playerSocket.sendPositiveOrNegative(message);
-		}
-		logger.info("Finished sending messages.");
-	}
-
-	private void sendGameModeOrStrainShortDescriptionAll(String currentGameModeOrStrain) {
-		String message = currentGameModeOrStrain;
-		logger.info("Sending everyone : --" + message + "--");
-		for (PlayerSocket playerSocket : playerSockets) {
-			playerSocket.sendGameModeOrStrain(message);
-		}
-		logger.info("Finished sending messages.");
-	}
-
-	private void sendInitializeDealAll() {
-		logger.info("Sending everyone Initialize Deal control");
-		for (PlayerSocket playerSocket : playerSockets) {
-			playerSocket.sendInitializeDeal();
-		}
-		logger.info("Finished sending controls.");
-	}
-
-	private void sendFinishDealAll() {
-		logger.info("Sending everyone Finish deal control");
-		for (PlayerSocket playerSocket : playerSockets) {
-			playerSocket.sendFinishDeal();
-		}
-		logger.info("Finished sending controls.");
-	}
-
-	private void sendGameScoreboardAll(GameScoreboard gameScoreboard) {
-		logger.info("Sending everyone the Game Scoreboard");
-		for (PlayerSocket playerSocket : playerSockets) {
-			playerSocket.sendGameScoreboard(gameScoreboard);
-		}
-		logger.info("Finished sending Game Scoreboards.");
-	}
-
-	private void sendFinishGameAll() {
-		logger.info("Sending everyone Finish Game control");
-		for (PlayerSocket playerSocket : playerSockets) {
-			playerSocket.sendFinishGame();
-		}
-		logger.info("Finished sending controls.");
-	}
-
-	private void sendInvalidRulesetAll() {
-		logger.info("Sending everyone Invalid ruleset control");
-		for (PlayerSocket playerSocket : playerSockets) {
-			playerSocket.sendInvalidRuleset();
-		}
-		logger.info("Finished sending controls.");
-	}
-
-	private void sendValidRulesetAll() {
-		logger.info("Sending everyone Valid ruleset control");
-		for (PlayerSocket playerSocket : playerSockets) {
-			playerSocket.sendValidRuleset();
-		}
-		logger.info("Finished sending controls.");
-	}
-
 	private Direction getCurrentPositiveOrNegativeChooser() {
 		return this.game.getDealer().getPositiveOrNegativeChooserWhenDealer();
 	}
@@ -322,6 +220,13 @@ public class GameServer {
 		}
 
 		return port;
+	}
+
+	// FIXME Refactor this method out of here ASAP
+	// Whoever is calling him, should be calling the messageSender directly in this
+	// case
+	public void sendDealAll(Deal deal) {
+		this.messageSender.sendDealAll(deal);
 	}
 
 }
