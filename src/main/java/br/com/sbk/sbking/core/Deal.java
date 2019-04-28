@@ -1,5 +1,7 @@
 package br.com.sbk.sbking.core;
 
+import static br.com.sbk.sbking.core.GameConstants.NUMBER_OF_TRICKS_IN_A_COMPLETE_HAND;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,11 +14,8 @@ import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
 @SuppressWarnings("serial")
 public class Deal implements Serializable {
 
-	private static final int NUMBER_OF_TRICKS_IN_A_COMPLETE_HAND = 13;
-
 	private Board board;
 	private int completedTricks;
-	private Direction dealer;
 	private Direction currentPlayer;
 	private Score score;
 
@@ -28,8 +27,7 @@ public class Deal implements Serializable {
 	public Deal(Board board, Ruleset ruleset) {
 		this.board = board;
 		this.ruleset = ruleset;
-		this.dealer = this.board.getDealer();
-		this.currentPlayer = this.dealer.getLeaderWhenDealer();
+		this.currentPlayer = this.board.getDealer().getLeaderWhenDealer();
 		this.score = new Score(ruleset);
 		this.completedTricks = 0;
 		this.tricks = new ArrayList<Trick>();
@@ -40,15 +38,15 @@ public class Deal implements Serializable {
 	}
 
 	public Trick getCurrentTrick() {
-		if (currentTrick == null) {
+		if (this.currentTrick == null) {
 			return new Trick(currentPlayer);
 		} else {
-			return currentTrick;
+			return this.currentTrick;
 		}
 	}
 
 	public Direction getCurrentPlayer() {
-		return currentPlayer;
+		return this.currentPlayer;
 	}
 
 	public int getNorthSouthPoints() {
@@ -67,14 +65,14 @@ public class Deal implements Serializable {
 		return allPointsPlayed() || allTricksPlayed();
 	}
 
-	private boolean allTricksPlayed() {
-		return this.completedTricks == NUMBER_OF_TRICKS_IN_A_COMPLETE_HAND;
-	}
-
 	private boolean allPointsPlayed() {
 		int totalPoints = this.ruleset.getTotalPoints();
 		int pointsPlayed = this.score.getAllPoints();
 		return pointsPlayed == totalPoints;
+	}
+
+	private boolean allTricksPlayed() {
+		return this.completedTricks == NUMBER_OF_TRICKS_IN_A_COMPLETE_HAND;
 	}
 
 	public int getCompletedTricks() {
@@ -223,7 +221,7 @@ public class Deal implements Serializable {
 	}
 
 	public Direction getDealer() {
-		return this.dealer;
+		return this.board.getDealer();
 	}
 
 	public Score getScore() {
