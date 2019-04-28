@@ -1,5 +1,7 @@
 package br.com.sbk.sbking.core.rulesets.concrete;
 
+import static br.com.sbk.sbking.core.GameConstants.NUMBER_OF_HEART_KINGS;
+
 import br.com.sbk.sbking.core.Trick;
 import br.com.sbk.sbking.core.rulesets.abstractClasses.NegativeRuleset;
 import br.com.sbk.sbking.core.rulesets.implementations.DefaultSuitFollowable;
@@ -10,7 +12,6 @@ import br.com.sbk.sbking.core.rulesets.implementations.ProhibitsHearts;
 public class NegativeKingRuleset extends NegativeRuleset {
 
 	private static final int NEGATIVE_KING_SCORE_MULTIPLIER = 160;
-	private static final int NUMBER_OF_HEART_KINGS = 1;
 
 	public NegativeKingRuleset() {
 		this.suitFollowable = new DefaultSuitFollowable();

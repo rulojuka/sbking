@@ -1,5 +1,7 @@
 package br.com.sbk.sbking.core.rulesets.abstractClasses;
 
+import static br.com.sbk.sbking.core.GameConstants.NUMBER_OF_TRICKS_IN_A_COMPLETE_HAND;
+
 import br.com.sbk.sbking.core.Trick;
 
 @SuppressWarnings("serial")
@@ -7,7 +9,6 @@ public abstract class PositiveRuleset extends Ruleset {
 
 	private static final int POSITIVE_SCORE_MULTIPLIER = 25;
 	private static final int POSITIVE_POINTS_PER_TRICK = 1;
-	private static final int NUMBER_OF_TRICKS = 13;
 
 	@Override
 	public int getScoreMultiplier() {
@@ -18,12 +19,12 @@ public abstract class PositiveRuleset extends Ruleset {
 	public int getPoints(Trick trick) {
 		return POSITIVE_POINTS_PER_TRICK;
 	}
-	
+
 	@Override
 	public int getTotalPoints() {
-		return NUMBER_OF_TRICKS;
+		return NUMBER_OF_TRICKS_IN_A_COMPLETE_HAND;
 	}
-	
+
 	@Override
 	public boolean isNegative() {
 		return false;

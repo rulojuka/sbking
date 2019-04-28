@@ -1,5 +1,7 @@
 package br.com.sbk.sbking.core.rulesets.concrete;
 
+import static br.com.sbk.sbking.core.GameConstants.NUMBER_OF_MEN;
+
 import br.com.sbk.sbking.core.Trick;
 import br.com.sbk.sbking.core.rulesets.abstractClasses.NegativeRuleset;
 import br.com.sbk.sbking.core.rulesets.implementations.DefaultSuitFollowable;
@@ -10,7 +12,6 @@ import br.com.sbk.sbking.core.rulesets.implementations.NoTrumpSuitWinnable;
 public class NegativeMenRuleset extends NegativeRuleset {
 
 	private static final int NEGATIVE_MEN_SCORE_MULTIPLIER = 30;
-	private static final int NUMBER_OF_MEN = 8;
 
 	public NegativeMenRuleset() {
 		this.suitFollowable = new DefaultSuitFollowable();

@@ -1,5 +1,7 @@
 package br.com.sbk.sbking.core.rulesets.concrete;
 
+import static br.com.sbk.sbking.core.GameConstants.NUMBER_OF_HEARTS_CARDS;
+
 import br.com.sbk.sbking.core.Trick;
 import br.com.sbk.sbking.core.rulesets.abstractClasses.NegativeRuleset;
 import br.com.sbk.sbking.core.rulesets.implementations.DefaultSuitFollowable;
@@ -10,7 +12,6 @@ import br.com.sbk.sbking.core.rulesets.implementations.ProhibitsHearts;
 public class NegativeHeartsRuleset extends NegativeRuleset {
 
 	private static final int NEGATIVE_HEARTS_SCORE_MULTIPLIER = 20;
-	private static final int NUMBER_OF_HEART_CARDS = 13;
 
 	public NegativeHeartsRuleset() {
 		this.suitFollowable = new DefaultSuitFollowable();
@@ -40,7 +41,7 @@ public class NegativeHeartsRuleset extends NegativeRuleset {
 
 	@Override
 	public int getTotalPoints() {
-		return NUMBER_OF_HEART_CARDS;
+		return NUMBER_OF_HEARTS_CARDS;
 	}
 
 }
