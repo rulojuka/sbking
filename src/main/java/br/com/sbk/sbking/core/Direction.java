@@ -55,19 +55,15 @@ public enum Direction {
 	public char getAbbreviation() {
 		return abbreviation;
 	}
-	
-	public Direction getPartner() {
-		return this.next(2);
-	}
-	
+
 	public Direction getPositiveOrNegativeChooserWhenDealer() {
-		return this.next();
+		return this.next(1);
 	}
-	
+
 	public Direction getLeaderWhenDealer() {
 		return this.next(2);
 	}
-	
+
 	public Direction getGameModeOrStrainChooserWhenDealer() {
 		return this.next(3);
 	}

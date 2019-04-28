@@ -9,6 +9,16 @@ import org.junit.Test;
 
 public class DirectionTest {
 
+	private static final String NORTH_COMPLETE_NAME = "North";
+	private static final String EAST_COMPLETE_NAME = "East";
+	private static final String SOUTH_COMPLETE_NAME = "South";
+	private static final String WEST_COMPLETE_NAME = "West";
+
+	private static final char NORTH_ABBREVIATION = 'N';
+	private static final char EAST_ABBREVIATION = 'E';
+	private static final char SOUTH_ABBREVIATION = 'S';
+	private static final char WEST_ABBREVIATION = 'W';
+
 	private static Direction north;
 	private static Direction east;
 	private static Direction south;
@@ -78,18 +88,18 @@ public class DirectionTest {
 
 	@Test
 	public void shouldGetCompleteName() {
-		assertEquals("North", north.getCompleteName());
-		assertEquals("East", east.getCompleteName());
-		assertEquals("South", south.getCompleteName());
-		assertEquals("West", west.getCompleteName());
+		assertEquals(NORTH_COMPLETE_NAME, north.getCompleteName());
+		assertEquals(EAST_COMPLETE_NAME, east.getCompleteName());
+		assertEquals(SOUTH_COMPLETE_NAME, south.getCompleteName());
+		assertEquals(WEST_COMPLETE_NAME, west.getCompleteName());
 	}
 
 	@Test
 	public void shouldGetAbbreviation() {
-		assertEquals('N', north.getAbbreviation());
-		assertEquals('E', east.getAbbreviation());
-		assertEquals('S', south.getAbbreviation());
-		assertEquals('W', west.getAbbreviation());
+		assertEquals(NORTH_ABBREVIATION, north.getAbbreviation());
+		assertEquals(EAST_ABBREVIATION, east.getAbbreviation());
+		assertEquals(SOUTH_ABBREVIATION, south.getAbbreviation());
+		assertEquals(WEST_ABBREVIATION, west.getAbbreviation());
 	}
 
 }
