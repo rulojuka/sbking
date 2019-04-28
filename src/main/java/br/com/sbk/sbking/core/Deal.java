@@ -67,7 +67,7 @@ public class Deal implements Serializable {
 
 	private boolean allPointsPlayed() {
 		int totalPoints = this.ruleset.getTotalPoints();
-		int pointsPlayed = this.score.getAllPoints();
+		int pointsPlayed = this.score.getAlreadyPlayedPoints();
 		return pointsPlayed == totalPoints;
 	}
 

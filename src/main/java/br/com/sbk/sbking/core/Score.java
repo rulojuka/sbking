@@ -39,7 +39,7 @@ public class Score implements Serializable {
 		eastWestPoints += this.scoreable.getPoints(trick);
 	}
 
-	public int getAllPoints() {
+	public int getAlreadyPlayedPoints() {
 		return this.eastWestPoints + this.northSouthPoints;
 	}
 	
