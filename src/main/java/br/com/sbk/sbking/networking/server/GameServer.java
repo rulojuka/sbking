@@ -69,7 +69,7 @@ public class GameServer implements Runnable {
 		this.game = new Game();
 
 		while (!game.isFinished()) {
-			this.game.initializeBoard();
+			this.game.dealNewBoard();
 
 			do {
 

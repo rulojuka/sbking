@@ -1,5 +1,9 @@
 package br.com.sbk.sbking.core;
 
+import static br.com.sbk.sbking.core.GameConstants.MAXIMUM_NEGATIVES_PERMITTED_BY_DIRECTION;
+import static br.com.sbk.sbking.core.GameConstants.MAXIMUM_POSITIVES_PERMITTED_BY_DIRECTION;
+import static br.com.sbk.sbking.core.GameConstants.TOTAL_GAMES;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -10,9 +14,6 @@ import br.com.sbk.sbking.gui.models.GameScoreboard;
 
 public class Game {
 
-	private static final int MAXIMUM_POSITIVES_PERMITTED_BY_DIRECTION = 2;
-	private static final int MAXIMUM_NEGATIVES_PERMITTED_BY_DIRECTION = 3;
-	private static final int TOTAL_GAMES = 10;
 	private GameScoreboard gameScoreboard;
 	private Set<NegativeRuleset> chosenNegativeRulesets = new HashSet<NegativeRuleset>();
 	private int northSouthNegatives = 0;
@@ -30,7 +31,7 @@ public class Game {
 		this.gameScoreboard = new GameScoreboard();
 	}
 
-	public void initializeBoard() {
+	public void dealNewBoard() {
 		BoardDealer boardDealer = new BoardDealer();
 		this.currentBoard = boardDealer.dealBoard(this.dealer, new ShuffledDeck());
 	}
@@ -44,13 +45,12 @@ public class Game {
 	}
 
 	public void finishDeal() {
-		Deal currentDeal = this.getCurrentDeal();
-		Direction currentChooser = currentDeal.getDealer().getPositiveOrNegativeChooserWhenDealer();
+		Direction currentChooser = this.getCurrentDeal().getDealer().getPositiveOrNegativeChooserWhenDealer();
 		boolean isNorthSouth = currentChooser.isNorthSouth();
-		Ruleset currentRuleset = currentDeal.getRuleset();
+		Ruleset currentRuleset = this.getCurrentDeal().getRuleset();
 		boolean isPositive = currentRuleset instanceof PositiveRuleset;
 
-		this.getGameScoreboard().addFinishedDeal(currentDeal);
+		this.getGameScoreboard().addFinishedDeal(this.getCurrentDeal());
 		if (isPositive) {
 			if (isNorthSouth) {
 				northSouthPositives++;
