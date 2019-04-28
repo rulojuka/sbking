@@ -27,5 +27,9 @@ public class ShuffledDeck {
 			return iterator.next();
 		throw new RuntimeException("Trying to deal card from am empty deck.");
 	}
+	
+	public boolean hasCard() {
+		return iterator.hasNext();
+	}
 
 }

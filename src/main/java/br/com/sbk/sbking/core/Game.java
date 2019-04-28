@@ -31,7 +31,8 @@ public class Game {
 	}
 
 	public void initializeBoard() {
-		this.currentBoard = BoardDealer.dealBoard(this.dealer);
+		BoardDealer boardDealer = new BoardDealer();
+		this.currentBoard = boardDealer.dealBoard(this.dealer, new ShuffledDeck());
 	}
 
 	public void addRuleset(Ruleset currentGameModeOrStrain) {

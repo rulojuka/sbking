@@ -1,19 +1,18 @@
 package br.com.sbk.sbking.core;
 
+import static br.com.sbk.sbking.core.GameConstants.SIZE_OF_HAND;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
 public class BoardDealerTest {
 
-	private static final int SIZE_OF_HAND = 13;
-
 	// FIXME This is an integration test as it needs other classes to work.
 	@Test
 	public void shouldReceiveABoardWithTheCorrectDealerAndACompleteSetOfCards() {
 		Direction dealer = Direction.NORTH;
-
-		Board board = BoardDealer.dealBoard(dealer);
+		BoardDealer boardDealer = new BoardDealer();
+		Board board = boardDealer.dealBoard(dealer, new ShuffledDeck());
 
 		// The correct test should verify if new Board(completeHand1, completeHand2,
 		// completeHand3, completeHand4, dealer) was called but Mockito can't do that.

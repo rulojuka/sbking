@@ -20,6 +20,7 @@ import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.core.Hand;
 import br.com.sbk.sbking.core.Rank;
 import br.com.sbk.sbking.core.Score;
+import br.com.sbk.sbking.core.ShuffledDeck;
 import br.com.sbk.sbking.core.Suit;
 import br.com.sbk.sbking.core.Trick;
 import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
@@ -147,7 +148,7 @@ public class SerializationTest {
 
 	@Test
 	public void dealShouldBeSerializableAndDeserializable() {
-		Board anyBoard = BoardDealer.dealBoard(Direction.SOUTH);
+		Board anyBoard = createSouthBoard();
 		NegativeTricksRuleset anyRuleset = new NegativeTricksRuleset();
 		Deal deal = new Deal(anyBoard, anyRuleset);
 
@@ -159,7 +160,7 @@ public class SerializationTest {
 
 	@Test
 	public void dealWithCurrentTrickShouldBeSerializableAndDeserializable() {
-		Board anyBoard = BoardDealer.dealBoard(Direction.SOUTH);
+		Board anyBoard = createSouthBoard();
 		NegativeTricksRuleset anyRuleset = new NegativeTricksRuleset();
 		Deal deal = new Deal(anyBoard, anyRuleset);
 		Card anyCardOfCurrentPlayer = deal.getHandOf(deal.getCurrentPlayer()).get(0);
@@ -170,6 +171,12 @@ public class SerializationTest {
 		Deal deserializedDeal = serializator.tryToDeserialize(Deal.class);
 		assertEquals(deal, deserializedDeal);
 		assertEquals(anyCardOfCurrentPlayer, deserializedDeal.getCurrentTrick().getCards().get(0));
+	}
+
+	private Board createSouthBoard() {
+		BoardDealer boardDealer = new BoardDealer();
+		Board anyBoard = boardDealer.dealBoard(Direction.SOUTH, new ShuffledDeck());
+		return anyBoard;
 	}
 
 }
