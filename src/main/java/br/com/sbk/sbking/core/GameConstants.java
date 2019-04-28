@@ -7,4 +7,5 @@ public class GameConstants {
 	public static final int MAXIMUM_POSITIVES_PERMITTED_BY_DIRECTION = 2;
 	public static final int MAXIMUM_NEGATIVES_PERMITTED_BY_DIRECTION = 3;
 	public static final int TOTAL_GAMES = 10;
+	public static final int COMPLETE_TRICK_NUMBER_OF_CARDS = NUMBER_OF_HANDS;
 }

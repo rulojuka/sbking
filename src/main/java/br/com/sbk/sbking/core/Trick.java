@@ -1,5 +1,7 @@
 package br.com.sbk.sbking.core;
 
+import static br.com.sbk.sbking.core.GameConstants.COMPLETE_TRICK_NUMBER_OF_CARDS;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,8 +13,8 @@ import java.util.TreeSet;
 import br.com.sbk.sbking.core.exceptions.TrickAlreadyFullException;
 
 @SuppressWarnings("serial")
-public class Trick implements Serializable{
-	private static final int COMPLETE_TRICK_NUMBER_OF_CARDS = 4;
+public class Trick implements Serializable {
+
 	private List<Card> cards;
 	private Direction leader;
 	private boolean lastTwo;
@@ -43,22 +45,20 @@ public class Trick implements Serializable{
 		return this.leader;
 	}
 
+	public List<Card> getCards() {
+		return Collections.unmodifiableList(this.cards);
+	}
+
 	public Suit getLeadSuit() {
 		return this.getLeadCard().getSuit();
 	}
 
-	public Direction getWinnerWithoutTrumpSuit() {
-		Card card = this.highestCardOfSuit(this.getLeadSuit());
-		return this.directionOfCard(card);
+	private Card getLeadCard() {
+		return this.getCards().get(0);
 	}
 
-	public Direction getWinnerWithTrumpSuit(Suit trumpSuit) {
-		Card card;
-		if (this.hasSuit(trumpSuit)) {
-			card = this.highestCardOfSuit(trumpSuit);
-		} else {
-			card = this.highestCardOfSuit(this.getLeadSuit());
-		}
+	public Direction getWinnerWithoutTrumpSuit() {
+		Card card = this.highestCardOfSuit(this.getLeadSuit());
 		return this.directionOfCard(card);
 	}
 
@@ -79,8 +79,35 @@ public class Trick implements Serializable{
 		}
 	}
 
-	public List<Card> getCards() {
-		return Collections.unmodifiableList(this.cards);
+	private Direction directionOfCard(Card card) {
+		Direction currentDirection = leader;
+		for (Card cardFromTrick : this.getCards()) {
+			if (card.equals(cardFromTrick)) {
+				return currentDirection;
+			} else {
+				currentDirection = currentDirection.next();
+			}
+		}
+		throw new RuntimeException("Card not found");
+	}
+
+	public Direction getWinnerWithTrumpSuit(Suit trumpSuit) {
+		Card card;
+		if (this.hasSuit(trumpSuit)) {
+			card = this.highestCardOfSuit(trumpSuit);
+		} else {
+			card = this.highestCardOfSuit(this.getLeadSuit());
+		}
+		return this.directionOfCard(card);
+	}
+
+	private boolean hasSuit(Suit suit) {
+		for (Card card : this.getCards()) {
+			if (card.getSuit() == suit) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public int getNumberOfMen() {
@@ -130,31 +157,6 @@ public class Trick implements Serializable{
 		return hearts;
 	}
 
-	private Direction directionOfCard(Card card) {
-		Direction currentDirection = leader;
-		for (Card cardFromTrick : this.getCards()) {
-			if (card.equals(cardFromTrick)) {
-				return currentDirection;
-			} else {
-				currentDirection = currentDirection.next();
-			}
-		}
-		throw new RuntimeException("Card not found");
-	}
-
-	private boolean hasSuit(Suit suit) {
-		for (Card card : this.getCards()) {
-			if (card.getSuit() == suit) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	private Card getLeadCard() {
-		return this.getCards().get(0);
-	}
-
 	private int getNumberOfCards() {
 		return this.getCards().size();
 	}
@@ -189,11 +191,10 @@ public class Trick implements Serializable{
 			return false;
 		return true;
 	}
-	
+
 	@Override
 	public String toString() {
 		return this.cards.toString();
 	}
-	
 
 }
