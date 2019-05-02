@@ -1,7 +1,5 @@
 package br.com.sbk.sbking.networking.client;
 
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 import org.apache.log4j.Logger;
@@ -16,6 +14,7 @@ import br.com.sbk.sbking.networking.core.properties.FileProperties;
 import br.com.sbk.sbking.networking.core.properties.NetworkingProperties;
 import br.com.sbk.sbking.networking.core.properties.SystemProperties;
 import br.com.sbk.sbking.networking.core.serialization.Serializator;
+import br.com.sbk.sbking.networking.core.serialization.SerializatorFactory;
 
 public class SBKingClient implements Runnable {
 
@@ -83,13 +82,13 @@ public class SBKingClient implements Runnable {
 	}
 
 	private Serializator initializeSerializatorOrExit(Socket socket) {
+		SerializatorFactory serializatorFactory = new SerializatorFactory();
 		try {
-			ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
-			ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
-			return new Serializator(objectInputStream, objectOutputStream);
+			return serializatorFactory.getSerializator(socket);
 		} catch (Exception e) {
 			logger.fatal("Could not create serializator.");
-			logger.debug(e);
+			logger.fatal(e);
+			logger.fatal(e.getStackTrace());
 			System.exit(COULD_NOT_CREATE_SERIALIZATOR_ERROR);
 		}
 

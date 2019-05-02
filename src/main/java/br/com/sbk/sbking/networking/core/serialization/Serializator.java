@@ -1,34 +1,30 @@
 package br.com.sbk.sbking.networking.core.serialization;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 
 import org.apache.log4j.Logger;
 
 public class Serializator {
 
-	private final ObjectInputStream objectInputStream;
-	private final ObjectOutputStream objectOutputStream;
+	private final ObjectInputStreamWrapper objectInputStreamWrapper;
+	private final ObjectOutputStreamWrapper objectOutputStreamWrapper;
 	private static final Logger logger = Logger.getLogger(Serializator.class);
 
-	public Serializator(ObjectInputStream objectInputStream, ObjectOutputStream objectOutputStream) {
-		this.objectInputStream = objectInputStream;
-		this.objectOutputStream = objectOutputStream;
+	public Serializator(ObjectInputStreamWrapper objectInputStreamWrapper,
+			ObjectOutputStreamWrapper objectOutputStreamWrapper) {
+		this.objectInputStreamWrapper = objectInputStreamWrapper;
+		this.objectOutputStreamWrapper = objectOutputStreamWrapper;
 	}
 
 	@Override
 	protected void finalize() throws Exception {
-		objectOutputStream.close();
-		objectInputStream.close();
+		this.objectOutputStreamWrapper.close();
+		this.objectInputStreamWrapper.close();
 	}
 
 	public void tryToSerialize(Object object) {
 		try {
-			// Don't forget to reset or writeObject will probably send and already sent
-			// object again.
-			objectOutputStream.reset();
-			objectOutputStream.writeObject(object);
+			this.objectOutputStreamWrapper.resetAndWriteObject(object);
 		} catch (IOException e) {
 			logger.error("Error trying to serialize object:" + object);
 			logger.error(e);
@@ -45,12 +41,10 @@ public class Serializator {
 	private Object tryToDeserializeObject() {
 		Object deserializedObject = null;
 		try {
-			deserializedObject = objectInputStream.readObject();
-		} catch (IOException i) {
+			deserializedObject = this.objectInputStreamWrapper.readObject();
+		} catch (Exception e) {
 			logger.error("Error trying to deserialize object.");
-			logger.error(i);
-		} catch (ClassNotFoundException c) {
-			logger.error(c);
+			logger.error(e);
 		}
 		return deserializedObject;
 	}

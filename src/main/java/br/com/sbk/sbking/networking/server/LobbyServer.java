@@ -1,8 +1,6 @@
 package br.com.sbk.sbking.networking.server;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -16,6 +14,7 @@ import br.com.sbk.sbking.networking.core.properties.FileProperties;
 import br.com.sbk.sbking.networking.core.properties.NetworkingProperties;
 import br.com.sbk.sbking.networking.core.properties.SystemProperties;
 import br.com.sbk.sbking.networking.core.serialization.Serializator;
+import br.com.sbk.sbking.networking.core.serialization.SerializatorFactory;
 
 public class LobbyServer {
 
@@ -67,10 +66,9 @@ public class LobbyServer {
 	}
 
 	private Serializator initializeSerializator(Socket socket) {
+		SerializatorFactory serializatorFactory = new SerializatorFactory();
 		try {
-			ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
-			ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
-			return new Serializator(objectInputStream, objectOutputStream);
+			return serializatorFactory.getSerializator(socket);
 		} catch (Exception e) {
 			logger.debug(e);
 		}
