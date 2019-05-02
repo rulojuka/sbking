@@ -22,7 +22,7 @@ public class HandTest {
 
 		assertEquals(0, hand.size());
 	}
-	
+
 	@Test
 	public void shouldAddAndGetACard() {
 		Hand hand = new Hand();
@@ -48,7 +48,7 @@ public class HandTest {
 		assertEquals(1, hand.size());
 		assertEquals(secondCard, hand.get(0));
 	}
-	
+
 	@Test
 	public void shouldSortUsingCardInsideHandRules() {
 		// The rules should be these:
@@ -164,6 +164,22 @@ public class HandTest {
 		assertTrue(hand.onlyHasHearts());
 		hand.addCard(aceOfSpades);
 		assertFalse(hand.onlyHasHearts());
+	}
+
+	@Test
+	public void shouldTransformToStringByPipeSeparatingCards() {
+		Card aceOfSpades = mock(Card.class);
+		String aceOfSpadesString = "sA";
+		when(aceOfSpades.toString()).thenReturn(aceOfSpadesString);
+		Card kingOfHearts = mock(Card.class);
+		String kingOfHeartsString = "hK";
+		when(kingOfHearts.toString()).thenReturn(kingOfHeartsString);
+		Hand hand = new Hand();
+		hand.addCard(aceOfSpades);
+		hand.addCard(kingOfHearts);
+		String finalString = "|sA|hK|";
+
+		assertEquals(finalString, hand.toString());
 	}
 
 }
