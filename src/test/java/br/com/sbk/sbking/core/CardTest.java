@@ -87,8 +87,18 @@ public class CardTest {
 
 	@Test
 	public void shouldReturnIfItIsTheKingOfHeartsOrNot() {
-		assertFalse(jackOfClubs.isHeart());
-		assertTrue(kingOfHearts.isHeart());
+		assertFalse(kingOfDiamonds.isKingOfHearts());
+		assertFalse(queenOfHearts.isKingOfHearts());
+		assertTrue(kingOfHearts.isKingOfHearts());
+	}
+
+	@Test
+	public void shouldTransformToStringUsingSuitAndRankSymbol() {
+		String kingOfHeartsString = "hK";
+		String threeOfClubsString = "c3";
+
+		assertEquals(kingOfHeartsString, kingOfHearts.toString());
+		assertEquals(threeOfClubsString, threeOfClubs.toString());
 	}
 
 }
