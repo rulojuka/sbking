@@ -81,14 +81,16 @@ public class Trick implements Serializable {
 
 	private Direction directionOfCard(Card card) {
 		Direction currentDirection = leader;
+		Direction response = null;
 		for (Card cardFromTrick : this.getCards()) {
 			if (card.equals(cardFromTrick)) {
-				return currentDirection;
+				response = currentDirection;
+				break;
 			} else {
 				currentDirection = currentDirection.next();
 			}
 		}
-		throw new RuntimeException("Card not found");
+		return response;
 	}
 
 	public Direction getWinnerWithTrumpSuit(Suit trumpSuit) {
