@@ -13,7 +13,6 @@ public class GameModeSummary implements Serializable {
 	private Score score;
 
 	public GameModeSummary(Direction chosenBy, Ruleset ruleset, int orderOfPlay, Score score) {
-		super();
 		this.chosenBy = chosenBy;
 		this.ruleset = ruleset;
 		this.orderOfPlay = orderOfPlay;
