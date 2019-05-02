@@ -11,13 +11,13 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import br.com.sbk.sbking.core.Trick;
-import br.com.sbk.sbking.core.rulesets.concrete.NegativeHeartsRuleset;
 
 public class NegativeHeartsRulesetTest {
 
 	private static final int NEGATIVE_HEARTS_SCORE_MULTIPLIER = 20;
 	private static final String NEGATIVE_HEARTS_SHORT_DESCRIPTION = "Negative hearts";
 	private static final String NEGATIVE_HEARTS_COMPLETE_DESCRIPTION = "Avoid all hearts cards";
+	private static final int TOTAL_NUMBER_OF_HEARTS_CARDS = 13;
 
 	NegativeHeartsRuleset negativeHeartsRuleset;
 
@@ -56,4 +56,10 @@ public class NegativeHeartsRulesetTest {
 		assertTrue(this.negativeHeartsRuleset.prohibitsHeartsUntilOnlySuitLeft());
 
 	}
+
+	@Test
+	public void shouldGetTotalPoints() {
+		assertEquals(TOTAL_NUMBER_OF_HEARTS_CARDS, this.negativeHeartsRuleset.getTotalPoints());
+	}
+	
 }

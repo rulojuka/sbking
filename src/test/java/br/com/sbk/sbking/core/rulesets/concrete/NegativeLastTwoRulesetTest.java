@@ -11,13 +11,13 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import br.com.sbk.sbking.core.Trick;
-import br.com.sbk.sbking.core.rulesets.concrete.NegativeLastTwoRuleset;
 
 public class NegativeLastTwoRulesetTest {
 
 	private static final int NEGATIVE_LAST_TWO_SCORE_MULTIPLIER = 90;
 	private static final String NEGATIVE_LAST_TWO_SHORT_DESCRIPTION = "Negative last two";
 	private static final String NEGATIVE_LAST_TWO_COMPLETE_DESCRIPTION = "Avoid the last two tricks";
+	private static final int TOTAL_NUMBER_OF_LAST_TWO_TRICKS = 2;
 
 	private NegativeLastTwoRuleset negativeLastTwoRuleset;
 
@@ -63,6 +63,11 @@ public class NegativeLastTwoRulesetTest {
 	@Test
 	public void shouldNotProhibitsHeartsUntilOnlySuitLeft() {
 		assertFalse(this.negativeLastTwoRuleset.prohibitsHeartsUntilOnlySuitLeft());
+	}
+	
+	@Test
+	public void shouldGetTotalPoints() {
+		assertEquals(TOTAL_NUMBER_OF_LAST_TWO_TRICKS, this.negativeLastTwoRuleset.getTotalPoints());
 	}
 
 }

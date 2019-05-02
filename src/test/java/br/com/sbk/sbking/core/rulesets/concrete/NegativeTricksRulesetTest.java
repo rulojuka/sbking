@@ -9,7 +9,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import br.com.sbk.sbking.core.Trick;
-import br.com.sbk.sbking.core.rulesets.concrete.NegativeTricksRuleset;
 
 public class NegativeTricksRulesetTest {
 
@@ -17,6 +16,7 @@ public class NegativeTricksRulesetTest {
 	private static final int NEGATIVE_POINTS_PER_TRICK = 1;
 	private static final String NEGATIVE_TRICKS_SHORT_DESCRIPTION = "Negative tricks";
 	private static final String NEGATIVE_TRICKS_COMPLETE_DESCRIPTION = "Avoid all tricks";
+	private static final int TOTAL_NUMBER_OF_TRICKS = 13;
 	private NegativeTricksRuleset negativeTricksRuleset;
 
 	@Before
@@ -49,6 +49,11 @@ public class NegativeTricksRulesetTest {
 	@Test
 	public void shouldNotProhibitsHeartsUntilOnlySuitLeft() {
 		assertFalse(this.negativeTricksRuleset.prohibitsHeartsUntilOnlySuitLeft());
+	}
+
+	@Test
+	public void shouldGetTotalPoints() {
+		assertEquals(TOTAL_NUMBER_OF_TRICKS, this.negativeTricksRuleset.getTotalPoints());
 	}
 
 }

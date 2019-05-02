@@ -11,13 +11,13 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import br.com.sbk.sbking.core.Trick;
-import br.com.sbk.sbking.core.rulesets.concrete.NegativeMenRuleset;
 
 public class NegativeMenRulesetTest {
 
 	private static final int NEGATIVE_MEN_SCORE_MULTIPLIER = 30;
 	private static final String NEGATIVE_MEN_SHORT_DESCRIPTION = "Negative men";
 	private static final String NEGATIVE_MEN_COMPLETE_DESCRIPTION = "Avoid all jacks and kings";
+	private static final Object TOTAL_NUMBER_OF_MEN = 8;
 
 	private NegativeMenRuleset negativeMenRuleset;
 
@@ -54,6 +54,11 @@ public class NegativeMenRulesetTest {
 	@Test
 	public void shouldNotProhibitsHeartsUntilOnlySuitLeft() {
 		assertFalse(this.negativeMenRuleset.prohibitsHeartsUntilOnlySuitLeft());
+	}
+
+	@Test
+	public void shouldGetTotalPoints() {
+		assertEquals(TOTAL_NUMBER_OF_MEN, this.negativeMenRuleset.getTotalPoints());
 	}
 
 }

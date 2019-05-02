@@ -11,13 +11,13 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import br.com.sbk.sbking.core.Trick;
-import br.com.sbk.sbking.core.rulesets.concrete.NegativeWomenRuleset;
 
 public class NegativeWomenRulesetTest {
 
 	private static final int NEGATIVE_WOMEN_SCORE_MULTIPLIER = 50;
 	private static final String NEGATIVE_WOMEN_SHORT_DESCRIPTION = "Negative women";
 	private static final String NEGATIVE_WOMEN_COMPLETE_DESCRIPTION = "Avoid all queens";
+	private static final int TOTAL_NUMBER_OF_WOMEN = 4;
 
 	private NegativeWomenRuleset negativeWomenRuleset;
 
@@ -54,6 +54,11 @@ public class NegativeWomenRulesetTest {
 	@Test
 	public void shouldNotProhibitsHeartsUntilOnlySuitLeft() {
 		assertFalse(this.negativeWomenRuleset.prohibitsHeartsUntilOnlySuitLeft());
+	}
+
+	@Test
+	public void shouldGetTotalPoints() {
+		assertEquals(TOTAL_NUMBER_OF_WOMEN, this.negativeWomenRuleset.getTotalPoints());
 	}
 
 }
