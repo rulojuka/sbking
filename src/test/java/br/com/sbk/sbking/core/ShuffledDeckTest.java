@@ -8,6 +8,8 @@ import java.util.Set;
 
 import org.junit.Test;
 
+import br.com.sbk.sbking.core.exceptions.DealingCardFromAnEmptyDeckException;
+
 public class ShuffledDeckTest {
 
 	private static final int DECK_SIZE = Suit.values().length * Rank.values().length;
@@ -40,7 +42,16 @@ public class ShuffledDeckTest {
 			}
 		}
 		assertTrue(equalCardCounter < 52);
+	}
 
+	@Test(expected = DealingCardFromAnEmptyDeckException.class)
+	public void shouldThrowExceptionWhenDealingCardFromAnEmptyDeck() {
+		ShuffledDeck shuffledDeck = new ShuffledDeck();
+		for (int i = 0; i < DECK_SIZE; i++) {
+			shuffledDeck.dealCard();
+		}
+
+		shuffledDeck.dealCard();
 	}
 
 }

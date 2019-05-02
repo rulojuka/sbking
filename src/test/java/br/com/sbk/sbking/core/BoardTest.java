@@ -48,7 +48,10 @@ public class BoardTest {
 	}
 
 	@Test
-	public void shouldGetHandOfACertainDirection() {
+	public void shouldGetHandOfAllPossibleDirections() {
+		assertEquals(this.northHand, this.board.getHandOf(Direction.NORTH));
+		assertEquals(this.eastHand, this.board.getHandOf(Direction.EAST));
+		assertEquals(this.southHand, this.board.getHandOf(Direction.SOUTH));
 		assertEquals(this.westHand, this.board.getHandOf(Direction.WEST));
 	}
 

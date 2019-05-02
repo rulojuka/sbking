@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import br.com.sbk.sbking.core.exceptions.DealingCardFromAnEmptyDeckException;
+
 public class ShuffledDeck {
 	private List<Card> deck; // List is best because we need to shuffle it
 	private Iterator<Card> iterator;
@@ -24,7 +26,7 @@ public class ShuffledDeck {
 	public Card dealCard() {
 		if (iterator.hasNext())
 			return iterator.next();
-		throw new RuntimeException("Trying to deal card from am empty deck.");
+		throw new DealingCardFromAnEmptyDeckException();
 	}
 
 	public boolean hasCard() {

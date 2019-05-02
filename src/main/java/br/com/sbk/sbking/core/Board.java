@@ -7,7 +7,7 @@ import java.util.Map;
 @SuppressWarnings("serial")
 public class Board implements Serializable {
 
-	private Map<Direction, Hand> hands = new HashMap<Direction,Hand>();
+	private Map<Direction, Hand> hands = new HashMap<Direction, Hand>();
 	private Direction dealer;
 
 	public Board(Hand northHand, Hand eastHand, Hand southHand, Hand westHand, Direction dealer) {
@@ -15,7 +15,7 @@ public class Board implements Serializable {
 		hands.put(Direction.EAST, eastHand);
 		hands.put(Direction.SOUTH, southHand);
 		hands.put(Direction.WEST, westHand);
-		
+
 		this.sortAllHands();
 		this.dealer = dealer;
 	}
@@ -25,11 +25,7 @@ public class Board implements Serializable {
 	}
 
 	public Hand getHandOf(Direction direction) {
-		try {
-			return this.hands.get(direction);
-		}catch (Exception e) {
-			throw new RuntimeException("Invalid direction");
-		}
+		return this.hands.get(direction);
 	}
 
 	private void sortAllHands() {
@@ -65,7 +61,5 @@ public class Board implements Serializable {
 			return false;
 		return true;
 	}
-	
-	
 
 }
