@@ -65,9 +65,13 @@ public class DirectionTest {
 	public void shouldKnowItsOrientation() {
 		assertTrue(north.isNorthSouth());
 		assertFalse(north.isEastWest());
+		assertTrue(south.isNorthSouth());
+		assertFalse(south.isEastWest());
 
 		assertTrue(east.isEastWest());
 		assertFalse(east.isNorthSouth());
+		assertTrue(west.isEastWest());
+		assertFalse(west.isNorthSouth());
 	}
 
 	@Test
@@ -84,6 +88,22 @@ public class DirectionTest {
 		assertTrue(north.next(2) == south);
 		assertTrue(north.next(3) == west);
 		assertTrue(north.next(4) == north);
+	}
+	
+	@Test
+	public void shouldGetPositiveOrNegativeChooserWhenDealer() {
+		assertEquals(east,north.getPositiveOrNegativeChooserWhenDealer());
+		assertEquals(south,east.getPositiveOrNegativeChooserWhenDealer());
+		assertEquals(west,south.getPositiveOrNegativeChooserWhenDealer());
+		assertEquals(north,west.getPositiveOrNegativeChooserWhenDealer());
+	}
+	
+	@Test
+	public void shouldGetGameModeOrStrainChooserWhenDealer() {
+		assertEquals(west,north.getGameModeOrStrainChooserWhenDealer());
+		assertEquals(north,east.getGameModeOrStrainChooserWhenDealer());
+		assertEquals(east,south.getGameModeOrStrainChooserWhenDealer());
+		assertEquals(south,west.getGameModeOrStrainChooserWhenDealer());
 	}
 
 	@Test
