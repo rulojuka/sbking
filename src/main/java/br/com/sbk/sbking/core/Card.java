@@ -110,4 +110,19 @@ public class Card {
         }
     }
 
+    /**
+     * @deprecated Hibernate only
+     */
+
+    public Card() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
 }
