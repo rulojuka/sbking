@@ -11,7 +11,7 @@ import br.com.sbk.sbking.gui.models.GameScoreboard;
 public class GameScoreboardElement {
 	public GameScoreboardElement(GameScoreboard gameScoreboard, Container container, Point gameScoreboardCenter) {
 		int width = 300;
-		int height = 220;
+		int height = 250;
 
 		int x_offset = width / 2;
 		x_offset *= -1;
