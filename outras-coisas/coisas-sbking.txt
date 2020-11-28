@@ -1,0 +1,38 @@
+Bugs/Features
+
+
+
+Features sugeridas:
+
+- Mostrar o dealer da mão (e talvez quem pediu também)
+- As cartas deviam ficar sempre embaixo
+- As cartas dos oponentes deveriam aparecer
+- Aparecer o nome das pessoas
+- Mostrar na tela se a pessoa está escolhendo posi ou neg ( ao invés de mostrar que ela está escolhendo ALGUMA das duas)
+- Kibitzers mode
+- Deixar mais claro de quem é a vez
+
+- Colocar os símbolos dos lugares (tipo bússola)
+
+- Fazer claim na posi
+- Mostrar o placar parcial durante o jogo
+- Fazer feature de baixar a mão
+- Deixar mais claro de quem é a carta jogada (provavelmente deixando ela mais próxima à mão de quem jogou)
+- Pedir neg e posi obrigatória automaticamente
+- Impossibilitar a pessoa de pedir algo que não pode
+- Escolher a ordenação das cartas
+- Poder mudar as cartas de lugar na mão
+- Escolher imagens diferentes de baralho
+- Melhorar a usabilidade do clique (talvez, levantar a carta no primeiro clique)
+
+- Neg 8, A sim 2 não
+
+
+Bugs:
+- Dá pra jogar 3 posis
+- Tempo para ver a vaza é muito pequeno.
+- Não mostra a última carta
+- Não está mostrando o score total no windows
+
+Outros:
+- Testar no windows
