@@ -31,6 +31,23 @@ and see them with
 mvn spotbugs:gui
 ```
 
+## Using Docker
+
+If you prefer to user Docker, you can
+```
+make build
+```
+to build the server image and
+```
+make run
+```
+to run the server on the default port.
+
+You can also pull the image directly from the [Docker Hub](https://hub.docker.com/r/rulojuka/sbking) if you want to just start the server on the default port
+```
+docker run rulojuka/sbking
+```
+
 ## Authors and copyright
 
 ### Authors:
