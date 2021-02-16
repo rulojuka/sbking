@@ -15,6 +15,12 @@ mvn clean package
 
 This should clean your directory, compile, run all tests and package the final .jar at the target/ directory. Use `java -jar target/sbking-<version>.jar` to run it.
 
+To compile the client, you need to change the `MainClass` in the pom.xml to
+```
+<mainClass>br.com.sbk.sbking.gui.main.MainNetworkGame</mainClass>
+```
+and then follow the same steps above.
+
 ## Code quality
 
 After a sucessful package, you can see [JaCoCo](https://www.jacoco.org/jacoco/)'s code coverage report at `target/site/jacoco/index.html`
