@@ -3,8 +3,8 @@ package br.com.sbk.sbking.networking.server;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.Collection;
+// import java.util.ArrayList;
+// import java.util.Collection;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -28,7 +28,7 @@ public class LobbyServer {
 	private static final int MAXIMUM_NUMBER_OF_CONCURRENT_GAME_SERVERS = 2;
 
 	private ExecutorService pool;
-	private Collection<GameServer> runningGameServers = new ArrayList<GameServer>();
+	// private Collection<GameServer> runningGameServers = new ArrayList<GameServer>();
 
 	public LobbyServer() {
 		this.pool = Executors.newFixedThreadPool(MAXIMUM_NUMBER_OF_CONCURRENT_GAME_SERVERS);
@@ -44,9 +44,9 @@ public class LobbyServer {
 
 			GameServer gameServer = new GameServer();
 			logger.info("Created new gameServer");
+			// runningGameServers.add(gameServer);
 
 			for (int i = 0; i < NUMBER_OF_PLAYERS_TO_FORM_A_GAME; i++) {
-				runningGameServers.add(gameServer);
 				Socket connectingPlayerSocket = listener.accept();
 				Serializator connectingPlayerSerializator = initializeSerializator(connectingPlayerSocket);
 				if (connectingPlayerSocket == null || connectingPlayerSerializator == null) {
@@ -56,8 +56,24 @@ public class LobbyServer {
 				PlayerNetworkInformation connectingPlayerNetworkInformation = new PlayerNetworkInformation(
 						connectingPlayerSocket, connectingPlayerSerializator);
 				gameServer.addPlayer(connectingPlayerNetworkInformation);
+				logger.info(i+1 + " players connected.");
 			}
+			logger.info("4 players connected. Executing gameServer");
 			pool.execute(gameServer);
+			logger.info("Started gameServer. From now on, everyone will be added as spectators");
+
+			while(true){
+				Socket connectingPlayerSocket = listener.accept();
+				Serializator connectingPlayerSerializator = initializeSerializator(connectingPlayerSocket);
+				if (connectingPlayerSocket == null || connectingPlayerSerializator == null) {
+					logger.error("Could not communicate with client. Will not add it and listen for next one.");
+					continue;
+				}
+				PlayerNetworkInformation connectingPlayerNetworkInformation = new PlayerNetworkInformation(
+						connectingPlayerSocket, connectingPlayerSerializator);
+				gameServer.addSpectator(connectingPlayerNetworkInformation);
+				logger.info("Added a spectator.");
+			}
 		} catch (IOException e) {
 			logger.fatal("Fatal error listening to new connections. Exiting lobby server.");
 			logger.fatal(e);

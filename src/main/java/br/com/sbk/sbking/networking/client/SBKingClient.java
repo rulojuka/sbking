@@ -43,6 +43,8 @@ public class SBKingClient implements Runnable {
 
 	private PlayCardActionListener playCardActionListener;
 
+	private boolean spectator;
+
 	final static Logger logger = Logger.getLogger(SBKingClient.class);
 
 	public SBKingClient() {
@@ -131,6 +133,7 @@ public class SBKingClient implements Runnable {
 		final String GAMESCOREBOARD = "GAMESCOREBOARD";
 		final String INVALIDRULESET = "INVALIDRULESET";
 		final String VALIDRULESET = "VALIDRULESET";
+		final String ISSPECTATOR = "ISSPECTATOR";
 
 		if (MESSAGE.equals(controlMessage)) {
 			String string = this.serializator.tryToDeserialize(String.class);
@@ -192,6 +195,9 @@ public class SBKingClient implements Runnable {
 		} else if (GAMESCOREBOARD.equals(controlMessage)) {
 			this.currentGameScoreboard = this.serializator.tryToDeserialize(GameScoreboard.class);
 			logger.info("Received GameScoreboard." + this.currentGameScoreboard.toString());
+		} else if (ISSPECTATOR.equals(controlMessage)) {
+			this.spectator = true;
+			logger.info("Received ISSPECTATOR.");
 		} else {
 			logger.error("Could not understand control.");
 		}
@@ -252,8 +258,8 @@ public class SBKingClient implements Runnable {
 		return this.direction;
 	}
 
-	public boolean isDirectionSet() {
-		return this.direction != null;
+	public boolean isDirectionOrSpectatorSet() {
+		return this.direction != null || this.spectator == true;
 	}
 
 	private void setPositiveOrNegativeChooser(Direction direction) {
@@ -377,6 +383,10 @@ public class SBKingClient implements Runnable {
 
 	public PlayCardActionListener getPlayCardActionListener() {
 		return this.playCardActionListener;
+	}
+
+	public boolean isSpectator() {
+		return this.spectator;
 	}
 
 }

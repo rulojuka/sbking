@@ -18,6 +18,7 @@ import br.com.sbk.sbking.gui.painters.ConnectToServerPainter;
 import br.com.sbk.sbking.gui.painters.DealPainter;
 import br.com.sbk.sbking.gui.painters.FinalScoreboardPainter;
 import br.com.sbk.sbking.gui.painters.Painter;
+import br.com.sbk.sbking.gui.painters.SpectatorPainter;
 import br.com.sbk.sbking.gui.painters.WaitingForChoosingGameModeOrStrainPainter;
 import br.com.sbk.sbking.gui.painters.WaitingForChoosingPositiveOrNegativePainter;
 import br.com.sbk.sbking.gui.painters.WaitingForPlayersPainter;
@@ -62,7 +63,13 @@ public class NetworkClientScreen extends JFrame {
 		}
 
 		logger.info("Waiting for sbKingClient.isDirectionSet() to be true");
-		while (!sbKingClient.isDirectionSet()) {
+		while (!sbKingClient.isDirectionOrSpectatorSet()) {
+			sleepFor(100);
+		}
+
+		while(sbKingClient.isSpectator()){
+			logger.info("It is a spectator. Painting the spectator screen");
+			paintSpectatorScreen(sbKingClient.getDeal(), sbKingClient.getPlayCardActionListener());
 			sleepFor(100);
 		}
 
@@ -192,6 +199,13 @@ public class NetworkClientScreen extends JFrame {
 	private void paintFinalScoreboardScreen() {
 		Painter finalScoreboardPainter = new FinalScoreboardPainter(this.sbKingClient.getCurrentGameScoreboard());
 		paintPainter(finalScoreboardPainter);
+	}
+
+	private void paintSpectatorScreen(Deal deal, ActionListener playCardActionListener) {
+		if(deal != null){
+			Painter spectatorPainter = new SpectatorPainter(playCardActionListener, deal);
+			paintPainter(spectatorPainter);
+		}
 	}
 
 	public void connectToServer() {

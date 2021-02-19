@@ -22,7 +22,7 @@ public class GameServer implements Runnable {
 
 	final static Logger logger = Logger.getLogger(GameServer.class);
 
-	private static final int NUMBER_OF_PLAYERS_IN_A_GAME = 4;
+	private static final int NUMBER_OF_PLAYERS_AND_KIBITZERS_IN_A_GAME = 20;
 
 	private PositiveOrNegativeNotification positiveOrNegativeNotification = new PositiveOrNegativeNotification();
 	private PositiveOrNegative currentPositiveOrNegative;
@@ -34,14 +34,15 @@ public class GameServer implements Runnable {
 	private Game game;
 	private boolean isRulesetPermitted;
 
-	private Collection<PlayerGameSocket> playerSockets = new ArrayList<PlayerGameSocket>();
+	private Collection<ClientGameSocket> playerSockets = new ArrayList<ClientGameSocket>();
+	private Collection<ClientGameSocket> spectatorSockets = new ArrayList<ClientGameSocket>();
 	private MessageSender messageSender;
 
 	private ExecutorService pool;
 	private Direction nextDirection = Direction.values()[0];
 
 	public GameServer() {
-		this.pool = Executors.newFixedThreadPool(NUMBER_OF_PLAYERS_IN_A_GAME);
+		this.pool = Executors.newFixedThreadPool(NUMBER_OF_PLAYERS_AND_KIBITZERS_IN_A_GAME);
 	}
 
 	public void addPlayer(PlayerNetworkInformation playerNetworkInformation) {
@@ -49,6 +50,15 @@ public class GameServer implements Runnable {
 				playerNetworkInformation.getSocket(), getNextDirection(), this);
 		this.playerSockets.add(currentPlayerGameSocket);
 		pool.execute(currentPlayerGameSocket);
+	}
+
+	public void addSpectator(PlayerNetworkInformation playerNetworkInformation) {
+		SpectatorGameSocket spectatorGameSocket = new SpectatorGameSocket(playerNetworkInformation.getSerializator(),
+				playerNetworkInformation.getSocket(), this);
+		this.spectatorSockets.add(spectatorGameSocket);
+		this.messageSender.addClientGameSocket(spectatorGameSocket);
+		logger.info("Info do spectator:" + spectatorGameSocket);
+		pool.execute(spectatorGameSocket);
 	}
 
 	private Direction getNextDirection() {
@@ -180,8 +190,9 @@ public class GameServer implements Runnable {
 
 	}
 
-	public void removePlayerSocket(PlayerGameSocket playerSocket) {
+	public void removeClientGameSocket(ClientGameSocket playerSocket) {
 		this.playerSockets.remove(playerSocket);
+		this.spectatorSockets.remove(playerSocket);
 	}
 
 	public void notifyChoosePositiveOrNegative(PositiveOrNegative positiveOrNegative, Direction direction) {
@@ -248,4 +259,5 @@ public class GameServer implements Runnable {
 			logger.debug(e);
 		}
 	}
+	
 }
