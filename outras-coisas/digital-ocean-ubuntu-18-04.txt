@@ -1,8 +1,8 @@
-apt update
-apt upgrade -y
-apt autoremove -y
-apt install default-jdk -y # Installs Java 10 openjdk version "10.0.2" 2018-07-17
-apt install maven -y # Installs Apache Maven 3.5.2
+# Update everything and
+# Installs Java 10 openjdk version "10.0.2" 2018-07-17
+# and Maven
+apt update && apt upgrade -y && apt autoremove -y && apt install -y default-jdk maven
+
 mkdir workspace
 cd workspace
 git clone https://github.com/rulojuka/sbking.git

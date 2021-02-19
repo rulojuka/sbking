@@ -33,6 +33,7 @@ Bugs:
 - Tempo para ver a vaza é muito pequeno.
 - Não mostra a última carta
 - Não está mostrando o score total no windows
+- Os testes não rodam se o server estiver rodando (deve estar usando uma mesma porta)
 
 Outros:
 - Testar no windows
