@@ -68,7 +68,7 @@ public class NetworkClientScreen extends JFrame {
 		}
 
 		while(sbKingClient.isSpectator()){
-			logger.info("It is a spectator. Painting the spectator screen");
+			// logger.info("It is a spectator. Painting the spectator screen");
 			paintSpectatorScreen(sbKingClient.getDeal(), sbKingClient.getPlayCardActionListener());
 			sleepFor(100);
 		}
@@ -208,18 +208,10 @@ public class NetworkClientScreen extends JFrame {
 		}
 	}
 
-	public void connectToServer() {
-		this.sbKingClient = new SBKingClient();
+	public void connectToServer(String nickname) {
+		this.sbKingClient = new SBKingClient(nickname);
 		this.connectedToServer = true;
 		pool.execute(this.sbKingClient);
-	}
-
-	class GameSelectActionListener implements java.awt.event.ActionListener {
-		public void actionPerformed(java.awt.event.ActionEvent event) {
-			SBKingClient sbKingClient = new SBKingClient();
-			sbKingClient.run();
-		}
-
 	}
 
 }

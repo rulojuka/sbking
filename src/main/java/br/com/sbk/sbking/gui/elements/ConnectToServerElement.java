@@ -6,6 +6,9 @@ import static br.com.sbk.sbking.gui.constants.FrameConstants.HALF_WIDTH;
 import java.awt.Container;
 import java.awt.event.ActionListener;
 
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+
 import br.com.sbk.sbking.gui.JElements.ConnectToServerButton;
 
 public class ConnectToServerElement {
@@ -15,6 +18,20 @@ public class ConnectToServerElement {
 		ConnectToServerButton connectToServerButton = new ConnectToServerButton();
 		connectToServerButton.addActionListener(actionListener);
 		container.add(connectToServerButton); // This line needs to go before setting the button location
+
+		JLabel nicknameLabel = new JLabel("Enter nickname:");
+		container.add(nicknameLabel);
+		int width = 200;
+		int height = 15;
+		nicknameLabel.setSize(width, height);
+		nicknameLabel.setLocation(HALF_WIDTH - nicknameLabel.getWidth()/2, HALF_HEIGHT  - 100 - height);
+		nicknameLabel.setForeground(new java.awt.Color(255, 0, 0));
+
+		JTextField nicknameTextField = new JTextField("");
+		container.add(nicknameTextField);
+		nicknameTextField.setSize(width, height);
+		nicknameTextField.setLocation(HALF_WIDTH - nicknameTextField.getWidth() / 2, HALF_HEIGHT - 100);
+		nicknameTextField.setName("nicknameTextField");
 
 		int x_position = HALF_WIDTH - connectToServerButton.getWidth() / 2;
 		int y_position = HALF_HEIGHT - connectToServerButton.getHeight() / 2;

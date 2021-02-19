@@ -15,6 +15,7 @@ import java.awt.Point;
 import br.com.sbk.sbking.core.Board;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.core.Hand;
+import br.com.sbk.sbking.core.Player;
 
 public class HandWhileChoosingElement {
 
@@ -35,6 +36,6 @@ public class HandWhileChoosingElement {
 			handLocationCenter = new Point(WEST_X_CENTER, WEST_Y_CENTER);
 			break;
 		}
-		new HandElement(myHand, contentPane, null, handLocationCenter);
+		new HandElement(myHand, contentPane, null, handLocationCenter, new Player("Choosing: "));
 	}
 }

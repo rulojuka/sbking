@@ -8,6 +8,7 @@ import java.util.concurrent.Executors;
 import org.apache.log4j.Logger;
 
 import br.com.sbk.sbking.core.Card;
+import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.core.Game;
 import br.com.sbk.sbking.core.exceptions.PlayedCardInAnotherPlayersTurnException;
@@ -46,15 +47,13 @@ public class GameServer implements Runnable {
 	}
 
 	public void addPlayer(PlayerNetworkInformation playerNetworkInformation) {
-		PlayerGameSocket currentPlayerGameSocket = new PlayerGameSocket(playerNetworkInformation.getSerializator(),
-				playerNetworkInformation.getSocket(), getNextDirection(), this);
+		PlayerGameSocket currentPlayerGameSocket = new PlayerGameSocket(playerNetworkInformation, getNextDirection(), this);
 		this.playerSockets.add(currentPlayerGameSocket);
 		pool.execute(currentPlayerGameSocket);
 	}
 
 	public void addSpectator(PlayerNetworkInformation playerNetworkInformation) {
-		SpectatorGameSocket spectatorGameSocket = new SpectatorGameSocket(playerNetworkInformation.getSerializator(),
-				playerNetworkInformation.getSocket(), this);
+		SpectatorGameSocket spectatorGameSocket = new SpectatorGameSocket(playerNetworkInformation, this);
 		this.spectatorSockets.add(spectatorGameSocket);
 		this.messageSender.addClientGameSocket(spectatorGameSocket);
 		logger.info("Info do spectator:" + spectatorGameSocket);
@@ -77,7 +76,7 @@ public class GameServer implements Runnable {
 		this.messageSender.sendMessageAll("ALLCONNECTED");
 
 		this.game = new Game();
-
+		
 		while (!game.isFinished()) {
 			this.game.dealNewBoard();
 
@@ -145,6 +144,16 @@ public class GameServer implements Runnable {
 
 			logger.info("Everything selected! Game commencing!");
 			this.game.addRuleset(currentGameModeOrStrain);
+			
+			Deal currentDeal = this.game.getCurrentDeal();
+			for (ClientGameSocket socket : playerSockets) {
+				PlayerGameSocket playerGameSocket = (PlayerGameSocket) socket;
+				logger.info("Socket:" + playerGameSocket);
+				logger.info("Direction:" + playerGameSocket.getDirection());
+				logger.info("Player:" + playerGameSocket.getPlayer());
+				logger.info("CurrentDeal:" + currentDeal);
+				currentDeal.setPlayerOf(playerGameSocket.getDirection(), playerGameSocket.getPlayer());
+			}
 
 			this.dealHasChanged = true;
 			while (!this.game.getCurrentDeal().isFinished()) {

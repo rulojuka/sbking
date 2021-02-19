@@ -45,15 +45,19 @@ public class SBKingClient implements Runnable {
 
 	private boolean spectator;
 
+	private String nickname;
+
 	final static Logger logger = Logger.getLogger(SBKingClient.class);
 
-	public SBKingClient() {
+	public SBKingClient(String nickname) {
 		Socket socket = initializeSocketOrExit();
 		logger.info("Socket initialized.");
 		this.serializator = initializeSerializatorOrExit(socket);
 		logger.info("Serializator initialized.");
 		NetworkCardPlayer networkCardPlayer = new NetworkCardPlayer(this.serializator);
 		this.playCardActionListener = new PlayCardActionListener(networkCardPlayer);
+		this.setNickname(nickname);
+		this.sendNickname(nickname);
 	}
 
 	private Socket initializeSocketOrExit() {
@@ -387,6 +391,19 @@ public class SBKingClient implements Runnable {
 
 	public boolean isSpectator() {
 		return this.spectator;
+	}
+
+	public String getNickname() {
+		return nickname;
+	}
+
+	private void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+
+	public void sendNickname(String nickname) {
+		logger.debug("Sending nickname to server");
+		this.serializator.tryToSerialize("NICKNAME" + nickname);
 	}
 
 }

@@ -4,7 +4,9 @@ import static br.com.sbk.sbking.core.GameConstants.NUMBER_OF_TRICKS_IN_A_COMPLET
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import br.com.sbk.sbking.core.exceptions.DoesNotFollowSuitException;
 import br.com.sbk.sbking.core.exceptions.PlayedCardInAnotherPlayersTurnException;
@@ -18,6 +20,7 @@ public class Deal implements Serializable {
 	private int completedTricks;
 	private Direction currentPlayer;
 	private Score score;
+	private Map<Direction, Player> players = new HashMap<Direction, Player>();
 
 	private Ruleset ruleset;
 
@@ -31,6 +34,15 @@ public class Deal implements Serializable {
 		this.score = new Score(ruleset);
 		this.completedTricks = 0;
 		this.tricks = new ArrayList<Trick>();
+		this.players = new HashMap<Direction, Player>();
+	}
+
+	public Player getPlayerOf(Direction direction) {
+		return this.players.get(direction);
+	}
+
+	public void setPlayerOf(Direction direction, Player player) {
+		this.players.put(direction, player);
 	}
 
 	public Hand getHandOf(Direction direction) {

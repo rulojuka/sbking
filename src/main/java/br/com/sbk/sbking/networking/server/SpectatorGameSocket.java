@@ -1,14 +1,12 @@
 package br.com.sbk.sbking.networking.server;
 
 import java.io.IOException;
-import java.net.Socket;
 
 import br.com.sbk.sbking.core.Card;
-import br.com.sbk.sbking.networking.core.serialization.Serializator;
 
 public class SpectatorGameSocket extends ClientGameSocket {
-	public SpectatorGameSocket(Serializator serializator, Socket socket, GameServer gameServer) {
-		super(serializator, socket, gameServer);
+	public SpectatorGameSocket(PlayerNetworkInformation playerNetworkInformation, GameServer gameServer) {
+		super(playerNetworkInformation, gameServer);
 	}
 
 	@Override
@@ -33,8 +31,7 @@ public class SpectatorGameSocket extends ClientGameSocket {
 	}
 
 	private void setup() throws IOException, InterruptedException {
-		logger.info("Sleeping for 500ms waiting for client to setup itself");
-		Thread.sleep(500);
+		super.waitForClientSetup();
 		this.sendIsSpectator();
 	}
 
@@ -47,6 +44,12 @@ public class SpectatorGameSocket extends ClientGameSocket {
 		if (readObject instanceof String) {
 			String string = (String) readObject;
 			logger.info("A spectator sent this message: --" + string + "--");
+			String NICKNAME = "NICKNAME";
+			if(string.startsWith(NICKNAME)){
+				String nickname = string.substring(NICKNAME.length());
+				logger.info(" Setting new nickname: --" + nickname + "--");
+				this.playerNetworkInformation.setNickname(nickname);
+			}
 		}
 		if (readObject instanceof Card) {
 			Card playedCard = (Card) readObject;

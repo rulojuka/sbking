@@ -1,21 +1,23 @@
 package br.com.sbk.sbking.networking.server;
 
 import java.io.IOException;
-import java.net.Socket;
 
 import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.core.rulesets.RulesetFromShortDescriptionIdentifier;
 import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
 import br.com.sbk.sbking.gui.models.PositiveOrNegative;
-import br.com.sbk.sbking.networking.core.serialization.Serializator;
 
 public class PlayerGameSocket extends ClientGameSocket {
 	private Direction direction;
 
-	public PlayerGameSocket(Serializator serializator, Socket socket, Direction direction, GameServer gameServer) {
-		super(serializator, socket, gameServer);
+	public PlayerGameSocket(PlayerNetworkInformation playerNetworkInformation, Direction direction, GameServer gameServer) {
+		super(playerNetworkInformation, gameServer);
 		this.direction = direction;
+	}
+
+	public Direction getDirection() {
+		return direction;
 	}
 
 	@Override
@@ -40,19 +42,23 @@ public class PlayerGameSocket extends ClientGameSocket {
 	}
 
 	private void setup() throws IOException, InterruptedException {
-		logger.info("Sleeping for 500ms waiting for client to setup itself");
-		Thread.sleep(500);
+		super.waitForClientSetup();
 		this.sendDirection(direction);
 	}
 
-	private void processCommand() {
+	protected void processCommand() {
 		Object readObject = this.serializator.tryToDeserialize(Object.class);
 		if (readObject instanceof String) {
 			String string = (String) readObject;
 			logger.info(this.direction + " sent this message: --" + string + "--");
 			String POSITIVE = "POSITIVE";
 			String NEGATIVE = "NEGATIVE";
-			if (POSITIVE.equals(string) || NEGATIVE.equals(string)) {
+			String NICKNAME = "NICKNAME";
+			if(string.startsWith(NICKNAME)){
+				String nickname = string.substring(NICKNAME.length());
+				logger.info(" Setting new nickname: --" + nickname + "--");
+				this.playerNetworkInformation.setNickname(nickname);
+			} else if (POSITIVE.equals(string) || NEGATIVE.equals(string)) {
 				PositiveOrNegative positiveOrNegative = new PositiveOrNegative();
 				if (POSITIVE.equals(string)) {
 					positiveOrNegative.setPositive();

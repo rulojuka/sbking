@@ -10,6 +10,7 @@ import java.util.concurrent.Executors;
 
 import org.apache.log4j.Logger;
 
+import br.com.sbk.sbking.core.Player;
 import br.com.sbk.sbking.networking.core.properties.FileProperties;
 import br.com.sbk.sbking.networking.core.properties.NetworkingProperties;
 import br.com.sbk.sbking.networking.core.properties.SystemProperties;
@@ -53,8 +54,9 @@ public class LobbyServer {
 					logger.error("Could not communicate with client. Will not add it and listen for next one.");
 					continue;
 				}
+				Player currentPlayer = new Player("Player"+(i+1));
 				PlayerNetworkInformation connectingPlayerNetworkInformation = new PlayerNetworkInformation(
-						connectingPlayerSocket, connectingPlayerSerializator);
+						connectingPlayerSocket, connectingPlayerSerializator,currentPlayer);
 				gameServer.addPlayer(connectingPlayerNetworkInformation);
 				logger.info(i+1 + " players connected.");
 			}
@@ -69,8 +71,9 @@ public class LobbyServer {
 					logger.error("Could not communicate with client. Will not add it and listen for next one.");
 					continue;
 				}
+				Player currentPlayer = new Player("Spectator");
 				PlayerNetworkInformation connectingPlayerNetworkInformation = new PlayerNetworkInformation(
-						connectingPlayerSocket, connectingPlayerSerializator);
+						connectingPlayerSocket, connectingPlayerSerializator,currentPlayer);
 				gameServer.addSpectator(connectingPlayerNetworkInformation);
 				logger.info("Added a spectator.");
 			}

@@ -8,22 +8,34 @@ import org.apache.log4j.Logger;
 import br.com.sbk.sbking.core.Board;
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
+import br.com.sbk.sbking.core.Player;
 import br.com.sbk.sbking.gui.models.GameScoreboard;
 import br.com.sbk.sbking.networking.core.serialization.Serializator;
 
 public abstract class ClientGameSocket implements Runnable {
+	protected PlayerNetworkInformation playerNetworkInformation;
 	protected Socket socket;
 	protected Serializator serializator;
 	protected GameServer gameServer;
 	final static Logger logger = Logger.getLogger(SpectatorGameSocket.class);
 
-	public ClientGameSocket(Serializator serializator, Socket socket, GameServer gameServer) {
-		this.serializator = serializator;
-		this.socket = socket;
+	public ClientGameSocket(PlayerNetworkInformation playerNetworkInformation, GameServer gameServer) {
+		this.playerNetworkInformation = playerNetworkInformation;
+		this.socket = playerNetworkInformation.getSocket();
+		this.serializator = playerNetworkInformation.getSerializator();
 		this.gameServer = gameServer;
 	}
 
+	public Player getPlayer(){
+		return this.playerNetworkInformation.getPlayer();
+	}
+
 	public abstract void run();
+
+	protected void waitForClientSetup() throws IOException, InterruptedException {
+		logger.info("Sleeping for 500ms waiting for client to setup itself");
+		Thread.sleep(500);
+	}
 
   public void sendDeal(Deal deal) {
 		String control = "DEAL";

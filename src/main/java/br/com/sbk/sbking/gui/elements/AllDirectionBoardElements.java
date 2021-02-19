@@ -21,13 +21,13 @@ public class AllDirectionBoardElements {
 	public AllDirectionBoardElements(Deal deal, Container container,
 			ActionListener actionListener) {
 			new HandElement(deal.getHandOf(Direction.NORTH), container, actionListener,
-					new Point(NORTH_X_CENTER, NORTH_Y_CENTER));
+					new Point(NORTH_X_CENTER, NORTH_Y_CENTER), deal.getPlayerOf(Direction.NORTH));
 			new HandElement(deal.getHandOf(Direction.EAST), container, actionListener,
-					new Point(EAST_X_CENTER, EAST_Y_CENTER));
+					new Point(EAST_X_CENTER, EAST_Y_CENTER), deal.getPlayerOf(Direction.EAST));
 			new HandElement(deal.getHandOf(Direction.SOUTH), container, actionListener,
-					new Point(SOUTH_X_CENTER, SOUTH_Y_CENTER));
+					new Point(SOUTH_X_CENTER, SOUTH_Y_CENTER), deal.getPlayerOf(Direction.SOUTH));
 			new HandElement(deal.getHandOf(Direction.WEST), container, actionListener,
-					new Point(WEST_X_CENTER, WEST_Y_CENTER));
+					new Point(WEST_X_CENTER, WEST_Y_CENTER), deal.getPlayerOf(Direction.WEST));
 
 		new CurrentPlayerElement(deal.getCurrentPlayer(), container, false);
 
