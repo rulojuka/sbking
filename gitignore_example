@@ -6,4 +6,6 @@ tmp
 .classpath
 .project
 .settings/
+target/
 TODO
+*.jar
