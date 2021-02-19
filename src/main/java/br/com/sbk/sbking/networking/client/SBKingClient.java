@@ -49,8 +49,8 @@ public class SBKingClient implements Runnable {
 
 	final static Logger logger = Logger.getLogger(SBKingClient.class);
 
-	public SBKingClient(String nickname) {
-		Socket socket = initializeSocketOrExit();
+	public SBKingClient(String nickname, String hostname) {
+		Socket socket = initializeSocketOrExit(hostname);
 		logger.info("Socket initialized.");
 		this.serializator = initializeSerializatorOrExit(socket);
 		logger.info("Serializator initialized.");
@@ -60,13 +60,19 @@ public class SBKingClient implements Runnable {
 		this.sendNickname(nickname);
 	}
 
-	private Socket initializeSocketOrExit() {
+	private Socket initializeSocketOrExit(String hostname) {
 		String host = null;
 		int port = 0;
 		try {
 			FileProperties configFile = new FileProperties(NETWORKING_CONFIGURATION_FILENAME);
 			NetworkingProperties networkingProperties = new NetworkingProperties(configFile, new SystemProperties());
-			host = networkingProperties.getHost();
+
+			logger.info("Given hostname is: " + hostname);
+			if(hostname==null || hostname.isEmpty()){
+				host = networkingProperties.getHost();
+			}else{
+				host = hostname;
+			}
 			port = networkingProperties.getPort();
 		} catch (Exception e) {
 			logger.fatal("Could not get network information from properties.");

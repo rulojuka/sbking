@@ -208,8 +208,8 @@ public class NetworkClientScreen extends JFrame {
 		}
 	}
 
-	public void connectToServer(String nickname) {
-		this.sbKingClient = new SBKingClient(nickname);
+	public void connectToServer(String nickname, String hostname) {
+		this.sbKingClient = new SBKingClient(nickname, hostname);
 		this.connectedToServer = true;
 		pool.execute(this.sbKingClient);
 	}

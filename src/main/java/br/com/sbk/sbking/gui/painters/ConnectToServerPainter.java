@@ -29,14 +29,27 @@ public class ConnectToServerPainter implements Painter {
 		public void actionPerformed(java.awt.event.ActionEvent event) {
 			SBKingButton button = (SBKingButton) event.getSource();
 			Component[] components = button.getParent().getComponents();
+
+			String nickname = "";
+			String hostname = "127.0.0.1";
+
 			for (Component component : components) {
 				if( "nicknameTextField".equals(component.getName())){
 					JTextField nicknameTextField = (JTextField) component;
 					System.out.println("Achou o nickname: " + nicknameTextField.getText());
-					networkClientScreen.connectToServer(nicknameTextField.getText());
+					nickname = nicknameTextField.getText();
+				}
+				else if( "hostnameTextField".equals(component.getName())){
+					JTextField hostnameTextField = (JTextField) component;
+					System.out.println("Achou o hostname: " + hostnameTextField.getText());
+					if(hostnameTextField.getText()!=null && !hostnameTextField.getText().isEmpty()){
+						hostname = hostnameTextField.getText();
+					}
 				}
 			}
 			
+			networkClientScreen.connectToServer(nickname, hostname);
+
 		}
 	}
 

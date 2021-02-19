@@ -19,10 +19,22 @@ public class ConnectToServerElement {
 		connectToServerButton.addActionListener(actionListener);
 		container.add(connectToServerButton); // This line needs to go before setting the button location
 
+		int width = 300;
+		int height = 15;
+		JLabel hostnameLabel = new JLabel("Enter IP or leave blank to play locally:");
+		container.add(hostnameLabel);
+		hostnameLabel.setSize(width, height);
+		hostnameLabel.setLocation(HALF_WIDTH - hostnameLabel.getWidth()/2, HALF_HEIGHT  - 100 - 100 - height);
+		hostnameLabel.setForeground(new java.awt.Color(255, 0, 0));
+
+		JTextField hostnameTextField = new JTextField("");
+		container.add(hostnameTextField);
+		hostnameTextField.setSize(width, height);
+		hostnameTextField.setLocation(HALF_WIDTH - hostnameTextField.getWidth() / 2, HALF_HEIGHT - 100 - 100);
+		hostnameTextField.setName("hostnameTextField");
+
 		JLabel nicknameLabel = new JLabel("Enter nickname:");
 		container.add(nicknameLabel);
-		int width = 200;
-		int height = 15;
 		nicknameLabel.setSize(width, height);
 		nicknameLabel.setLocation(HALF_WIDTH - nicknameLabel.getWidth()/2, HALF_HEIGHT  - 100 - height);
 		nicknameLabel.setForeground(new java.awt.Color(255, 0, 0));
@@ -32,6 +44,8 @@ public class ConnectToServerElement {
 		nicknameTextField.setSize(width, height);
 		nicknameTextField.setLocation(HALF_WIDTH - nicknameTextField.getWidth() / 2, HALF_HEIGHT - 100);
 		nicknameTextField.setName("nicknameTextField");
+
+		
 
 		int x_position = HALF_WIDTH - connectToServerButton.getWidth() / 2;
 		int y_position = HALF_HEIGHT - connectToServerButton.getHeight() / 2;
