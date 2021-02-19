@@ -1,7 +1,8 @@
+#!/bin/bash
 # Update everything and
 # Installs Java 10 openjdk version "10.0.2" 2018-07-17
-# and Maven
-apt update && apt upgrade -y && apt autoremove -y && apt install -y default-jdk maven
+# and Maven - it takes about 3 minutes
+apt update && apt install -y default-jdk maven
 
 mkdir workspace
 cd workspace

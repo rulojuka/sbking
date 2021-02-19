@@ -7,19 +7,18 @@ SBKing is a King card game software aimed to provide a rich and intuitive interf
 
 ## Compiling
 
-SBKing uses [Maven](https://maven.apache.org/) to build. The following line should be enough:
+SBKing uses Makefile and [Maven](https://maven.apache.org/) to build. The following line should be enough:
 
 ```
-mvn clean package
+make server
 ```
 
-This should clean your directory, compile, run all tests and package the final .jar at the target/ directory. Use `java -jar target/sbking-<version>.jar` to run it.
+This should clean your directory, compile, run all tests, package the final .jar at the `target/` directory and copy it into `./sbking-server.jar`. Use `java -jar ./sbking-server.jar` to run it.
 
-To compile the client, you need to change the `MainClass` in the pom.xml to
+To compile the client in the same fashion (`./sbking-client.jar`):
 ```
-<mainClass>br.com.sbk.sbking.gui.main.MainNetworkGame</mainClass>
+make client
 ```
-and then follow the same steps above.
 
 ## Code quality
 
@@ -52,6 +51,23 @@ to run the server on the default port.
 You can also pull the image directly from the [Docker Hub](https://hub.docker.com/r/rulojuka/sbking) if you want to just start the server on the default port
 ```
 docker run rulojuka/sbking
+```
+
+### On DigitalOcean
+Create a [docker based droplet](https://marketplace.digitalocean.com/apps/docker) and
+```
+docker run -p 60000:60000 rulojuka/sbking
+```
+or follow the `digital-ocean-ubuntu-18-04.sh` script if the docker version is not enough.
+
+
+### Pushing to DockerHub
+```
+make build
+docker login
+docker images # To discover the image id
+docker tag IMAGE-ID rulojuka/sbking
+docker push rulojuka/sbking
 ```
 
 ## Authors and copyright
