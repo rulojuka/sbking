@@ -16,8 +16,8 @@ public class PositiveWithTrumpsRulesetTest {
 
 	private static final int POSITIVE_WITH_TRUMPS_SCORE_MULTIPLIER = 25;
 	private static final int POSITIVE_POINTS_PER_TRICK = 1;
-	private static final String POSITIVE_SPADES_SHORT_DESCRIPTION = "Positive Spades";
-	private static final String POSITIVE_SPADES_COMPLETE_DESCRIPTION = "Make the most tricks with Spades as trump suit";
+	private static final String POSITIVE_SPADES_SHORT_DESCRIPTION = "Positive spades";
+	private static final String POSITIVE_SPADES_COMPLETE_DESCRIPTION = "Make the most tricks with spades as trump suit";
 	private PositiveWithTrumpsRuleset positiveWithTrumpRuleset;
 
 	@Before

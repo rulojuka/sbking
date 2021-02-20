@@ -20,12 +20,12 @@ public class PositiveWithTrumpsRuleset extends PositiveRuleset {
 
 	@Override
 	public String getShortDescription() {
-		return "Positive " + trumpSuit.getName();
+		return "Positive " + trumpSuit.getName().toLowerCase();
 	}
 
 	@Override
 	public String getCompleteDescription() {
-		return "Make the most tricks with " + trumpSuit.getName() + " as trump suit";
+		return "Make the most tricks with " + trumpSuit.getName().toLowerCase() + " as trump suit";
 	}
 
 	@Override
