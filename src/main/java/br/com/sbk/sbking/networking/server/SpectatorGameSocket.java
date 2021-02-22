@@ -47,7 +47,7 @@ public class SpectatorGameSocket extends ClientGameSocket {
 			String NICKNAME = "NICKNAME";
 			if(string.startsWith(NICKNAME)){
 				String nickname = string.substring(NICKNAME.length());
-				logger.info(" Setting new nickname: --" + nickname + "--");
+				logger.info("Setting new nickname: --" + nickname + "--");
 				this.playerNetworkInformation.setNickname(nickname);
 			}
 		}

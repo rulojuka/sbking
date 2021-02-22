@@ -3,7 +3,8 @@ package br.com.sbk.sbking.networking.server;
 import java.io.IOException;
 import java.net.Socket;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import br.com.sbk.sbking.core.Board;
 import br.com.sbk.sbking.core.Deal;
@@ -17,7 +18,7 @@ public abstract class ClientGameSocket implements Runnable {
 	protected Socket socket;
 	protected Serializator serializator;
 	protected GameServer gameServer;
-	final static Logger logger = Logger.getLogger(SpectatorGameSocket.class);
+	final static Logger logger = LogManager.getLogger(SpectatorGameSocket.class);
 
 	public ClientGameSocket(PlayerNetworkInformation playerNetworkInformation, GameServer gameServer) {
 		this.playerNetworkInformation = playerNetworkInformation;

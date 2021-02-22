@@ -8,7 +8,8 @@ import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import br.com.sbk.sbking.core.Player;
 import br.com.sbk.sbking.networking.core.properties.FileProperties;
@@ -21,7 +22,7 @@ public class LobbyServer {
 
 	private static final int NUMBER_OF_PLAYERS_TO_FORM_A_GAME = 4;
 
-	final static Logger logger = Logger.getLogger(LobbyServer.class);
+	final static Logger logger = LogManager.getLogger(LobbyServer.class);
 
 	private static final String NETWORKING_CONFIGURATION_FILENAME = "networkConfiguration.cfg";
 	private static final int COULD_NOT_GET_PORT_FROM_PROPERTIES_ERROR = 1;

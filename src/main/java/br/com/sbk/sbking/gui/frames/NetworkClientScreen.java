@@ -10,7 +10,8 @@ import java.util.concurrent.Executors;
 
 import javax.swing.JFrame;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
@@ -27,7 +28,7 @@ import br.com.sbk.sbking.networking.client.SBKingClient;
 @SuppressWarnings("serial")
 public class NetworkClientScreen extends JFrame {
 
-	final static Logger logger = Logger.getLogger(NetworkClientScreen.class);
+	final static Logger logger = LogManager.getLogger(NetworkClientScreen.class);
 
 	private boolean connectedToServer = false;
 	private SBKingClient sbKingClient;

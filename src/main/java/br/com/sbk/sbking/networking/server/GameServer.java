@@ -5,7 +5,8 @@ import java.util.Collection;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Deal;
@@ -21,7 +22,7 @@ import br.com.sbk.sbking.networking.server.notifications.PositiveOrNegativeNotif
 
 public class GameServer implements Runnable {
 
-	final static Logger logger = Logger.getLogger(GameServer.class);
+	final static Logger logger = LogManager.getLogger(GameServer.class);
 
 	private static final int NUMBER_OF_PLAYERS_AND_KIBITZERS_IN_A_GAME = 20;
 

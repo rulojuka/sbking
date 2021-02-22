@@ -5,12 +5,13 @@ import static br.com.sbk.sbking.networking.core.properties.PropertiesConstants.P
 
 import java.util.Properties;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 public class FileProperties {
 
 	private final Properties configFile;
-	final static Logger logger = Logger.getLogger(FileProperties.class);
+	final static Logger logger = LogManager.getLogger(FileProperties.class);
 
 	public FileProperties(String filename) {
 		this.configFile = new Properties();
