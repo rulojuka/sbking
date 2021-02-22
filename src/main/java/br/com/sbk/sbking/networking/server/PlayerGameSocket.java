@@ -7,9 +7,11 @@ import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.core.rulesets.RulesetFromShortDescriptionIdentifier;
 import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
 import br.com.sbk.sbking.gui.models.PositiveOrNegative;
+import br.com.sbk.sbking.networking.core.serialization.DisconnectedObject;
 
 public class PlayerGameSocket extends ClientGameSocket {
 	private Direction direction;
+	private boolean hasDisconnected = false;
 
 	public PlayerGameSocket(PlayerNetworkInformation playerNetworkInformation, Direction direction, GameServer gameServer) {
 		super(playerNetworkInformation, gameServer);
@@ -25,20 +27,24 @@ public class PlayerGameSocket extends ClientGameSocket {
 		logger.info("Connected: " + socket);
 		try {
 			setup();
-			while (true) {
+			while (!hasDisconnected) {
 				processCommand();
 			}
 		} catch (Exception e) {
 			logger.debug("Error:" + socket, e);
 		} finally {
-			try {
-				socket.close();
-			} catch (IOException e) {
-				logger.debug(e);
-			}
-			logger.info("Closed: " + socket + ". Removing (myself) from playerSocketList");
-			gameServer.removeClientGameSocket(this);
+			disconnect();
 		}
+	}
+
+	private void disconnect() {
+		try {
+			this.socket.close();
+		} catch (IOException e) {
+			logger.debug(e);
+		}
+		logger.info("Closed: " + this.socket + ". Removing (myself) from playerSocketList");
+		gameServer.removeClientGameSocket(this);
 	}
 
 	private void setup() throws IOException, InterruptedException {
@@ -48,6 +54,9 @@ public class PlayerGameSocket extends ClientGameSocket {
 
 	protected void processCommand() {
 		Object readObject = this.serializator.tryToDeserialize(Object.class);
+		if(readObject instanceof DisconnectedObject){
+			this.hasDisconnected = true;
+		}
 		if (readObject instanceof String) {
 			String string = (String) readObject;
 			logger.info(this.direction + " sent this message: --" + string + "--");

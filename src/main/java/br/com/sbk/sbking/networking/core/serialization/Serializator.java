@@ -45,6 +45,7 @@ public class Serializator {
 		} catch (Exception e) {
 			logger.error("Error trying to deserialize object.");
 			logger.error(e);
+			return new DisconnectedObject();
 		}
 		return deserializedObject;
 	}
