@@ -9,3 +9,9 @@ tmp
 target/
 TODO
 *.jar
+
+# Log4j
+.factorypath
+
+# vscode
+.vscode/
