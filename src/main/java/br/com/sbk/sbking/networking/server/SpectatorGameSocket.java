@@ -3,6 +3,7 @@ package br.com.sbk.sbking.networking.server;
 import java.io.IOException;
 
 import br.com.sbk.sbking.core.Card;
+import br.com.sbk.sbking.networking.core.serialization.DisconnectedObject;
 
 public class SpectatorGameSocket extends ClientGameSocket {
 	public SpectatorGameSocket(PlayerNetworkInformation playerNetworkInformation, GameServer gameServer) {
@@ -10,37 +11,18 @@ public class SpectatorGameSocket extends ClientGameSocket {
 	}
 
 	@Override
-	public void run() {
-		logger.info("Connected: " + socket);
-		try {
-			setup();
-			while (true) {
-				processCommand();
-			}
-		} catch (Exception e) {
-			logger.debug("Error:" + socket, e);
-		} finally {
-			try {
-				socket.close();
-			} catch (IOException e) {
-				logger.debug(e);
-			}
-			logger.info("Closed: " + socket + ". Removing (myself) from playerSocketList");
-			gameServer.removeClientGameSocket(this);
-		}
-	}
-
-	private void setup() throws IOException, InterruptedException {
+	protected void setup() throws IOException, InterruptedException {
 		super.waitForClientSetup();
 		this.sendIsSpectator();
 	}
 
-	private void processCommand() {
-		// No commands yet.
-		// The commands will come here later.
-
-		// As there is no command yet, this line should halt
+	@Override
+	protected void processCommand() {
 		Object readObject = this.serializator.tryToDeserialize(Object.class);
+		if (readObject instanceof DisconnectedObject) {
+			this.hasDisconnected = true;
+		}
+		
 		if (readObject instanceof String) {
 			String string = (String) readObject;
 			logger.info("A spectator sent this message: --" + string + "--");

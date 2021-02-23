@@ -11,7 +11,6 @@ import br.com.sbk.sbking.networking.core.serialization.DisconnectedObject;
 
 public class PlayerGameSocket extends ClientGameSocket {
 	private Direction direction;
-	private boolean hasDisconnected = false;
 
 	public PlayerGameSocket(PlayerNetworkInformation playerNetworkInformation, Direction direction,
 			GameServer gameServer) {
@@ -24,35 +23,12 @@ public class PlayerGameSocket extends ClientGameSocket {
 	}
 
 	@Override
-	public void run() {
-		logger.info("Connected: " + socket);
-		try {
-			setup();
-			while (!hasDisconnected) {
-				processCommand();
-			}
-		} catch (Exception e) {
-			logger.debug("Error:" + socket, e);
-		} finally {
-			disconnect();
-		}
-	}
-
-	private void disconnect() {
-		try {
-			this.socket.close();
-		} catch (IOException e) {
-			logger.debug(e);
-		}
-		logger.info("Closed: " + this.socket + ". Removing (myself) from playerSocketList");
-		gameServer.removeClientGameSocket(this);
-	}
-
-	private void setup() throws IOException, InterruptedException {
+	protected void setup() throws IOException, InterruptedException {
 		super.waitForClientSetup();
 		this.sendDirection(direction);
 	}
 
+	@Override
 	protected void processCommand() {
 		Object readObject = this.serializator.tryToDeserialize(Object.class);
 		if (readObject instanceof DisconnectedObject) {

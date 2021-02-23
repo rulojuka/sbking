@@ -1,5 +1,7 @@
 package br.com.sbk.sbking.networking.server;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.concurrent.Executors;
 
 import org.apache.logging.log4j.LogManager;
@@ -36,7 +38,10 @@ public class KingGameServer extends GameServer {
 	
 	@Override
 	public void run() {
-		this.messageSender = new MessageSender(playerSockets);
+		Collection<ClientGameSocket> allSockets = new ArrayList<ClientGameSocket>();
+		allSockets.addAll(playerSockets);
+		allSockets.addAll(spectatorSockets);
+		this.messageSender = new MessageSender(allSockets);
 		
 		logger.info("Sleeping for 1000ms waiting for last client to setup itself");
 		sleepFor(1000);

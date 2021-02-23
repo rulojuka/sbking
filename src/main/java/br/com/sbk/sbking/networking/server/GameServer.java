@@ -10,7 +10,6 @@ import org.apache.logging.log4j.Logger;
 import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.core.TrickGame;
-import br.com.sbk.sbking.core.KingGame;
 import br.com.sbk.sbking.core.exceptions.PlayedCardInAnotherPlayersTurnException;
 import br.com.sbk.sbking.networking.server.notifications.CardPlayNotification;
 
@@ -19,8 +18,8 @@ public abstract class GameServer implements Runnable {
 	protected boolean dealHasChanged;
 	protected Direction nextDirection = Direction.values()[0];
 
-	protected Collection<ClientGameSocket> playerSockets = new ArrayList<ClientGameSocket>();
-	protected Collection<ClientGameSocket> spectatorSockets = new ArrayList<ClientGameSocket>();
+	protected Collection<PlayerGameSocket> playerSockets = new ArrayList<PlayerGameSocket>();
+	protected Collection<SpectatorGameSocket> spectatorSockets = new ArrayList<SpectatorGameSocket>();
   protected MessageSender messageSender;
   
   protected TrickGame game;

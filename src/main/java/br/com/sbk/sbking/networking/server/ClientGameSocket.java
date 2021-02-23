@@ -19,6 +19,7 @@ public abstract class ClientGameSocket implements Runnable {
 	protected Serializator serializator;
 	protected GameServer gameServer;
 	final static Logger logger = LogManager.getLogger(SpectatorGameSocket.class);
+	protected boolean hasDisconnected = false;
 
 	public ClientGameSocket(PlayerNetworkInformation playerNetworkInformation, GameServer gameServer) {
 		this.playerNetworkInformation = playerNetworkInformation;
@@ -31,7 +32,32 @@ public abstract class ClientGameSocket implements Runnable {
 		return this.playerNetworkInformation.getPlayer();
 	}
 
-	public abstract void run();
+	public void run() {
+		logger.info("Connected: " + socket);
+		try {
+			setup();
+			while (!hasDisconnected) {
+				processCommand();
+			}
+		} catch (Exception e) {
+			logger.debug("Error:" + socket, e);
+		} finally {
+			disconnect();
+		}
+	}
+
+	protected abstract void setup() throws IOException, InterruptedException;
+	protected abstract void processCommand();
+
+	protected void disconnect() {
+		try {
+			this.socket.close();
+		} catch (IOException e) {
+			logger.debug(e);
+		}
+		logger.info("Closed: " + this.socket + ". Removing (myself) from playerSocketList");
+		gameServer.removeClientGameSocket(this);
+	}
 
 	protected void waitForClientSetup() throws IOException, InterruptedException {
 		logger.info("Sleeping for 500ms waiting for client to setup itself");
