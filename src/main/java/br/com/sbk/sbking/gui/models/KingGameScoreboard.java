@@ -1,6 +1,8 @@
 package br.com.sbk.sbking.gui.models;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
@@ -90,39 +92,44 @@ public class KingGameScoreboard implements Serializable {
 		return response;
 	}
 
+	private static final Map<Integer, String> names = new HashMap<Integer, String>() {
+		{
+			put(1, new NegativeTricksRuleset().getShortDescription());
+			put(2, new NegativeHeartsRuleset().getShortDescription());
+			put(3, new NegativeMenRuleset().getShortDescription());
+			put(4, new NegativeWomenRuleset().getShortDescription());
+			put(5, new NegativeLastTwoRuleset().getShortDescription());
+			put(6, new NegativeKingRuleset().getShortDescription());
+		}
+	};
+
 	private String getNameOfGameNumber(int number) {
-		switch (number) {
-		case 1:
-			return new NegativeTricksRuleset().getShortDescription();
-		case 2:
-			return new NegativeHeartsRuleset().getShortDescription();
-		case 3:
-			return new NegativeMenRuleset().getShortDescription();
-		case 4:
-			return new NegativeWomenRuleset().getShortDescription();
-		case 5:
-			return new NegativeLastTwoRuleset().getShortDescription();
-		case 6:
-			return new NegativeKingRuleset().getShortDescription();
-		default:
+		String name = names.get(number);
+		if(name == null){
 			return "Positive";
+		} else{
+			return name;
 		}
 	}
 
+	private static final Map<Ruleset, Integer> positions = new HashMap<Ruleset, Integer>() {
+		{
+			put(new NegativeTricksRuleset(),1);
+			put(new NegativeHeartsRuleset(),2);
+			put(new NegativeMenRuleset(),3);
+			put(new NegativeWomenRuleset(),4);
+			put(new NegativeLastTwoRuleset(),5);
+			put(new NegativeKingRuleset(),6);
+		}
+	};
+
 	private int getPositionOfRuleset(Ruleset ruleset) {
-		if (new NegativeTricksRuleset().equals(ruleset))
-			return 0;
-		if (new NegativeHeartsRuleset().equals(ruleset))
-			return 1;
-		if (new NegativeMenRuleset().equals(ruleset))
-			return 2;
-		if (new NegativeWomenRuleset().equals(ruleset))
-			return 3;
-		if (new NegativeLastTwoRuleset().equals(ruleset))
-			return 4;
-		if (new NegativeKingRuleset().equals(ruleset))
-			return 5;
-		return 6 + this.positivesPlayed;
+		Integer position = positions.get(ruleset);
+		if(position == null){
+			return 6 + this.positivesPlayed;
+		} else {
+			return position;
+		}
 	}
 
 }
