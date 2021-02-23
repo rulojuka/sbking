@@ -6,10 +6,10 @@ import java.awt.Point;
 
 import javax.swing.JLabel;
 
-import br.com.sbk.sbking.gui.models.GameScoreboard;
+import br.com.sbk.sbking.gui.models.KingGameScoreboard;
 
 public class GameScoreboardElement {
-	public GameScoreboardElement(GameScoreboard gameScoreboard, Container container, Point gameScoreboardCenter) {
+	public GameScoreboardElement(KingGameScoreboard gameScoreboard, Container container, Point gameScoreboardCenter) {
 		int width = 300;
 		int height = 250;
 

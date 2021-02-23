@@ -8,7 +8,7 @@ public class GameScoreboardTest {
 
 	@Test
 	public void getLineShouldReturnFormattedString() {
-		GameScoreboard gameScoreboard = new GameScoreboard();
+		KingGameScoreboard gameScoreboard = new KingGameScoreboard();
 		String firstLine = gameScoreboard.getLine(1);
 		assertEquals("Negative tricks      ---- --- --",firstLine);
 	}

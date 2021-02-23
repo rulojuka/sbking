@@ -10,7 +10,7 @@ import br.com.sbk.sbking.core.Board;
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.core.Player;
-import br.com.sbk.sbking.gui.models.GameScoreboard;
+import br.com.sbk.sbking.gui.models.KingGameScoreboard;
 import br.com.sbk.sbking.networking.core.serialization.Serializator;
 
 public abstract class ClientGameSocket implements Runnable {
@@ -101,7 +101,7 @@ public abstract class ClientGameSocket implements Runnable {
 		this.serializator.tryToSerialize(control);
 	}
 
-	public void sendGameScoreboard(GameScoreboard gameScoreboard) {
+	public void sendGameScoreboard(KingGameScoreboard gameScoreboard) {
 		String control = "GAMESCOREBOARD";
 		this.serializator.tryToSerialize(control);
 		this.serializator.tryToSerialize(gameScoreboard);

@@ -17,7 +17,7 @@ import br.com.sbk.sbking.core.rulesets.concrete.NegativeTricksRuleset;
 import br.com.sbk.sbking.core.rulesets.concrete.NegativeWomenRuleset;
 
 @SuppressWarnings("serial")
-public class GameScoreboard implements Serializable {
+public class KingGameScoreboard implements Serializable {
 
 	private GameModeSummary[] games = new GameModeSummary[10];
 	private int gamesPlayed = 0;

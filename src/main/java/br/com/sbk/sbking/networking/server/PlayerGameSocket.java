@@ -13,7 +13,8 @@ public class PlayerGameSocket extends ClientGameSocket {
 	private Direction direction;
 	private boolean hasDisconnected = false;
 
-	public PlayerGameSocket(PlayerNetworkInformation playerNetworkInformation, Direction direction, GameServer gameServer) {
+	public PlayerGameSocket(PlayerNetworkInformation playerNetworkInformation, Direction direction,
+			GameServer gameServer) {
 		super(playerNetworkInformation, gameServer);
 		this.direction = direction;
 	}
@@ -54,7 +55,7 @@ public class PlayerGameSocket extends ClientGameSocket {
 
 	protected void processCommand() {
 		Object readObject = this.serializator.tryToDeserialize(Object.class);
-		if(readObject instanceof DisconnectedObject){
+		if (readObject instanceof DisconnectedObject) {
 			this.hasDisconnected = true;
 		}
 		if (readObject instanceof String) {
@@ -63,22 +64,25 @@ public class PlayerGameSocket extends ClientGameSocket {
 			String POSITIVE = "POSITIVE";
 			String NEGATIVE = "NEGATIVE";
 			String NICKNAME = "NICKNAME";
-			if(string.startsWith(NICKNAME)){
+			if (string.startsWith(NICKNAME)) {
 				String nickname = string.substring(NICKNAME.length());
 				logger.info("Setting new nickname: --" + nickname + "--");
 				this.playerNetworkInformation.setNickname(nickname);
-			} else if (POSITIVE.equals(string) || NEGATIVE.equals(string)) {
-				PositiveOrNegative positiveOrNegative = new PositiveOrNegative();
-				if (POSITIVE.equals(string)) {
-					positiveOrNegative.setPositive();
-				} else {
-					positiveOrNegative.setNegative();
-				}
-				gameServer.notifyChoosePositiveOrNegative(positiveOrNegative, this.direction);
 			} else {
-				Ruleset gameModeOrStrain = RulesetFromShortDescriptionIdentifier.identify(string);
-				if (gameModeOrStrain != null) {
-					gameServer.notifyChooseGameModeOrStrain(gameModeOrStrain, direction);
+				KingGameServer kingGameServer = (KingGameServer) gameServer;
+				if (POSITIVE.equals(string) || NEGATIVE.equals(string)) {
+					PositiveOrNegative positiveOrNegative = new PositiveOrNegative();
+					if (POSITIVE.equals(string)) {
+						positiveOrNegative.setPositive();
+					} else {
+						positiveOrNegative.setNegative();
+					}
+					kingGameServer.notifyChoosePositiveOrNegative(positiveOrNegative, this.direction);
+				} else {
+					Ruleset gameModeOrStrain = RulesetFromShortDescriptionIdentifier.identify(string);
+					if (gameModeOrStrain != null) {
+						kingGameServer.notifyChooseGameModeOrStrain(gameModeOrStrain, direction);
+					}
 				}
 			}
 		}
@@ -88,7 +92,5 @@ public class PlayerGameSocket extends ClientGameSocket {
 			gameServer.notifyPlayCard(playedCard, this.direction);
 		}
 	}
-
-	
 
 }

@@ -9,7 +9,7 @@ import br.com.sbk.sbking.core.Board;
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.gui.listeners.PlayCardActionListener;
-import br.com.sbk.sbking.gui.models.GameScoreboard;
+import br.com.sbk.sbking.gui.models.KingGameScoreboard;
 import br.com.sbk.sbking.gui.models.PositiveOrNegative;
 import br.com.sbk.sbking.networking.core.properties.FileProperties;
 import br.com.sbk.sbking.networking.core.properties.NetworkingProperties;
@@ -38,7 +38,7 @@ public class SBKingClient implements Runnable {
 
 	private boolean gameFinished = false;
 
-	private GameScoreboard currentGameScoreboard = new GameScoreboard();
+	private KingGameScoreboard currentGameScoreboard = new KingGameScoreboard();
 
 	private Board currentBoard;
 
@@ -204,7 +204,7 @@ public class SBKingClient implements Runnable {
 		} else if (VALIDRULESET.equals(controlMessage)) {
 			this.setRulesetValid(true);
 		} else if (GAMESCOREBOARD.equals(controlMessage)) {
-			this.currentGameScoreboard = this.serializator.tryToDeserialize(GameScoreboard.class);
+			this.currentGameScoreboard = this.serializator.tryToDeserialize(KingGameScoreboard.class);
 			logger.info("Received GameScoreboard." + this.currentGameScoreboard.toString());
 		} else if (ISSPECTATOR.equals(controlMessage)) {
 			this.spectator = true;
@@ -376,7 +376,7 @@ public class SBKingClient implements Runnable {
 		this.gameFinished = true;
 	}
 
-	public GameScoreboard getCurrentGameScoreboard() {
+	public KingGameScoreboard getCurrentGameScoreboard() {
 		return this.currentGameScoreboard;
 	}
 

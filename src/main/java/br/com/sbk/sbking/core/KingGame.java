@@ -10,11 +10,11 @@ import java.util.Set;
 import br.com.sbk.sbking.core.rulesets.abstractClasses.NegativeRuleset;
 import br.com.sbk.sbking.core.rulesets.abstractClasses.PositiveRuleset;
 import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
-import br.com.sbk.sbking.gui.models.GameScoreboard;
+import br.com.sbk.sbking.gui.models.KingGameScoreboard;
 
-public class Game {
+public class KingGame extends TrickGame {
 
-	private GameScoreboard gameScoreboard;
+	private KingGameScoreboard gameScoreboard;
 	private Set<NegativeRuleset> chosenNegativeRulesets = new HashSet<NegativeRuleset>();
 	private int northSouthNegatives = 0;
 	private int eastWestNegatives = 0;
@@ -22,28 +22,20 @@ public class Game {
 	private int eastWestPositives = 0;
 	private int playedHands = 0;
 
-	private Board currentBoard;
-	private Deal currentDeal;
-
-	private Direction dealer = Direction.NORTH;
-
-	public Game() {
-		this.gameScoreboard = new GameScoreboard();
-	}
-
-	public void dealNewBoard() {
-		BoardDealer boardDealer = new BoardDealer();
-		this.currentBoard = boardDealer.dealBoard(this.dealer, new ShuffledDeck());
+	public KingGame() {
+		this.gameScoreboard = new KingGameScoreboard();
 	}
 
 	public void addRuleset(Ruleset currentGameModeOrStrain) {
 		this.currentDeal = new Deal(this.currentBoard, currentGameModeOrStrain);
 	}
 
+	@Override
 	public boolean isFinished() {
 		return playedHands == TOTAL_GAMES;
 	}
 
+	@Override
 	public void finishDeal() {
 		Direction currentChooser = this.getCurrentDeal().getDealer().getPositiveOrNegativeChooserWhenDealer();
 		boolean isNorthSouth = currentChooser.isNorthSouth();
@@ -70,7 +62,7 @@ public class Game {
 		this.playedHands++;
 	}
 
-	public GameScoreboard getGameScoreboard() {
+	public KingGameScoreboard getGameScoreboard() {
 		return gameScoreboard;
 	}
 
@@ -95,19 +87,6 @@ public class Game {
 				return eastWestNegatives < MAXIMUM_NEGATIVES_PERMITTED_BY_DIRECTION;
 			}
 		}
-
-	}
-
-	public Direction getDealer() {
-		return this.dealer;
-	}
-
-	public Board getCurrentBoard() {
-		return this.currentBoard;
-	}
-
-	public Deal getCurrentDeal() {
-		return this.currentDeal;
 	}
 
 }

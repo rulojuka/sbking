@@ -7,13 +7,13 @@ import java.awt.Container;
 import java.awt.Point;
 
 import br.com.sbk.sbking.gui.elements.GameScoreboardElement;
-import br.com.sbk.sbking.gui.models.GameScoreboard;
+import br.com.sbk.sbking.gui.models.KingGameScoreboard;
 
 public class FinalScoreboardPainter implements Painter {
 
-	private GameScoreboard gameScoreboard;
+	private KingGameScoreboard gameScoreboard;
 
-	public FinalScoreboardPainter(GameScoreboard gameScoreboard) {
+	public FinalScoreboardPainter(KingGameScoreboard gameScoreboard) {
 		this.gameScoreboard = gameScoreboard;
 	}
 

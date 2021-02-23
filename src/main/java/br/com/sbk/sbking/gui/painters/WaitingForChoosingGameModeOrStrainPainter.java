@@ -11,7 +11,7 @@ import br.com.sbk.sbking.gui.elements.GameScoreboardElement;
 import br.com.sbk.sbking.gui.elements.HandWhileChoosingElement;
 import br.com.sbk.sbking.gui.elements.WaitingForChooserElement;
 import br.com.sbk.sbking.gui.elements.YouArePlayerElement;
-import br.com.sbk.sbking.gui.models.GameScoreboard;
+import br.com.sbk.sbking.gui.models.KingGameScoreboard;
 import br.com.sbk.sbking.networking.client.SBKingClient;
 
 public class WaitingForChoosingGameModeOrStrainPainter implements Painter {
@@ -20,10 +20,10 @@ public class WaitingForChoosingGameModeOrStrainPainter implements Painter {
 	private Direction chooserDirection;
 	private boolean isPositive;
 	private SBKingClient sbKingClient;
-	private GameScoreboard gameScoreboard;
+	private KingGameScoreboard gameScoreboard;
 
 	public WaitingForChoosingGameModeOrStrainPainter(Direction myDirection, Direction chooserDirection,
-			boolean isPositive, SBKingClient sbKingClient, GameScoreboard gameScoreboard) {
+			boolean isPositive, SBKingClient sbKingClient, KingGameScoreboard gameScoreboard) {
 		this.myDirection = myDirection;
 		this.chooserDirection = chooserDirection;
 		this.isPositive = isPositive;

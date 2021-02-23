@@ -8,7 +8,7 @@ import org.apache.logging.log4j.LogManager;
 import br.com.sbk.sbking.core.Board;
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
-import br.com.sbk.sbking.gui.models.GameScoreboard;
+import br.com.sbk.sbking.gui.models.KingGameScoreboard;
 import br.com.sbk.sbking.gui.models.PositiveOrNegative;
 
 public class MessageSender {
@@ -98,7 +98,7 @@ public class MessageSender {
 		logger.info("Finished sending controls.");
 	}
 
-	public void sendGameScoreboardAll(GameScoreboard gameScoreboard) {
+	public void sendGameScoreboardAll(KingGameScoreboard gameScoreboard) {
 		logger.info("Sending everyone the Game Scoreboard");
 		for (ClientGameSocket playerSocket : playerSockets) {
 			playerSocket.sendGameScoreboard(gameScoreboard);

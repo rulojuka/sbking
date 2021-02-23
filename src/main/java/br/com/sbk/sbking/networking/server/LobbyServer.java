@@ -3,13 +3,11 @@ package br.com.sbk.sbking.networking.server;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-// import java.util.ArrayList;
-// import java.util.Collection;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import br.com.sbk.sbking.core.Player;
 import br.com.sbk.sbking.networking.core.properties.FileProperties;
@@ -30,7 +28,6 @@ public class LobbyServer {
 	private static final int MAXIMUM_NUMBER_OF_CONCURRENT_GAME_SERVERS = 2;
 
 	private ExecutorService pool;
-	// private Collection<GameServer> runningGameServers = new ArrayList<GameServer>();
 
 	public LobbyServer() {
 		this.pool = Executors.newFixedThreadPool(MAXIMUM_NUMBER_OF_CONCURRENT_GAME_SERVERS);
@@ -44,9 +41,8 @@ public class LobbyServer {
 			logger.info("My InetAddress is: " + listener.getInetAddress());
 			logger.info("Listening for connections on port: " + port);
 
-			GameServer gameServer = new GameServer();
+			GameServer gameServer = new KingGameServer();
 			logger.info("Created new gameServer");
-			// runningGameServers.add(gameServer);
 
 			for (int i = 0; i < NUMBER_OF_PLAYERS_TO_FORM_A_GAME; i++) {
 				Socket connectingPlayerSocket = listener.accept();
