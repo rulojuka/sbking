@@ -17,7 +17,7 @@ public class HandElement {
 	private static final int BETWEEN_CARDS_WIDTH = 22; /* 26 is good for the eyes. 22 to fit everything */
 	private DeckCardImageInformation deckCardImageInformation;
 
-	public HandElement(Hand hand, Container container, ActionListener actionListener, Point handCenter, Player player) {
+	public HandElement(Hand hand, Container container, ActionListener actionListener, Point handCenter, Player player, boolean isVisible) {
 		this.deckCardImageInformation = new DeckCardImageInformation();
 
 		int x_offset = ((hand.size() + 1) * BETWEEN_CARDS_WIDTH) / 2;
@@ -30,7 +30,10 @@ public class HandElement {
 		for (int i = hand.size() - 1; i >= 0; i--) { // This way, it draws correctly
 			Card card = hand.get(i);
 			CardButton cardButton = new CardButton(card, deckCardImageInformation);
-			if (actionListener != null) {
+			if(!isVisible){
+				cardButton.flip();
+			}
+			if (actionListener != null && isVisible) {
 				cardButton.addActionListener(actionListener);
 			}
 			container.add(cardButton); // This line needs to go before setting the button location

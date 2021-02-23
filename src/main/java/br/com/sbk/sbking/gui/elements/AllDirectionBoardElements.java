@@ -14,7 +14,7 @@ public class AllDirectionBoardElements {
 			ActionListener actionListener) {
 				for (Direction direction : Direction.values()) {
 					new HandElement(deal.getHandOf(direction), container, actionListener,
-					FrameConstants.pointOfDirection.get(direction), deal.getPlayerOf(direction));
+					FrameConstants.pointOfDirection.get(direction), deal.getPlayerOf(direction), true);
 				}
 
 		new CurrentPlayerElement(deal.getCurrentPlayer(), container, false);
