@@ -12,7 +12,7 @@ clean:
 	rm ./sbking-server.jar
 
 client:
-	mvn -f pom-client.xml clean package && cp target/sbking-1.0.0-alpha-jar-with-dependencies.jar ./sbking-client.jar
+	mvn -f pom-client.xml clean package && cp target/sbking-1.0.0-alpha-jar-with-dependencies.jar ./sbking-client.jar && chmod +x ./sbking-client.jar
 
 server:
 	mvn clean package && cp target/sbking-1.0.0-alpha-jar-with-dependencies.jar ./sbking-server.jar
