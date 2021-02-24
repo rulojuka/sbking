@@ -38,10 +38,8 @@ public class KingGameServer extends GameServer {
 	
 	@Override
 	public void run() {
-		Collection<ClientGameSocket> allSockets = new ArrayList<ClientGameSocket>();
-		allSockets.addAll(playerSockets);
-		allSockets.addAll(spectatorSockets);
-		this.messageSender = new MessageSender(allSockets);
+		
+		this.messageSender = new MessageSender(this.getAllSockets());
 		
 		logger.info("Sleeping for 1000ms waiting for last client to setup itself");
 		sleepFor(1000);

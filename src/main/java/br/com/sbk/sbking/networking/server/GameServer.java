@@ -90,4 +90,11 @@ public abstract class GameServer implements Runnable {
 		}
 	}
 
+	protected Collection<ClientGameSocket> getAllSockets(){
+		Collection<ClientGameSocket> allSockets = new ArrayList<ClientGameSocket>();
+		allSockets.addAll(playerSockets);
+		allSockets.addAll(spectatorSockets);
+		return allSockets;
+	}
+
 }
