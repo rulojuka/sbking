@@ -20,7 +20,7 @@ public class SuitTest {
 		hearts = Suit.HEARTS;
 		spades = Suit.SPADES;
 	}
-	
+
 	@Test
 	public void theSameSuitShouldAlwaysBeTheSameObject() {
 		Suit suit1 = Suit.CLUBS;

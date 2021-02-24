@@ -22,12 +22,12 @@ public class SpectatorGameSocket extends ClientGameSocket {
 		if (readObject instanceof DisconnectedObject) {
 			this.hasDisconnected = true;
 		}
-		
+
 		if (readObject instanceof String) {
 			String string = (String) readObject;
 			logger.info("A spectator sent this message: --" + string + "--");
 			String NICKNAME = "NICKNAME";
-			if(string.startsWith(NICKNAME)){
+			if (string.startsWith(NICKNAME)) {
 				String nickname = string.substring(NICKNAME.length());
 				logger.info("Setting new nickname: --" + nickname + "--");
 				this.playerNetworkInformation.setNickname(nickname);

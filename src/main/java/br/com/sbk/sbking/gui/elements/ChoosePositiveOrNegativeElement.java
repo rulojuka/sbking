@@ -24,7 +24,7 @@ public class ChoosePositiveOrNegativeElement {
 	private int elementHeight;
 	private int xSpacing;
 	private int yLabelOffset;
-	
+
 	private static int BUTTON_WIDTH = 80;
 
 	public ChoosePositiveOrNegativeElement(Container container, SBKingClient sbKingClient) {

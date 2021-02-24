@@ -68,7 +68,7 @@ public class NetworkClientScreen extends JFrame {
 			sleepFor(100);
 		}
 
-		while(sbKingClient.isSpectator()){
+		while (sbKingClient.isSpectator()) {
 			// logger.info("It is a spectator. Painting the spectator screen");
 			paintSpectatorScreen(sbKingClient.getDeal(), sbKingClient.getPlayCardActionListener());
 			sleepFor(100);
@@ -179,8 +179,8 @@ public class NetworkClientScreen extends JFrame {
 	}
 
 	private void paintWaitingForChoosingPositiveOrNegativeScreen(Direction myDirection, Direction chooserDirection) {
-		Painter waitingForChoosingPainter = new WaitingForChoosingPositiveOrNegativePainter(myDirection,
-				chooserDirection, this.sbKingClient, this.sbKingClient.getCurrentGameScoreboard());
+		Painter waitingForChoosingPainter = new WaitingForChoosingPositiveOrNegativePainter(myDirection, chooserDirection,
+				this.sbKingClient, this.sbKingClient.getCurrentGameScoreboard());
 		paintPainter(waitingForChoosingPainter);
 
 	}
@@ -203,7 +203,7 @@ public class NetworkClientScreen extends JFrame {
 	}
 
 	private void paintSpectatorScreen(Deal deal, ActionListener playCardActionListener) {
-		if(deal != null){
+		if (deal != null) {
 			Painter spectatorPainter = new SpectatorPainter(playCardActionListener, deal);
 			paintPainter(spectatorPainter);
 		}

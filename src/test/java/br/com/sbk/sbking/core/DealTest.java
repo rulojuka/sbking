@@ -127,7 +127,7 @@ public class DealTest {
 		when(ruleset.prohibitsHeartsUntilOnlySuitLeft()).thenReturn(true);
 		when(card.isHeart()).thenReturn(true);
 		when(handOfCurrentPlayer.onlyHasHearts()).thenReturn(false);
-		
+
 		Deal deal = new Deal(board, ruleset);
 		deal.playCard(card);
 	}

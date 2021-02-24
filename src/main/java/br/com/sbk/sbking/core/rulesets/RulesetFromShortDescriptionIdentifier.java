@@ -10,7 +10,8 @@ public class RulesetFromShortDescriptionIdentifier {
 
 	private static Map<String, Ruleset> shortDescriptionOfRulesets = new HashMap<String, Ruleset>();
 
-	// Static initialization block to avoid doing this calculation every time identify(..) is called.
+	// Static initialization block to avoid doing this calculation every time
+	// identify(..) is called.
 	static {
 		for (NegativeRulesetsEnum rulesetEnumElement : NegativeRulesetsEnum.values()) {
 			Ruleset current = rulesetEnumElement.getNegativeRuleset();

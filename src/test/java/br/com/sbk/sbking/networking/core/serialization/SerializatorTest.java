@@ -21,11 +21,11 @@ public class SerializatorTest {
 		objectOutputStreamWrapper = mock(ObjectOutputStreamWrapper.class);
 		serializator = new Serializator(objectInputStreamWrapper, objectOutputStreamWrapper);
 	}
-	
+
 	@Test
 	public void finalizeShouldCallCloseOnBothWrappers() throws Exception {
 		serializator.finalize();
-		
+
 		Mockito.verify(objectInputStreamWrapper).close();
 		Mockito.verify(objectOutputStreamWrapper).close();
 	}

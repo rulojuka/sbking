@@ -105,27 +105,27 @@ public class KingGameScoreboard implements Serializable {
 
 	private String getNameOfGameNumber(int number) {
 		String name = names.get(number);
-		if(name == null){
+		if (name == null) {
 			return "Positive";
-		} else{
+		} else {
 			return name;
 		}
 	}
 
 	private static final Map<Ruleset, Integer> positions = new HashMap<Ruleset, Integer>() {
 		{
-			put(new NegativeTricksRuleset(),1);
-			put(new NegativeHeartsRuleset(),2);
-			put(new NegativeMenRuleset(),3);
-			put(new NegativeWomenRuleset(),4);
-			put(new NegativeLastTwoRuleset(),5);
-			put(new NegativeKingRuleset(),6);
+			put(new NegativeTricksRuleset(), 1);
+			put(new NegativeHeartsRuleset(), 2);
+			put(new NegativeMenRuleset(), 3);
+			put(new NegativeWomenRuleset(), 4);
+			put(new NegativeLastTwoRuleset(), 5);
+			put(new NegativeKingRuleset(), 6);
 		}
 	};
 
 	private int getPositionOfRuleset(Ruleset ruleset) {
 		Integer position = positions.get(ruleset);
-		if(position == null){
+		if (position == null) {
 			return 6 + this.positivesPlayed;
 		} else {
 			return position;

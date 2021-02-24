@@ -13,10 +13,10 @@ public class ScoreSummaryElement {
 		int size = 200;
 
 		JButton scoreboardButton = new JButton();
-		scoreboardButton.setText("NS:" + board.getNorthSouthPoints() * scoreMultiplier + " EW:"
-				+ board.getEastWestPoints() * scoreMultiplier);
+		scoreboardButton.setText(
+				"NS:" + board.getNorthSouthPoints() * scoreMultiplier + " EW:" + board.getEastWestPoints() * scoreMultiplier);
 		container.add(scoreboardButton);
-		scoreboardButton.setBounds(container.getWidth() / 2 - size/2, container.getHeight() / 2 - size/2, size, size);
+		scoreboardButton.setBounds(container.getWidth() / 2 - size / 2, container.getHeight() / 2 - size / 2, size, size);
 	}
 
 }

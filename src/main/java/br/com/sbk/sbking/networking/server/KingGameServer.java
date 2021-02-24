@@ -30,25 +30,25 @@ public class KingGameServer extends GameServer {
 	private boolean isRulesetPermitted;
 
 	private KingGame kingGame;
-	
+
 	public KingGameServer() {
 		super();
 		this.pool = Executors.newFixedThreadPool(NUMBER_OF_PLAYERS_AND_KIBITZERS_IN_A_GAME);
 	}
-	
+
 	@Override
 	public void run() {
-		
+
 		this.messageSender = new MessageSender(this.getAllSockets());
-		
+
 		logger.info("Sleeping for 1000ms waiting for last client to setup itself");
 		sleepFor(1000);
-		
+
 		this.messageSender.sendMessageAll("ALLCONNECTED");
-		
+
 		this.game = new KingGame();
 		this.kingGame = (KingGame) this.game;
-		
+
 		while (!game.isFinished()) {
 			this.game.dealNewBoard();
 
@@ -65,8 +65,7 @@ public class KingGameServer extends GameServer {
 				synchronized (positiveOrNegativeNotification) {
 					// wait until object notifies - which relinquishes the lock on the object too
 					try {
-						logger.info(
-								"I am waiting for some thread to notify that it wants to choose positive or negative");
+						logger.info("I am waiting for some thread to notify that it wants to choose positive or negative");
 						positiveOrNegativeNotification.wait();
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
@@ -74,8 +73,8 @@ public class KingGameServer extends GameServer {
 					}
 				}
 
-				logger.info("I received that is going to be "
-						+ positiveOrNegativeNotification.getPositiveOrNegative().toString());
+				logger.info(
+						"I received that is going to be " + positiveOrNegativeNotification.getPositiveOrNegative().toString());
 				this.currentPositiveOrNegative = positiveOrNegativeNotification.getPositiveOrNegative();
 				this.messageSender.sendPositiveOrNegativeAll(this.currentPositiveOrNegative);
 
@@ -84,8 +83,7 @@ public class KingGameServer extends GameServer {
 				synchronized (gameModeOrStrainNotification) {
 					// wait until object notifies - which relinquishes the lock on the object too
 					try {
-						logger.info(
-								"I am waiting for some thread to notify that it wants to choose game Mode Or Strain");
+						logger.info("I am waiting for some thread to notify that it wants to choose game Mode Or Strain");
 						gameModeOrStrainNotification.wait();
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
@@ -108,15 +106,14 @@ public class KingGameServer extends GameServer {
 
 			} while (!isRulesetPermitted);
 
-			this.messageSender
-					.sendGameModeOrStrainShortDescriptionAll(this.currentGameModeOrStrain.getShortDescription());
+			this.messageSender.sendGameModeOrStrainShortDescriptionAll(this.currentGameModeOrStrain.getShortDescription());
 
 			logger.info("Sleeping for 500ms waiting for everything come out right.");
 			sleepFor(500);
 
 			logger.info("Everything selected! Game commencing!");
 			this.kingGame.addRuleset(currentGameModeOrStrain);
-			
+
 			Deal currentDeal = this.game.getCurrentDeal();
 			for (ClientGameSocket socket : playerSockets) {
 				PlayerGameSocket playerGameSocket = (PlayerGameSocket) socket;
@@ -148,8 +145,7 @@ public class KingGameServer extends GameServer {
 				}
 				Direction directionToBePlayed = cardPlayNotification.getDirection();
 				Card cardToBePlayed = cardPlayNotification.getCard();
-				logger.info(
-						"Received notification that " + directionToBePlayed + " wants to play the " + cardToBePlayed);
+				logger.info("Received notification that " + directionToBePlayed + " wants to play the " + cardToBePlayed);
 				try {
 					this.playCard(cardToBePlayed, directionToBePlayed);
 				} catch (Exception e) {

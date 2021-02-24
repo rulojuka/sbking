@@ -10,7 +10,7 @@ public class PositiveOrNegativeNotification {
 		this.positiveOrNegative = positiveOrNegative;
 		this.notifyAll();
 	}
-	
+
 	public PositiveOrNegative getPositiveOrNegative() {
 		return this.positiveOrNegative;
 	}

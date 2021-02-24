@@ -28,7 +28,7 @@ public abstract class ClientGameSocket implements Runnable {
 		this.gameServer = gameServer;
 	}
 
-	public Player getPlayer(){
+	public Player getPlayer() {
 		return this.playerNetworkInformation.getPlayer();
 	}
 
@@ -47,6 +47,7 @@ public abstract class ClientGameSocket implements Runnable {
 	}
 
 	protected abstract void setup() throws IOException, InterruptedException;
+
 	protected abstract void processCommand();
 
 	protected void disconnect() {
@@ -64,13 +65,13 @@ public abstract class ClientGameSocket implements Runnable {
 		Thread.sleep(500);
 	}
 
-  public void sendDeal(Deal deal) {
+	public void sendDeal(Deal deal) {
 		String control = "DEAL";
 		this.serializator.tryToSerialize(control);
 		this.serializator.tryToSerialize(deal);
-  }
-  
-  public void sendMessage(String string) {
+	}
+
+	public void sendMessage(String string) {
 		String control = "MESSAGE";
 		this.serializator.tryToSerialize(control);
 		this.serializator.tryToSerialize(string);

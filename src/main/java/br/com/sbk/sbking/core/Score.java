@@ -42,7 +42,7 @@ public class Score implements Serializable {
 	public int getAlreadyPlayedPoints() {
 		return this.eastWestPoints + this.northSouthPoints;
 	}
-	
+
 	public int getFinalPunctuation() {
 		int points = (getNorthSouthPoints() - getEastWestPoints()) * scoreable.getScoreMultiplier();
 		if (scoreable.isNegative()) {

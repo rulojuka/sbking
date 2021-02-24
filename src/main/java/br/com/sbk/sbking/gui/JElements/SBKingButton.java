@@ -7,10 +7,10 @@ public class SBKingButton extends JButton {
 
 	public SBKingButton() {
 		super();
-//		this.setFocusPainted(false);
-//		this.setRolloverEnabled(false);
+		// this.setFocusPainted(false);
+		// this.setRolloverEnabled(false);
 		this.setContentAreaFilled(false); /* Paint always in the same order??? */
-//		this.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+		// this.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
 	}
 

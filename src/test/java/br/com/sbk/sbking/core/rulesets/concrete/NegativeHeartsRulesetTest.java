@@ -61,5 +61,5 @@ public class NegativeHeartsRulesetTest {
 	public void shouldGetTotalPoints() {
 		assertEquals(TOTAL_NUMBER_OF_HEARTS_CARDS, this.negativeHeartsRuleset.getTotalPoints());
 	}
-	
+
 }

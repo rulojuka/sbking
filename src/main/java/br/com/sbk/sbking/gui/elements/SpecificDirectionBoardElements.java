@@ -13,23 +13,22 @@ public class SpecificDirectionBoardElements {
 	public SpecificDirectionBoardElements(Direction direction, Deal deal, Container container,
 			ActionListener actionListener) {
 
-				for (Direction currentDirection : Direction.values()) {
-					if(direction.equals(currentDirection)){
-						new HandElement(deal.getHandOf(currentDirection), container, actionListener,
+		for (Direction currentDirection : Direction.values()) {
+			if (direction.equals(currentDirection)) {
+				new HandElement(deal.getHandOf(currentDirection), container, actionListener,
 						FrameConstants.pointOfDirection.get(currentDirection), deal.getPlayerOf(currentDirection), true);
-					} else {
-						new HandElement(deal.getHandOf(currentDirection), container, actionListener,
+			} else {
+				new HandElement(deal.getHandOf(currentDirection), container, actionListener,
 						FrameConstants.pointOfDirection.get(currentDirection), deal.getPlayerOf(currentDirection), false);
-					}
-				}
+			}
+		}
 
 		boolean isMyTurn = deal.getCurrentPlayer().equals(direction);
 		new CurrentPlayerElement(deal.getCurrentPlayer(), container, isMyTurn);
 
 		new ScoreboardElement(deal, container, new Point(container.getWidth() - 150, 10));
 
-		new TrickElement(deal.getCurrentTrick(), container,
-				new Point(container.getWidth() / 2, container.getHeight() / 2));
+		new TrickElement(deal.getCurrentTrick(), container, new Point(container.getWidth() / 2, container.getHeight() / 2));
 
 		new RulesetElement(deal.getRuleset(), container, new Point(150, 10));
 	}

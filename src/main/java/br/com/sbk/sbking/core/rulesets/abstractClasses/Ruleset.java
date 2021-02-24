@@ -57,21 +57,19 @@ public abstract class Ruleset
 		if (heartsProhibitable == null) {
 			if (other.heartsProhibitable != null)
 				return false;
-		} else if (!(heartsProhibitable.getClass()==other.heartsProhibitable.getClass()))
+		} else if (!(heartsProhibitable.getClass() == other.heartsProhibitable.getClass()))
 			return false;
 		if (suitFollowable == null) {
 			if (other.suitFollowable != null)
 				return false;
-		} else if (!(suitFollowable.getClass()==other.suitFollowable.getClass()))
+		} else if (!(suitFollowable.getClass() == other.suitFollowable.getClass()))
 			return false;
 		if (winnable == null) {
 			if (other.winnable != null)
 				return false;
-		} else if (!(winnable.getClass()==other.winnable.getClass()))
+		} else if (!(winnable.getClass() == other.winnable.getClass()))
 			return false;
 		return true;
 	}
-	
-	
 
 }

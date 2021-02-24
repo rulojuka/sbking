@@ -7,9 +7,9 @@ public interface Scoreable {
 	public int getScoreMultiplier();
 
 	public int getPoints(Trick trick);
-	
+
 	public int getTotalPoints();
-	
+
 	public boolean isNegative();
 
 }

@@ -25,12 +25,12 @@ public class CurrentPlayerElement {
 		Point tableCenter = new Point(HALF_WIDTH, HALF_HEIGHT);
 		Point currentPlayerPosition = new Point(tableCenter);
 		currentPlayerPosition.translate(X_OFFSET - width / 2, Y_OFFSET);
-		
+
 		String text;
-		
-		if(isMyTurn) {
+
+		if (isMyTurn) {
 			text = "It is your turn.";
-		}else {
+		} else {
 			text = currentPlayer.getCompleteName() + " to play.";
 		}
 

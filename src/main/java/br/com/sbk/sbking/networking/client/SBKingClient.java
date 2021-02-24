@@ -69,9 +69,9 @@ public class SBKingClient implements Runnable {
 			NetworkingProperties networkingProperties = new NetworkingProperties(configFile, new SystemProperties());
 
 			logger.info("Given hostname is: " + hostname);
-			if(hostname==null || hostname.isEmpty()){
+			if (hostname == null || hostname.isEmpty()) {
 				host = networkingProperties.getHost();
-			}else{
+			} else {
 				host = hostname;
 			}
 			port = networkingProperties.getPort();
@@ -158,8 +158,8 @@ public class SBKingClient implements Runnable {
 			this.setCurrentBoard(board);
 		} else if (DEAL.equals(controlMessage)) {
 			Deal deal = this.serializator.tryToDeserialize(Deal.class);
-			logger.info("I received a deal that contains this trick: " + deal.getCurrentTrick()
-					+ " and will paint it on screen");
+			logger.info(
+					"I received a deal that contains this trick: " + deal.getCurrentTrick() + " and will paint it on screen");
 			this.setCurrentDeal(deal);
 		} else if (DIRECTION.equals(controlMessage)) {
 			Direction direction = this.serializator.tryToDeserialize(Direction.class);

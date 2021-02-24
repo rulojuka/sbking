@@ -17,7 +17,8 @@ public class HandElement {
 	private static final int BETWEEN_CARDS_WIDTH = 22; /* 26 is good for the eyes. 22 to fit everything */
 	private DeckCardImageInformation deckCardImageInformation;
 
-	public HandElement(Hand hand, Container container, ActionListener actionListener, Point handCenter, Player player, boolean isVisible) {
+	public HandElement(Hand hand, Container container, ActionListener actionListener, Point handCenter, Player player,
+			boolean isVisible) {
 		this.deckCardImageInformation = new DeckCardImageInformation();
 
 		int x_offset = ((hand.size() + 1) * BETWEEN_CARDS_WIDTH) / 2;
@@ -30,7 +31,7 @@ public class HandElement {
 		for (int i = hand.size() - 1; i >= 0; i--) { // This way, it draws correctly
 			Card card = hand.get(i);
 			CardButton cardButton = new CardButton(card, deckCardImageInformation);
-			if(!isVisible){
+			if (!isVisible) {
 				cardButton.flip();
 			}
 			if (actionListener != null && isVisible) {
@@ -38,15 +39,14 @@ public class HandElement {
 			}
 			container.add(cardButton); // This line needs to go before setting the button location
 			cardButton.setLocation(locationOfCard(i, handTopLeftCorner)); // This line needs to go after adding the
-																			// button to
+			// button to
 			// the container
 		}
-
 
 		JLabel nameLabel = new JLabel(player.getName());
 		nameLabel.setSize(200, 15);
 		Point inicio = handTopLeftCorner;
-		handTopLeftCorner.translate(0, deckCardImageInformation.getCardHeight()+5);
+		handTopLeftCorner.translate(0, deckCardImageInformation.getCardHeight() + 5);
 		nameLabel.setLocation(inicio);
 		container.add(nameLabel);
 	}

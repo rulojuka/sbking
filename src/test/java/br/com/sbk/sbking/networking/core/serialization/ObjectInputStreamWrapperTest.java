@@ -27,12 +27,12 @@ public class ObjectInputStreamWrapperTest {
 
 	@Test
 	public void couldNotTestReadObjectBecauseMethodIsFinal() {
-//		try {
-//			objectInputStreamWrapper.readObject(); // Mockito mock is powerless here
-//			Mockito.verify(objectInputStream).readObject();
-//		} catch (Exception e) {
-//			throw new RuntimeException();
-//		}
+		// try {
+		// objectInputStreamWrapper.readObject(); // Mockito mock is powerless here
+		// Mockito.verify(objectInputStream).readObject();
+		// } catch (Exception e) {
+		// throw new RuntimeException();
+		// }
 	}
 
 }

@@ -20,7 +20,7 @@ public class MessageSender {
 		this.playerSockets = playerSockets;
 	}
 
-	public void addClientGameSocket(ClientGameSocket clientGameSocket){
+	public void addClientGameSocket(ClientGameSocket clientGameSocket) {
 		this.playerSockets.add(clientGameSocket);
 	}
 

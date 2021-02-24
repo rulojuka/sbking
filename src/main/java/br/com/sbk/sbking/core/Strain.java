@@ -8,8 +8,7 @@ public enum Strain {
 	DIAMONDS("Diamonds", new PositiveWithTrumpsRuleset(Suit.DIAMONDS)),
 	CLUBS("Clubs", new PositiveWithTrumpsRuleset(Suit.CLUBS)),
 	HEARTS("Hearts", new PositiveWithTrumpsRuleset(Suit.HEARTS)),
-	SPADES("Spades", new PositiveWithTrumpsRuleset(Suit.SPADES)),
-	NOTRUMPS("No Trumps", new PositiveNoTrumpsRuleset());
+	SPADES("Spades", new PositiveWithTrumpsRuleset(Suit.SPADES)), NOTRUMPS("No Trumps", new PositiveNoTrumpsRuleset());
 
 	private final String name;
 	private final PositiveRuleset positiveRuleset;

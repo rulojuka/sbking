@@ -1,6 +1,6 @@
 package br.com.sbk.sbking.networking.server;
 
-public class GenericTrickGameServer extends GameServer{
+public class GenericTrickGameServer extends GameServer {
 
   @Override
   public void run() {

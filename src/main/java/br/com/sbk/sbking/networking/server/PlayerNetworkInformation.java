@@ -28,7 +28,7 @@ public class PlayerNetworkInformation {
 		return this.player;
 	}
 
-	public void setNickname(String nickname){
+	public void setNickname(String nickname) {
 		this.player.setName(nickname);
 	}
 

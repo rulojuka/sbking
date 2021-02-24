@@ -39,8 +39,8 @@ public class WaitingForChoosingPositiveOrNegativePainter implements Painter {
 			YouArePlayerElement.add(this.myDirection, contentPane);
 			WaitingForChooserElement.add(contentPane, chooserDirection, "Positive or Negative.");
 		} else {
-			ChoosePositiveOrNegativeElement choosePositiveOrNegativeElement = new ChoosePositiveOrNegativeElement(
-					contentPane, this.sbKingClient);
+			ChoosePositiveOrNegativeElement choosePositiveOrNegativeElement = new ChoosePositiveOrNegativeElement(contentPane,
+					this.sbKingClient);
 			choosePositiveOrNegativeElement.add();
 		}
 

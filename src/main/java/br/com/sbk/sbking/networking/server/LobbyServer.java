@@ -51,17 +51,17 @@ public class LobbyServer {
 					logger.error("Could not communicate with client. Will not add it and listen for next one.");
 					continue;
 				}
-				Player currentPlayer = new Player("Player"+(i+1));
+				Player currentPlayer = new Player("Player" + (i + 1));
 				PlayerNetworkInformation connectingPlayerNetworkInformation = new PlayerNetworkInformation(
-						connectingPlayerSocket, connectingPlayerSerializator,currentPlayer);
+						connectingPlayerSocket, connectingPlayerSerializator, currentPlayer);
 				gameServer.addPlayer(connectingPlayerNetworkInformation);
-				logger.info(i+1 + " players connected.");
+				logger.info(i + 1 + " players connected.");
 			}
 			logger.info("4 players connected. Executing gameServer");
 			pool.execute(gameServer);
 			logger.info("Started gameServer. From now on, everyone will be added as spectators");
 
-			while(true){
+			while (true) {
 				Socket connectingPlayerSocket = listener.accept();
 				Serializator connectingPlayerSerializator = initializeSerializator(connectingPlayerSocket);
 				if (connectingPlayerSocket == null || connectingPlayerSerializator == null) {
@@ -70,7 +70,7 @@ public class LobbyServer {
 				}
 				Player currentPlayer = new Player("Spectator");
 				PlayerNetworkInformation connectingPlayerNetworkInformation = new PlayerNetworkInformation(
-						connectingPlayerSocket, connectingPlayerSerializator,currentPlayer);
+						connectingPlayerSocket, connectingPlayerSerializator, currentPlayer);
 				gameServer.addSpectator(connectingPlayerNetworkInformation);
 				logger.info("Added a spectator.");
 			}
@@ -95,8 +95,7 @@ public class LobbyServer {
 		FileProperties fileProperties = new FileProperties(NETWORKING_CONFIGURATION_FILENAME);
 		int port = 0;
 		try {
-			NetworkingProperties networkingProperties = new NetworkingProperties(fileProperties,
-					new SystemProperties());
+			NetworkingProperties networkingProperties = new NetworkingProperties(fileProperties, new SystemProperties());
 			port = networkingProperties.getPort();
 		} catch (Exception e) {
 			logger.fatal("Could not get port from properties.");

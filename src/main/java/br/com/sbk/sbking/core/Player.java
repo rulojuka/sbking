@@ -3,7 +3,7 @@ package br.com.sbk.sbking.core;
 import java.io.Serializable;
 
 @SuppressWarnings("serial")
-public class Player implements Serializable{
+public class Player implements Serializable {
 
   private String name;
 

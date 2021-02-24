@@ -22,7 +22,7 @@ public class NetworkingTest {
 		} catch (IOException e1) {
 		}
 	}
-	
+
 	@Test
 	public void shouldCapitalizeToManyClientsAtOnce() {
 		CapitalizeClient capitalizeClient1 = new CapitalizeClient();

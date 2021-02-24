@@ -17,7 +17,7 @@ public class TrickElement {
 	private static final int CARD_WIDTH = 72;
 	private static final int CARD_HEIGHT = 96;
 	private DeckCardImageInformation deckCardImageInformation;
-	
+
 	public TrickElement(Trick currentTrick, Container container, Point point) {
 		deckCardImageInformation = new DeckCardImageInformation();
 		trick = new ArrayList<CardButton>();
@@ -29,7 +29,7 @@ public class TrickElement {
 			trick.add(cardButton);
 			container.add(cardButton); // This line needs to go before setting the button location
 			cardButton.setLocation(cardLocation(leader.next(i), point)); // This line needs to go after adding the
-																			// button to the container
+			// button to the container
 		}
 	}
 

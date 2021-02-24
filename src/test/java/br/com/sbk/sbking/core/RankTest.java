@@ -38,7 +38,7 @@ public class RankTest {
 		king = Rank.KING;
 		ace = Rank.ACE;
 	}
-	
+
 	@Test
 	public void theSameRankShouldAlwaysBeTheSameObject() {
 		Rank rank1 = Rank.TWO;

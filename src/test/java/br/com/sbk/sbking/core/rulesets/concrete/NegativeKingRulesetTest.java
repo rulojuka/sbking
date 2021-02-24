@@ -18,7 +18,6 @@ public class NegativeKingRulesetTest {
 	private static final String NEGATIVE_KING_SHORT_DESCRIPTION = "Negative king";
 	private static final String NEGATIVE_KING_COMPLETE_DESCRIPTION = "Avoid the King of Hearts";
 	private static final int TOTAL_NUMBER_OF_HEART_KINGS = 1;
-	
 
 	private NegativeKingRuleset negativeKingRuleset;
 
@@ -65,7 +64,7 @@ public class NegativeKingRulesetTest {
 	public void shouldProhibitsHeartsUntilOnlySuitLeft() {
 		assertTrue(this.negativeKingRuleset.prohibitsHeartsUntilOnlySuitLeft());
 	}
-	
+
 	@Test
 	public void shouldGetTotalPoints() {
 		assertEquals(TOTAL_NUMBER_OF_HEART_KINGS, this.negativeKingRuleset.getTotalPoints());

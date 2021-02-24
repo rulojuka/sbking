@@ -27,14 +27,15 @@ public class ObjectOutputStreamWrapperTest {
 
 	@Test
 	public void couldNotTestResetAndWriteObjectBecauseWriteObjectMethodIsFinal() {
-//		Object anyObject = Mockito.mock(Object.class);
-//		try {
-//			objectOutputStreamWrapper.resetAndWriteObject(anyObject);
-//			Mockito.verify(objectOutputStream).reset(); // This would work
-//			Mockito.verify(objectOutputStream).writeObject(anyObject); // but Mockito mock is powerless here
-//		} catch (Exception e) {
-//			throw new RuntimeException();
-//		}
+		// Object anyObject = Mockito.mock(Object.class);
+		// try {
+		// objectOutputStreamWrapper.resetAndWriteObject(anyObject);
+		// Mockito.verify(objectOutputStream).reset(); // This would work
+		// Mockito.verify(objectOutputStream).writeObject(anyObject); // but Mockito
+		// mock is powerless here
+		// } catch (Exception e) {
+		// throw new RuntimeException();
+		// }
 	}
 
 }

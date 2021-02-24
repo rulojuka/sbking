@@ -34,20 +34,19 @@ public class ConnectToServerPainter implements Painter {
 			String hostname = "127.0.0.1";
 
 			for (Component component : components) {
-				if( "nicknameTextField".equals(component.getName())){
+				if ("nicknameTextField".equals(component.getName())) {
 					JTextField nicknameTextField = (JTextField) component;
 					System.out.println("Achou o nickname: " + nicknameTextField.getText());
 					nickname = nicknameTextField.getText();
-				}
-				else if( "hostnameTextField".equals(component.getName())){
+				} else if ("hostnameTextField".equals(component.getName())) {
 					JTextField hostnameTextField = (JTextField) component;
 					System.out.println("Achou o hostname: " + hostnameTextField.getText());
-					if(hostnameTextField.getText()!=null && !hostnameTextField.getText().isEmpty()){
+					if (hostnameTextField.getText() != null && !hostnameTextField.getText().isEmpty()) {
 						hostname = hostnameTextField.getText();
 					}
 				}
 			}
-			
+
 			networkClientScreen.connectToServer(nickname, hostname);
 
 		}

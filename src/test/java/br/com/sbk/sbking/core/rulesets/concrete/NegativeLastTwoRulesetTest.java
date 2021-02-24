@@ -37,15 +37,15 @@ public class NegativeLastTwoRulesetTest {
 		int pointsInANotLastTwoTrick = 0;
 		Trick trickFive = mock(Trick.class);
 		when(trickFive.isLastTwo()).thenReturn(notOneOfTheLastTwo);
-		
+
 		boolean oneOfTheLastTwo = true;
 		int pointsInALastTwoTrick = 1;
 		Trick trickTwelve = mock(Trick.class);
 		when(trickTwelve.isLastTwo()).thenReturn(oneOfTheLastTwo);
-		
+
 		assertEquals(pointsInANotLastTwoTrick, this.negativeLastTwoRuleset.getPoints(trickFive));
 		assertEquals(pointsInALastTwoTrick, this.negativeLastTwoRuleset.getPoints(trickTwelve));
-		
+
 		Mockito.verify(trickFive, only()).isLastTwo();
 		Mockito.verify(trickTwelve, only()).isLastTwo();
 	}
@@ -64,7 +64,7 @@ public class NegativeLastTwoRulesetTest {
 	public void shouldNotProhibitsHeartsUntilOnlySuitLeft() {
 		assertFalse(this.negativeLastTwoRuleset.prohibitsHeartsUntilOnlySuitLeft());
 	}
-	
+
 	@Test
 	public void shouldGetTotalPoints() {
 		assertEquals(TOTAL_NUMBER_OF_LAST_TWO_TRICKS, this.negativeLastTwoRuleset.getTotalPoints());

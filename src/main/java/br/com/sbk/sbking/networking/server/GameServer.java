@@ -14,21 +14,21 @@ import br.com.sbk.sbking.core.exceptions.PlayedCardInAnotherPlayersTurnException
 import br.com.sbk.sbking.networking.server.notifications.CardPlayNotification;
 
 public abstract class GameServer implements Runnable {
-  protected CardPlayNotification cardPlayNotification = new CardPlayNotification();
+	protected CardPlayNotification cardPlayNotification = new CardPlayNotification();
 	protected boolean dealHasChanged;
 	protected Direction nextDirection = Direction.values()[0];
 
 	protected Collection<PlayerGameSocket> playerSockets = new ArrayList<PlayerGameSocket>();
 	protected Collection<SpectatorGameSocket> spectatorSockets = new ArrayList<SpectatorGameSocket>();
-  protected MessageSender messageSender;
-  
-  protected TrickGame game;
+	protected MessageSender messageSender;
 
-  protected ExecutorService pool;
+	protected TrickGame game;
 
-  final static Logger logger = LogManager.getLogger(KingGameServer.class);
-  
-  public void addPlayer(PlayerNetworkInformation playerNetworkInformation) {
+	protected ExecutorService pool;
+
+	final static Logger logger = LogManager.getLogger(KingGameServer.class);
+
+	public void addPlayer(PlayerNetworkInformation playerNetworkInformation) {
 		PlayerGameSocket currentPlayerGameSocket = new PlayerGameSocket(playerNetworkInformation, getNextDirection(), this);
 		this.playerSockets.add(currentPlayerGameSocket);
 		pool.execute(currentPlayerGameSocket);
@@ -46,14 +46,14 @@ public abstract class GameServer implements Runnable {
 		Direction nextDirection = this.nextDirection;
 		this.nextDirection = this.nextDirection.next();
 		return nextDirection;
-  }
-  
-  public void removeClientGameSocket(ClientGameSocket playerSocket) {
+	}
+
+	public void removeClientGameSocket(ClientGameSocket playerSocket) {
 		this.playerSockets.remove(playerSocket);
 		this.spectatorSockets.remove(playerSocket);
-  }
-  
-  protected void playCard(Card card, Direction direction) {
+	}
+
+	protected void playCard(Card card, Direction direction) {
 		logger.info("It is currently the " + this.game.getCurrentDeal().getCurrentPlayer() + " turn");
 		try {
 			if (this.game.getCurrentDeal().getCurrentPlayer() == direction) {
@@ -90,7 +90,7 @@ public abstract class GameServer implements Runnable {
 		}
 	}
 
-	protected Collection<ClientGameSocket> getAllSockets(){
+	protected Collection<ClientGameSocket> getAllSockets() {
 		Collection<ClientGameSocket> allSockets = new ArrayList<ClientGameSocket>();
 		allSockets.addAll(playerSockets);
 		allSockets.addAll(spectatorSockets);
