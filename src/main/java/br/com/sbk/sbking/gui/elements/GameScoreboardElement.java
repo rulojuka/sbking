@@ -6,6 +6,7 @@ import java.awt.Point;
 
 import javax.swing.JLabel;
 
+import br.com.sbk.sbking.gui.JElements.SBKingLabel;
 import br.com.sbk.sbking.gui.models.KingGameScoreboard;
 
 public class GameScoreboardElement {
@@ -42,7 +43,7 @@ public class GameScoreboardElement {
 
 		Font font = new Font(Font.MONOSPACED, Font.PLAIN, 15);
 
-		JLabel label = new JLabel(stringWithoutSpaces);
+		JLabel label = new SBKingLabel(stringWithoutSpaces);
 		label.setFont(font);
 		label.setLocation(gameScoreboardTopLeftCorner);
 		label.setSize(width, height);

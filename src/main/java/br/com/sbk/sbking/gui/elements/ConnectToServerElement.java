@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import br.com.sbk.sbking.gui.JElements.ConnectToServerButton;
+import br.com.sbk.sbking.gui.JElements.SBKingLabel;
 
 public class ConnectToServerElement {
 
@@ -21,11 +22,10 @@ public class ConnectToServerElement {
 
 		int width = 300;
 		int height = 15;
-		JLabel hostnameLabel = new JLabel("Enter IP or leave blank to play locally:");
+		JLabel hostnameLabel = new SBKingLabel("Enter IP or leave blank to play locally:");
 		container.add(hostnameLabel);
 		hostnameLabel.setSize(width, height);
 		hostnameLabel.setLocation(HALF_WIDTH - hostnameLabel.getWidth() / 2, HALF_HEIGHT - 100 - 100 - height);
-		hostnameLabel.setForeground(new java.awt.Color(255, 0, 0));
 
 		JTextField hostnameTextField = new JTextField("");
 		container.add(hostnameTextField);
@@ -33,11 +33,10 @@ public class ConnectToServerElement {
 		hostnameTextField.setLocation(HALF_WIDTH - hostnameTextField.getWidth() / 2, HALF_HEIGHT - 100 - 100);
 		hostnameTextField.setName("hostnameTextField");
 
-		JLabel nicknameLabel = new JLabel("Enter nickname:");
+		JLabel nicknameLabel = new SBKingLabel("Enter nickname:");
 		container.add(nicknameLabel);
 		nicknameLabel.setSize(width, height);
 		nicknameLabel.setLocation(HALF_WIDTH - nicknameLabel.getWidth() / 2, HALF_HEIGHT - 100 - height);
-		nicknameLabel.setForeground(new java.awt.Color(255, 0, 0));
 
 		JTextField nicknameTextField = new JTextField("");
 		container.add(nicknameTextField);

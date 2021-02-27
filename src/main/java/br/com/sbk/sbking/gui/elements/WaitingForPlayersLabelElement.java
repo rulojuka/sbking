@@ -8,10 +8,12 @@ import java.awt.Container;
 
 import javax.swing.JLabel;
 
+import br.com.sbk.sbking.gui.JElements.SBKingLabel;
+
 public class WaitingForPlayersLabelElement {
 
 	public static void add(Container container) {
-		JLabel rulesetLabel = new JLabel("Waiting for players...");
+		JLabel rulesetLabel = new SBKingLabel("Waiting for players...");
 		rulesetLabel.setHorizontalAlignment(CENTER);
 		int width = 300;
 		int height = 15;

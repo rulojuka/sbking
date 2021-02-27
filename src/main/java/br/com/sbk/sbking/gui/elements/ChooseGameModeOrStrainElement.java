@@ -15,6 +15,7 @@ import javax.swing.JRadioButton;
 
 import br.com.sbk.sbking.core.Strain;
 import br.com.sbk.sbking.core.rulesets.NegativeRulesetsEnum;
+import br.com.sbk.sbking.gui.JElements.SBKingLabel;
 import br.com.sbk.sbking.networking.client.SBKingClient;
 
 public class ChooseGameModeOrStrainElement {
@@ -120,7 +121,7 @@ public class ChooseGameModeOrStrainElement {
 
 	private void addLabel(Point labelPosition) {
 		int labelWidth = 120;
-		JLabel waitingLabel = new JLabel("Please choose:");
+		JLabel waitingLabel = new SBKingLabel("Please choose:");
 		waitingLabel.setSize(labelWidth, elementHeight);
 		waitingLabel.setLocation(labelPosition);
 		container.add(waitingLabel);

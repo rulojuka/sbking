@@ -10,6 +10,7 @@ import java.awt.Point;
 import javax.swing.JLabel;
 
 import br.com.sbk.sbking.core.Direction;
+import br.com.sbk.sbking.gui.JElements.SBKingLabel;
 
 public class CurrentPlayerElement {
 
@@ -34,7 +35,7 @@ public class CurrentPlayerElement {
 			text = currentPlayer.getCompleteName() + " to play.";
 		}
 
-		JLabel playerButton = new JLabel(text);
+		JLabel playerButton = new SBKingLabel(text);
 		playerButton.setHorizontalAlignment(CENTER);
 		playerButton.setSize(width, height);
 		playerButton.setLocation(currentPlayerPosition);

@@ -10,6 +10,7 @@ import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Hand;
 import br.com.sbk.sbking.core.Player;
 import br.com.sbk.sbking.gui.JElements.CardButton;
+import br.com.sbk.sbking.gui.JElements.SBKingLabel;
 import br.com.sbk.sbking.gui.models.DeckCardImageInformation;
 
 public class HandElement {
@@ -43,7 +44,7 @@ public class HandElement {
 			// the container
 		}
 
-		JLabel nameLabel = new JLabel(player.getName());
+		JLabel nameLabel = new SBKingLabel(player.getName());
 		nameLabel.setSize(200, 15);
 		Point inicio = handTopLeftCorner;
 		handTopLeftCorner.translate(0, deckCardImageInformation.getCardHeight() + 5);

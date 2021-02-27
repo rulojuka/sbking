@@ -7,6 +7,7 @@ import java.awt.Container;
 import javax.swing.JLabel;
 
 import br.com.sbk.sbking.core.Direction;
+import br.com.sbk.sbking.gui.JElements.SBKingLabel;
 
 public class WaitingForChooserElement {
 
@@ -15,7 +16,7 @@ public class WaitingForChooserElement {
 		String labelTextSuffix = "</html>";
 		String completeLabelText = labelTextPrefix + text + labelTextSuffix;
 
-		JLabel waitingLabel = new JLabel(completeLabelText);
+		JLabel waitingLabel = new SBKingLabel(completeLabelText);
 		waitingLabel.setHorizontalAlignment(CENTER);
 		int width = 300;
 		int height = 30;

@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 
+import br.com.sbk.sbking.gui.JElements.SBKingLabel;
 import br.com.sbk.sbking.networking.client.SBKingClient;
 
 public class ChoosePositiveOrNegativeElement {
@@ -96,7 +97,7 @@ public class ChoosePositiveOrNegativeElement {
 
 	private void addLabel(Point labelPosition) {
 		int labelWidth = 120;
-		JLabel waitingLabel = new JLabel("Please choose:");
+		JLabel waitingLabel = new SBKingLabel("Please choose:");
 		waitingLabel.setSize(labelWidth, elementHeight);
 		waitingLabel.setLocation(labelPosition);
 		container.add(waitingLabel);

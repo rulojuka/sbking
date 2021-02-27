@@ -10,6 +10,7 @@ import java.awt.Point;
 import javax.swing.JLabel;
 
 import br.com.sbk.sbking.core.Direction;
+import br.com.sbk.sbking.gui.JElements.SBKingLabel;
 
 public class YouArePlayerElement {
 
@@ -23,11 +24,10 @@ public class YouArePlayerElement {
 		Point currentPlayerPosition = new Point(tableCenter);
 		currentPlayerPosition.translate(X_OFFSET - width / 2, Y_OFFSET);
 
-		JLabel playerLabel = new JLabel("You are " + direction.getCompleteName());
+		JLabel playerLabel = new SBKingLabel("You are " + direction.getCompleteName());
 		playerLabel.setHorizontalAlignment(CENTER);
 		playerLabel.setSize(width, height);
 		playerLabel.setLocation(currentPlayerPosition);
-		playerLabel.setOpaque(true);
 		container.add(playerLabel);
 	}
 
