@@ -7,6 +7,8 @@ import static br.com.sbk.sbking.gui.constants.FrameConstants.TABLE_WIDTH;
 import java.awt.event.ActionListener;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.JFrame;
 
@@ -210,9 +212,22 @@ public class NetworkClientScreen extends JFrame {
 	}
 
 	public void connectToServer(String nickname, String hostname) {
-		this.sbKingClient = new SBKingClient(nickname, hostname);
-		this.connectedToServer = true;
-		pool.execute(this.sbKingClient);
+		hostname = hostname.trim();
+		if(isValidIP(hostname)){
+			this.sbKingClient = new SBKingClient(nickname, hostname);
+			this.connectedToServer = true;
+			pool.execute(this.sbKingClient);
+		}
+		else{
+			logger.error("Invalid IP");
+		}
 	}
+
+	private boolean isValidIP(String ipAddr){
+         
+		Pattern ptn = Pattern.compile("^(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})$");
+		Matcher mtch = ptn.matcher(ipAddr);
+		return mtch.find();
+}
 
 }
