@@ -44,6 +44,9 @@ public class HandElement {
 			// the container
 		}
 
+		if(player == null){
+			player = new Player("Empty.");
+		}
 		JLabel nameLabel = new SBKingLabel(player.getName());
 		nameLabel.setSize(200, 15);
 		Point inicio = handTopLeftCorner;

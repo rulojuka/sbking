@@ -17,15 +17,19 @@ public abstract class ClientGameSocket implements Runnable {
 	protected PlayerNetworkInformation playerNetworkInformation;
 	protected Socket socket;
 	protected Serializator serializator;
-	protected GameServer gameServer;
+	protected Table table;
 	final static Logger logger = LogManager.getLogger(SpectatorGameSocket.class);
 	protected boolean hasDisconnected = false;
 
-	public ClientGameSocket(PlayerNetworkInformation playerNetworkInformation, GameServer gameServer) {
+	public ClientGameSocket(PlayerNetworkInformation playerNetworkInformation, Table table) {
 		this.playerNetworkInformation = playerNetworkInformation;
 		this.socket = playerNetworkInformation.getSocket();
 		this.serializator = playerNetworkInformation.getSerializator();
-		this.gameServer = gameServer;
+		this.table = table;
+	}
+
+	public Socket getSocket() {
+		return this.socket;
 	}
 
 	public Player getPlayer() {
@@ -57,7 +61,7 @@ public abstract class ClientGameSocket implements Runnable {
 			logger.debug(e);
 		}
 		logger.info("Closed: " + this.socket + ". Removing (myself) from playerSocketList");
-		gameServer.removeClientGameSocket(this);
+		this.table.removeClientGameSocket(this);
 	}
 
 	protected void waitForClientSetup() throws IOException, InterruptedException {

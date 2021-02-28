@@ -6,8 +6,8 @@ import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.networking.core.serialization.DisconnectedObject;
 
 public class SpectatorGameSocket extends ClientGameSocket {
-	public SpectatorGameSocket(PlayerNetworkInformation playerNetworkInformation, GameServer gameServer) {
-		super(playerNetworkInformation, gameServer);
+	public SpectatorGameSocket(PlayerNetworkInformation playerNetworkInformation, Table table) {
+		super(playerNetworkInformation, table);
 	}
 
 	@Override

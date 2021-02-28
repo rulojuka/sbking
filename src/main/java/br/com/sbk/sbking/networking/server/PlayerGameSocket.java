@@ -13,8 +13,8 @@ public class PlayerGameSocket extends ClientGameSocket {
 	private Direction direction;
 
 	public PlayerGameSocket(PlayerNetworkInformation playerNetworkInformation, Direction direction,
-			GameServer gameServer) {
-		super(playerNetworkInformation, gameServer);
+			Table table) {
+		super(playerNetworkInformation, table);
 		this.direction = direction;
 	}
 
@@ -45,7 +45,7 @@ public class PlayerGameSocket extends ClientGameSocket {
 				logger.info("Setting new nickname: --" + nickname + "--");
 				this.playerNetworkInformation.setNickname(nickname);
 			} else {
-				KingGameServer kingGameServer = (KingGameServer) gameServer;
+				KingGameServer kingGameServer = (KingGameServer) this.table.getGameServer();
 				if (POSITIVE.equals(string) || NEGATIVE.equals(string)) {
 					PositiveOrNegative positiveOrNegative = new PositiveOrNegative();
 					if (POSITIVE.equals(string)) {
@@ -65,7 +65,7 @@ public class PlayerGameSocket extends ClientGameSocket {
 		if (readObject instanceof Card) {
 			Card playedCard = (Card) readObject;
 			logger.info(this.direction + " is trying to play the " + playedCard);
-			gameServer.notifyPlayCard(playedCard, this.direction);
+			table.getGameServer().notifyPlayCard(playedCard, this.direction);
 		}
 	}
 

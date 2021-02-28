@@ -12,9 +12,10 @@ import java.util.regex.Pattern;
 
 import javax.swing.JFrame;
 
-import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
+import br.com.sbk.sbking.core.Board;
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.gui.painters.ConnectToServerPainter;
@@ -70,9 +71,17 @@ public class NetworkClientScreen extends JFrame {
 			sleepFor(100);
 		}
 
+		logger.info("It is a spectator. Painting the spectator screen");
 		while (sbKingClient.isSpectator()) {
-			// logger.info("It is a spectator. Painting the spectator screen");
-			paintSpectatorScreen(sbKingClient.getDeal(), sbKingClient.getPlayCardActionListener());
+			if(sbKingClient.getBoardHasChanged() || sbKingClient.getDealHasChanged()){
+				Deal currentDeal = sbKingClient.getDeal();
+				Board currentBoard = sbKingClient.getCurrentBoard();
+				if (currentDeal == null) {
+					paintSpectatorScreen(currentBoard, sbKingClient.getPlayCardActionListener());
+				} else {
+					paintSpectatorScreen(currentDeal, sbKingClient.getPlayCardActionListener());
+				}
+			}
 			sleepFor(100);
 		}
 
@@ -205,29 +214,39 @@ public class NetworkClientScreen extends JFrame {
 	}
 
 	private void paintSpectatorScreen(Deal deal, ActionListener playCardActionListener) {
-		if (deal != null) {
+		if (deal == null) {
+			logger.error("Deal should not be null here.");
+		} else {
 			Painter spectatorPainter = new SpectatorPainter(playCardActionListener, deal);
+			paintPainter(spectatorPainter);
+		}
+	}
+
+	private void paintSpectatorScreen(Board board, ActionListener playCardActionListener) {
+		if (board == null) {
+			logger.error("Board should not be null here.");
+		} else {
+			Painter spectatorPainter = new SpectatorPainter(playCardActionListener, board);
 			paintPainter(spectatorPainter);
 		}
 	}
 
 	public void connectToServer(String nickname, String hostname) {
 		hostname = hostname.trim();
-		if(isValidIP(hostname)){
+		if (isValidIP(hostname)) {
 			this.sbKingClient = new SBKingClient(nickname, hostname);
 			this.connectedToServer = true;
 			pool.execute(this.sbKingClient);
-		}
-		else{
+		} else {
 			logger.error("Invalid IP");
 		}
 	}
 
-	private boolean isValidIP(String ipAddr){
-         
+	private boolean isValidIP(String ipAddr) {
+
 		Pattern ptn = Pattern.compile("^(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})$");
 		Matcher mtch = ptn.matcher(ipAddr);
 		return mtch.find();
-}
+	}
 
 }

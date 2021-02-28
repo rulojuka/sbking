@@ -24,6 +24,7 @@ public class KingGame extends TrickGame {
 
 	public KingGame() {
 		this.gameScoreboard = new KingGameScoreboard();
+		this.dealNewBoard();
 	}
 
 	public void addRuleset(Ruleset currentGameModeOrStrain) {

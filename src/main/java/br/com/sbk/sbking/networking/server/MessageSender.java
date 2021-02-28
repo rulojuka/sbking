@@ -1,9 +1,10 @@
 package br.com.sbk.sbking.networking.server;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
-import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import br.com.sbk.sbking.core.Board;
 import br.com.sbk.sbking.core.Deal;
@@ -16,8 +17,8 @@ public class MessageSender {
 	private Collection<ClientGameSocket> playerSockets;
 	final static Logger logger = LogManager.getLogger(MessageSender.class);
 
-	public MessageSender(Collection<ClientGameSocket> playerSockets) {
-		this.playerSockets = playerSockets;
+	public MessageSender() {
+		this.playerSockets = new ArrayList<ClientGameSocket>();
 	}
 
 	public void addClientGameSocket(ClientGameSocket clientGameSocket) {
@@ -30,6 +31,12 @@ public class MessageSender {
 			playerSocket.sendDeal(deal);
 		}
 		logger.info("Finished sending deals.");
+	}
+
+	public void sendDealOne(Deal deal, ClientGameSocket clientGameSocket) {
+		logger.info("Sending one player the current deal");
+		clientGameSocket.sendDeal(deal);
+		logger.info("Finished sending deal.");
 	}
 
 	public void sendBoardAll(Board board) {

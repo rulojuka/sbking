@@ -21,8 +21,6 @@ public class KingGameServer extends GameServer {
 
 	final static Logger logger = LogManager.getLogger(KingGameServer.class);
 
-	private static final int NUMBER_OF_PLAYERS_AND_KIBITZERS_IN_A_GAME = 20;
-
 	private PositiveOrNegativeNotification positiveOrNegativeNotification = new PositiveOrNegativeNotification();
 	private PositiveOrNegative currentPositiveOrNegative;
 	private GameModeOrStrainNotification gameModeOrStrainNotification = new GameModeOrStrainNotification();
@@ -33,18 +31,16 @@ public class KingGameServer extends GameServer {
 
 	public KingGameServer() {
 		super();
-		this.pool = Executors.newFixedThreadPool(NUMBER_OF_PLAYERS_AND_KIBITZERS_IN_A_GAME);
+		this.game = new KingGame();
 	}
 
 	@Override
 	public void run() {
 
-		this.messageSender = new MessageSender(this.getAllSockets());
-
 		logger.info("Sleeping for 1000ms waiting for last client to setup itself");
 		sleepFor(1000);
 
-		this.messageSender.sendMessageAll("ALLCONNECTED");
+		this.table.getMessageSender().sendMessageAll("ALLCONNECTED");
 
 		this.game = new KingGame();
 		this.kingGame = (KingGame) this.game;
@@ -54,13 +50,13 @@ public class KingGameServer extends GameServer {
 
 			do {
 
-				this.messageSender.sendInitializeDealAll();
+				this.table.getMessageSender().sendInitializeDealAll();
 				logger.info("Sleeping for 500ms waiting for clients to initialize its deals.");
 				sleepFor(500);
 
-				this.messageSender.sendBoardAll(this.game.getCurrentBoard());
+				this.table.getMessageSender().sendBoardAll(this.game.getCurrentBoard());
 
-				this.messageSender.sendChooserPositiveNegativeAll(this.getCurrentPositiveOrNegativeChooser());
+				this.table.getMessageSender().sendChooserPositiveNegativeAll(this.getCurrentPositiveOrNegativeChooser());
 
 				synchronized (positiveOrNegativeNotification) {
 					// wait until object notifies - which relinquishes the lock on the object too
@@ -76,9 +72,9 @@ public class KingGameServer extends GameServer {
 				logger.info(
 						"I received that is going to be " + positiveOrNegativeNotification.getPositiveOrNegative().toString());
 				this.currentPositiveOrNegative = positiveOrNegativeNotification.getPositiveOrNegative();
-				this.messageSender.sendPositiveOrNegativeAll(this.currentPositiveOrNegative);
+				this.table.getMessageSender().sendPositiveOrNegativeAll(this.currentPositiveOrNegative);
 
-				this.messageSender.sendChooserGameModeOrStrainAll(this.getCurrentGameModeOrStrainChooser());
+				this.table.getMessageSender().sendChooserGameModeOrStrainAll(this.getCurrentGameModeOrStrainChooser());
 
 				synchronized (gameModeOrStrainNotification) {
 					// wait until object notifies - which relinquishes the lock on the object too
@@ -99,14 +95,14 @@ public class KingGameServer extends GameServer {
 
 				if (!isRulesetPermitted) {
 					logger.info("This ruleset is not permitted. Restarting choose procedure");
-					this.messageSender.sendInvalidRulesetAll();
+					this.table.getMessageSender().sendInvalidRulesetAll();
 				} else {
-					this.messageSender.sendValidRulesetAll();
+					this.table.getMessageSender().sendValidRulesetAll();
 				}
 
 			} while (!isRulesetPermitted);
 
-			this.messageSender.sendGameModeOrStrainShortDescriptionAll(this.currentGameModeOrStrain.getShortDescription());
+			this.table.getMessageSender().sendGameModeOrStrainShortDescriptionAll(this.currentGameModeOrStrain.getShortDescription());
 
 			logger.info("Sleeping for 500ms waiting for everything come out right.");
 			sleepFor(500);
@@ -115,13 +111,8 @@ public class KingGameServer extends GameServer {
 			this.kingGame.addRuleset(currentGameModeOrStrain);
 
 			Deal currentDeal = this.game.getCurrentDeal();
-			for (ClientGameSocket socket : playerSockets) {
-				PlayerGameSocket playerGameSocket = (PlayerGameSocket) socket;
-				logger.info("Socket:" + playerGameSocket);
-				logger.info("Direction:" + playerGameSocket.getDirection());
-				logger.info("Player:" + playerGameSocket.getPlayer());
-				logger.info("CurrentDeal:" + currentDeal);
-				currentDeal.setPlayerOf(playerGameSocket.getDirection(), playerGameSocket.getPlayer());
+			for (Direction direction: Direction.values()) {
+				currentDeal.setPlayerOf(direction, this.table.getPlayerOf(direction));
 			}
 
 			this.dealHasChanged = true;
@@ -130,7 +121,7 @@ public class KingGameServer extends GameServer {
 				sleepFor(500);
 				if (this.dealHasChanged) {
 					logger.info("Sending new 'round' of deals");
-					this.messageSender.sendDealAll(this.game.getCurrentDeal());
+					this.table.getMessageSender().sendDealAll(this.game.getCurrentDeal());
 					this.dealHasChanged = false;
 				}
 				synchronized (cardPlayNotification) {
@@ -154,14 +145,14 @@ public class KingGameServer extends GameServer {
 			}
 
 			this.game.finishDeal();
-			this.messageSender.sendGameScoreboardAll(this.kingGame.getGameScoreboard());
+			this.table.getMessageSender().sendGameScoreboardAll(this.kingGame.getGameScoreboard());
 
-			this.messageSender.sendFinishDealAll();
+			this.table.getMessageSender().sendFinishDealAll();
 			logger.info("Deal finished!");
 
 		}
 
-		this.messageSender.sendFinishGameAll();
+		this.table.getMessageSender().sendFinishGameAll();
 
 		logger.info("Game has ended.");
 

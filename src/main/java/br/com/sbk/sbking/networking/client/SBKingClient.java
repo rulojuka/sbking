@@ -31,7 +31,12 @@ public class SBKingClient implements Runnable {
 	private Direction positiveOrNegativeChooser;
 	private Direction GameModeOrStrainChooser;
 	private PositiveOrNegative positiveOrNegative;
+
+	private Board currentBoard;
+	private boolean boardHasChanged = true;
+
 	private Deal currentDeal;
+	private boolean dealHasChanged = true;
 
 	private boolean dealFinished;
 	private Boolean rulesetValid = null;
@@ -40,7 +45,6 @@ public class SBKingClient implements Runnable {
 
 	private KingGameScoreboard currentGameScoreboard = new KingGameScoreboard();
 
-	private Board currentBoard;
 
 	private PlayCardActionListener playCardActionListener;
 
@@ -224,7 +228,7 @@ public class SBKingClient implements Runnable {
 
 	private void setCurrentBoard(Board board) {
 		this.currentBoard = board;
-
+		this.boardHasChanged = true;
 	}
 
 	private void finishDeal() {
@@ -352,6 +356,7 @@ public class SBKingClient implements Runnable {
 
 	private void setCurrentDeal(Deal deal) {
 		this.currentDeal = deal;
+		this.dealHasChanged = true;
 	}
 
 	private void unsetCurrentDeal() {
@@ -359,9 +364,12 @@ public class SBKingClient implements Runnable {
 	}
 
 	public Deal getDeal() {
-		Deal deal = this.currentDeal;
-		this.currentDeal = null;
-		return deal;
+		this.dealHasChanged = false;
+		return this.currentDeal;
+	}
+
+	public boolean getDealHasChanged(){
+		return this.dealHasChanged;
 	}
 
 	public boolean isDealFinished() {
@@ -389,7 +397,12 @@ public class SBKingClient implements Runnable {
 	}
 
 	public Board getCurrentBoard() {
+		this.boardHasChanged = false;
 		return this.currentBoard;
+	}
+
+	public boolean getBoardHasChanged(){
+		return this.boardHasChanged;
 	}
 
 	public PlayCardActionListener getPlayCardActionListener() {
