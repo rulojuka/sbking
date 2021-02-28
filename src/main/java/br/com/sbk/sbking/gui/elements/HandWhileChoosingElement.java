@@ -14,6 +14,6 @@ public class HandWhileChoosingElement {
 	public HandWhileChoosingElement(Container contentPane, Board board, Direction direction) {
 		Hand myHand = board.getHandOf(direction);
 		Point handLocationCenter = FrameConstants.pointOfDirection.get(direction);
-		new HandElement(myHand, contentPane, null, handLocationCenter, new Player("Choosing: "), true);
+		new HandElement(myHand, contentPane, null, handLocationCenter, new Player("Choosing: "), true, direction);
 	}
 }

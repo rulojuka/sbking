@@ -37,7 +37,7 @@ public class SpectatorPainter implements Painter {
 		if (deal.isFinished()) {
 			new ScoreSummaryElement(deal, contentPane);
 		} else {
-			new AllDirectionBoardElements(deal, contentPane, actionListener);
+			new AllDirectionBoardElements(deal, contentPane, this.actionListener);
 		}
 
 		contentPane.validate();

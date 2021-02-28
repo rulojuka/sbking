@@ -40,6 +40,7 @@ public class LobbyServer {
 					logger.info("Created new gameServer");
 					GameServer gameServer = new KingGameServer();
 					this.table = new Table(connectedPlayerNetworkInformation, gameServer);
+					gameServer.setTable(table);
 					this.ownerConnected = true;
 					logger.info("Created a Table. Owner is " + connectedPlayerNetworkInformation.getSocket().getInetAddress() + "and GameServer is KingGameServer.");
 				} catch (RuntimeException e) {

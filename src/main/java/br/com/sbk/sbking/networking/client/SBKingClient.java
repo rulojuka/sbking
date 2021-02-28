@@ -8,7 +8,7 @@ import org.apache.logging.log4j.LogManager;
 import br.com.sbk.sbking.core.Board;
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
-import br.com.sbk.sbking.gui.listeners.PlayCardActionListener;
+import br.com.sbk.sbking.gui.listeners.ClientActionListener;
 import br.com.sbk.sbking.gui.models.KingGameScoreboard;
 import br.com.sbk.sbking.gui.models.PositiveOrNegative;
 import br.com.sbk.sbking.networking.core.properties.FileProperties;
@@ -46,7 +46,7 @@ public class SBKingClient implements Runnable {
 	private KingGameScoreboard currentGameScoreboard = new KingGameScoreboard();
 
 
-	private PlayCardActionListener playCardActionListener;
+	private ClientActionListener playCardActionListener;
 
 	private boolean spectator;
 
@@ -59,8 +59,8 @@ public class SBKingClient implements Runnable {
 		logger.info("Socket initialized.");
 		this.serializator = initializeSerializatorOrExit(socket);
 		logger.info("Serializator initialized.");
-		NetworkCardPlayer networkCardPlayer = new NetworkCardPlayer(this.serializator);
-		this.playCardActionListener = new PlayCardActionListener(networkCardPlayer);
+		NetworkMessageSender networkCardPlayer = new NetworkMessageSender(this.serializator);
+		this.playCardActionListener = new ClientActionListener(networkCardPlayer);
 		this.setNickname(nickname);
 		this.sendNickname(nickname);
 	}
@@ -405,7 +405,7 @@ public class SBKingClient implements Runnable {
 		return this.boardHasChanged;
 	}
 
-	public PlayCardActionListener getPlayCardActionListener() {
+	public ClientActionListener getPlayCardActionListener() {
 		return this.playCardActionListener;
 	}
 

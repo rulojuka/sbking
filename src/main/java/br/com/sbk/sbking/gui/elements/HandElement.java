@@ -4,22 +4,29 @@ import java.awt.Container;
 import java.awt.Point;
 import java.awt.event.ActionListener;
 
-import javax.swing.JLabel;
+import javax.swing.JButton;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import br.com.sbk.sbking.core.Card;
+import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.core.Hand;
 import br.com.sbk.sbking.core.Player;
 import br.com.sbk.sbking.gui.JElements.CardButton;
-import br.com.sbk.sbking.gui.JElements.SBKingLabel;
+import br.com.sbk.sbking.gui.JElements.SBKingButton;
+import br.com.sbk.sbking.gui.JElements.SitOrLeaveButton;
 import br.com.sbk.sbking.gui.models.DeckCardImageInformation;
 
 public class HandElement {
+
+	final static Logger logger = LogManager.getLogger(HandElement.class);
 
 	private static final int BETWEEN_CARDS_WIDTH = 22; /* 26 is good for the eyes. 22 to fit everything */
 	private DeckCardImageInformation deckCardImageInformation;
 
 	public HandElement(Hand hand, Container container, ActionListener actionListener, Point handCenter, Player player,
-			boolean isVisible) {
+			boolean isVisible, Direction direction) {
 		this.deckCardImageInformation = new DeckCardImageInformation();
 
 		int x_offset = ((hand.size() + 1) * BETWEEN_CARDS_WIDTH) / 2;
@@ -44,15 +51,18 @@ public class HandElement {
 			// the container
 		}
 
-		if(player == null){
-			player = new Player("Empty.");
+		JButton sitOrLeaveButton = new SitOrLeaveButton(direction);
+		sitOrLeaveButton.addActionListener(actionListener);
+		if (player == null) {
+      sitOrLeaveButton.setText("Click to seat.");
+		} else{
+      sitOrLeaveButton.setText(player.getName());
 		}
-		JLabel nameLabel = new SBKingLabel(player.getName());
-		nameLabel.setSize(200, 15);
+		
 		Point inicio = handTopLeftCorner;
 		handTopLeftCorner.translate(0, deckCardImageInformation.getCardHeight() + 5);
-		nameLabel.setLocation(inicio);
-		container.add(nameLabel);
+		sitOrLeaveButton.setLocation(inicio);
+		container.add(sitOrLeaveButton);
 	}
 
 	private Point locationOfCard(int index, Point handTopLeftCorner) {

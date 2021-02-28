@@ -12,8 +12,7 @@ import br.com.sbk.sbking.networking.core.serialization.DisconnectedObject;
 public class PlayerGameSocket extends ClientGameSocket {
 	private Direction direction;
 
-	public PlayerGameSocket(PlayerNetworkInformation playerNetworkInformation, Direction direction,
-			Table table) {
+	public PlayerGameSocket(PlayerNetworkInformation playerNetworkInformation, Direction direction, Table table) {
 		super(playerNetworkInformation, table);
 		this.direction = direction;
 	}
@@ -33,8 +32,7 @@ public class PlayerGameSocket extends ClientGameSocket {
 		Object readObject = this.serializator.tryToDeserialize(Object.class);
 		if (readObject instanceof DisconnectedObject) {
 			this.hasDisconnected = true;
-		}
-		if (readObject instanceof String) {
+		} else if (readObject instanceof String) {
 			String string = (String) readObject;
 			logger.info(this.direction + " sent this message: --" + string + "--");
 			String POSITIVE = "POSITIVE";
@@ -61,11 +59,14 @@ public class PlayerGameSocket extends ClientGameSocket {
 					}
 				}
 			}
-		}
-		if (readObject instanceof Card) {
+		} else if (readObject instanceof Card) {
 			Card playedCard = (Card) readObject;
 			logger.info(this.direction + " is trying to play the " + playedCard);
 			table.getGameServer().notifyPlayCard(playedCard, this.direction);
+		} else if (readObject instanceof Direction) {
+			Direction direction = (Direction) readObject;
+			// Leave the seat or sit in another place
+			logger.info(this.direction + " is trying to leave his sit or sit on " + direction);
 		}
 	}
 

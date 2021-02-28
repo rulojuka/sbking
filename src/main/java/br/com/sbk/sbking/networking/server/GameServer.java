@@ -21,6 +21,10 @@ public abstract class GameServer implements Runnable {
 
 	protected TrickGame game;
 
+	public void setTable(Table table) {
+		this.table = table;
+	}
+
 	protected void playCard(Card card, Direction direction) {
 		logger.info("It is currently the " + this.game.getCurrentDeal().getCurrentPlayer() + " turn");
 		try {

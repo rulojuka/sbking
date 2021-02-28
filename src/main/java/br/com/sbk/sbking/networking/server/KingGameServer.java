@@ -1,9 +1,5 @@
 package br.com.sbk.sbking.networking.server;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.concurrent.Executors;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -30,7 +26,6 @@ public class KingGameServer extends GameServer {
 	private KingGame kingGame;
 
 	public KingGameServer() {
-		super();
 		this.game = new KingGame();
 	}
 
@@ -102,7 +97,8 @@ public class KingGameServer extends GameServer {
 
 			} while (!isRulesetPermitted);
 
-			this.table.getMessageSender().sendGameModeOrStrainShortDescriptionAll(this.currentGameModeOrStrain.getShortDescription());
+			this.table.getMessageSender()
+					.sendGameModeOrStrainShortDescriptionAll(this.currentGameModeOrStrain.getShortDescription());
 
 			logger.info("Sleeping for 500ms waiting for everything come out right.");
 			sleepFor(500);
@@ -111,7 +107,7 @@ public class KingGameServer extends GameServer {
 			this.kingGame.addRuleset(currentGameModeOrStrain);
 
 			Deal currentDeal = this.game.getCurrentDeal();
-			for (Direction direction: Direction.values()) {
+			for (Direction direction : Direction.values()) {
 				currentDeal.setPlayerOf(direction, this.table.getPlayerOf(direction));
 			}
 

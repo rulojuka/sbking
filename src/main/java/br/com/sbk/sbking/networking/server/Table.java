@@ -1,12 +1,12 @@
 package br.com.sbk.sbking.networking.server;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.function.Predicate;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -47,10 +47,30 @@ public class Table {
     if (currentSeatedPlayer != null) {
       logger.info("Trying to seat in an occupied seat. Ignoring request.");
     } else {
+      this.removeFromSpectatorsAndPlayers(playerNetworkInformation);
       PlayerGameSocket currentPlayerGameSocket = new PlayerGameSocket(playerNetworkInformation, direction, this);
       this.playerSockets.put(direction, currentPlayerGameSocket);
       pool.execute(currentPlayerGameSocket);
     }
+
+    //TODO remove this
+    if(playerSockets.size()==4){
+      this.gameServer.run();
+    }
+  }
+
+  private void removeFromSpectatorsAndPlayers(PlayerNetworkInformation playerNetworkInformation){
+    Predicate<SpectatorGameSocket> predicate = sock->(sock.playerNetworkInformation.equals(playerNetworkInformation)); 
+    spectatorSockets.removeIf(predicate);
+
+    for (Direction direction : Direction.values()) {
+      PlayerGameSocket playerGameSocket = playerSockets.get(direction);
+      if(playerGameSocket != null && playerGameSocket.playerNetworkInformation.equals(playerNetworkInformation)){
+        logger.info("Removing player from " + direction.getCompleteName());
+        playerSockets.remove(direction);
+      }
+    }
+
   }
 
   public void addSpectator(PlayerNetworkInformation playerNetworkInformation) {

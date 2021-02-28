@@ -3,6 +3,7 @@ package br.com.sbk.sbking.networking.server;
 import java.io.IOException;
 
 import br.com.sbk.sbking.core.Card;
+import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.networking.core.serialization.DisconnectedObject;
 
 public class SpectatorGameSocket extends ClientGameSocket {
@@ -21,9 +22,7 @@ public class SpectatorGameSocket extends ClientGameSocket {
 		Object readObject = this.serializator.tryToDeserialize(Object.class);
 		if (readObject instanceof DisconnectedObject) {
 			this.hasDisconnected = true;
-		}
-
-		if (readObject instanceof String) {
+		} else if (readObject instanceof String) {
 			String string = (String) readObject;
 			logger.info("A spectator sent this message: --" + string + "--");
 			String NICKNAME = "NICKNAME";
@@ -32,10 +31,14 @@ public class SpectatorGameSocket extends ClientGameSocket {
 				logger.info("Setting new nickname: --" + nickname + "--");
 				this.playerNetworkInformation.setNickname(nickname);
 			}
-		}
-		if (readObject instanceof Card) {
+		} else if (readObject instanceof Card) {
 			Card playedCard = (Card) readObject;
 			logger.info("A spectator is trying to play the " + playedCard);
+		} else if (readObject instanceof Direction) {
+			Direction direction = (Direction) readObject;
+			// Sit in direction
+			logger.info("A spectator is trying to sit on " + direction);
+			this.table.addPlayer(this.playerNetworkInformation, direction);
 		}
 	}
 
