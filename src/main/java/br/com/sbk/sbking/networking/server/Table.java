@@ -51,6 +51,8 @@ public class Table {
       PlayerGameSocket currentPlayerGameSocket = new PlayerGameSocket(playerNetworkInformation, direction, this);
       this.playerSockets.put(direction, currentPlayerGameSocket);
       pool.execute(currentPlayerGameSocket);
+      this.gameServer.getDeal().setPlayerOf(direction, playerNetworkInformation.getPlayer());
+      this.messageSender.sendDealAll(this.gameServer.getDeal()); // For some reason this is arriving before the client knows it is not a spectator anymore
     }
 
     //TODO remove this
@@ -78,7 +80,7 @@ public class Table {
     this.spectatorSockets.add(spectatorGameSocket);
     this.messageSender.addClientGameSocket(spectatorGameSocket);
     logger.info("Info do spectator:" + spectatorGameSocket);
-    this.messageSender.sendBoardAll(this.gameServer.getBoard());
+    this.messageSender.sendDealAll(this.gameServer.getDeal());
     pool.execute(spectatorGameSocket);
   }
 

@@ -148,4 +148,14 @@ public abstract class ClientGameSocket implements Runnable {
 		this.serializator.tryToSerialize(control);
 	}
 
+	public void sendIsSpectator() {
+		String control = "ISSPECTATOR";
+		this.serializator.tryToSerialize(control);
+	}
+
+	public void sendIsNotSpectator() {
+		String control = "ISNOTSPECTATOR";
+		this.serializator.tryToSerialize(control);
+	}
+
 }

@@ -149,6 +149,7 @@ public class SBKingClient implements Runnable {
 		final String INVALIDRULESET = "INVALIDRULESET";
 		final String VALIDRULESET = "VALIDRULESET";
 		final String ISSPECTATOR = "ISSPECTATOR";
+		final String ISNOTSPECTATOR = "ISNOTSPECTATOR";
 
 		if (MESSAGE.equals(controlMessage)) {
 			String string = this.serializator.tryToDeserialize(String.class);
@@ -213,6 +214,9 @@ public class SBKingClient implements Runnable {
 		} else if (ISSPECTATOR.equals(controlMessage)) {
 			this.spectator = true;
 			logger.info("Received ISSPECTATOR.");
+		} else if (ISNOTSPECTATOR.equals(controlMessage)) {
+			this.spectator = false;
+			logger.info("Received ISNOTSPECTATOR.");
 		} else {
 			logger.error("Could not understand control.");
 		}

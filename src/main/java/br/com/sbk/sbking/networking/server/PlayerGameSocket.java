@@ -24,6 +24,7 @@ public class PlayerGameSocket extends ClientGameSocket {
 	@Override
 	protected void setup() throws IOException, InterruptedException {
 		super.waitForClientSetup();
+		this.sendIsNotSpectator();
 		this.sendDirection(direction);
 	}
 

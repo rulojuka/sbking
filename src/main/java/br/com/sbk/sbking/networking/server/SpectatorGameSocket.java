@@ -42,9 +42,4 @@ public class SpectatorGameSocket extends ClientGameSocket {
 		}
 	}
 
-	public void sendIsSpectator() {
-		String control = "ISSPECTATOR";
-		this.serializator.tryToSerialize(control);
-	}
-
 }

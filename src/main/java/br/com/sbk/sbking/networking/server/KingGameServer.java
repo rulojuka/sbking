@@ -7,6 +7,7 @@ import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.core.KingGame;
+import br.com.sbk.sbking.core.Player;
 import br.com.sbk.sbking.core.exceptions.SelectedPositiveOrNegativeInAnotherPlayersTurnException;
 import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
 import br.com.sbk.sbking.gui.models.PositiveOrNegative;
@@ -41,7 +42,12 @@ public class KingGameServer extends GameServer {
 		this.kingGame = (KingGame) this.game;
 
 		while (!game.isFinished()) {
-			this.game.dealNewBoard();
+			this.game.dealNewBoard(); // Perhaps this should be at the end of do/while
+
+			for (Direction direction : Direction.values()) {
+				Player player = this.table.getPlayerOf(direction);
+				this.game.setPlayerOf(direction, player);
+			}
 
 			do {
 
