@@ -3,12 +3,11 @@ package br.com.sbk.sbking.gui.painters;
 import java.awt.Container;
 import java.awt.event.ActionListener;
 
-import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
-import br.com.sbk.sbking.gui.elements.ScoreSummaryElement;
 import br.com.sbk.sbking.gui.elements.SpecificDirectionBoardElements;
 
 public class DealPainter implements Painter {
@@ -30,11 +29,13 @@ public class DealPainter implements Painter {
 		logger.info("Painting deal that contains this trick: " + deal.getCurrentTrick());
 		contentPane.removeAll();
 
-		if (deal.isFinished()) {
-			new ScoreSummaryElement(deal, contentPane);
-		} else {
-			new SpecificDirectionBoardElements(this.direction, deal, contentPane, actionListener);
-		}
+		// This should be uncommented when there is a good way to show the last card for
+		// a second before showing the scoresummary
+		// if (deal.isFinished()) {
+		// new ScoreSummaryElement(deal, contentPane);
+		// } else {
+		new SpecificDirectionBoardElements(this.direction, deal, contentPane, actionListener);
+		// }
 
 		contentPane.validate();
 		contentPane.repaint();

@@ -56,11 +56,6 @@ public class Table {
       this.messageSender.sendDealAll(this.gameServer.getDeal());
     }
 
-    // TODO remove this
-    if (playerSockets.size() == 4) {
-      this.gameServer.run();
-    }
-
     logAllSockets();
   }
 
@@ -94,10 +89,6 @@ public class Table {
       this.messageSender.sendDealAll(this.gameServer.getDeal());
     }
 
-    // TODO remove this
-    if (playerSockets.size() == 4) {
-      this.gameServer.run();
-    }
     logAllSockets();
   }
 

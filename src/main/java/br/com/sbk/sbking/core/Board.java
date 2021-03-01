@@ -1,7 +1,9 @@
 package br.com.sbk.sbking.core;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @SuppressWarnings("serial")
@@ -32,6 +34,15 @@ public class Board implements Serializable {
 		for (Direction direction : Direction.values()) {
 			this.getHandOf(direction).sort();
 		}
+	}
+
+	public List<Card> removeOneCardFromEachHand(){
+		List<Card> removedCards = new ArrayList<Card>();
+		for (Direction direction : Direction.values()) {
+			Card removedCard = this.getHandOf(direction).removeOneRandomCard();
+			removedCards.add(removedCard);
+		}
+		return removedCards;
 	}
 
 	@Override

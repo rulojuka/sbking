@@ -18,6 +18,7 @@ public class Deal implements Serializable {
 
 	private Board board;
 	private int completedTricks;
+	private int startingNumberOfCardsInTheHand;
 	private Direction currentPlayer;
 	private Score score;
 	private Map<Direction, Player> players = new HashMap<Direction, Player>();
@@ -33,6 +34,7 @@ public class Deal implements Serializable {
 		this.currentPlayer = this.board.getDealer().getLeaderWhenDealer();
 		this.score = new Score(ruleset);
 		this.completedTricks = 0;
+		this.startingNumberOfCardsInTheHand = NUMBER_OF_TRICKS_IN_A_COMPLETE_HAND;
 		this.tricks = new ArrayList<Trick>();
 		this.players = new HashMap<Direction, Player>();
 	}
@@ -88,7 +90,7 @@ public class Deal implements Serializable {
 	}
 
 	private boolean allTricksPlayed() {
-		return this.completedTricks == NUMBER_OF_TRICKS_IN_A_COMPLETE_HAND;
+		return this.completedTricks == startingNumberOfCardsInTheHand;
 	}
 
 	public int getCompletedTricks() {
@@ -242,6 +244,10 @@ public class Deal implements Serializable {
 
 	public Score getScore() {
 		return this.score;
+	}
+
+	public void setStartingNumberOfCardsInTheHand(int startingNumberOfCardsInTheHand) {
+		this.startingNumberOfCardsInTheHand = startingNumberOfCardsInTheHand;
 	}
 
 }

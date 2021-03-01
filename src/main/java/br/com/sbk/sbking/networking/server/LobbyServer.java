@@ -3,6 +3,8 @@ package br.com.sbk.sbking.networking.server;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -25,6 +27,13 @@ public class LobbyServer {
 
 	private boolean ownerConnected = false;
 
+	private static final int MAXIMUM_NUMBER_OF_CONCURRENT_GAME_SERVERS = 2;
+	private ExecutorService pool;
+
+	public LobbyServer() {
+		this.pool = Executors.newFixedThreadPool(MAXIMUM_NUMBER_OF_CONCURRENT_GAME_SERVERS);
+	}
+
 	public void run() {
 		int port = this.getPortFromNetworkingProperties();
 
@@ -35,15 +44,18 @@ public class LobbyServer {
 
 			while (!ownerConnected) {
 				Socket connectingSocket = listener.accept();
+				logger.info("The first client is trying to connect!");
 				try {
 					PlayerNetworkInformation connectedPlayerNetworkInformation = this.connectPlayer(connectingSocket);
 					logger.info("Created new gameServer");
-					GameServer gameServer = new KingGameServer();
+					GameServer gameServer = new CagandoNoBequinhoGameServer();
 					
 					this.table = new Table(connectedPlayerNetworkInformation, gameServer);
 					gameServer.setTable(table);
 					this.ownerConnected = true;
-					logger.info("Created a Table. Owner is " + connectedPlayerNetworkInformation.getSocket().getInetAddress() + "and GameServer is KingGameServer.");
+					logger.info("Created a Table. Owner is " + connectedPlayerNetworkInformation.getSocket().getInetAddress() + "and GameServer is CagandoNoBequinhoGameServer.");
+					pool.execute(gameServer);
+					logger.info("Executing gameServer in the pool.");
 				} catch (RuntimeException e) {
 					logger.error(e.getMessage());
 				}
@@ -51,6 +63,7 @@ public class LobbyServer {
 			
 			while (true) {
 				Socket connectingPlayerSocket = listener.accept();
+				logger.info("Someone is trying to connect!");
 				try {
 					PlayerNetworkInformation connectedPlayer = this.connectPlayer(connectingPlayerSocket);
 					this.table.addSpectator(connectedPlayer);
