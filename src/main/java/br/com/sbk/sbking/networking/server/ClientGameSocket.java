@@ -150,7 +150,7 @@ public class ClientGameSocket implements Runnable {
 	}
 
 	private void waitForClientSetup() throws IOException, InterruptedException {
-		logger.info("Sleeping for 500ms waiting for client to setup itself");
+		logger.info("Sleeping for 300ms waiting for client to setup itself");
 		Thread.sleep(300);
 	}
 

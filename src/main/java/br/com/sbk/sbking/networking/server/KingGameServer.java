@@ -33,8 +33,8 @@ public class KingGameServer extends GameServer {
 	@Override
 	public void run() {
 
-		logger.info("Sleeping for 1000ms waiting for last client to setup itself");
-		sleepFor(1000);
+		logger.info("Sleeping for 500ms waiting for last client to setup itself");
+		sleepFor(500);
 
 		this.table.getMessageSender().sendMessageAll("ALLCONNECTED");
 
@@ -52,8 +52,8 @@ public class KingGameServer extends GameServer {
 			do {
 
 				this.table.getMessageSender().sendInitializeDealAll();
-				logger.info("Sleeping for 500ms waiting for clients to initialize its deals.");
-				sleepFor(500);
+				logger.info("Sleeping for 300ms waiting for clients to initialize its deals.");
+				sleepFor(300);
 
 				this.table.getMessageSender().sendBoardAll(this.game.getCurrentBoard());
 
@@ -106,8 +106,8 @@ public class KingGameServer extends GameServer {
 			this.table.getMessageSender()
 					.sendGameModeOrStrainShortDescriptionAll(this.currentGameModeOrStrain.getShortDescription());
 
-			logger.info("Sleeping for 500ms waiting for everything come out right.");
-			sleepFor(500);
+			logger.info("Sleeping for 300ms waiting for everything come out right.");
+			sleepFor(300);
 
 			logger.info("Everything selected! Game commencing!");
 			this.kingGame.addRuleset(currentGameModeOrStrain);
@@ -119,8 +119,8 @@ public class KingGameServer extends GameServer {
 
 			this.dealHasChanged = true;
 			while (!this.game.getCurrentDeal().isFinished()) {
-				logger.info("Sleeping for 500ms waiting for all clients to prepare themselves.");
-				sleepFor(500);
+				logger.info("Sleeping for 300ms waiting for all clients to prepare themselves.");
+				sleepFor(300);
 				if (this.dealHasChanged) {
 					logger.info("Sending new 'round' of deals");
 					this.table.getMessageSender().sendDealAll(this.game.getCurrentDeal());

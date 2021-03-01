@@ -221,11 +221,10 @@ public class SBKingClient implements Runnable {
 			logger.error("Could not understand control.");
 		}
 
-		// FIXME
+		// FIXME remove this if possible
 		try {
-			Thread.sleep(1000);
+			Thread.sleep(300);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

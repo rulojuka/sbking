@@ -97,88 +97,8 @@ public class NetworkClientScreen extends JFrame {
 				}
 
 			}
-				sleepFor(1000);
+				sleepFor(300);
 		}
-
-		// logger.info("Starting to paint WaitingForPlayersScreen");
-		// paintWaitingForPlayersScreen();
-		// logger.info("Finished painting WaitingForPlayersScreen");
-
-		// logger.info("Waiting for sbKingClient.isEveryoneConnected() to be true");
-		// while (!sbKingClient.isEveryoneConnected()) {
-		// 	sleepFor(100);
-		// }
-
-		// while (true) {
-
-		// 	logger.info(
-		// 			"Waiting for sbKingClient.isPositiveOrNegativeChooserSet() or sbKingClient.isGameFinished() to be true");
-		// 	while (!sbKingClient.isPositiveOrNegativeChooserSet() && !sbKingClient.isGameFinished()) {
-		// 		sleepFor(100);
-		// 	}
-
-		// 	if (sbKingClient.isGameFinished()) {
-		// 		logger.info("Game is finished. Exiting main loop");
-		// 		break;
-		// 	}
-
-		// 	logger.info("Starting to paint WaitingForChoosingScreen");
-		// 	paintWaitingForChoosingPositiveOrNegativeScreen(sbKingClient.getDirection(),
-		// 			sbKingClient.getPositiveOrNegativeChooser());
-		// 	logger.info("Finished painting WaitingForChoosingScreen");
-
-		// 	logger.info("Waiting for sbKingClient.isPositiveOrNegativeSelected() to be true");
-		// 	while (!sbKingClient.isPositiveOrNegativeSelected()) {
-		// 		sleepFor(100);
-		// 	}
-		// 	boolean isPositive = this.sbKingClient.isPositive();
-		// 	logger.info("Received PositiveOrNegative from server.");
-
-		// 	logger.info("Waiting for sbKingClient.isGameModeOrStrainChooserSet() to be true");
-		// 	while (!sbKingClient.isGameModeOrStrainChooserSet()) {
-		// 		sleepFor(100);
-		// 	}
-
-		// 	logger.info("Starting to paint WaitingForChoosingGameModeOrStrainScreen");
-		// 	paintWaitingForChoosingGameModeOrStrainScreen(sbKingClient.getDirection(),
-		// 			sbKingClient.getGameModeOrStrainChooser(), isPositive);
-		// 	logger.info("Finished painting WaitingForChoosingGameModeOrStrainScreen");
-
-		// 	logger.info("Waiting for server to valid chosen Ruleset");
-		// 	while (!sbKingClient.isRulesetValidSet()) {
-		// 		sleepFor(100);
-		// 	}
-		// 	if (!sbKingClient.isRulesetValid()) {
-		// 		logger.info("Chosen Ruleset is invalid, sleeping for 2 seconds while client cleans itself");
-		// 		sleepFor(2000);
-		// 		logger.info("Returning to beginning of loop");
-		// 		continue;
-		// 	}
-
-		// 	while (!sbKingClient.isDealFinished() && !sbKingClient.newDealAvailable()) {
-		// 		sleepFor(100);
-		// 		if (sbKingClient.newDealAvailable()) {
-		// 			Deal currentDeal = sbKingClient.getDeal();
-
-		// 			logger.info("Starting to paint Deal");
-		// 			paintDeal(currentDeal, sbKingClient.getDirection(), sbKingClient.getPlayCardActionListener());
-		// 			logger.info("Finished painting Deal");
-		// 		}
-
-		// 	}
-
-		// 	logger.info("Sleeping for 2000 ms to wait for FINISHGAME");
-		// 	sleepFor(2000);
-
-		// }
-
-		// logger.info("Starting to paint paintFinalScoreboardScreen");
-		// paintFinalScoreboardScreen();
-		// logger.info("Finished painting paintFinalScoreboardScreen");
-
-		// logger.info("Final scoreboard painted. Waiting for 10 seconds before exiting.");
-		// sleepFor(10000);
-		// logger.info("Game finished!");
 	}
 
 	private void sleepFor(int miliseconds) {
@@ -199,33 +119,9 @@ public class NetworkClientScreen extends JFrame {
 		paintPainter(connectToServerPainter);
 	}
 
-	private void paintWaitingForPlayersScreen() {
-		Painter waitingForPlayersPainter = new WaitingForPlayersPainter(sbKingClient.getDirection());
-		paintPainter(waitingForPlayersPainter);
-	}
-
-	private void paintWaitingForChoosingPositiveOrNegativeScreen(Direction myDirection, Direction chooserDirection) {
-		Painter waitingForChoosingPainter = new WaitingForChoosingPositiveOrNegativePainter(myDirection, chooserDirection,
-				this.sbKingClient, this.sbKingClient.getCurrentGameScoreboard());
-		paintPainter(waitingForChoosingPainter);
-
-	}
-
-	private void paintWaitingForChoosingGameModeOrStrainScreen(Direction direction, Direction chooser,
-			boolean isPositive) {
-		Painter waitingForChoosingGameModeOrStrainPainter = new WaitingForChoosingGameModeOrStrainPainter(direction,
-				chooser, isPositive, this.sbKingClient, this.sbKingClient.getCurrentGameScoreboard());
-		paintPainter(waitingForChoosingGameModeOrStrainPainter);
-	}
-
 	private void paintDeal(Deal deal, Direction direction, ActionListener playCardActionListener) {
 		Painter dealPainter = new DealPainter(playCardActionListener, direction, deal);
 		paintPainter(dealPainter);
-	}
-
-	private void paintFinalScoreboardScreen() {
-		Painter finalScoreboardPainter = new FinalScoreboardPainter(this.sbKingClient.getCurrentGameScoreboard());
-		paintPainter(finalScoreboardPainter);
 	}
 
 	private void paintSpectatorScreen(Deal deal, ActionListener playCardActionListener) {
