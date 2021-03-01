@@ -71,11 +71,11 @@ public class NetworkClientScreen extends JFrame {
 			sleepFor(100);
 		}
 
-		logger.info("It is a spectator. Painting the spectator screen");
 		while (true) {
 			if(sbKingClient.isSpectator()){
-
 				if(sbKingClient.getBoardHasChanged() || sbKingClient.getDealHasChanged()){
+					logger.info("Deal has changed. Painting deal.");
+					logger.info("It is a spectator.");
 					Deal currentDeal = sbKingClient.getDeal();
 					Board currentBoard = sbKingClient.getCurrentBoard();
 					if (currentDeal == null) {
@@ -87,6 +87,8 @@ public class NetworkClientScreen extends JFrame {
 			}
 			else{
 				if (sbKingClient.getDealHasChanged()) {
+					logger.info("Deal has changed. Painting deal.");
+					logger.info("It is a player.");
 					Deal currentDeal = sbKingClient.getDeal();
 
 					logger.info("Starting to paint Deal");
@@ -95,7 +97,7 @@ public class NetworkClientScreen extends JFrame {
 				}
 
 			}
-				sleepFor(100);
+				sleepFor(1000);
 		}
 
 		// logger.info("Starting to paint WaitingForPlayersScreen");

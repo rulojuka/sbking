@@ -59,7 +59,7 @@ public class SBKingClient implements Runnable {
 		logger.info("Socket initialized.");
 		this.serializator = initializeSerializatorOrExit(socket);
 		logger.info("Serializator initialized.");
-		NetworkMessageSender networkCardPlayer = new NetworkMessageSender(this.serializator);
+		ClientToServerMessageSender networkCardPlayer = new ClientToServerMessageSender(this.serializator);
 		this.playCardActionListener = new ClientActionListener(networkCardPlayer);
 		this.setNickname(nickname);
 		this.sendNickname(nickname);

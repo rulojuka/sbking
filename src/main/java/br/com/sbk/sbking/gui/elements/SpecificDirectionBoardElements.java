@@ -14,13 +14,13 @@ public class SpecificDirectionBoardElements {
 			ActionListener actionListener) {
 
 		for (Direction currentDirection : Direction.values()) {
-			if (direction.equals(currentDirection)) {
+			if (currentDirection.equals(direction)) {
 				new HandElement(deal.getHandOf(currentDirection), container, actionListener,
 						FrameConstants.pointOfDirection.get(currentDirection), deal.getPlayerOf(currentDirection), true, direction);
 			} else {
 				new HandElement(deal.getHandOf(currentDirection), container, actionListener,
 						FrameConstants.pointOfDirection.get(currentDirection), deal.getPlayerOf(currentDirection), false,
-						direction);
+						currentDirection);
 			}
 		}
 

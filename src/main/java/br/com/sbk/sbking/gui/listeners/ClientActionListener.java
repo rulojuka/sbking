@@ -8,15 +8,15 @@ import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.gui.JElements.CardButton;
 import br.com.sbk.sbking.gui.JElements.SBKingButton;
 import br.com.sbk.sbking.gui.JElements.SitOrLeaveButton;
-import br.com.sbk.sbking.networking.client.NetworkMessageSender;
+import br.com.sbk.sbking.networking.client.ClientToServerMessageSender;
 
 public class ClientActionListener implements java.awt.event.ActionListener {
 
 	final static Logger logger = LogManager.getLogger(ClientActionListener.class);
 
-	private NetworkMessageSender networkMessageSender;
+	private ClientToServerMessageSender networkMessageSender;
 
-	public ClientActionListener(NetworkMessageSender networkCardPlayer) {
+	public ClientActionListener(ClientToServerMessageSender networkCardPlayer) {
 		super();
 		this.networkMessageSender = networkCardPlayer;
 	}
@@ -38,7 +38,7 @@ public class ClientActionListener implements java.awt.event.ActionListener {
 		} else if (source instanceof SitOrLeaveButton) {
 			SitOrLeaveButton clickedSitOrLeaveButton = (SitOrLeaveButton) source;
 			Direction direction = (Direction) clickedSitOrLeaveButton.getClientProperty("direction");
-			networkMessageSender.sit(direction);
+			networkMessageSender.sitOrLeave(direction);
 			logger.info("Pedindo para sentar ou sair em: " + direction.getCompleteName());
 		}
 

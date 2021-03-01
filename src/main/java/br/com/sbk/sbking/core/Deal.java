@@ -45,6 +45,10 @@ public class Deal implements Serializable {
 		this.players.put(direction, player);
 	}
 
+	public void unsetPlayerOf(Direction direction) {
+		this.players.remove(direction);
+	}
+
 	public Hand getHandOf(Direction direction) {
 		return this.board.getHandOf(direction);
 	}
