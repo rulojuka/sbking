@@ -63,6 +63,10 @@ or follow the `digital-ocean-ubuntu-18-04.sh` script if the docker version is no
 
 ### Pushing to DockerHub
 ```
+# docker ps -a # To discover unused containers
+# docker rm CONTAINER-ID # To remove them
+# docker images # To see images
+# docker rmi IMAGE-ID # To remove them
 make build
 docker login
 docker images # To discover the image id
