@@ -8,7 +8,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.net.URL;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 import org.apache.logging.log4j.LogManager;
@@ -37,6 +39,8 @@ public abstract class NetworkClientScreen extends JFrame {
 		this.setVisible(true);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(TABLE_WIDTH, TABLE_HEIGHT);
+
+		this.setApplicationIcon();
 	}
 
 	private void initializeContentPane() {
@@ -58,10 +62,19 @@ public abstract class NetworkClientScreen extends JFrame {
 	}
 
 	private boolean isValidIP(String ipAddr) {
-
 		Pattern ptn = Pattern.compile("^(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})$");
 		Matcher mtch = ptn.matcher(ipAddr);
 		return mtch.find();
 	}
 
+	private void setApplicationIcon() {
+		String imagePath = "/images/logo/logo.jpg";
+		URL logo_url = getClass().getResource(imagePath);
+
+		// Prevents an application crash in case image is non-existent.
+		if (logo_url != null) {
+			ImageIcon img = new ImageIcon(logo_url);
+			this.setIconImage(img.getImage());
+		}
+	}
 }
