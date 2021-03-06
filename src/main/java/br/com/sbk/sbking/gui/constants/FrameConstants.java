@@ -19,7 +19,7 @@ public final class FrameConstants {
 	public static Map<Direction, Point> pointOfDirection = new HashMap<Direction, Point>();
 
 	public static void initFrameConstants() {
-		computeConstants(1024, 768);		
+		computeConstants(1360, 1024);		
 	}
 
 	public static void computeConstants(int newWidth, int newHeight) {

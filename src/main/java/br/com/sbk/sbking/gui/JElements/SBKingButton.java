@@ -10,7 +10,5 @@ public class SBKingButton extends JButton {
 		this.setContentAreaFilled(false); /* Paint always in the same order??? */
 
 		this.setForeground(new java.awt.Color(255, 255, 255));
-
 	}
-
 }
