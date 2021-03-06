@@ -1,5 +1,4 @@
 APP_NAME=sbking
-# WIN_NAME=MINGW64_NT-10.0-18363
 
 build:
 	docker build -t $(APP_NAME) .
