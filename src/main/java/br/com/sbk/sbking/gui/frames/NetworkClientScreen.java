@@ -154,7 +154,6 @@ public class NetworkClientScreen extends JFrame {
 	}
 
 	private boolean isValidIP(String ipAddr) {
-
 		Pattern ptn = Pattern.compile("^(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})$");
 		Matcher mtch = ptn.matcher(ipAddr);
 		return mtch.find();
