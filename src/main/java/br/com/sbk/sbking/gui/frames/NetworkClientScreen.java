@@ -158,5 +158,4 @@ public class NetworkClientScreen extends JFrame {
 		Matcher mtch = ptn.matcher(ipAddr);
 		return mtch.find();
 	}
-
 }
