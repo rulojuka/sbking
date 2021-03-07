@@ -97,7 +97,7 @@ public class NetworkClientScreen extends JFrame {
 				}
 
 			}
-				sleepFor(300);
+			sleepFor(300);
 		}
 	}
 
