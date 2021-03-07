@@ -44,9 +44,11 @@ public class PositiveKingNetworkClientScreen extends NetworkClientScreen {
 		while (true) {
 			sleepFor(300);
 			if (sbKingClient.isSpectator()) {
-				if (sbKingClient.getBoardHasChanged() || sbKingClient.getDealHasChanged()) {
-					logger.info("Deal has changed. Painting deal.");
-					logger.info("It is a spectator.");
+				if (sbKingClient.getBoardHasChanged() || sbKingClient.getDealHasChanged() || sbKingClient.getGUIHasChanged()) {
+					if (!sbKingClient.getGUIHasChanged()) {
+						logger.info("Deal has changed. Painting deal.");
+						logger.info("It is a spectator.");
+					}
 					Deal currentDeal = sbKingClient.getDeal();
 					Board currentBoard = sbKingClient.getCurrentBoard();
 					if (currentDeal == null) {
@@ -57,9 +59,11 @@ public class PositiveKingNetworkClientScreen extends NetworkClientScreen {
 				}
 			} else {
 				sleepFor(1000); // Waiting
-				if (sbKingClient.getDealHasChanged()) {
-					logger.info("Deal has changed. Painting deal.");
-					logger.info("It is a player.");
+				if (sbKingClient.getDealHasChanged() || sbKingClient.getGUIHasChanged()) {
+					if (!sbKingClient.getGUIHasChanged()) {
+						logger.info("Deal has changed. Painting deal.");
+						logger.info("It is a player.");
+					}
 					logger.info("Starting to paint Deal");
 					paintDeal(sbKingClient.getDeal(), sbKingClient.getDirection(), sbKingClient.getPlayCardActionListener());
 					logger.info("Finished painting Deal");

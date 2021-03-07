@@ -4,11 +4,13 @@ import static br.com.sbk.sbking.gui.constants.FrameConstants.TABLE_COLOR;
 import static br.com.sbk.sbking.gui.constants.FrameConstants.TABLE_HEIGHT;
 import static br.com.sbk.sbking.gui.constants.FrameConstants.TABLE_WIDTH;
 
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.net.URL;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.net.URL;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -16,12 +18,13 @@ import javax.swing.JFrame;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import br.com.sbk.sbking.gui.constants.FrameConstants;
 import br.com.sbk.sbking.networking.client.SBKingClient;
 
 @SuppressWarnings("serial")
 public abstract class NetworkClientScreen extends JFrame {
 
-  final static Logger logger = LogManager.getLogger(NetworkClientScreen.class);
+	final static Logger logger = LogManager.getLogger(NetworkClientScreen.class);
 
 	protected boolean connectedToServer = false;
 	protected SBKingClient sbKingClient;
@@ -46,6 +49,19 @@ public abstract class NetworkClientScreen extends JFrame {
 	private void initializeContentPane() {
 		getContentPane().setLayout(null);
 		getContentPane().setBackground(TABLE_COLOR);
+		NetworkClientScreen screen = this;
+		this.addComponentListener(new ComponentAdapter() {
+			public void componentResized(ComponentEvent componentEvent) {
+				// Recompute frame constants.
+				FrameConstants.computeConstants(screen.getWidth(), screen.getHeight());
+
+				// Connecting screen has no sbKingClient to store the GUI invalidation flag.
+				if (sbKingClient != null) {
+					// Invalidating the client's GUI flag provekes a Pane repaint on the main loop.
+					sbKingClient.setGUIHasChanged(true);
+				}
+			}
+		});
 	}
 
 	public abstract void run();
