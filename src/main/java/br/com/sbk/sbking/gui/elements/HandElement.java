@@ -26,7 +26,7 @@ public class HandElement {
 	private DeckCardImageInformation deckCardImageInformation;
 
 	public HandElement(Hand hand, Container container, ActionListener actionListener, Point handCenter, Player player,
-			boolean isVisible, Direction direction) {
+		boolean isVisible, Direction direction) {
 		this.deckCardImageInformation = new DeckCardImageInformation();
 
 		int x_offset = ((hand.size() + 1) * BETWEEN_CARDS_WIDTH) / 2;
@@ -54,14 +54,14 @@ public class HandElement {
 		JButton sitOrLeaveButton = new SitOrLeaveButton(direction);
 		sitOrLeaveButton.addActionListener(actionListener);
 		if (player == null) {
-      sitOrLeaveButton.setText("Click to seat.");
+			sitOrLeaveButton.setText("Click to seat.");
 		} else{
-      sitOrLeaveButton.setText(player.getName());
+			sitOrLeaveButton.setText(player.getName());
 		}
 		
-		Point inicio = handTopLeftCorner;
+		Point startingPoint = handTopLeftCorner;
 		handTopLeftCorner.translate(0, deckCardImageInformation.getCardHeight() + 5);
-		sitOrLeaveButton.setLocation(inicio);
+		sitOrLeaveButton.setLocation(startingPoint);
 		container.add(sitOrLeaveButton);
 	}
 
