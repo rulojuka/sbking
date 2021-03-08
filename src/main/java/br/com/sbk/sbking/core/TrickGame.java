@@ -9,8 +9,8 @@ public abstract class TrickGame {
 	protected Direction dealer = Direction.NORTH;
 
 	public void dealNewBoard() {
-		BoardDealer boardDealer = new BoardDealer();
-		this.currentBoard = boardDealer.dealBoard(this.dealer, new ShuffledDeck());
+		BoardDealer boardDealer = new FourteenHCPPlusDoubletonRuledBoardDealer();
+		this.currentBoard = boardDealer.dealBoard(this.dealer);
 		this.currentDeal = new Deal(currentBoard, new PositiveNoTrumpsRuleset()); // This should be a NoRuleset
 	}
 

@@ -13,7 +13,7 @@ public class CagandoNoBequinhoGame extends TrickGame {
 
 	public CagandoNoBequinhoGame() {
 		super();
-		this.currentNumberOfCardsInAHand = 2;
+		this.currentNumberOfCardsInAHand = 13;
 		this.dealNewBoard();
 	}
 

@@ -5,6 +5,9 @@ import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.only;
 import static org.mockito.Mockito.verify;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -12,21 +15,17 @@ import org.mockito.Mockito;
 public class BoardTest {
 
 	private Direction dealer;
-	private Hand northHand;
-	private Hand eastHand;
-	private Hand southHand;
-	private Hand westHand;
 	private Board board;
+	private Map<Direction,Hand> hands = new HashMap<Direction,Hand>();
 
 	@Before
 	public void createNorthBoard() {
 		dealer = Direction.NORTH;
-		northHand = Mockito.mock(Hand.class);
-		eastHand = Mockito.mock(Hand.class);
-		southHand = Mockito.mock(Hand.class);
-		westHand = Mockito.mock(Hand.class);
+		for (Direction direction : Direction.values()) {
+			hands.put(direction, Mockito.mock(Hand.class));
+		}
 
-		board = new Board(northHand, eastHand, southHand, westHand, dealer);
+		board = new Board(hands, dealer);
 	}
 
 	@Test
@@ -36,10 +35,9 @@ public class BoardTest {
 
 	@Test
 	public void shouldSortAllHands() {
-		verify(this.northHand, only()).sort();
-		verify(this.eastHand, only()).sort();
-		verify(this.southHand, only()).sort();
-		verify(this.westHand, only()).sort();
+		for (Direction direction : Direction.values()) {
+			verify(this.hands.get(direction), only()).sort();
+		}
 	}
 
 	@Test
@@ -49,10 +47,9 @@ public class BoardTest {
 
 	@Test
 	public void shouldGetHandOfAllPossibleDirections() {
-		assertEquals(this.northHand, this.board.getHandOf(Direction.NORTH));
-		assertEquals(this.eastHand, this.board.getHandOf(Direction.EAST));
-		assertEquals(this.southHand, this.board.getHandOf(Direction.SOUTH));
-		assertEquals(this.westHand, this.board.getHandOf(Direction.WEST));
+		for (Direction direction : Direction.values()) {
+			assertEquals(this.hands.get(direction), this.board.getHandOf(direction));
+		}
 	}
 
 }

@@ -12,12 +12,9 @@ public class Board implements Serializable {
 	private Map<Direction, Hand> hands = new HashMap<Direction, Hand>();
 	private Direction dealer;
 
-	public Board(Hand northHand, Hand eastHand, Hand southHand, Hand westHand, Direction dealer) {
-		hands.put(Direction.NORTH, northHand);
-		hands.put(Direction.EAST, eastHand);
-		hands.put(Direction.SOUTH, southHand);
-		hands.put(Direction.WEST, westHand);
-
+	public Board(Map hands, Direction dealer) {
+		this.hands = hands;
+		
 		this.sortAllHands();
 		this.dealer = dealer;
 	}

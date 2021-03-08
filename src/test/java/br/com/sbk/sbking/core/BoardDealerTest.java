@@ -11,8 +11,8 @@ public class BoardDealerTest {
 	@Test
 	public void shouldReceiveABoardWithTheCorrectDealerAndACompleteSetOfCards() {
 		Direction dealer = Direction.NORTH;
-		BoardDealer boardDealer = new BoardDealer();
-		Board board = boardDealer.dealBoard(dealer, new ShuffledDeck());
+		BoardDealer boardDealer = new ShuffledBoardDealer();
+		Board board = boardDealer.dealBoard(dealer);
 
 		// The correct test should verify if new Board(completeHand1, completeHand2,
 		// completeHand3, completeHand4, dealer) was called but Mockito can't do that.

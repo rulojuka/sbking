@@ -4,7 +4,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @SuppressWarnings("serial")
 public class Hand implements Serializable {
@@ -125,6 +127,28 @@ public class Hand implements Serializable {
 		} else if (!cards.equals(other.cards))
 			return false;
 		return true;
+	}
+
+	public int getHCP() {
+		int sum = 0;
+		for (Card card : cards) {
+			sum += card.getPoints();
+		}
+		return sum;
+	}
+
+	public int getShortestSuitLength() {
+		Map<Suit,Integer> numberOfCards = new HashMap<Suit,Integer>();
+		for (Suit suit : Suit.values()) {
+			numberOfCards.put(suit,0);
+		}
+		for (Card card : cards) {
+			Suit currentSuit = card.getSuit();
+			int currentValue = numberOfCards.get(currentSuit);
+			currentValue ++;
+			numberOfCards.put(currentSuit,currentValue);
+		}
+		return numberOfCards.values().stream().reduce(Math::min).orElse(0);
 	}
 
 }

@@ -1,6 +1,8 @@
 package br.com.sbk.sbking.core;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 @SuppressWarnings("serial")
 public class Card implements Serializable {
@@ -81,6 +83,21 @@ public class Card implements Serializable {
 	@Override
 	public String toString() {
 		return this.suit.getSymbol() + this.rank.getSymbol();
+	}
+
+	public int getPoints() {
+		Map<Rank,Integer> points = new HashMap<Rank,Integer>();
+		points.put(Rank.ACE,4);
+		points.put(Rank.KING,3);
+		points.put(Rank.QUEEN,2);
+		points.put(Rank.JACK,1);
+		
+		Integer value = points.get(this.rank); 
+		if(value==null){
+			return 0;
+		} else{
+			return value;
+		}
 	}
 
 }
