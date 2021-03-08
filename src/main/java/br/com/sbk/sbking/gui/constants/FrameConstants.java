@@ -6,6 +6,7 @@ import java.awt.Point;
 
 import br.com.sbk.sbking.core.Direction;
 
+// (TODO) refactor this class to reduce instruction duplication. 
 public final class FrameConstants {
 	public static final java.awt.Color TABLE_COLOR = new java.awt.Color(0, 100, 0); // Tablecloth green
 	public static int TABLE_WIDTH = 1024;
