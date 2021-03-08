@@ -115,7 +115,6 @@ public class NetworkClientScreen extends JFrame {
 					paintDeal(currentDeal, sbKingClient.getDirection(), sbKingClient.getPlayCardActionListener());
 					logger.info("Finished painting Deal");
 				}
-
 			}
 			sleepFor(300);
 		}
