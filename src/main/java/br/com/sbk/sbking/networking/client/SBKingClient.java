@@ -45,7 +45,6 @@ public class SBKingClient implements Runnable {
 
 	private KingGameScoreboard currentGameScoreboard = new KingGameScoreboard();
 
-
 	private ClientActionListener playCardActionListener;
 
 	private boolean spectator;
@@ -371,7 +370,7 @@ public class SBKingClient implements Runnable {
 		return this.currentDeal;
 	}
 
-	public boolean getDealHasChanged(){
+	public boolean getDealHasChanged() {
 		return this.dealHasChanged;
 	}
 
@@ -404,7 +403,7 @@ public class SBKingClient implements Runnable {
 		return this.currentBoard;
 	}
 
-	public boolean getBoardHasChanged(){
+	public boolean getBoardHasChanged() {
 		return this.boardHasChanged;
 	}
 

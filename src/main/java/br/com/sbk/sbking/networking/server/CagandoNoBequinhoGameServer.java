@@ -81,7 +81,7 @@ public class CagandoNoBequinhoGameServer extends GameServer {
 			}
 
 			this.table.getMessageSender().sendDealAll(this.game.getCurrentDeal());
-			sleepFor(1000); // Wait one second for everyone to see the last card
+			sleepFor(4000); // Wait four seconds for everyone to see the last card
 
 			this.game.finishDeal();
 			this.table.getMessageSender().sendGameScoreboardAll(new KingGameScoreboard());

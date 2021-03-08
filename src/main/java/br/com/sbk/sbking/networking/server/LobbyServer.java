@@ -48,7 +48,7 @@ public class LobbyServer {
 				try {
 					PlayerNetworkInformation connectedPlayerNetworkInformation = this.connectPlayer(connectingSocket);
 					logger.info("Created new gameServer");
-					GameServer gameServer = new CagandoNoBequinhoGameServer();
+					GameServer gameServer = new PositiveKingGameServer();
 					
 					this.table = new Table(connectedPlayerNetworkInformation, gameServer);
 					gameServer.setTable(table);

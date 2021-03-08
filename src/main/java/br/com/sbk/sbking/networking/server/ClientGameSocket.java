@@ -40,7 +40,7 @@ public class ClientGameSocket implements Runnable {
 		this.direction = direction;
 	}
 
-	public void unsetDirection(){
+	public void unsetDirection() {
 		this.direction = null;
 	}
 
@@ -109,7 +109,7 @@ public class ClientGameSocket implements Runnable {
 					logger.info("Setting new nickname: --" + nickname + "--");
 					this.playerNetworkInformation.setNickname(nickname);
 				} else {
-					KingGameServer kingGameServer = (KingGameServer) this.table.getGameServer();
+					PositiveKingGameServer kingGameServer = (PositiveKingGameServer) this.table.getGameServer();
 					if (POSITIVE.equals(string) || NEGATIVE.equals(string)) {
 						PositiveOrNegative positiveOrNegative = new PositiveOrNegative();
 						if (POSITIVE.equals(string)) {

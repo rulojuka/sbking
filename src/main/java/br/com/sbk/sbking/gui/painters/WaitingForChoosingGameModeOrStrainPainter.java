@@ -46,7 +46,7 @@ public class WaitingForChoosingGameModeOrStrainPainter implements Painter {
 			chooseGameModeOrStrainElement.add();
 		}
 
-		new HandWhileChoosingElement(contentPane, this.sbKingClient.getCurrentBoard(), this.myDirection);
+		new HandWhileChoosingElement(contentPane, this.sbKingClient.getDeal(), this.myDirection);
 
 		contentPane.validate();
 		contentPane.repaint();
