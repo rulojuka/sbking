@@ -5,8 +5,10 @@ import static br.com.sbk.sbking.gui.constants.FrameConstants.TABLE_HEIGHT;
 import static br.com.sbk.sbking.gui.constants.FrameConstants.TABLE_WIDTH;
 
 import java.awt.event.ActionListener;
-import java.util.concurrent.ExecutorService;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ExecutorService;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -18,6 +20,7 @@ import org.apache.logging.log4j.Logger;
 import br.com.sbk.sbking.core.Board;
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
+import br.com.sbk.sbking.gui.constants.FrameConstants;
 import br.com.sbk.sbking.gui.painters.ConnectToServerPainter;
 import br.com.sbk.sbking.gui.painters.DealPainter;
 import br.com.sbk.sbking.gui.painters.FinalScoreboardPainter;
@@ -43,6 +46,18 @@ public class NetworkClientScreen extends JFrame {
 		initializeJFrame();
 		initializeContentPane();
 		pool = Executors.newFixedThreadPool(4);
+		NetworkClientScreen screen = this;
+
+		this.addComponentListener(new ComponentAdapter() {
+			public void componentResized(ComponentEvent componentEvent) {
+				// Recompute frame constants. 
+				// TODO rename "constant" since they are no longer fixed.
+				FrameConstants.computeConstants(screen.getWidth(), screen.getHeight());
+				
+				// Reposition stuff in the board.
+				
+			}
+		});
 	}
 
 	private void initializeJFrame() {
