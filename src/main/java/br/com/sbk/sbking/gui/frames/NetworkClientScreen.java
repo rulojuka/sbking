@@ -61,11 +61,11 @@ public class NetworkClientScreen extends JFrame {
 		this.addComponentListener(new ComponentAdapter() {
 			public void componentResized(ComponentEvent componentEvent) {
 				// Recompute frame constants. 
-				// TODO rename "constant" since they are no longer fixed.
 				FrameConstants.computeConstants(screen.getWidth(), screen.getHeight());
 				
-				// Appropriate paint calls will deal with repositioning GUI components on screen accordign to new precomputed constants.
+				// Connecting screen has no sbKingClient to store the GUI invalidation flag.
 				if (sbKingClient != null) {
+					// Invalidating the client's GUI flag provekes a Pane repaint on the main loop.
 					sbKingClient.setGUIHasChanged(true);
 				}
 			}
