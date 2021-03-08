@@ -46,18 +46,6 @@ public class NetworkClientScreen extends JFrame {
 		initializeJFrame();
 		initializeContentPane();
 		pool = Executors.newFixedThreadPool(4);
-		NetworkClientScreen screen = this;
-
-		this.addComponentListener(new ComponentAdapter() {
-			public void componentResized(ComponentEvent componentEvent) {
-				// Recompute frame constants. 
-				// TODO rename "constant" since they are no longer fixed.
-				FrameConstants.computeConstants(screen.getWidth(), screen.getHeight());
-				
-				// Reposition stuff in the board.
-				
-			}
-		});
 	}
 
 	private void initializeJFrame() {
@@ -69,6 +57,19 @@ public class NetworkClientScreen extends JFrame {
 	private void initializeContentPane() {
 		getContentPane().setLayout(null);
 		getContentPane().setBackground(TABLE_COLOR);
+		NetworkClientScreen screen = this;
+		this.addComponentListener(new ComponentAdapter() {
+			public void componentResized(ComponentEvent componentEvent) {
+				// Recompute frame constants. 
+				// TODO rename "constant" since they are no longer fixed.
+				FrameConstants.computeConstants(screen.getWidth(), screen.getHeight());
+				
+				// Appropriate paint calls will deal with repositioning GUI components on screen accordign to new precomputed constants.
+				if (sbKingClient != null) {
+					sbKingClient.setGUIHasChanged(true);
+				}
+			}
+		});
 	}
 
 	public void run() {
@@ -88,9 +89,11 @@ public class NetworkClientScreen extends JFrame {
 
 		while (true) {
 			if(sbKingClient.isSpectator()){
-				if(sbKingClient.getBoardHasChanged() || sbKingClient.getDealHasChanged()){
-					logger.info("Deal has changed. Painting deal.");
-					logger.info("It is a spectator.");
+				if(sbKingClient.getBoardHasChanged() || sbKingClient.getDealHasChanged() || sbKingClient.getGUIHasChanged()){
+					if (!sbKingClient.getGUIHasChanged()) {
+						logger.info("Deal has changed. Painting deal.");
+						logger.info("It is a spectator.");
+					}
 					Deal currentDeal = sbKingClient.getDeal();
 					Board currentBoard = sbKingClient.getCurrentBoard();
 					if (currentDeal == null) {
@@ -101,9 +104,11 @@ public class NetworkClientScreen extends JFrame {
 				}
 			}
 			else{
-				if (sbKingClient.getDealHasChanged()) {
-					logger.info("Deal has changed. Painting deal.");
-					logger.info("It is a player.");
+				if (sbKingClient.getDealHasChanged() || sbKingClient.getGUIHasChanged()) {
+					if (sbKingClient.getDealHasChanged()) {
+						logger.info("Deal has changed. Painting deal.");
+						logger.info("It is a player.");
+					}
 					Deal currentDeal = sbKingClient.getDeal();
 
 					logger.info("Starting to paint Deal");
@@ -127,6 +132,10 @@ public class NetworkClientScreen extends JFrame {
 	private void paintPainter(Painter painter) {
 		this.getContentPane().removeAll();
 		painter.paint(this.getContentPane());
+
+		if (sbKingClient != null) {
+			sbKingClient.setGUIHasChanged(false);
+		}
 	}
 
 	private void paintConnectToServerScreen() {
