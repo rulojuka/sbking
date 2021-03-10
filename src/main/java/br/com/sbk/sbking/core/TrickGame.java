@@ -1,6 +1,6 @@
 package br.com.sbk.sbking.core;
 
-import br.com.sbk.sbking.core.rulesets.concrete.PositiveNoTrumpsRuleset;
+import br.com.sbk.sbking.core.rulesets.concrete.NoRuleset;
 
 public abstract class TrickGame {
 
@@ -11,7 +11,7 @@ public abstract class TrickGame {
 	public void dealNewBoard() {
 		BoardDealer boardDealer = new FourteenHCPPlusDoubletonRuledBoardDealer();
 		this.currentBoard = boardDealer.dealBoard(this.dealer);
-		this.currentDeal = new Deal(currentBoard, new PositiveNoTrumpsRuleset()); // This should be a NoRuleset
+		this.currentDeal = new Deal(currentBoard, new NoRuleset());
 	}
 
 	public Direction getDealer() {
@@ -30,7 +30,7 @@ public abstract class TrickGame {
 
 	public abstract void finishDeal();
 
-	public void setPlayerOf(Direction direction, Player player){
+	public void setPlayerOf(Direction direction, Player player) {
 		this.currentDeal.setPlayerOf(direction, player);
 	}
 
