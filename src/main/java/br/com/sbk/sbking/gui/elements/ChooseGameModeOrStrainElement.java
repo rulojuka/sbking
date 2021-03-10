@@ -115,7 +115,9 @@ public class ChooseGameModeOrStrainElement {
 					break;
 				}
 			}
-			sbKingClient.sendGameModeOrStrain(selectedOnRadio.getText());
+			if (selectedOnRadio != null) {
+				sbKingClient.sendGameModeOrStrain(selectedOnRadio.getText());
+			}
 		}
 	}
 
