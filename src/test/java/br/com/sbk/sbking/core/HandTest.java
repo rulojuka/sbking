@@ -57,7 +57,6 @@ public class HandTest {
 		// Then, inside each suit, the cards are ordered by rank, so
 		// Ace first, then King, ... , then Three, then Two
 
-		// Setup
 		Card kingOfSpades = mock(Card.class);
 		Card queenOfSpades = mock(Card.class);
 		Card aceOfHearts = mock(Card.class);
@@ -96,10 +95,8 @@ public class HandTest {
 			hand.addCard(card);
 		}
 
-		// Exercise
 		hand.sort();
 
-		// Verify
 		assertEquals(kingOfSpades, hand.get(0));
 		assertEquals(queenOfSpades, hand.get(1));
 		assertEquals(aceOfHearts, hand.get(2));

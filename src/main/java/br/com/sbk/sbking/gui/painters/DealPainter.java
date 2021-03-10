@@ -29,8 +29,8 @@ public class DealPainter implements Painter {
 		logger.info("Painting deal that contains this trick: " + deal.getCurrentTrick());
 		contentPane.removeAll();
 
-		// This should be uncommented when there is a good way to show the last card for
-		// a second before showing the scoresummary
+		// FIXME This should be uncommented when there is a good way to show the last
+		// card for a second before showing the scoresummary
 		// if (deal.isFinished()) {
 		// new ScoreSummaryElement(deal, contentPane);
 		// } else {

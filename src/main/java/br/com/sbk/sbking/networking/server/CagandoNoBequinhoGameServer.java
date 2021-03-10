@@ -34,7 +34,7 @@ public class CagandoNoBequinhoGameServer extends GameServer {
 
 			int currentHand = this.cagandoNoBequinhoGame.getCurrentNumberOfCardsInAHand();
 
-			this.cagandoNoBequinhoGame.dealNewBoard(currentHand); // Perhaps this should be at the end of do/while
+			this.cagandoNoBequinhoGame.dealNewBoard(currentHand);
 
 			for (Direction direction : Direction.values()) {
 				Player player = this.table.getPlayerOf(direction);
@@ -66,7 +66,6 @@ public class CagandoNoBequinhoGameServer extends GameServer {
 						logger.info("I am waiting for some thread to notify that it wants to play a card.");
 						cardPlayNotification.wait();
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
@@ -81,7 +80,7 @@ public class CagandoNoBequinhoGameServer extends GameServer {
 			}
 
 			this.table.getMessageSender().sendDealAll(this.game.getCurrentDeal());
-			sleepFor(4000); // Wait four seconds for everyone to see the last card
+			this.sleepToShowLastCard();
 
 			this.game.finishDeal();
 			this.table.getMessageSender().sendGameScoreboardAll(new KingGameScoreboard());

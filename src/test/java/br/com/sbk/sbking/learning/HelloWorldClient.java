@@ -17,7 +17,6 @@ public class HelloWorldClient {
 		try {
 			inputStream = this.socket.getInputStream();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		Scanner in = new Scanner(inputStream);

@@ -34,13 +34,6 @@ public class Table {
     this.addSpectator(owner);
   }
 
-  // private Collection<ClientGameSocket> getAllSockets() {
-  // Collection<ClientGameSocket> allSockets = new ArrayList<ClientGameSocket>();
-  // allSockets.addAll(playerSockets.values());
-  // allSockets.addAll(spectatorSockets);
-  // return allSockets;
-  // }
-
   public void moveSpectatorToSeat(ClientGameSocket spectatorGameSocket, Direction direction) {
     logger.info("Entered moveSpectatorToSeat.");
     ClientGameSocket currentSeatedPlayer = this.playerSockets.get(direction);
@@ -70,18 +63,19 @@ public class Table {
         this.spectatorSockets.add(clientGameSocket);
         clientGameSocket.sendIsSpectator();
         this.messageSender.sendDealAll(this.gameServer.getDeal());
-      }else{
+      } else {
         logger.info("Trying to seat in an occupied seat. Ignoring request.");
       }
     } else {
-      logger.info("Trying to move from " + clientGameSocket.getDirection().getCompleteName() + " to " + direction.getCompleteName() + ".");
+      logger.info("Trying to move from " + clientGameSocket.getDirection().getCompleteName() + " to "
+          + direction.getCompleteName() + ".");
       Direction from = clientGameSocket.getDirection();
       Direction to = direction;
 
       this.removeFromPlayers(clientGameSocket);
       this.gameServer.getDeal().unsetPlayerOf(from);
 
-      playerSockets.put(to,clientGameSocket);
+      playerSockets.put(to, clientGameSocket);
       clientGameSocket.setDirection(to);
       clientGameSocket.sendDirection(to);
 
@@ -102,9 +96,9 @@ public class Table {
   }
 
   private void printSocket(ClientGameSocket socket) {
-    if(socket.isSpectator()){
+    if (socket.isSpectator()) {
       logger.info("SPEC:");
-    }else{
+    } else {
       logger.info(socket.getDirection().getCompleteName());
     }
     logger.info("  " + socket.getPlayer().getName());

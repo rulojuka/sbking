@@ -131,7 +131,6 @@ public class ClientGameSocket implements Runnable {
 				table.getGameServer().notifyPlayCard(playedCard, this.direction);
 			} else if (readObject instanceof Direction) {
 				Direction direction = (Direction) readObject;
-				// Leave the seat or sit in another place
 				logger.info(this.direction + " is trying to leave his sit or sit on " + direction);
 				this.table.moveOrUnsitPlayer(this, direction);
 			}

@@ -42,7 +42,7 @@ public class KingGameServer extends GameServer {
 		this.kingGame = (KingGame) this.game;
 
 		while (!game.isFinished()) {
-			this.game.dealNewBoard(); // Perhaps this should be at the end of do/while
+			this.game.dealNewBoard();
 
 			for (Direction direction : Direction.values()) {
 				Player player = this.table.getPlayerOf(direction);
@@ -65,7 +65,6 @@ public class KingGameServer extends GameServer {
 						logger.info("I am waiting for some thread to notify that it wants to choose positive or negative");
 						positiveOrNegativeNotification.wait();
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
@@ -83,7 +82,6 @@ public class KingGameServer extends GameServer {
 						logger.info("I am waiting for some thread to notify that it wants to choose game Mode Or Strain");
 						gameModeOrStrainNotification.wait();
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
@@ -132,7 +130,6 @@ public class KingGameServer extends GameServer {
 						logger.info("I am waiting for some thread to notify that it wants to play a card.");
 						cardPlayNotification.wait();
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}

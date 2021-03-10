@@ -58,7 +58,7 @@ public class PositiveKingNetworkClientScreen extends NetworkClientScreen {
 					}
 				}
 			} else {
-				sleepFor(1000); // Waiting
+				sleepFor(1000);
 				if (sbKingClient.getDealHasChanged() || sbKingClient.getGUIHasChanged()) {
 					if (!sbKingClient.getGUIHasChanged()) {
 						logger.info("Deal has changed. Painting deal.");
@@ -89,20 +89,6 @@ public class PositiveKingNetworkClientScreen extends NetworkClientScreen {
 				}
 			}
 		}
-
-		// logger.info("Sleeping for 2000 ms to wait for FINISHGAME");
-		// sleepFor(2000);
-
-		// }
-
-		// logger.info("Starting to paint paintFinalScoreboardScreen");
-		// paintFinalScoreboardScreen();
-		// logger.info("Finished painting paintFinalScoreboardScreen");
-
-		// logger.info("Final scoreboard painted. Waiting for 10 seconds before
-		// exiting.");
-		// sleepFor(10000);
-		// logger.info("Game finished!");
 	}
 
 	private void paintSpectatorScreen(Deal deal, ActionListener playCardActionListener) {

@@ -93,10 +93,8 @@ public class SBKingClient implements Runnable {
 			logger.fatal("Could not create socket.");
 			logger.debug(e);
 			System.exit(COULD_NOT_CREATE_SOCKET_ERROR);
+			return null;
 		}
-
-		// Unreachable code
-		return null;
 	}
 
 	private Serializator initializeSerializatorOrExit(Socket socket) {
@@ -108,10 +106,8 @@ public class SBKingClient implements Runnable {
 			logger.fatal(e);
 			logger.fatal(e.getStackTrace());
 			System.exit(COULD_NOT_CREATE_SERIALIZATOR_ERROR);
+			return null;
 		}
-
-		// Unreachable code
-		return null;
 	}
 
 	@Override
@@ -376,11 +372,11 @@ public class SBKingClient implements Runnable {
 		return this.dealHasChanged;
 	}
 
-	public void setGUIHasChanged(boolean guiHasChanged){
+	public void setGUIHasChanged(boolean guiHasChanged) {
 		this.guiHasChanged = guiHasChanged;
 	}
 
-	public boolean getGUIHasChanged(){
+	public boolean getGUIHasChanged() {
 		return this.guiHasChanged;
 	}
 

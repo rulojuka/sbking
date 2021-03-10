@@ -48,10 +48,13 @@ public abstract class GameServer implements Runnable {
 	public void notifyPlayCard(Card card, Direction direction) {
 		synchronized (cardPlayNotification) {
 			logger.info("Started notifying main thread that I(" + direction + ") want to play the " + card);
-			// release all waiters
-			cardPlayNotification.notifyAllWithCardAndDirection(card, direction);
+			this.releaseAllWaiters(card, direction);
 			logger.info("Finished notifying main thread that I(" + direction + ") want to play the " + card);
 		}
+	}
+
+	private void releaseAllWaiters(Card card, Direction direction) {
+		cardPlayNotification.notifyAllWithCardAndDirection(card, direction);
 	}
 
 	protected void sleepFor(int miliseconds) {
@@ -68,6 +71,10 @@ public abstract class GameServer implements Runnable {
 
 	public Board getBoard() {
 		return this.game.getCurrentBoard();
+	}
+
+	protected void sleepToShowLastCard() {
+		sleepFor(4000);
 	}
 
 }

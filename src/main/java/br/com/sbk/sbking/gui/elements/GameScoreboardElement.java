@@ -37,9 +37,7 @@ public class GameScoreboardElement {
 		text.append("<br/>");
 		text.append("</html>");
 		String string = text.toString();
-		// System.out.println("Full html is: **"+string+"**");
 		String stringWithoutSpaces = string.replaceAll(" ", "&nbsp;");
-		// System.out.println("Full html is: **"+stringWithoutSpaces+"**");
 
 		Font font = new Font(Font.MONOSPACED, Font.PLAIN, 15);
 

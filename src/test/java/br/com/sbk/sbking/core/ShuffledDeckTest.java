@@ -29,7 +29,7 @@ public class ShuffledDeckTest {
 
 	@Test
 	public void constructorShouldReturnAShuffledDeck() {
-		// This test fails 1/(52!) of the times :)
+		// This test fails 1/(52!) of the time :)
 		ShuffledDeck firstShuffledDeck = new ShuffledDeck();
 		ShuffledDeck secondShuffledDeck = new ShuffledDeck();
 		int equalCardCounter = 0;

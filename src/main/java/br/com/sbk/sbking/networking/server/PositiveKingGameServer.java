@@ -40,7 +40,7 @@ public class PositiveKingGameServer extends GameServer {
 		this.positiveKingGame = (PositiveKingGame) this.game;
 
 		while (!game.isFinished()) {
-			this.game.dealNewBoard(); // Perhaps this should be at the end of do/while
+			this.game.dealNewBoard();
 
 			for (Direction direction : Direction.values()) {
 				Player player = this.table.getPlayerOf(direction);
@@ -78,7 +78,6 @@ public class PositiveKingGameServer extends GameServer {
 							gameModeOrStrainNotification.wait(3000);
 							this.table.getMessageSender().sendChooserGameModeOrStrainAll(this.getCurrentGameModeOrStrainChooser());
 						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}
@@ -128,7 +127,6 @@ public class PositiveKingGameServer extends GameServer {
 						logger.info("I am waiting for some thread to notify that it wants to play a card.");
 						cardPlayNotification.wait();
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
@@ -143,7 +141,7 @@ public class PositiveKingGameServer extends GameServer {
 			}
 
 			this.table.getMessageSender().sendDealAll(this.game.getCurrentDeal());
-			sleepFor(4000); // Wait four seconds for everyone to see the last card
+			this.sleepToShowLastCard();
 
 			this.game.finishDeal();
 			this.table.getMessageSender().sendGameScoreboardAll(this.positiveKingGame.getGameScoreboard());

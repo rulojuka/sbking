@@ -19,7 +19,7 @@ public class CagandoNoBequinhoGame extends TrickGame {
 
 	@Override
 	public boolean isFinished() {
-		return currentNumberOfCardsInAHand > 13; // This should finish at the end of the round with 13 cards.
+		return currentNumberOfCardsInAHand > 13;
 	}
 
 	@Override
