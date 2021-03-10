@@ -7,6 +7,8 @@ import static br.com.sbk.sbking.gui.constants.FrameConstants.TABLE_WIDTH;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.regex.Matcher;
@@ -91,6 +93,20 @@ public abstract class NetworkClientScreen extends JFrame {
 		if (logo_url != null) {
 			ImageIcon img = new ImageIcon(logo_url);
 			this.setIconImage(img.getImage());
+		}
+	}
+
+	public String getIpFromServer(String server) {
+		Map<String, String> nameToHostname = new HashMap<String, String>();
+		nameToHostname.put("Local", "127.0.0.1");
+		nameToHostname.put("Alejandro", "144.126.251.69");
+		nameToHostname.put("Perez", "161.35.251.100");
+		nameToHostname.put("Taís", "144.126.251.87");
+		String hostname = nameToHostname.get(server);
+		if (hostname != null) {
+			return hostname;
+		} else {
+			return "127.0.0.1";
 		}
 	}
 }

@@ -5,8 +5,14 @@ import static br.com.sbk.sbking.gui.constants.FrameConstants.HALF_WIDTH;
 
 import java.awt.Container;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.List;
 
+import javax.swing.AbstractButton;
+import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 import br.com.sbk.sbking.gui.JElements.ConnectToServerButton;
@@ -14,24 +20,37 @@ import br.com.sbk.sbking.gui.JElements.SBKingLabel;
 
 public class ConnectToServerElement {
 
-	public static void add(Container container, ActionListener actionListener) {
+	private List<JRadioButton> radioButtons;
+	private List<String> texts;
+
+	public void add(Container container, ActionListener actionListener) {
 
 		ConnectToServerButton connectToServerButton = new ConnectToServerButton();
 		connectToServerButton.addActionListener(actionListener);
 		container.add(connectToServerButton); // This line needs to go before setting the button location
 
-		int width = 300;
+		int width = 160;
 		int height = 15;
-		JLabel hostnameLabel = new SBKingLabel("Enter IP or leave blank to play locally:");
+
+		JLabel hostnameLabel = new SBKingLabel("Choose server:");
 		container.add(hostnameLabel);
 		hostnameLabel.setSize(width, height);
-		hostnameLabel.setLocation(HALF_WIDTH - hostnameLabel.getWidth() / 2, HALF_HEIGHT - 100 - 100 - height);
+		hostnameLabel.setLocation(HALF_WIDTH - 80, HALF_HEIGHT - 100 - 100 - height - height);
 
-		JTextField hostnameTextField = new JTextField("");
-		container.add(hostnameTextField);
-		hostnameTextField.setSize(width, height);
-		hostnameTextField.setLocation(HALF_WIDTH - hostnameTextField.getWidth() / 2, HALF_HEIGHT - 100 - 100);
-		hostnameTextField.setName("hostnameTextField");
+		texts = new ArrayList<String>();
+		texts.add("Local");
+		texts.add("Alejandro");
+		texts.add("Perez");
+		texts.add("Taís");
+		radioButtons = new ArrayList<JRadioButton>();
+		SBKingRadioButtonGroupCreator sbKingRadioButtonGroupCreator = new SBKingRadioButtonGroupCreator();
+		ButtonGroup buttonGroup = sbKingRadioButtonGroupCreator.create(texts, HALF_WIDTH - 80,
+				HALF_HEIGHT - 100 - 100 - height);
+		for (Enumeration<AbstractButton> elements = buttonGroup.getElements(); elements.hasMoreElements();) {
+			AbstractButton element = elements.nextElement();
+			container.add(element);
+			radioButtons.add((JRadioButton) element);
+		}
 
 		JLabel nicknameLabel = new SBKingLabel("Enter nickname:");
 		container.add(nicknameLabel);

@@ -3,6 +3,7 @@ package br.com.sbk.sbking.gui.painters;
 import java.awt.Component;
 import java.awt.Container;
 
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 import br.com.sbk.sbking.gui.JElements.SBKingButton;
@@ -19,7 +20,8 @@ public class ConnectToServerPainter implements Painter {
 
 	@Override
 	public void paint(Container contentPane) {
-		ConnectToServerElement.add(contentPane, new ConnectToScreenActionListener());
+		ConnectToServerElement connectToServerElement = new ConnectToServerElement();
+		connectToServerElement.add(contentPane, new ConnectToScreenActionListener());
 
 		contentPane.validate();
 		contentPane.repaint();
@@ -36,19 +38,16 @@ public class ConnectToServerPainter implements Painter {
 			for (Component component : components) {
 				if ("nicknameTextField".equals(component.getName())) {
 					JTextField nicknameTextField = (JTextField) component;
-					System.out.println("Achou o nickname: " + nicknameTextField.getText());
 					nickname = nicknameTextField.getText();
-				} else if ("hostnameTextField".equals(component.getName())) {
-					JTextField hostnameTextField = (JTextField) component;
-					System.out.println("Achou o hostname: " + hostnameTextField.getText());
-					if (hostnameTextField.getText() != null && !hostnameTextField.getText().isEmpty()) {
-						hostname = hostnameTextField.getText();
+				}
+				if (component instanceof JRadioButton) {
+					JRadioButton radioButton = (JRadioButton) component;
+					if (radioButton.isSelected()) {
+						hostname = networkClientScreen.getIpFromServer(radioButton.getName());
 					}
 				}
 			}
-
 			networkClientScreen.connectToServer(nickname, hostname);
-
 		}
 	}
 
