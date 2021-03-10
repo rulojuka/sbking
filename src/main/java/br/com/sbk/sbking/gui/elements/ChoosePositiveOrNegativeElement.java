@@ -5,7 +5,11 @@ import static br.com.sbk.sbking.gui.constants.FrameConstants.HALF_WIDTH;
 
 import java.awt.Container;
 import java.awt.Point;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.List;
 
+import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -17,14 +21,14 @@ import br.com.sbk.sbking.networking.client.SBKingClient;
 public class ChoosePositiveOrNegativeElement {
 
 	private Container container;
-	private JRadioButton positiveButton;
-	private JRadioButton negativeButton;
+	private List<JRadioButton> radioButtons;
 	private SBKingClient sbKingClient;
 	private int numberOfElements;
 	private int elementWidth;
 	private int elementHeight;
 	private int xSpacing;
 	private int yLabelOffset;
+	List<String> texts;
 
 	private static int BUTTON_WIDTH = 80;
 
@@ -32,7 +36,10 @@ public class ChoosePositiveOrNegativeElement {
 		this.container = container;
 		this.sbKingClient = sbKingClient;
 		this.numberOfElements = 2;
-		this.elementWidth = 90;
+		this.elementWidth = 160;
+		this.texts = new ArrayList<String>();
+		texts.add("Positive");
+		texts.add("Negative");
 	}
 
 	public void add() {
@@ -59,20 +66,14 @@ public class ChoosePositiveOrNegativeElement {
 		int y = buttonsPosition.y;
 		int x = buttonsPosition.x;
 
-		ButtonGroup bg = new ButtonGroup();
-
-		positiveButton = new JRadioButton("Positive");
-		positiveButton.setBounds(x, y, elementWidth, elementHeight);
-		container.add(positiveButton);
-		bg.add(positiveButton);
-
-		y += elementHeight;
-
-		negativeButton = new JRadioButton("Negative");
-		negativeButton.setBounds(x, y, elementWidth, elementHeight);
-		container.add(negativeButton);
-
-		bg.add(negativeButton);
+		radioButtons = new ArrayList<JRadioButton>();
+		SBKingRadioButtonGroupCreator sbKingRadioButtonGroupCreator = new SBKingRadioButtonGroupCreator();
+		ButtonGroup buttonGroup = sbKingRadioButtonGroupCreator.create(texts, x, y);
+		for (Enumeration<AbstractButton> elements = buttonGroup.getElements(); elements.hasMoreElements();) {
+			AbstractButton element = elements.nextElement();
+			container.add(element);
+			radioButtons.add((JRadioButton) element);
+		}
 
 		JButton selectPositiveOrNegativeButton = new JButton();
 
@@ -87,10 +88,19 @@ public class ChoosePositiveOrNegativeElement {
 
 	class PositiveOrNegativeSelectActionListener implements java.awt.event.ActionListener {
 		public void actionPerformed(java.awt.event.ActionEvent event) {
-			if (positiveButton.isSelected()) {
-				sbKingClient.sendPositive();
-			} else {
-				sbKingClient.sendNegative();
+			JRadioButton selectedOnRadio = null;
+			for (JRadioButton jRadioButton : radioButtons) {
+				if (jRadioButton.isSelected()) {
+					selectedOnRadio = jRadioButton;
+					break;
+				}
+			}
+			if (selectedOnRadio != null) {
+				if (selectedOnRadio.getText().equals(texts.get(0))) {
+					sbKingClient.sendPositive();
+				} else if (selectedOnRadio.getText().equals(texts.get(1))) {
+					sbKingClient.sendNegative();
+				}
 			}
 		}
 	}

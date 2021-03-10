@@ -6,8 +6,10 @@ import static br.com.sbk.sbking.gui.constants.FrameConstants.HALF_WIDTH;
 import java.awt.Container;
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 
+import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -21,7 +23,6 @@ import br.com.sbk.sbking.networking.client.SBKingClient;
 public class ChooseGameModeOrStrainElement {
 
 	private Container container;
-	private JRadioButton currentButton;
 	private List<JRadioButton> radioButtons;
 	private SBKingClient sbKingClient;
 	private boolean isPositive;
@@ -67,10 +68,9 @@ public class ChooseGameModeOrStrainElement {
 	}
 
 	private void addRadioButtons(Point buttonsPosition) {
+		this.radioButtons = new ArrayList<JRadioButton>();
 		int y = buttonsPosition.y;
 		int x = buttonsPosition.x;
-
-		ButtonGroup bg = new ButtonGroup();
 
 		List<String> texts = new ArrayList<String>();
 		if (this.isPositive) {
@@ -83,17 +83,12 @@ public class ChooseGameModeOrStrainElement {
 			}
 		}
 
-		radioButtons = new ArrayList<JRadioButton>();
-		for (String text : texts) {
-			currentButton = new JRadioButton(text);
-			currentButton.setBounds(x, y, elementWidth, elementHeight);
-			container.add(currentButton);
-			radioButtons.add(currentButton);
-
-			y += elementHeight;
-
-			bg.add(currentButton);
-
+		SBKingRadioButtonGroupCreator sbKingRadioButtonGroupCreator = new SBKingRadioButtonGroupCreator();
+		ButtonGroup buttonGroup = sbKingRadioButtonGroupCreator.create(texts, x, y);
+		for (Enumeration<AbstractButton> elements = buttonGroup.getElements(); elements.hasMoreElements();) {
+			AbstractButton element = elements.nextElement();
+			container.add(element);
+			radioButtons.add((JRadioButton) element);
 		}
 
 		JButton selectGameModeOrStrandButton = new JButton();
