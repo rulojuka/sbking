@@ -10,17 +10,19 @@ import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Rank;
 import br.com.sbk.sbking.core.Suit;
 
+
 public class DeckCardImageInformation {
 	private static final String directory = "/images/cards/";
-	private static final int CARD_IMAGE_WIDTH = 72;
-	private static final int CARD_IMAGE_HEIGHT = 96; 
-	private static final int SCALE_FACTOR = 2;
 
-	private static final int CARD_WIDTH = CARD_IMAGE_HEIGHT*SCALE_FACTOR;
-	private static final int CARD_HEIGHT = CARD_IMAGE_HEIGHT*SCALE_FACTOR;
+	private static final int CARD_IMAGE_WIDTH = 182;
+	private static final int CARD_IMAGE_HEIGHT = 247; 
+	private static final double SCALE_FACTOR = 0.75;
+
+	private static final int CARD_WIDTH = (int)(CARD_IMAGE_WIDTH*SCALE_FACTOR);
+	private static final int CARD_HEIGHT = (int)(CARD_IMAGE_HEIGHT*SCALE_FACTOR);
 
 	public ImageIcon getBackImage() {
-		String imagePath = directory + "b1fv.png";
+		String imagePath = directory + "back.png";
 		URL url = getClass().getResource(imagePath);
 
 		return getScaledCardImage(url);
