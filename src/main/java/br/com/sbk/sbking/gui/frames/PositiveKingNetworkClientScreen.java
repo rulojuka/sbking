@@ -120,6 +120,9 @@ public class PositiveKingNetworkClientScreen extends NetworkClientScreen {
 	private void paintPainter(Painter painter) {
 		this.getContentPane().removeAll();
 		painter.paint(this.getContentPane());
+		if (sbKingClient != null) {
+			sbKingClient.setGUIHasChanged(false);
+		}
 	}
 
 	private void paintConnectToServerScreen() {
