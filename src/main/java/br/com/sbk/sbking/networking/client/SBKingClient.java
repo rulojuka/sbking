@@ -377,7 +377,9 @@ public class SBKingClient implements Runnable {
 	}
 
 	public boolean getGUIHasChanged() {
-		return this.guiHasChanged;
+		boolean returnValue = this.guiHasChanged;
+		this.guiHasChanged = false;
+		return returnValue;
 	}
 
 	public boolean isDealFinished() {
