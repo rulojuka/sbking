@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:sodipodi="http://inkscape.sourceforge.net/DTD/sodipodi-0.dtd"
+    xmlns:cc="http://web.resource.org/cc/"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:svg="http://www.w3.org/2000/svg"
+    xmlns:ns1="http://sozi.baierouge.fr"
+    id="svg2"
+    viewBox="0 0 140 190"
+    sodipodi:version="0.32"
+    version="1.0"
+    inkscape:version="0.41"
+    y="0"
+    x="0"
+    sodipodi:docname="h_5.svg"
+    sodipodi:docbase="/home/nicu/Desktop/simple"
+  >
+  <sodipodi:namedview
+      id="base"
+      bordercolor="#666666"
+      inkscape:window-x="0"
+      inkscape:window-y="26"
+      pagecolor="#ffffff"
+      inkscape:zoom="1.9105263"
+      inkscape:pageshadow="2"
+      borderopacity="1.0"
+      inkscape:current-layer="svg2"
+      inkscape:cx="70.000003"
+      inkscape:cy="95.000001"
+      inkscape:window-height="791"
+      inkscape:pageopacity="0.0"
+      inkscape:window-width="1152"
+  />
+  <g
+      id="layer1"
+      inkscape:label="Layer 1"
+      inkscape:groupmode="layer"
+    >
+    <g
+        id="g5630"
+      >
+      <path
+          id="rect2070"
+          style="fill-opacity:.49804;fill:#000000"
+          d="m21 5h103c8.86 0 16 7.136 16 16v153c0 8.86-7.14 16-16 16h-103c-8.864 0-16-7.14-16-16v-153c0-8.864 7.136-16 16-16z"
+      />
+      <path
+          id="rect1300"
+          style="fill:#e7e7e7"
+          d="m17 1h103c8.86 0 16 7.136 16 16v153c0 8.86-7.14 16-16 16h-103c-8.864 0-16-7.14-16-16v-153c0-8.864 7.136-16 16-16z"
+      />
+      <path
+          id="path5624"
+          style="fill:#c7891f"
+          d="m19 3h103c8.86 0 16 7.136 16 16v153c0 8.86-7.14 16-16 16h-103c-8.864 0-16-7.14-16-16v-153c0-8.864 7.136-16 16-16z"
+      />
+      <path
+          id="rect1306"
+          style="fill:#ffffff"
+          d="m18 2h103c8.86 0 16 7.136 16 16v153c0 8.86-7.14 16-16 16h-103c-8.864 0-16-7.14-16-16v-153c0-8.864 7.136-16 16-16z"
+      />
+    </g
+    >
+  </g
+  >
+  <path
+      id="text1386"
+      style="fill:#ff0000"
+      d="m12.604 11.998h15.898v5.687h-10.798v4.641c0.487-0.161 0.975-0.281 1.462-0.361 0.498-0.094 1.013-0.141 1.545-0.141 3.023 0 5.377 0.917 7.061 2.753 1.683 1.822 2.525 4.367 2.525 7.635 0 3.242-0.92 5.78-2.758 7.616-1.828 1.835-4.369 2.753-7.626 2.753-1.406 0-2.802-0.168-4.186-0.503-1.373-0.321-2.741-0.817-4.104-1.487v-6.088c1.352 0.938 2.631 1.641 3.838 2.11 1.218 0.469 2.365 0.703 3.439 0.703 1.551 0 2.769-0.455 3.655-1.366 0.897-0.925 1.346-2.17 1.346-3.738 0-1.58-0.449-2.826-1.346-3.737-0.886-0.911-2.104-1.367-3.655-1.367-0.919 0-1.899 0.148-2.941 0.443-1.041 0.281-2.159 0.723-3.355 1.326v-16.879"
+  />
+  <g
+      id="g1390"
+      style="fill:#ff0000"
+      transform="matrix(.28639 0 0 .38877 -29.608 -9.4724)"
+    >
+    <path
+        id="path1392"
+        style="fill-rule:evenodd"
+        d="m147.21 156.42c-2.54 0.01-5.33 0.48-8.41 1.53-33.62 19.53 11.7 51.04 30.84 78.09l0.56 0.14c21.03-29.57 61.07-62.11 30.47-78.23-24.23-8.25-30.71 19.2-30.93 20.19-0.2-0.87-5.15-21.81-22.53-21.72z"
+        transform="matrix(1.1054 0 0 1.0796 -12.014 -18.867)"
+    />
+  </g
+  >
+  <path
+      id="text13635"
+      style="fill:#ff0000"
+      d="m126.26 177h-15.9v-5.68h10.8v-4.65c-0.49 0.16-0.97 0.29-1.46 0.37-0.5 0.09-1.01 0.14-1.55 0.14-3.02 0-5.37-0.92-7.06-2.76-1.68-1.82-2.52-4.36-2.52-7.63 0-3.24 0.92-5.78 2.76-7.62 1.82-1.83 4.37-2.75 7.62-2.75 1.41 0 2.8 0.17 4.19 0.5 1.37 0.32 2.74 0.82 4.1 1.49v6.09c-1.35-0.94-2.63-1.64-3.84-2.11s-2.36-0.71-3.43-0.71c-1.56 0-2.77 0.46-3.66 1.37-0.9 0.92-1.35 2.17-1.35 3.74 0 1.58 0.45 2.82 1.35 3.74 0.89 0.91 2.1 1.36 3.66 1.36 0.91 0 1.89-0.15 2.94-0.44 1.04-0.28 2.16-0.72 3.35-1.33v16.88"
+  />
+  <g
+      id="g13639"
+      style="fill:#ff0000"
+      transform="matrix(-.28639 0 0 -.38877 168.47 198.31)"
+    >
+    <path
+        id="path13641"
+        style="fill-rule:evenodd"
+        d="m147.21 156.42c-2.54 0.01-5.33 0.48-8.41 1.53-33.62 19.53 11.7 51.04 30.84 78.09l0.56 0.14c21.03-29.57 61.07-62.11 30.47-78.23-24.23-8.25-30.71 19.2-30.93 20.19-0.2-0.87-5.15-21.81-22.53-21.72z"
+        transform="matrix(1.1054 0 0 1.0796 -12.014 -18.867)"
+    />
+  </g
+  >
+  <g
+      id="g3558"
+    >
+    <g
+        id="g2569"
+      >
+      <g
+          id="g3424"
+      />
+    </g
+    >
+  </g
+  >
+  <g
+      id="g1861"
+      style="fill:#ff0000"
+      transform="matrix(.16636 0 0 .22966 22.054 10.772)"
+    >
+    <path
+        id="path1863"
+        style="fill-rule:evenodd"
+        d="m147.21 156.42c-2.54 0.01-5.33 0.48-8.41 1.53-33.62 19.53 11.7 51.04 30.84 78.09l0.56 0.14c21.03-29.57 61.07-62.11 30.47-78.23-24.23-8.25-30.71 19.2-30.93 20.19-0.2-0.87-5.15-21.81-22.53-21.72z"
+        transform="matrix(1.1054 0 0 1.0796 -12.014 -18.867)"
+    />
+  </g
+  >
+  <g
+      id="g3606"
+      style="fill:#ff0000"
+      transform="matrix(.16636 0 0 .22966 58.054 10.772)"
+    >
+    <path
+        id="path3608"
+        style="fill-rule:evenodd"
+        d="m147.21 156.42c-2.54 0.01-5.33 0.48-8.41 1.53-33.62 19.53 11.7 51.04 30.84 78.09l0.56 0.14c21.03-29.57 61.07-62.11 30.47-78.23-24.23-8.25-30.71 19.2-30.93 20.19-0.2-0.87-5.15-21.81-22.53-21.72z"
+        transform="matrix(1.1054 0 0 1.0796 -12.014 -18.867)"
+    />
+  </g
+  >
+  <g
+      id="g3610"
+      style="fill:#ff0000"
+      transform="matrix(.16636 0 0 .22966 40.694 47.772)"
+    >
+    <path
+        id="path3612"
+        style="fill-rule:evenodd"
+        d="m147.21 156.42c-2.54 0.01-5.33 0.48-8.41 1.53-33.62 19.53 11.7 51.04 30.84 78.09l0.56 0.14c21.03-29.57 61.07-62.11 30.47-78.23-24.23-8.25-30.71 19.2-30.93 20.19-0.2-0.87-5.15-21.81-22.53-21.72z"
+        transform="matrix(1.1054 0 0 1.0796 -12.014 -18.867)"
+    />
+  </g
+  >
+  <g
+      id="g3614"
+      style="fill:#ff0000"
+      transform="matrix(-.16636 0 0 -.22966 82.306 176.23)"
+    >
+    <path
+        id="path3616"
+        style="fill-rule:evenodd"
+        d="m147.21 156.42c-2.54 0.01-5.33 0.48-8.41 1.53-33.62 19.53 11.7 51.04 30.84 78.09l0.56 0.14c21.03-29.57 61.07-62.11 30.47-78.23-24.23-8.25-30.71 19.2-30.93 20.19-0.2-0.87-5.15-21.81-22.53-21.72z"
+        transform="matrix(1.1054 0 0 1.0796 -12.014 -18.867)"
+    />
+  </g
+  >
+  <g
+      id="g3618"
+      style="fill:#ff0000"
+      transform="matrix(-.16636 0 0 -.22966 117.31 176.23)"
+    >
+    <path
+        id="path3620"
+        style="fill-rule:evenodd"
+        d="m147.21 156.42c-2.54 0.01-5.33 0.48-8.41 1.53-33.62 19.53 11.7 51.04 30.84 78.09l0.56 0.14c21.03-29.57 61.07-62.11 30.47-78.23-24.23-8.25-30.71 19.2-30.93 20.19-0.2-0.87-5.15-21.81-22.53-21.72z"
+        transform="matrix(1.1054 0 0 1.0796 -12.014 -18.867)"
+    />
+  </g
+  >
+  <metadata
+    >
+    <rdf:RDF
+      >
+      <cc:Work
+        >
+        <dc:format
+          >image/svg+xml</dc:format
+        >
+        <dc:type
+            rdf:resource="http://purl.org/dc/dcmitype/StillImage"
+        />
+        <cc:license
+            rdf:resource="http://creativecommons.org/licenses/publicdomain/"
+        />
+        <dc:publisher
+          >
+          <cc:Agent
+              rdf:about="http://openclipart.org/"
+            >
+            <dc:title
+              >Openclipart</dc:title
+            >
+          </cc:Agent
+          >
+        </dc:publisher
+        >
+        <dc:title
+          >White deck: 5 of hearts</dc:title
+        >
+        <dc:date
+          >2009-03-24T12:19:03</dc:date
+        >
+        <dc:description
+          >playing card from the "White" set</dc:description
+        >
+        <dc:source
+          >https://openclipart.org/detail/23179/white-deck:-5-of-hearts-by-nicubunu</dc:source
+        >
+        <dc:creator
+          >
+          <cc:Agent
+            >
+            <dc:title
+              >nicubunu</dc:title
+            >
+          </cc:Agent
+          >
+        </dc:creator
+        >
+        <dc:subject
+          >
+          <rdf:Bag
+            >
+            <rdf:li
+              >card</rdf:li
+            >
+            <rdf:li
+              >cards</rdf:li
+            >
+            <rdf:li
+              >deck</rdf:li
+            >
+            <rdf:li
+              >gambling</rdf:li
+            >
+            <rdf:li
+              >game</rdf:li
+            >
+            <rdf:li
+              >play</rdf:li
+            >
+            <rdf:li
+              >playing cards</rdf:li
+            >
+            <rdf:li
+              >white deck</rdf:li
+            >
+          </rdf:Bag
+          >
+        </dc:subject
+        >
+      </cc:Work
+      >
+      <cc:License
+          rdf:about="http://creativecommons.org/licenses/publicdomain/"
+        >
+        <cc:permits
+            rdf:resource="http://creativecommons.org/ns#Reproduction"
+        />
+        <cc:permits
+            rdf:resource="http://creativecommons.org/ns#Distribution"
+        />
+        <cc:permits
+            rdf:resource="http://creativecommons.org/ns#DerivativeWorks"
+        />
+      </cc:License
+      >
+    </rdf:RDF
+    >
+  </metadata
+  >
+</svg
+>
