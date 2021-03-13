@@ -2,6 +2,10 @@ package br.com.sbk.sbking.gui.JElements;
 
 import javax.swing.ImageIcon;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;  
+import java.awt.event.MouseListener;
+
 import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.gui.models.DeckCardImageInformation;
 
@@ -23,6 +27,24 @@ public class CardButton extends SBKingButton {
 		this.setSize(deckCardImageInformation.getCardWidth(), deckCardImageInformation.getCardHeight());
 		this.faceUp = true;
 		this.setIcon(frontImage);
+
+		this.setBorderPainted(false);
+
+		this.setMouseListener(this);
+	}
+
+	private void setMouseListener(CardButton sbkingButton) {
+		addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				sbkingButton.setBorderPainted(true);
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				sbkingButton.setBorderPainted(false);
+			}
+		});
 	}
 
 	public void flip() {
@@ -38,5 +60,4 @@ public class CardButton extends SBKingButton {
 	public Card getCard() {
 		return card;
 	}
-
 }
