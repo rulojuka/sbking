@@ -22,7 +22,7 @@ public class HandElement {
 
 	final static Logger logger = LogManager.getLogger(HandElement.class);
 
-	private static final int BETWEEN_CARDS_WIDTH = 22; /* 26 is good for the eyes. 22 to fit everything */
+	private static final int BETWEEN_CARDS_WIDTH = 36; /* 26 is good for the eyes. 22 to fit everything */
 	private DeckCardImageInformation deckCardImageInformation;
 
 	public HandElement(Hand hand, Container container, ActionListener actionListener, Point handCenter, Player player,
