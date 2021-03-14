@@ -26,7 +26,10 @@ public class DeckCardImageInformation {
 	private static int WIDTH_BETWEEN_CARDS;
 
 	public DeckCardImageInformation() {
-		computeDeckCardImageInformation();
+		SCALE_FACTOR = FrameConstants.getScreenScale();
+		CARD_WIDTH = (int)(ORIGINAL_CARD_IMAGE_WIDTH*SCALE_FACTOR);
+		CARD_HEIGHT = (int)(ORIGINAL_CARD_IMAGE_HEIGHT*SCALE_FACTOR);
+		WIDTH_BETWEEN_CARDS = (int)(ORIGINAL_WIDTH_BETWEEN_CARDS*SCALE_FACTOR);
 	}
 
 	public ImageIcon getBackImage() {
@@ -61,12 +64,5 @@ public class DeckCardImageInformation {
 	private ImageIcon getScaledCardImage(URL url) {
 		Image cardImage = new ImageIcon(url).getImage();
 		return new ImageIcon(cardImage.getScaledInstance(CARD_WIDTH, CARD_HEIGHT, java.awt.Image.SCALE_SMOOTH));
-	}
-
-	public void computeDeckCardImageInformation() {
-		SCALE_FACTOR = FrameConstants.getScreenScale();
-		CARD_WIDTH = (int)(ORIGINAL_CARD_IMAGE_WIDTH*SCALE_FACTOR);
-		CARD_HEIGHT = (int)(ORIGINAL_CARD_IMAGE_HEIGHT*SCALE_FACTOR);
-		WIDTH_BETWEEN_CARDS = (int)(ORIGINAL_WIDTH_BETWEEN_CARDS*SCALE_FACTOR);
 	}
 }
