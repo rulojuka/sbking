@@ -8,6 +8,7 @@ import org.apache.logging.log4j.Logger;
 import br.com.sbk.sbking.core.Board;
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
+import br.com.sbk.sbking.gui.main.ClientApplicationState;
 import br.com.sbk.sbking.gui.painters.ConnectToServerPainter;
 import br.com.sbk.sbking.gui.painters.DealPainter;
 import br.com.sbk.sbking.gui.painters.Painter;
@@ -42,8 +43,8 @@ public class KingNetworkClientScreen extends NetworkClientScreen {
 		while (true) {
 			sleepFor(300);
 			if (sbKingClient.isSpectator()) {
-				if (sbKingClient.getBoardHasChanged() || sbKingClient.getDealHasChanged() || sbKingClient.getGUIHasChanged()) {
-					if (!sbKingClient.getGUIHasChanged()) {
+				if (sbKingClient.getBoardHasChanged() || sbKingClient.getDealHasChanged() || ClientApplicationState.getGUIHasChanged()) {
+					if (!ClientApplicationState.getGUIHasChanged()) {
 						logger.info("Deal has changed. Painting deal.");
 						logger.info("It is a spectator.");
 					}
@@ -57,8 +58,8 @@ public class KingNetworkClientScreen extends NetworkClientScreen {
 				}
 			} else {
 				sleepFor(1000);
-				if (sbKingClient.getDealHasChanged() || sbKingClient.getGUIHasChanged()) {
-					if (!sbKingClient.getGUIHasChanged()) {
+				if (sbKingClient.getDealHasChanged() || ClientApplicationState.getGUIHasChanged()) {
+					if (!ClientApplicationState.getGUIHasChanged()) {
 						logger.info("Deal has changed. Painting deal.");
 						logger.info("It is a player.");
 					}

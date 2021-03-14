@@ -21,8 +21,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import br.com.sbk.sbking.gui.constants.FrameConstants;
+import br.com.sbk.sbking.gui.main.ClientApplicationState;
 import br.com.sbk.sbking.gui.painters.Painter;
 import br.com.sbk.sbking.networking.client.SBKingClient;
+
 
 @SuppressWarnings("serial")
 public abstract class NetworkClientScreen extends JFrame {
@@ -55,14 +57,7 @@ public abstract class NetworkClientScreen extends JFrame {
 		NetworkClientScreen screen = this;
 		this.addComponentListener(new ComponentAdapter() {
 			public void componentResized(ComponentEvent componentEvent) {
-				// Recompute frame constants.
-				FrameConstants.computeConstants(screen.getWidth(), screen.getHeight());
-
-				// Connecting screen has no sbKingClient to store the GUI invalidation flag.
-				if (sbKingClient != null) {
-					// Invalidating the client's GUI flag provekes a Pane repaint on the main loop.
-					sbKingClient.setGUIHasChanged(true);
-				}
+				ClientApplicationState.resizeWindow(screen.getWidth(), screen.getHeight());
 			}
 		});
 	}
@@ -114,8 +109,6 @@ public abstract class NetworkClientScreen extends JFrame {
 	protected void paintPainter(Painter painter) {
 		this.getContentPane().removeAll();
 		painter.paint(this.getContentPane());
-		if (sbKingClient != null) {
-			sbKingClient.setGUIHasChanged(false);
-		}
+		ClientApplicationState.setGUIHasChanged(false);
 	}
 }
