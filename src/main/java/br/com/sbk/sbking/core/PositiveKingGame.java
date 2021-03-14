@@ -8,6 +8,7 @@ import java.util.Set;
 import br.com.sbk.sbking.core.rulesets.abstractClasses.NegativeRuleset;
 import br.com.sbk.sbking.core.rulesets.abstractClasses.PositiveRuleset;
 import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
+import br.com.sbk.sbking.core.rulesets.concrete.NoRuleset;
 import br.com.sbk.sbking.gui.models.KingGameScoreboard;
 
 public class PositiveKingGame extends TrickGame {
@@ -23,7 +24,14 @@ public class PositiveKingGame extends TrickGame {
 	public PositiveKingGame() {
 		this.gameScoreboard = new KingGameScoreboard();
 		this.dealNewBoard();
-		
+
+	}
+
+	@Override
+	public void dealNewBoard() {
+		BoardDealer boardDealer = new FourteenHCPPlusDoubletonRuledBoardDealer();
+		this.currentBoard = boardDealer.dealBoard(this.dealer);
+		this.currentDeal = new Deal(currentBoard, new NoRuleset());
 	}
 
 	public void addRuleset(Ruleset currentGameModeOrStrain) {
@@ -45,17 +53,17 @@ public class PositiveKingGame extends TrickGame {
 		this.getGameScoreboard().addFinishedDeal(this.getCurrentDeal());
 		if (isPositive) {
 			if (isNorthSouth) {
-				northSouthPositives++;
+				this.northSouthPositives++;
 			} else {
-				eastWestPositives++;
+				this.eastWestPositives++;
 			}
 		} else {
 			NegativeRuleset negativeRuleset = (NegativeRuleset) currentRuleset;
 			this.chosenNegativeRulesets.add(negativeRuleset);
 			if (isNorthSouth) {
-				northSouthNegatives++;
+				this.northSouthNegatives++;
 			} else {
-				eastWestNegatives++;
+				this.eastWestNegatives++;
 			}
 		}
 		this.dealer = this.dealer.next();

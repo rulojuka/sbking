@@ -48,19 +48,20 @@ public class LobbyServer {
 				try {
 					PlayerNetworkInformation connectedPlayerNetworkInformation = this.connectPlayer(connectingSocket);
 					logger.info("Created new gameServer");
-					GameServer gameServer = new PositiveKingGameServer();
-					
+					GameServer gameServer = new KingGameServer();
+
 					this.table = new Table(connectedPlayerNetworkInformation, gameServer);
 					gameServer.setTable(table);
 					this.ownerConnected = true;
-					logger.info("Created a Table. Owner is " + connectedPlayerNetworkInformation.getSocket().getInetAddress() + "and GameServer is CagandoNoBequinhoGameServer.");
+					logger.info("Created a Table. Owner is " + connectedPlayerNetworkInformation.getSocket().getInetAddress()
+							+ "and GameServer is KingGameServer.");
 					pool.execute(gameServer);
 					logger.info("Executing gameServer in the pool.");
 				} catch (RuntimeException e) {
 					logger.error(e.getMessage());
 				}
 			}
-			
+
 			while (true) {
 				Socket connectingPlayerSocket = listener.accept();
 				logger.info("Someone is trying to connect!");
@@ -79,7 +80,7 @@ public class LobbyServer {
 		}
 		logger.info("Lobby has ended. Exiting main thread.");
 	}
-	
+
 	private PlayerNetworkInformation connectPlayer(Socket connectingPlayerSocket) {
 		Serializator connectingPlayerSerializator = initializeSerializator(connectingPlayerSocket);
 		if (connectingPlayerSocket == null || connectingPlayerSerializator == null) {

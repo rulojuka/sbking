@@ -32,9 +32,9 @@ public class CagandoNoBequinhoGame extends TrickGame {
 		return currentNumberOfCardsInAHand;
 	}
 
-	public void dealNewBoard(int numberOfCards) {
-		super.dealNewBoard();
-		int numberOfRemovedCards = 13 - numberOfCards;
+	@Override
+	public void dealNewBoard() {
+		int numberOfRemovedCards = 13 - this.currentNumberOfCardsInAHand;
 		List<Card> removedCards = null;
 		for (int i = 0; i < numberOfRemovedCards; i++) {
 			removedCards = this.currentBoard.removeOneCardFromEachHand();
@@ -48,7 +48,7 @@ public class CagandoNoBequinhoGame extends TrickGame {
 			this.addRuleset(new PositiveWithTrumpsRuleset(this.trumpCard.getSuit()));
 		}
 
-		this.currentDeal.setStartingNumberOfCardsInTheHand(numberOfCards);
+		this.currentDeal.setStartingNumberOfCardsInTheHand(this.currentNumberOfCardsInAHand);
 
 	}
 

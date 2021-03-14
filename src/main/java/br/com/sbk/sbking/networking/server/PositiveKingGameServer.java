@@ -19,7 +19,6 @@ public class PositiveKingGameServer extends GameServer {
 	final static Logger logger = LogManager.getLogger(KingGameServer.class);
 
 	private PositiveOrNegativeNotification positiveOrNegativeNotification;
-	private PositiveOrNegative currentPositiveOrNegative;
 	private GameModeOrStrainNotification gameModeOrStrainNotification;
 	private Ruleset currentGameModeOrStrain;
 	private boolean isRulesetPermitted;
@@ -51,7 +50,7 @@ public class PositiveKingGameServer extends GameServer {
 				this.gameModeOrStrainNotification = new GameModeOrStrainNotification();
 				this.positiveOrNegativeNotification = new PositiveOrNegativeNotification();
 				logger.info("Sleeping for 300ms waiting for clients to initialize its deals.");
-				sleepFor(500);
+				sleepFor(300);
 
 				logger.info("Everything selected! Game commencing!");
 
@@ -67,7 +66,6 @@ public class PositiveKingGameServer extends GameServer {
 
 				PositiveOrNegative positive = new PositiveOrNegative();
 				positive.setPositive();
-				this.currentPositiveOrNegative = positive;
 
 				synchronized (gameModeOrStrainNotification) {
 					// wait until object notifies - which relinquishes the lock on the object too

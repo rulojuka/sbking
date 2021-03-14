@@ -26,7 +26,6 @@ public class SBKingClient implements Runnable {
 	private final Serializator serializator;
 
 	private Direction direction;
-	private boolean allPlayersConnected;
 
 	private Direction positiveOrNegativeChooser;
 	private Direction GameModeOrStrainChooser;
@@ -136,7 +135,6 @@ public class SBKingClient implements Runnable {
 		final String DIRECTION = "DIRECTION";
 		final String WAIT = "WAIT";
 		final String CONTINUE = "CONTINUE";
-		final String ALLCONNECTED = "ALLCONNECTED";
 		final String CHOOSERPOSITIVENEGATIVE = "CHOOSERPOSITIVENEGATIVE";
 		final String CHOOSERGAMEMODEORSTRAIN = "CHOOSERGAMEMODEORSTRAIN";
 		final String POSITIVEORNEGATIVE = "POSITIVEORNEGATIVE";
@@ -151,9 +149,6 @@ public class SBKingClient implements Runnable {
 		if (MESSAGE.equals(controlMessage)) {
 			String string = this.serializator.tryToDeserialize(String.class);
 			logger.info("I received a message: --" + string + "--");
-			if (ALLCONNECTED.equals(string)) {
-				setAllPlayersConnected();
-			}
 		} else if (BOARD.equals(controlMessage)) {
 			Board board = this.serializator.tryToDeserialize(Board.class);
 			logger.info("I received a board.");
@@ -259,14 +254,6 @@ public class SBKingClient implements Runnable {
 		logger.debug("Sending negative to server");
 		String negative = "NEGATIVE";
 		this.serializator.tryToSerialize(negative);
-	}
-
-	private void setAllPlayersConnected() {
-		allPlayersConnected = true;
-	}
-
-	public boolean isEveryoneConnected() {
-		return allPlayersConnected;
 	}
 
 	public Direction getDirection() {
@@ -401,6 +388,9 @@ public class SBKingClient implements Runnable {
 	}
 
 	public boolean isRulesetValid() {
+		if (this.rulesetValid == null) {
+			return false;
+		}
 		return this.rulesetValid;
 	}
 

@@ -18,9 +18,9 @@ public class KingGameServer extends GameServer {
 
 	final static Logger logger = LogManager.getLogger(KingGameServer.class);
 
-	private PositiveOrNegativeNotification positiveOrNegativeNotification = new PositiveOrNegativeNotification();
+	private PositiveOrNegativeNotification positiveOrNegativeNotification;
 	private PositiveOrNegative currentPositiveOrNegative;
-	private GameModeOrStrainNotification gameModeOrStrainNotification = new GameModeOrStrainNotification();
+	private GameModeOrStrainNotification gameModeOrStrainNotification;
 	private Ruleset currentGameModeOrStrain;
 	private boolean isRulesetPermitted;
 
@@ -33,10 +33,8 @@ public class KingGameServer extends GameServer {
 	@Override
 	public void run() {
 
-		logger.info("Sleeping for 500ms waiting for last client to setup itself");
+		logger.info("Sleeping for 500ms waiting for clients to setup themselves");
 		sleepFor(500);
-
-		this.table.getMessageSender().sendMessageAll("ALLCONNECTED");
 
 		this.game = new KingGame();
 		this.kingGame = (KingGame) this.game;
@@ -44,28 +42,39 @@ public class KingGameServer extends GameServer {
 		while (!game.isFinished()) {
 			this.game.dealNewBoard();
 
-			for (Direction direction : Direction.values()) {
-				Player player = this.table.getPlayerOf(direction);
-				this.game.setPlayerOf(direction, player);
-			}
-
 			do {
+				for (Direction direction : Direction.values()) {
+					Player player = this.table.getPlayerOf(direction);
+					this.game.setPlayerOf(direction, player);
+				}
 
+				this.gameModeOrStrainNotification = new GameModeOrStrainNotification();
+				this.positiveOrNegativeNotification = new PositiveOrNegativeNotification();
 				this.table.getMessageSender().sendInitializeDealAll();
 				logger.info("Sleeping for 300ms waiting for clients to initialize its deals.");
 				sleepFor(300);
-
 				this.table.getMessageSender().sendBoardAll(this.game.getCurrentBoard());
-
+				sleepFor(300);
 				this.table.getMessageSender().sendChooserPositiveNegativeAll(this.getCurrentPositiveOrNegativeChooser());
 
 				synchronized (positiveOrNegativeNotification) {
 					// wait until object notifies - which relinquishes the lock on the object too
 					try {
 						logger.info("I am waiting for some thread to notify that it wants to choose positive or negative");
-						positiveOrNegativeNotification.wait();
+						positiveOrNegativeNotification.wait(3000);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
+					}
+
+					while (positiveOrNegativeNotification.getPositiveOrNegative() == null) {
+						try {
+							logger.info("I am waiting for some thread to notify that it wants to choose game Mode Or Strain");
+							positiveOrNegativeNotification.wait(3000);
+							this.table.getMessageSender()
+									.sendChooserPositiveNegativeAll(this.getCurrentGamePositiveOrNegativeChooser());
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
 					}
 				}
 
@@ -73,16 +82,22 @@ public class KingGameServer extends GameServer {
 						"I received that is going to be " + positiveOrNegativeNotification.getPositiveOrNegative().toString());
 				this.currentPositiveOrNegative = positiveOrNegativeNotification.getPositiveOrNegative();
 				this.table.getMessageSender().sendPositiveOrNegativeAll(this.currentPositiveOrNegative);
-
+				sleepFor(300);
 				this.table.getMessageSender().sendChooserGameModeOrStrainAll(this.getCurrentGameModeOrStrainChooser());
 
 				synchronized (gameModeOrStrainNotification) {
 					// wait until object notifies - which relinquishes the lock on the object too
-					try {
-						logger.info("I am waiting for some thread to notify that it wants to choose game Mode Or Strain");
-						gameModeOrStrainNotification.wait();
-					} catch (InterruptedException e) {
-						e.printStackTrace();
+					while (gameModeOrStrainNotification.getGameModeOrStrain() == null) {
+						logger.info("getGameModeOrStrain:" + gameModeOrStrainNotification.getGameModeOrStrain());
+						try {
+							logger.info("I am waiting for some thread to notify that it wants to choose game Mode Or Strain");
+							gameModeOrStrainNotification.wait(3000);
+							this.table.getMessageSender().sendPositiveOrNegativeAll(this.currentPositiveOrNegative);
+							sleepFor(300);
+							this.table.getMessageSender().sendChooserGameModeOrStrainAll(this.getCurrentGameModeOrStrainChooser());
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
 					}
 				}
 				logger.info("I received that is going to be "
@@ -116,9 +131,9 @@ public class KingGameServer extends GameServer {
 			}
 
 			this.dealHasChanged = true;
+			logger.info("Sleeping for 300ms waiting for all clients to prepare themselves.");
+			sleepFor(300);
 			while (!this.game.getCurrentDeal().isFinished()) {
-				logger.info("Sleeping for 300ms waiting for all clients to prepare themselves.");
-				sleepFor(300);
 				if (this.dealHasChanged) {
 					logger.info("Sending new 'round' of deals");
 					this.table.getMessageSender().sendDealAll(this.game.getCurrentDeal());
@@ -143,12 +158,20 @@ public class KingGameServer extends GameServer {
 				}
 			}
 
+			logger.info("Sending last 'round' of deals");
+			this.table.getMessageSender().sendDealAll(this.game.getCurrentDeal());
+			logger.info("Sleeping for 3000ms for everyone to see the last card.");
+			sleepFor(3000);
 			this.game.finishDeal();
+
 			this.table.getMessageSender().sendGameScoreboardAll(this.kingGame.getGameScoreboard());
 
+			logger.info("Sleeping for 300ms waiting for all clients to prepare themselves.");
+			sleepFor(300);
 			this.table.getMessageSender().sendFinishDealAll();
 			logger.info("Deal finished!");
-
+			logger.info("Sleeping for 300ms waiting for all clients to prepare themselves.");
+			sleepFor(300);
 		}
 
 		this.table.getMessageSender().sendFinishGameAll();
@@ -183,6 +206,10 @@ public class KingGameServer extends GameServer {
 
 	private Direction getCurrentGameModeOrStrainChooser() {
 		return this.game.getDealer().getGameModeOrStrainChooserWhenDealer();
+	}
+
+	private Direction getCurrentGamePositiveOrNegativeChooser() {
+		return this.game.getDealer().getPositiveOrNegativeChooserWhenDealer();
 	}
 
 }

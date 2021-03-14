@@ -1,18 +1,12 @@
 package br.com.sbk.sbking.core;
 
-import br.com.sbk.sbking.core.rulesets.concrete.NoRuleset;
-
 public abstract class TrickGame {
 
 	protected Board currentBoard;
 	protected Deal currentDeal;
 	protected Direction dealer = Direction.NORTH;
 
-	public void dealNewBoard() {
-		BoardDealer boardDealer = new FourteenHCPPlusDoubletonRuledBoardDealer();
-		this.currentBoard = boardDealer.dealBoard(this.dealer);
-		this.currentDeal = new Deal(currentBoard, new NoRuleset());
-	}
+	public abstract void dealNewBoard();
 
 	public Direction getDealer() {
 		return this.dealer;

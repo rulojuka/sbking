@@ -6,6 +6,7 @@ import java.awt.Container;
 import java.awt.Point;
 
 import br.com.sbk.sbking.core.Direction;
+import br.com.sbk.sbking.core.Hand;
 import br.com.sbk.sbking.gui.elements.ChoosePositiveOrNegativeElement;
 import br.com.sbk.sbking.gui.elements.GameScoreboardElement;
 import br.com.sbk.sbking.gui.elements.HandWhileChoosingElement;
@@ -44,7 +45,14 @@ public class WaitingForChoosingPositiveOrNegativePainter implements Painter {
 			choosePositiveOrNegativeElement.add();
 		}
 
-		new HandWhileChoosingElement(contentPane, this.sbKingClient.getDeal(), this.myDirection);
+		Hand myHand;
+		if (this.sbKingClient.getDeal() != null) {
+			myHand = this.sbKingClient.getDeal().getHandOf(this.myDirection);
+		} else {
+			myHand = this.sbKingClient.getCurrentBoard().getHandOf(this.myDirection);
+		}
+
+		new HandWhileChoosingElement(contentPane, myHand, this.myDirection);
 
 		contentPane.validate();
 		contentPane.repaint();

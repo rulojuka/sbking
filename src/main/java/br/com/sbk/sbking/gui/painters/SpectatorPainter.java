@@ -8,6 +8,7 @@ import org.apache.logging.log4j.Logger;
 
 import br.com.sbk.sbking.core.Board;
 import br.com.sbk.sbking.core.Deal;
+import br.com.sbk.sbking.core.rulesets.concrete.NoRuleset;
 import br.com.sbk.sbking.core.rulesets.concrete.PositiveNoTrumpsRuleset;
 import br.com.sbk.sbking.gui.elements.AllDirectionBoardElements;
 import br.com.sbk.sbking.gui.elements.ScoreSummaryElement;
@@ -26,7 +27,7 @@ public class SpectatorPainter implements Painter {
 
 	public SpectatorPainter(ActionListener actionListener, Board board) {
 		this.actionListener = actionListener;
-		this.deal = new Deal(board, new PositiveNoTrumpsRuleset());
+		this.deal = new Deal(board, new NoRuleset());
 	}
 
 	@Override

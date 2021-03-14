@@ -10,12 +10,14 @@ import java.util.Set;
 import br.com.sbk.sbking.core.rulesets.abstractClasses.NegativeRuleset;
 import br.com.sbk.sbking.core.rulesets.abstractClasses.PositiveRuleset;
 import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
+import br.com.sbk.sbking.core.rulesets.concrete.NoRuleset;
 import br.com.sbk.sbking.gui.models.KingGameScoreboard;
 
 public class KingGame extends TrickGame {
 
 	private KingGameScoreboard gameScoreboard;
 	private Set<NegativeRuleset> chosenNegativeRulesets = new HashSet<NegativeRuleset>();
+	BoardDealer boardDealer;
 	private int northSouthNegatives = 0;
 	private int eastWestNegatives = 0;
 	private int northSouthPositives = 0;
@@ -24,8 +26,14 @@ public class KingGame extends TrickGame {
 
 	public KingGame() {
 		this.gameScoreboard = new KingGameScoreboard();
+		this.boardDealer = new ShuffledBoardDealer();
 		this.dealNewBoard();
-		
+	}
+
+	@Override
+	public void dealNewBoard() {
+		this.currentBoard = this.boardDealer.dealBoard(this.dealer);
+		this.currentDeal = new Deal(currentBoard, new NoRuleset());
 	}
 
 	public void addRuleset(Ruleset currentGameModeOrStrain) {

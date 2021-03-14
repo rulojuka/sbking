@@ -109,7 +109,7 @@ public class ClientGameSocket implements Runnable {
 					logger.info("Setting new nickname: --" + nickname + "--");
 					this.playerNetworkInformation.setNickname(nickname);
 				} else {
-					PositiveKingGameServer kingGameServer = (PositiveKingGameServer) this.table.getGameServer();
+					KingGameServer kingGameServer = (KingGameServer) this.table.getGameServer();
 					if (POSITIVE.equals(string) || NEGATIVE.equals(string)) {
 						PositiveOrNegative positiveOrNegative = new PositiveOrNegative();
 						if (POSITIVE.equals(string)) {

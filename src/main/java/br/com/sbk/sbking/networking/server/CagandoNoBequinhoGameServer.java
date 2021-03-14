@@ -26,15 +26,11 @@ public class CagandoNoBequinhoGameServer extends GameServer {
 		logger.info("Sleeping for 500ms waiting for last client to setup itself");
 		sleepFor(500);
 
-		this.table.getMessageSender().sendMessageAll("ALLCONNECTED");
-
 		this.cagandoNoBequinhoGame = (CagandoNoBequinhoGame) this.game;
 
 		while (!game.isFinished()) {
 
-			int currentHand = this.cagandoNoBequinhoGame.getCurrentNumberOfCardsInAHand();
-
-			this.cagandoNoBequinhoGame.dealNewBoard(currentHand);
+			this.cagandoNoBequinhoGame.dealNewBoard();
 
 			for (Direction direction : Direction.values()) {
 				Player player = this.table.getPlayerOf(direction);

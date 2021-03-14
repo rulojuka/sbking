@@ -37,39 +37,13 @@ public abstract class Ruleset
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((heartsProhibitable == null) ? 0 : heartsProhibitable.hashCode());
-		result = prime * result + ((suitFollowable == null) ? 0 : suitFollowable.hashCode());
-		result = prime * result + ((winnable == null) ? 0 : winnable.hashCode());
-		return result;
+		return this.getClass().hashCode();
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Ruleset other = (Ruleset) obj;
-		if (heartsProhibitable == null) {
-			if (other.heartsProhibitable != null)
-				return false;
-		} else if (!(heartsProhibitable.getClass() == other.heartsProhibitable.getClass()))
-			return false;
-		if (suitFollowable == null) {
-			if (other.suitFollowable != null)
-				return false;
-		} else if (!(suitFollowable.getClass() == other.suitFollowable.getClass()))
-			return false;
-		if (winnable == null) {
-			if (other.winnable != null)
-				return false;
-		} else if (!(winnable.getClass() == other.winnable.getClass()))
-			return false;
-		return true;
+		Class<? extends Ruleset> myClass = this.getClass();
+		return myClass.equals(obj.getClass());
 	}
 
 }
