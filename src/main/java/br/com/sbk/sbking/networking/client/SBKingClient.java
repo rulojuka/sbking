@@ -40,8 +40,6 @@ public class SBKingClient implements Runnable {
 	private boolean dealFinished;
 	private Boolean rulesetValid = null;
 
-	private boolean guiHasChanged = false;
-
 	private boolean gameFinished = false;
 
 	private KingGameScoreboard currentGameScoreboard = new KingGameScoreboard();
@@ -357,14 +355,6 @@ public class SBKingClient implements Runnable {
 
 	public boolean getDealHasChanged() {
 		return this.dealHasChanged;
-	}
-
-	public void setGUIHasChanged(boolean guiHasChanged) {
-		this.guiHasChanged = guiHasChanged;
-	}
-
-	public boolean getGUIHasChanged() {
-		return this.guiHasChanged;
 	}
 
 	public boolean isDealFinished() {
