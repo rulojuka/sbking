@@ -63,7 +63,13 @@ public class KingNetworkClientScreen extends NetworkClientScreen {
 						logger.info("It is a player.");
 					}
 					logger.info("Starting to paint Deal");
-					paintDeal(sbKingClient.getDeal(), sbKingClient.getDirection(), sbKingClient.getPlayCardActionListener());
+					Deal currentDeal = sbKingClient.getDeal();
+					Board currentBoard = sbKingClient.getCurrentBoard();
+					if (currentDeal == null) {
+						paintDeal(currentBoard, sbKingClient.getDirection(), sbKingClient.getPlayCardActionListener());
+					} else {
+						paintDeal(currentDeal, sbKingClient.getDirection(), sbKingClient.getPlayCardActionListener());
+					}
 					logger.info("Finished painting Deal");
 				} else {
 					if (!sbKingClient.isPositiveOrNegativeSelected()) {
@@ -151,6 +157,11 @@ public class KingNetworkClientScreen extends NetworkClientScreen {
 
 	private void paintDeal(Deal deal, Direction direction, ActionListener playCardActionListener) {
 		Painter dealPainter = new DealPainter(playCardActionListener, direction, deal);
+		this.paintPainter(dealPainter);
+	}
+
+	private void paintDeal(Board board, Direction direction, ActionListener playCardActionListener) {
+		Painter dealPainter = new DealPainter(playCardActionListener, direction, board);
 		this.paintPainter(dealPainter);
 	}
 

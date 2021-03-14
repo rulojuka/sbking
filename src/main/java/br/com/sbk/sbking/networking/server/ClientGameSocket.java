@@ -95,7 +95,7 @@ public class ClientGameSocket implements Runnable {
 			} else if (readObject instanceof Direction) {
 				Direction direction = (Direction) readObject;
 				logger.info("A spectator is trying to sit on " + direction);
-				this.table.moveSpectatorToSeat(this, direction);
+				this.table.moveToSeat(this, direction);
 			}
 		} else {
 			if (readObject instanceof String) {
@@ -132,7 +132,7 @@ public class ClientGameSocket implements Runnable {
 			} else if (readObject instanceof Direction) {
 				Direction direction = (Direction) readObject;
 				logger.info(this.direction + " is trying to leave his sit or sit on " + direction);
-				this.table.moveOrUnsitPlayer(this, direction);
+				this.table.moveToSeat(this, direction);
 			}
 		}
 	}
