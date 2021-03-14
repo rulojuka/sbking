@@ -96,7 +96,7 @@ public class PositiveKingNetworkClientScreen extends NetworkClientScreen {
 			logger.error("Deal should not be null here.");
 		} else {
 			Painter spectatorPainter = new SpectatorPainter(playCardActionListener, deal);
-			paintPainter(spectatorPainter);
+			this.paintPainter(spectatorPainter);
 		}
 	}
 
@@ -105,7 +105,7 @@ public class PositiveKingNetworkClientScreen extends NetworkClientScreen {
 			logger.error("Board should not be null here.");
 		} else {
 			Painter spectatorPainter = new SpectatorPainter(playCardActionListener, board);
-			paintPainter(spectatorPainter);
+			this.paintPainter(spectatorPainter);
 		}
 	}
 
@@ -117,26 +117,21 @@ public class PositiveKingNetworkClientScreen extends NetworkClientScreen {
 		}
 	}
 
-	private void paintPainter(Painter painter) {
-		this.getContentPane().removeAll();
-		painter.paint(this.getContentPane());
-	}
-
 	private void paintConnectToServerScreen() {
 		Painter connectToServerPainter = new ConnectToServerPainter(this);
-		paintPainter(connectToServerPainter);
+		this.paintPainter(connectToServerPainter);
 	}
 
 	private void paintWaitingForChoosingGameModeOrStrainScreen(Direction direction, Direction chooser,
 			boolean isPositive) {
 		Painter waitingForChoosingGameModeOrStrainPainter = new WaitingForChoosingGameModeOrStrainPainter(direction,
 				chooser, true, this.sbKingClient, this.sbKingClient.getCurrentGameScoreboard());
-		paintPainter(waitingForChoosingGameModeOrStrainPainter);
+		this.paintPainter(waitingForChoosingGameModeOrStrainPainter);
 	}
 
 	private void paintDeal(Deal deal, Direction direction, ActionListener playCardActionListener) {
 		Painter dealPainter = new DealPainter(playCardActionListener, direction, deal);
-		paintPainter(dealPainter);
+		this.paintPainter(dealPainter);
 	}
 
 }

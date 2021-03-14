@@ -79,19 +79,14 @@ public class CagandoNetworkClientScreen extends NetworkClientScreen {
 		}
 	}
 
-	private void paintPainter(Painter painter) {
-		this.getContentPane().removeAll();
-		painter.paint(this.getContentPane());
-	}
-
 	private void paintConnectToServerScreen() {
 		Painter connectToServerPainter = new ConnectToServerPainter(this);
-		paintPainter(connectToServerPainter);
+		this.paintPainter(connectToServerPainter);
 	}
 
 	private void paintDeal(Deal deal, Direction direction, ActionListener playCardActionListener) {
 		Painter dealPainter = new DealPainter(playCardActionListener, direction, deal);
-		paintPainter(dealPainter);
+		this.paintPainter(dealPainter);
 	}
 
 	private void paintSpectatorScreen(Deal deal, ActionListener playCardActionListener) {
@@ -99,7 +94,7 @@ public class CagandoNetworkClientScreen extends NetworkClientScreen {
 			logger.error("Deal should not be null here.");
 		} else {
 			Painter spectatorPainter = new SpectatorPainter(playCardActionListener, deal);
-			paintPainter(spectatorPainter);
+			this.paintPainter(spectatorPainter);
 		}
 	}
 
@@ -108,7 +103,7 @@ public class CagandoNetworkClientScreen extends NetworkClientScreen {
 			logger.error("Board should not be null here.");
 		} else {
 			Painter spectatorPainter = new SpectatorPainter(playCardActionListener, board);
-			paintPainter(spectatorPainter);
+			this.paintPainter(spectatorPainter);
 		}
 	}
 

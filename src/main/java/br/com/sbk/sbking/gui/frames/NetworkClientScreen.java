@@ -21,6 +21,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import br.com.sbk.sbking.gui.constants.FrameConstants;
+import br.com.sbk.sbking.gui.painters.Painter;
 import br.com.sbk.sbking.networking.client.SBKingClient;
 
 @SuppressWarnings("serial")
@@ -107,6 +108,14 @@ public abstract class NetworkClientScreen extends JFrame {
 			return hostname;
 		} else {
 			return "127.0.0.1";
+		}
+	}
+
+	protected void paintPainter(Painter painter) {
+		this.getContentPane().removeAll();
+		painter.paint(this.getContentPane());
+		if (sbKingClient != null) {
+			sbKingClient.setGUIHasChanged(false);
 		}
 	}
 }
