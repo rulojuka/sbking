@@ -22,7 +22,7 @@ function set_inkscape_export_flag() {
 function convert_svg_to_png() {
 	echo converting "$1" to "$2"
 	
-	# Export using inkscape, on 135 dpi
+	# Export using inkscape, on 125 dpi
 	inkscape "$INKSCAPE_EXPORT_FLAG=$2" -d 125 "$1"
 	echo " "
 }

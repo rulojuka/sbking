@@ -27,7 +27,6 @@ public class CardButton extends SBKingButton {
 		this.setSize(deckCardImageInformation.getCardWidth(), deckCardImageInformation.getCardHeight());
 		this.faceUp = true;
 		this.setIcon(frontImage);
-
 		this.setBorderPainted(false);
 
 		this.setMouseListener(this);
@@ -39,7 +38,6 @@ public class CardButton extends SBKingButton {
 			public void mouseEntered(MouseEvent e) {
 				sbkingButton.setBorderPainted(true);
 			}
-
 			@Override
 			public void mouseExited(MouseEvent e) {
 				sbkingButton.setBorderPainted(false);

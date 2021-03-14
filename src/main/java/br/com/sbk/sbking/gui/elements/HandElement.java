@@ -56,10 +56,10 @@ public class HandElement {
 		} else {
 			sitOrLeaveButton.setText(player.getName());
 		}
-		
-		Point starting_point = handTopLeftCorner;
+
+		Point startingPoint = handTopLeftCorner;
 		handTopLeftCorner.translate(0, deckCardImageInformation.getCardHeight() + 5);
-		sitOrLeaveButton.setLocation(starting_point);
+		sitOrLeaveButton.setLocation(startingPoint);
 		container.add(sitOrLeaveButton);
 	}
 
