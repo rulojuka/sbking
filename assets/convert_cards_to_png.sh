@@ -6,14 +6,24 @@
 # Requirements: inkscape, bash terminal.
 
 CARDS_SVG_PATH="./cards/"
+INKSCAPE_EXPORT_FLAG=""
+
+function set_inkscape_export_flag() {
+	version=`inkscape --version | cut -f2 -d" " | cut -f1 -d"."`
+	if [ $version -gt 0 ]
+	then
+		INKSCAPE_EXPORT_FLAG='--export-filename'
+	else
+		INKSCAPE_EXPORT_FLAG="--export-png"
+	fi
+}
 
 
 function convert_svg_to_png() {
 	echo converting "$1" to "$2"
 	
 	# Export using inkscape, on 135 dpi
-	inkscape --export-type="png" -d 125 "$1"
-	mv "${1/.svg/.png}" "$2"
+	inkscape "$INKSCAPE_EXPORT_FLAG=$2" -d 125 "$1"
 	echo " "
 }
 
@@ -88,6 +98,7 @@ function convert_name() {
 
 
 function main() {
+	set_inkscape_export_flag
 	for filename in "${CARDS_SVG_PATH}"*.svg; do
 		[ -e "$filename" ] || continue
 
