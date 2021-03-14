@@ -14,8 +14,6 @@ import br.com.sbk.sbking.gui.models.DeckCardImageInformation;
 public class TrickElement {
 
 	private List<CardButton> trick;
-	private static final int CARD_WIDTH = 72;
-	private static final int CARD_HEIGHT = 96;
 	private DeckCardImageInformation deckCardImageInformation;
 
 	public TrickElement(Trick currentTrick, Container container, Point point) {
@@ -34,22 +32,25 @@ public class TrickElement {
 	}
 
 	private Point cardLocation(Direction direction, Point center) {
-		int x = center.x - CARD_WIDTH / 2;
-		int y = center.y - CARD_HEIGHT / 2;
-		int diff = 30;
+
+		int x = center.x - deckCardImageInformation.getCardWidth() / 2;
+		int y = center.y - deckCardImageInformation.getCardHeight() / 2;
+		int xDiff = deckCardImageInformation.getWidthBetweenCards();
+		int yDiff = deckCardImageInformation.getWidthBetweenCards() * 2;
 		int dx;
 		int dy;
+
 		if (direction == Direction.NORTH) {
 			dx = 0;
-			dy = -diff;
+			dy = -yDiff;
 		} else if (direction == Direction.EAST) {
-			dx = +diff;
+			dx = +xDiff;
 			dy = 0;
 		} else if (direction == Direction.SOUTH) {
 			dx = 0;
-			dy = +diff;
+			dy = +yDiff;
 		} else {
-			dx = -diff;
+			dx = -xDiff;
 			dy = 0;
 		}
 		return new Point(x + dx, y + dy);
