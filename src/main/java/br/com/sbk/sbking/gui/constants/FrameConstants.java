@@ -11,7 +11,7 @@ public final class FrameConstants {
 	public static final java.awt.Color TABLE_COLOR = new java.awt.Color(0, 100, 0); // Tablecloth green
 
 	public static final int ORIGINAL_TABLE_WIDTH = 1600;
-	public static final int ORIGINAL_TABLE_HEIGHT = 1360;
+	public static final int ORIGINAL_TABLE_HEIGHT = 1400;
 
 	public static int TABLE_WIDTH;
 	public static int TABLE_HEIGHT;
@@ -24,8 +24,8 @@ public final class FrameConstants {
 	@SuppressWarnings("serial")
 	public static Map<Direction, Point> pointOfDirection = new HashMap<Direction, Point>();
 
-	public static void 1360() {
-		computeConstants(ORIGINAL_TABLE_WIDTH, ORIGINAL_TABLE_HEIGHT);		
+	public static void initFrameConstants() {
+		computeConstants(1400, 820);		
 	}
 
 	public static double getScreenScale() {
@@ -35,27 +35,28 @@ public final class FrameConstants {
 	public static void computeConstants(int newWidth, int newHeight) {
 		TABLE_WIDTH = newWidth;
 		TABLE_HEIGHT = newHeight;
-
 		HALF_WIDTH = TABLE_WIDTH / 2;
 		HALF_HEIGHT = TABLE_HEIGHT / 2;
-		
-		int FIFTH_WIDTH = TABLE_WIDTH / 5;
-		int FIFTH_HEIGHT = TABLE_HEIGHT / 5;
+		scaleX = (double)(TABLE_WIDTH)/ORIGINAL_TABLE_WIDTH;
+		scaleY = (double)(TABLE_HEIGHT)/ORIGINAL_TABLE_HEIGHT;
+		double scale = getScreenScale();
+
+		double handToTrickSpacingVertical = scale * 60;
+		double handToTrickSpacingHorizontal = scale * 400;
+		double approximateCardWidth = scale * 182;
+		double approximateCardHeight = scale * 247;
+
+		int widthOffset = (int)((3*approximateCardWidth + 2*handToTrickSpacingHorizontal)/2);
+		int heightOffset = (int)((3*approximateCardHeight + 2*handToTrickSpacingVertical)/2);
 
 		int NORTH_X_CENTER = HALF_WIDTH;
-		int NORTH_Y_CENTER = FIFTH_HEIGHT;
-
+		int NORTH_Y_CENTER = HALF_HEIGHT - heightOffset;
 		int SOUTH_X_CENTER = HALF_WIDTH;
-		int SOUTH_Y_CENTER = FIFTH_HEIGHT * 4;
-
-		int EAST_X_CENTER = FIFTH_WIDTH * 4;
+		int SOUTH_Y_CENTER = HALF_HEIGHT + heightOffset;
+		int EAST_X_CENTER = HALF_WIDTH + widthOffset;
 		int EAST_Y_CENTER = HALF_HEIGHT;
-
-		int WEST_X_CENTER = FIFTH_WIDTH;
+		int WEST_X_CENTER = HALF_WIDTH - widthOffset;
 		int WEST_Y_CENTER = HALF_HEIGHT;
-
-		scaleX = (double)(newWidth)/ORIGINAL_TABLE_WIDTH;
-		scaleY = (double)(newHeight)/ORIGINAL_TABLE_HEIGHT;
 
 		// TODO: cached references to the points stored in pointOfDirection may
 		// be invalid. We must prevent caching of those references.
