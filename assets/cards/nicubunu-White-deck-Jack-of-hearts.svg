@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg2"
+   sodipodi:docname="nicubunu-White-deck-Jack-of-hearts.svg"
+   viewBox="0 0 140 190"
+   sodipodi:version="0.32"
+   version="1.0"
+   y="0"
+   x="0"
+   inkscape:version="1.0.2-2 (e86c870879, 2021-01-15)">
+  <sodipodi:namedview
+     id="base"
+     bordercolor="#666666"
+     inkscape:pageshadow="2"
+     inkscape:window-y="26"
+     pagecolor="#ffffff"
+     inkscape:window-height="791"
+     inkscape:zoom="1"
+     inkscape:window-x="0"
+     borderopacity="1.0"
+     inkscape:current-layer="svg2"
+     inkscape:cx="70"
+     inkscape:cy="95"
+     inkscape:window-width="1152"
+     inkscape:pageopacity="0.0"
+     inkscape:document-rotation="0"
+     showgrid="false"
+     inkscape:window-maximized="0" />
+  <defs
+     id="defs3">
+    <linearGradient
+       id="linearGradient5407">
+      <stop
+         id="stop5409"
+         style="stop-color:#f0eb00"
+         offset="0" />
+      <stop
+         id="stop5411"
+         style="stop-color:#ffff00"
+         offset="1" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient3196">
+      <stop
+         id="stop3198"
+         style="stop-color:#008200"
+         offset="0" />
+      <stop
+         id="stop3200"
+         style="stop-color:#00d000"
+         offset="1" />
+    </linearGradient>
+  </defs>
+  <g
+     id="layer1"
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer">
+    <g
+       id="g5630">
+      <path
+         id="rect2070"
+         style="fill-opacity:.49804;fill:#000000"
+         d="m21 5h103c8.86 0 16 7.136 16 16v153c0 8.86-7.14 16-16 16h-103c-8.864 0-16-7.14-16-16v-153c0-8.864 7.136-16 16-16z" />
+      <path
+         id="rect1300"
+         style="fill:#e7e7e7"
+         d="m17 1h103c8.86 0 16 7.136 16 16v153c0 8.86-7.14 16-16 16h-103c-8.864 0-16-7.14-16-16v-153c0-8.864 7.136-16 16-16z" />
+      <path
+         id="path5624"
+         style="fill:#c7891f"
+         d="m19 3h103c8.86 0 16 7.136 16 16v153c0 8.86-7.14 16-16 16h-103c-8.864 0-16-7.14-16-16v-153c0-8.864 7.136-16 16-16z" />
+      <path
+         id="rect1306"
+         style="fill:#ffffff"
+         d="m18 2h103c8.86 0 16 7.136 16 16v153c0 8.86-7.14 16-16 16h-103c-8.864 0-16-7.14-16-16v-153c0-8.864 7.136-16 16-16z" />
+    </g>
+  </g>
+  <path
+     id="text1386"
+     style="fill:#ff0000"
+     d="m18.924 11.994h6.396v21.358c0 2.947-0.842 5.15-2.525 6.608-1.673 1.457-4.209 2.186-7.609 2.186h-1.296v-4.611h0.997c1.329 0 2.331-0.354 3.007-1.061 0.686-0.708 1.03-1.748 1.03-3.122v-21.358" />
+  <g
+     id="g1390"
+     style="fill:#ff0000"
+     transform="matrix(.28639 0 0 .38877 -29.608 -9.4724)">
+    <path
+       id="path1392"
+       d="m147.21 156.42c-2.54 0.01-5.33 0.48-8.41 1.53-33.62 19.53 11.7 51.04 30.84 78.09l0.56 0.14c21.03-29.57 61.07-62.11 30.47-78.23-24.23-8.25-30.71 19.2-30.93 20.19-0.2-0.87-5.15-21.81-22.53-21.72z"
+       style="fill-rule:evenodd"
+       transform="matrix(1.1054 0 0 1.0796 -12.014 -18.867)" />
+  </g>
+  <path
+     id="text15764"
+     style="fill:#ff0000"
+     d="m119.94 177.01h-6.39v-21.36c0-2.95 0.84-5.15 2.52-6.61 1.67-1.46 4.21-2.19 7.61-2.19h1.3v4.61h-1c-1.33 0-2.33 0.36-3.01 1.07-0.68 0.7-1.03 1.74-1.03 3.12v21.36" />
+  <g
+     id="g15768"
+     style="fill:#ff0000"
+     transform="matrix(-.28643 0 0 -.38877 168.48 198.31)">
+    <path
+       id="path15770"
+       d="m147.21 156.42c-2.54 0.01-5.33 0.48-8.41 1.53-33.62 19.53 11.7 51.04 30.84 78.09l0.56 0.14c21.03-29.57 61.07-62.11 30.47-78.23-24.23-8.25-30.71 19.2-30.93 20.19-0.2-0.87-5.15-21.81-22.53-21.72z"
+       style="fill-rule:evenodd"
+       transform="matrix(1.1054 0 0 1.0796 -12.014 -18.867)" />
+  </g>
+  <metadata
+     id="metadata63">
+    <rdf:RDF>
+      <cc:Work>
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <cc:license
+           rdf:resource="http://creativecommons.org/licenses/publicdomain/" />
+        <dc:publisher>
+          <cc:Agent
+             rdf:about="http://openclipart.org/">
+            <dc:title>Openclipart</dc:title>
+          </cc:Agent>
+        </dc:publisher>
+        <dc:title>White deck: Jack of hearts</dc:title>
+        <dc:date>2009-03-24T12:28:24</dc:date>
+        <dc:description>playing card from the &quot;White&quot; set</dc:description>
+        <dc:source>https://openclipart.org/detail/23193/white-deck:-jack-of-hearts-by-nicubunu</dc:source>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>nicubunu</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:subject>
+          <rdf:Bag>
+            <rdf:li>card</rdf:li>
+            <rdf:li>cards</rdf:li>
+            <rdf:li>deck</rdf:li>
+            <rdf:li>gambling</rdf:li>
+            <rdf:li>game</rdf:li>
+            <rdf:li>play</rdf:li>
+            <rdf:li>playing cards</rdf:li>
+            <rdf:li>white deck</rdf:li>
+          </rdf:Bag>
+        </dc:subject>
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/licenses/publicdomain/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+</svg>
