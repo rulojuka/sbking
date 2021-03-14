@@ -9,17 +9,27 @@ import br.com.sbk.sbking.gui.main.ClientApplicationState;
 
 public final class FrameConstants {
 	public static final java.awt.Color TABLE_COLOR = new java.awt.Color(0, 100, 0); // Tablecloth green
+
+	public static final int ORIGINAL_TABLE_WIDTH = 1600;
+	public static final int ORIGINAL_TABLE_HEIGHT = 1360;
+
 	public static int TABLE_WIDTH;
 	public static int TABLE_HEIGHT;
-
 	public static int HALF_WIDTH;
 	public static int HALF_HEIGHT;
+
+	private static double scaleX = 1.0;
+	private static double scaleY = 1.0;
 
 	@SuppressWarnings("serial")
 	public static Map<Direction, Point> pointOfDirection = new HashMap<Direction, Point>();
 
-	public static void initFrameConstants() {
-		computeConstants(1360, 1024);		
+	public static void 1360() {
+		computeConstants(ORIGINAL_TABLE_WIDTH, ORIGINAL_TABLE_HEIGHT);		
+	}
+
+	public static double getScreenScale() {
+		return Math.max(0.05, Math.min(scaleX, scaleY));
 	}
 
 	public static void computeConstants(int newWidth, int newHeight) {
@@ -43,6 +53,9 @@ public final class FrameConstants {
 
 		int WEST_X_CENTER = FIFTH_WIDTH;
 		int WEST_Y_CENTER = HALF_HEIGHT;
+
+		scaleX = (double)(newWidth)/ORIGINAL_TABLE_WIDTH;
+		scaleY = (double)(newHeight)/ORIGINAL_TABLE_HEIGHT;
 
 		// TODO: cached references to the points stored in pointOfDirection may
 		// be invalid. We must prevent caching of those references.
