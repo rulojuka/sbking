@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:sodipodi="http://inkscape.sourceforge.net/DTD/sodipodi-0.dtd"
+    xmlns:cc="http://web.resource.org/cc/"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:svg="http://www.w3.org/2000/svg"
+    xmlns:ns1="http://sozi.baierouge.fr"
+    id="svg2"
+    viewBox="0 0 140 190"
+    sodipodi:version="0.32"
+    version="1.0"
+    inkscape:version="0.41"
+    y="0"
+    x="0"
+    sodipodi:docname="d_5.svg"
+    sodipodi:docbase="/home/nicu/Desktop/simple"
+  >
+  <sodipodi:namedview
+      id="base"
+      bordercolor="#666666"
+      inkscape:window-x="0"
+      inkscape:window-y="26"
+      pagecolor="#ffffff"
+      inkscape:zoom="1.9105263"
+      inkscape:pageshadow="2"
+      borderopacity="1.0"
+      inkscape:current-layer="svg2"
+      inkscape:cx="70.000003"
+      inkscape:cy="95.000001"
+      inkscape:window-height="791"
+      inkscape:pageopacity="0.0"
+      inkscape:window-width="1152"
+  />
+  <g
+      id="layer1"
+      inkscape:label="Layer 1"
+      inkscape:groupmode="layer"
+    >
+    <g
+        id="g5630"
+      >
+      <path
+          id="rect2070"
+          style="fill-opacity:.49804;fill:#000000"
+          d="m21 5h103c8.86 0 16 7.136 16 16v153c0 8.86-7.14 16-16 16h-103c-8.864 0-16-7.14-16-16v-153c0-8.864 7.136-16 16-16z"
+      />
+      <path
+          id="rect1300"
+          style="fill:#e7e7e7"
+          d="m17 1h103c8.86 0 16 7.136 16 16v153c0 8.86-7.14 16-16 16h-103c-8.864 0-16-7.14-16-16v-153c0-8.864 7.136-16 16-16z"
+      />
+      <path
+          id="path5624"
+          style="fill:#c7891f"
+          d="m19 3h103c8.86 0 16 7.136 16 16v153c0 8.86-7.14 16-16 16h-103c-8.864 0-16-7.14-16-16v-153c0-8.864 7.136-16 16-16z"
+      />
+      <path
+          id="rect1306"
+          style="fill:#ffffff"
+          d="m18 2h103c8.86 0 16 7.136 16 16v153c0 8.86-7.14 16-16 16h-103c-8.864 0-16-7.14-16-16v-153c0-8.864 7.136-16 16-16z"
+      />
+    </g
+    >
+  </g
+  >
+  <g
+      id="g3925"
+      transform="translate(329.5 183.5)"
+    >
+    <path
+        id="text2531"
+        style="fill:#ff0000"
+        d="m-348.78-155.73h17.49v5.18h-11.88v4.22c0.54-0.15 1.07-0.26 1.61-0.33 0.55-0.09 1.11-0.13 1.7-0.13 3.32 0 5.91 0.83 7.76 2.5 1.86 1.66 2.78 3.97 2.78 6.95 0 2.94-1.01 5.25-3.03 6.92-2.01 1.67-4.81 2.5-8.39 2.5-1.54 0-3.08-0.15-4.6-0.45-1.51-0.3-3.02-0.75-4.51-1.36v-5.53c1.48 0.85 2.89 1.49 4.22 1.92 1.34 0.42 2.6 0.64 3.78 0.64 1.7 0 3.04-0.42 4.02-1.25 0.98-0.84 1.48-1.97 1.48-3.39 0-1.44-0.5-2.57-1.48-3.4s-2.32-1.25-4.02-1.25c-1.01 0-2.09 0.14-3.24 0.41-1.14 0.25-2.37 0.65-3.69 1.2v-15.35"
+        transform="scale(.90928 1.0998)"
+    />
+    <path
+        id="text2540"
+        style="fill:#ff0000"
+        d="m223.45 5.9103h17.49v5.1707h-11.88v4.22c0.54-0.146 1.08-0.255 1.61-0.328 0.55-0.086 1.12-0.128 1.7-0.128 3.33 0 5.91 0.834 7.77 2.503 1.85 1.656 2.77 3.971 2.77 6.943 0 2.947-1.01 5.256-3.03 6.924-2.01 1.669-4.81 2.503-8.39 2.503-1.54 0-3.08-0.152-4.6-0.456-1.51-0.293-3.01-0.743-4.51-1.352v-5.536c1.48 0.852 2.89 1.492 4.22 1.918 1.34 0.426 2.6 0.639 3.78 0.639 1.7 0 3.04-0.414 4.02-1.242 0.99-0.84 1.48-1.973 1.48-3.398 0-1.438-0.49-2.57-1.48-3.399-0.98-0.828-2.32-1.242-4.02-1.242-1.01 0-2.09 0.134-3.23 0.402-1.15 0.256-2.38 0.658-3.7 1.206v-15.348"
+        transform="scale(-.90928 -1.0998)"
+    />
+  </g
+  >
+  <path
+      id="path1608"
+      style="fill-rule:evenodd;fill:#ff0000"
+      d="m20.41 48.665c-4.126 8.245-7.135 12.498-13.34 17.04 5.872 4.487 10.013 9.124 13.46 16.62 3.079-7.121 6.847-12.43 13.39-16.843-6.582-3.349-10.393-8.654-13.51-16.817z"
+  />
+  <path
+      id="path1498"
+      style="fill-rule:evenodd;fill:#ff0000"
+      d="m51.13 45c-2.403 4.845-4.155 7.344-7.77 10.013 3.421 2.637 5.832 5.362 7.84 9.767 1.794-4.185 3.988-7.304 7.8-9.898-3.834-1.968-6.054-5.085-7.87-9.882z"
+  />
+  <path
+      id="path1500"
+      style="fill-rule:evenodd;fill:#ff0000"
+      d="m87.13 45c-2.403 4.845-4.155 7.344-7.77 10.013 3.421 2.637 5.832 5.362 7.84 9.767 1.794-4.185 3.988-7.304 7.8-9.898-3.834-1.968-6.054-5.085-7.87-9.882z"
+  />
+  <path
+      id="path1512"
+      style="fill-rule:evenodd;fill:#ff0000"
+      d="m53.13 122.22c-2.403 4.85-4.155 7.34-7.77 10.01 3.421 2.64 5.832 5.37 7.84 9.77 1.794-4.18 3.988-7.3 7.8-9.9-3.834-1.97-6.054-5.08-7.87-9.88z"
+  />
+  <path
+      id="path1516"
+      style="fill-rule:evenodd;fill:#ff0000"
+      d="m88.13 122c-2.403 4.85-4.155 7.34-7.77 10.01 3.421 2.64 5.832 5.37 7.84 9.77 1.794-4.18 3.988-7.3 7.8-9.9-3.834-1.97-6.054-5.08-7.87-9.88z"
+  />
+  <path
+      id="path1518"
+      style="fill-rule:evenodd;fill:#ff0000"
+      d="m118.34 106.34c-4.13 8.25-7.13 12.5-13.34 17.04 5.87 4.49 10.01 9.12 13.46 16.62 3.08-7.12 6.85-12.43 13.39-16.84-6.58-3.35-10.39-8.66-13.51-16.82z"
+  />
+  <path
+      id="path1502"
+      style="fill-rule:evenodd;fill:#ff0000"
+      d="m69.77 82.22c-2.403 4.845-4.155 7.344-7.77 10.013 3.421 2.637 5.832 5.362 7.84 9.767 1.794-4.185 3.988-7.304 7.8-9.898-3.834-1.968-6.054-5.085-7.87-9.882z"
+  />
+  <metadata
+    >
+    <rdf:RDF
+      >
+      <cc:Work
+        >
+        <dc:format
+          >image/svg+xml</dc:format
+        >
+        <dc:type
+            rdf:resource="http://purl.org/dc/dcmitype/StillImage"
+        />
+        <cc:license
+            rdf:resource="http://creativecommons.org/licenses/publicdomain/"
+        />
+        <dc:publisher
+          >
+          <cc:Agent
+              rdf:about="http://openclipart.org/"
+            >
+            <dc:title
+              >Openclipart</dc:title
+            >
+          </cc:Agent
+          >
+        </dc:publisher
+        >
+        <dc:title
+          >White deck: 5 of diamonds</dc:title
+        >
+        <dc:date
+          >2009-03-24T09:31:11</dc:date
+        >
+        <dc:description
+          >playing card from the "White" set</dc:description
+        >
+        <dc:source
+          >https://openclipart.org/detail/23131/white-deck:-5-of-diamonds-by-nicubunu</dc:source
+        >
+        <dc:creator
+          >
+          <cc:Agent
+            >
+            <dc:title
+              >nicubunu</dc:title
+            >
+          </cc:Agent
+          >
+        </dc:creator
+        >
+        <dc:subject
+          >
+          <rdf:Bag
+            >
+            <rdf:li
+              >card</rdf:li
+            >
+            <rdf:li
+              >cards</rdf:li
+            >
+            <rdf:li
+              >deck</rdf:li
+            >
+            <rdf:li
+              >gambling</rdf:li
+            >
+            <rdf:li
+              >game</rdf:li
+            >
+            <rdf:li
+              >play</rdf:li
+            >
+            <rdf:li
+              >playing cards</rdf:li
+            >
+            <rdf:li
+              >white deck</rdf:li
+            >
+          </rdf:Bag
+          >
+        </dc:subject
+        >
+      </cc:Work
+      >
+      <cc:License
+          rdf:about="http://creativecommons.org/licenses/publicdomain/"
+        >
+        <cc:permits
+            rdf:resource="http://creativecommons.org/ns#Reproduction"
+        />
+        <cc:permits
+            rdf:resource="http://creativecommons.org/ns#Distribution"
+        />
+        <cc:permits
+            rdf:resource="http://creativecommons.org/ns#DerivativeWorks"
+        />
+      </cc:License
+      >
+    </rdf:RDF
+    >
+  </metadata
+  >
+</svg
+>
