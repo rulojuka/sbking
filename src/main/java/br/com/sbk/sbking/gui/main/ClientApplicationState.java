@@ -28,10 +28,7 @@ public class ClientApplicationState {
 	public static void resizeWindow(int width, int height) {
 		logger.info("Resizing Window");
 
-		// Recompute frame constants.
 		FrameConstants.computeConstants(width, height);
-
-		guiHasChanged = true;
 	}
 
 }

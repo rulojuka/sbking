@@ -5,6 +5,7 @@ import java.util.Map;
 import java.awt.Point;
 
 import br.com.sbk.sbking.core.Direction;
+import br.com.sbk.sbking.gui.main.ClientApplicationState;
 
 public final class FrameConstants {
 	public static final java.awt.Color TABLE_COLOR = new java.awt.Color(0, 100, 0); // Tablecloth green
@@ -15,7 +16,7 @@ public final class FrameConstants {
 	public static int HALF_HEIGHT;
 
 	@SuppressWarnings("serial")
-	public static Map<Direction, Point> pointOfDirection;
+	public static Map<Direction, Point> pointOfDirection = new HashMap<Direction, Point>();
 
 	public static void initFrameConstants() {
 		computeConstants(1024, 768);		
@@ -43,13 +44,14 @@ public final class FrameConstants {
 		int WEST_X_CENTER = FIFTH_WIDTH;
 		int WEST_Y_CENTER = HALF_HEIGHT;
 
-		pointOfDirection = new HashMap<Direction, Point>() {
-			{
-				put(Direction.NORTH, new Point(NORTH_X_CENTER, NORTH_Y_CENTER));
-				put(Direction.EAST, new Point(EAST_X_CENTER, EAST_Y_CENTER));
-				put(Direction.SOUTH, new Point(SOUTH_X_CENTER, SOUTH_Y_CENTER));
-				put(Direction.WEST, new Point(WEST_X_CENTER, WEST_Y_CENTER));
-			}
-		};
+		// TODO: cached references to the points stored in pointOfDirection may
+		// be invalid. We must prevent caching of those references.
+		pointOfDirection.clear();
+		pointOfDirection.put(Direction.NORTH, new Point(NORTH_X_CENTER, NORTH_Y_CENTER));
+		pointOfDirection.put(Direction.EAST, new Point(EAST_X_CENTER, EAST_Y_CENTER));
+		pointOfDirection.put(Direction.SOUTH, new Point(SOUTH_X_CENTER, SOUTH_Y_CENTER));
+		pointOfDirection.put(Direction.WEST, new Point(WEST_X_CENTER, WEST_Y_CENTER));
+
+		ClientApplicationState.setGUIHasChanged(true);
 	}
 }
