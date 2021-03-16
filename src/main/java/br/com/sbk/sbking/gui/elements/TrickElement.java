@@ -28,6 +28,7 @@ public class TrickElement {
 			container.add(cardButton); // This line needs to go before setting the button location
 			cardButton.setLocation(cardLocation(leader.next(i), point)); // This line needs to go after adding the
 			// button to the container
+			cardButton.setIsInHand(false);
 		}
 	}
 
