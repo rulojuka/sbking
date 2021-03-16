@@ -32,11 +32,11 @@ public class TrickElement {
 	}
 
 	private Point cardLocation(Direction direction, Point center) {
-
+		int offsetY = deckCardImageInformation.getCardHeight() / 5;
 		int x = center.x - deckCardImageInformation.getCardWidth() / 2;
 		int y = center.y - deckCardImageInformation.getCardHeight() / 2;
 		int xDiff = deckCardImageInformation.getWidthBetweenCards();
-		int yDiff = deckCardImageInformation.getWidthBetweenCards() * 2;
+		int yDiff = (int)(deckCardImageInformation.getWidthBetweenCards() * 1.4);
 		int dx;
 		int dy;
 
@@ -53,7 +53,7 @@ public class TrickElement {
 			dx = -xDiff;
 			dy = 0;
 		}
-		return new Point(x + dx, y + dy);
+		return new Point(x + dx, y + dy + offsetY);
 	}
 
 }
