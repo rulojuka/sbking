@@ -47,6 +47,7 @@ public class HandElement {
 			container.add(cardButton); // This line needs to go before setting the button location
 			cardButton.setLocation(locationOfCard(i, handTopLeftCorner)); // This line needs to go after adding the
 			// button to the container
+			cardButton.setIsInHand(true);
 		}
 
 		JButton sitOrLeaveButton = new SitOrLeaveButton(direction);

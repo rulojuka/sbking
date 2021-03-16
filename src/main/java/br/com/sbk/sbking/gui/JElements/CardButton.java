@@ -1,5 +1,7 @@
 package br.com.sbk.sbking.gui.JElements;
 
+import java.awt.Point;
+
 import javax.swing.ImageIcon;
 
 import java.awt.event.MouseAdapter;
@@ -16,6 +18,8 @@ public class CardButton extends SBKingButton {
 	private ImageIcon backImage;
 	private boolean faceUp;
 	private Card card;
+	private int offsetWhenSelected;
+	private boolean isInHand;
 
 	public CardButton(Card card, DeckCardImageInformation deckCardImageInformation) {
 		super();
@@ -24,6 +28,8 @@ public class CardButton extends SBKingButton {
 		this.frontImage = deckCardImageInformation.getFrontImage(card);
 		this.backImage = deckCardImageInformation.getBackImage();
 
+		offsetWhenSelected = deckCardImageInformation.getCardHeight()/10;
+		
 		this.setSize(deckCardImageInformation.getCardWidth(), deckCardImageInformation.getCardHeight());
 		this.faceUp = true;
 		this.setIcon(frontImage);
@@ -32,15 +38,31 @@ public class CardButton extends SBKingButton {
 		this.setMouseListener(this);
 	}
 
+	private void setCardAsSelected() {
+		if (this.faceUp && isInHand) {
+			Point newLocation = (Point) this.getLocation().clone();
+			newLocation.translate(0, -offsetWhenSelected);
+			this.setLocation(newLocation);
+		}
+	}
+
+	private void setCardBackInHand() {
+		if (this.faceUp && isInHand) {
+			Point newLocation = (Point) this.getLocation().clone();
+			newLocation.translate(0, offsetWhenSelected);
+			this.setLocation(newLocation);
+		}
+	}
+
 	private void setMouseListener(CardButton sbkingButton) {
 		addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				sbkingButton.setBorderPainted(true);
+				setCardAsSelected();
 			}
 			@Override
 			public void mouseExited(MouseEvent e) {
-				sbkingButton.setBorderPainted(false);
+				setCardBackInHand();
 			}
 		});
 	}
@@ -57,5 +79,9 @@ public class CardButton extends SBKingButton {
 
 	public Card getCard() {
 		return card;
+	}
+
+	public void setIsInHand(boolean isInHand) {
+		this.isInHand = isInHand;
 	}
 }
