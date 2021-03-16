@@ -28,7 +28,7 @@ public class HandElement {
 		boolean isVisible, Direction direction) {
 		this.deckCardImageInformation = new DeckCardImageInformation();
 
-		int x_offset = ((hand.size() + 1) * deckCardImageInformation.getWidthBetweenCards()) / 2;
+		int x_offset = (((hand.size() - 1) * deckCardImageInformation.getWidthBetweenCards()) + deckCardImageInformation.getCardWidth())/2;
 		x_offset *= -1;
 		int y_offset = deckCardImageInformation.getCardHeight() / 2;
 		y_offset *= -1;
