@@ -10,6 +10,8 @@ import java.util.concurrent.Executors;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
@@ -18,6 +20,7 @@ import java.awt.event.MouseListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.Timer;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -40,12 +43,12 @@ public abstract class NetworkClientScreen extends JFrame {
 
 	public NetworkClientScreen() {
 		super();
-		initializeJFrame();
+		initializeFrame();
 		initializeContentPane(this);
 		pool = Executors.newFixedThreadPool(4);
 	}
 
-	private void initializeJFrame() {
+	private void initializeFrame() {
 		this.setVisible(true);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(FrameConstants.TABLE_WIDTH, FrameConstants.TABLE_HEIGHT);
@@ -56,17 +59,18 @@ public abstract class NetworkClientScreen extends JFrame {
 	private void initializeContentPane(NetworkClientScreen screen) {
 		getContentPane().setLayout(null);
 		getContentPane().setBackground(TABLE_COLOR);
+		
+		Timer resizeDebounceTimer = new Timer(100, new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				ClientApplicationState.checkWindowResize(screen.getWidth(), screen.getHeight());
+			}    
+		});
+		resizeDebounceTimer.setRepeats(false);
+
 		this.addComponentListener(new ComponentAdapter() {
 			public void componentResized(ComponentEvent componentEvent) {
 				ClientApplicationState.invalidateGUIScale();
-			}
-		});
-
-		this.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				logger.info("on mouse release");
-				ClientApplicationState.checkWindowResize(screen.getWidth(), screen.getHeight());
+				resizeDebounceTimer.restart();
 			}
 		});
 	}
