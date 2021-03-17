@@ -9,6 +9,7 @@ public class ClientApplicationState {
 
 	final static Logger logger = LogManager.getLogger(ClientApplicationState.class);
 	private static boolean guiHasChanged = false;
+	private static boolean scaleHasChanged = false;
 
 
 	public static void setGUIHasChanged(boolean changed) {
@@ -17,6 +18,18 @@ public class ClientApplicationState {
 
 	public static boolean getGUIHasChanged() {
 		return guiHasChanged;
+	}
+
+	public static void invalidateGUIScale() {
+		scaleHasChanged = true;
+	}
+
+	public static void checkWindowResize(int newWidth, int newHeight) {
+		if (scaleHasChanged) {  // add and (dimensions different)
+			resizeWindow(newWidth, newHeight);
+		}
+
+		scaleHasChanged = false;
 	}
 
 	public static void startAppState() {
@@ -32,6 +45,10 @@ public class ClientApplicationState {
 		logger.info("Resizing Window");
 
 		FrameConstants.computeConstants(width, height);
+		
+		AssetLoader.invalidateAssetLoaderCache();
+
+		ClientApplicationState.setGUIHasChanged(true);
 	}
 
 }

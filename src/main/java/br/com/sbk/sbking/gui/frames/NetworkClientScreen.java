@@ -1,11 +1,7 @@
 package br.com.sbk.sbking.gui.frames;
 
 import static br.com.sbk.sbking.gui.constants.FrameConstants.TABLE_COLOR;
-import static br.com.sbk.sbking.gui.constants.FrameConstants.TABLE_HEIGHT;
-import static br.com.sbk.sbking.gui.constants.FrameConstants.TABLE_WIDTH;
 
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,6 +9,12 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;  
+import java.awt.event.MouseListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -39,25 +41,32 @@ public abstract class NetworkClientScreen extends JFrame {
 	public NetworkClientScreen() {
 		super();
 		initializeJFrame();
-		initializeContentPane();
+		initializeContentPane(this);
 		pool = Executors.newFixedThreadPool(4);
 	}
 
 	private void initializeJFrame() {
 		this.setVisible(true);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setSize(TABLE_WIDTH, TABLE_HEIGHT);
+		this.setSize(FrameConstants.TABLE_WIDTH, FrameConstants.TABLE_HEIGHT);
 
 		this.setApplicationIcon();
 	}
 
-	private void initializeContentPane() {
+	private void initializeContentPane(NetworkClientScreen screen) {
 		getContentPane().setLayout(null);
 		getContentPane().setBackground(TABLE_COLOR);
-		NetworkClientScreen screen = this;
 		this.addComponentListener(new ComponentAdapter() {
 			public void componentResized(ComponentEvent componentEvent) {
-				ClientApplicationState.resizeWindow(screen.getWidth(), screen.getHeight());
+				ClientApplicationState.invalidateGUIScale();
+			}
+		});
+
+		this.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				logger.info("on mouse release");
+				ClientApplicationState.checkWindowResize(screen.getWidth(), screen.getHeight());
 			}
 		});
 	}
