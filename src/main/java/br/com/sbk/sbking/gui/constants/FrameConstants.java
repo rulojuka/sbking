@@ -29,8 +29,7 @@ public final class FrameConstants {
 	}
 
 	public static double getScreenScale() {
-		// return Math.max(0.05, Math.min(scaleX, scaleY));
-		return 0.7;
+		return Math.max(0.05, Math.min(scaleX, scaleY));
 	}
 
 	public static void computeConstants(int newWidth, int newHeight) {
