@@ -37,16 +37,16 @@ public class DeckCardImageInformation {
 		return suit.getSymbol() + rank.getSymbol().toLowerCase() + ".png";
 	}
 
-	public Image createFrontImage(Card card) {
+	public ImageIcon createFrontImage(Card card) {
 		String imagePath = directory + getFilename(card.getSuit(), card.getRank());
 		URL url = getClass().getResource(imagePath);
-		return new ImageIcon(url).getImage();
+		return getScaledCardImage(new ImageIcon(url).getImage());
 	}
 
-	public Image createBackImage() {
+	public ImageIcon createBackImage() {
 		String imagePath = directory + "back.png";
 		URL url = getClass().getResource(imagePath);
-		return new ImageIcon(url).getImage();
+		return getScaledCardImage(new ImageIcon(url).getImage());
 	}
 
 	private ImageIcon getScaledCardImage(Image img) {
@@ -54,11 +54,11 @@ public class DeckCardImageInformation {
 	}
 
 	public ImageIcon getBackImage() {
-		return getScaledCardImage(AssetLoader.getCachedBack());
+		return AssetLoader.getCachedBack();
 	}
 
 	public ImageIcon getFrontImage(Card card) {
-		return getScaledCardImage(AssetLoader.getCachedFrontImage(card));
+		return AssetLoader.getCachedFrontImage(card);
 	}
 
 	public int getCardWidth() {
