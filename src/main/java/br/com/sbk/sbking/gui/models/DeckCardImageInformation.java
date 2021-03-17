@@ -11,6 +11,7 @@ import br.com.sbk.sbking.core.Rank;
 import br.com.sbk.sbking.core.Suit;
 
 import br.com.sbk.sbking.gui.constants.FrameConstants;
+import br.com.sbk.sbking.gui.main.AssetLoader;
 
 
 public class DeckCardImageInformation {
@@ -32,21 +33,32 @@ public class DeckCardImageInformation {
 		WIDTH_BETWEEN_CARDS = (int)(ORIGINAL_WIDTH_BETWEEN_CARDS*SCALE_FACTOR);
 	}
 
-	public ImageIcon getBackImage() {
+	private String getFilename(Suit suit, Rank rank) {
+		return suit.getSymbol() + rank.getSymbol().toLowerCase() + ".png";
+	}
+
+	public Image createFrontImage(Card card) {
+		String imagePath = directory + getFilename(card.getSuit(), card.getRank());
+		URL url = getClass().getResource(imagePath);
+		return new ImageIcon(url).getImage();
+	}
+
+	public Image createBackImage() {
 		String imagePath = directory + "back.png";
 		URL url = getClass().getResource(imagePath);
+		return new ImageIcon(url).getImage();
+	}
 
-		return getScaledCardImage(url);
+	private ImageIcon getScaledCardImage(Image img) {
+		return new ImageIcon(img.getScaledInstance(CARD_WIDTH, CARD_HEIGHT, java.awt.Image.SCALE_SMOOTH));
+	}
+
+	public ImageIcon getBackImage() {
+		return getScaledCardImage(AssetLoader.getCachedBack());
 	}
 
 	public ImageIcon getFrontImage(Card card) {
-		String imagePath = directory + getFilename(card.getSuit(), card.getRank());
-		URL url = getClass().getResource(imagePath);
-		return getScaledCardImage(url);
-	}
-
-	private String getFilename(Suit suit, Rank rank) {
-		return suit.getSymbol() + rank.getSymbol().toLowerCase() + ".png";
+		return getScaledCardImage(AssetLoader.getCachedFrontImage(card));
 	}
 
 	public int getCardWidth() {
@@ -59,10 +71,5 @@ public class DeckCardImageInformation {
 
 	public int getWidthBetweenCards() {
 		return WIDTH_BETWEEN_CARDS;
-	}
-
-	private ImageIcon getScaledCardImage(URL url) {
-		Image cardImage = new ImageIcon(url).getImage();
-		return new ImageIcon(cardImage.getScaledInstance(CARD_WIDTH, CARD_HEIGHT, java.awt.Image.SCALE_SMOOTH));
 	}
 }
