@@ -65,7 +65,5 @@ public final class FrameConstants {
 		pointOfDirection.put(Direction.EAST, new Point(EAST_X_CENTER, EAST_Y_CENTER));
 		pointOfDirection.put(Direction.SOUTH, new Point(SOUTH_X_CENTER, SOUTH_Y_CENTER));
 		pointOfDirection.put(Direction.WEST, new Point(WEST_X_CENTER, WEST_Y_CENTER));
-
-		ClientApplicationState.setGUIHasChanged(true);
 	}
 }
