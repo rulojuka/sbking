@@ -23,6 +23,9 @@ public class ClientApplicationState {
 		logger.info("Initializing Frame Constants");
 		
 		FrameConstants.initFrameConstants();
+
+		// AssetLoader must be initialized after FrameConstants.
+		AssetLoader.initAssetLoader();
 	}
 
 	public static void resizeWindow(int width, int height) {
