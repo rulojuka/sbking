@@ -19,7 +19,7 @@ public class CardButton extends SBKingButton {
 	private boolean faceUp;
 	private Card card;
 	private int offsetWhenSelected;
-	private boolean isInHand;
+	private boolean isCardInHand;
 
 	public CardButton(Card card, DeckCardImageInformation deckCardImageInformation) {
 		super();
@@ -39,19 +39,21 @@ public class CardButton extends SBKingButton {
 	}
 
 	private void setCardAsSelected() {
-		if (this.faceUp && isInHand) {
-			Point newLocation = (Point) this.getLocation().clone();
-			newLocation.translate(0, -offsetWhenSelected);
-			this.setLocation(newLocation);
+		if (faceUp && isCardInHand) {
+			this.translate(0, -offsetWhenSelected);
 		}
 	}
 
 	private void setCardBackInHand() {
-		if (this.faceUp && isInHand) {
-			Point newLocation = (Point) this.getLocation().clone();
-			newLocation.translate(0, offsetWhenSelected);
-			this.setLocation(newLocation);
+		if (faceUp && isCardInHand) {
+			this.translate(0, offsetWhenSelected);
 		}
+	}
+
+	private void translate(int offsetX, int offsetY) {
+		Point newLocation = (Point) this.getLocation().clone();
+		newLocation.translate(offsetX, offsetY);
+		this.setLocation(newLocation);
 	}
 
 	private void setMouseListener(CardButton sbkingButton) {
@@ -68,12 +70,12 @@ public class CardButton extends SBKingButton {
 	}
 
 	public void flip() {
-		if (this.faceUp) {
+		if (faceUp) {
 			this.setIcon(this.backImage);
-			this.faceUp = false;
+			faceUp = false;
 		} else {
 			this.setIcon(this.frontImage);
-			this.faceUp = true;
+			faceUp = true;
 		}
 	}
 
@@ -81,7 +83,7 @@ public class CardButton extends SBKingButton {
 		return card;
 	}
 
-	public void setIsInHand(boolean isInHand) {
-		this.isInHand = isInHand;
+	public void setIsInHand(boolean isCardInHand) {
+		this.isCardInHand = isCardInHand;
 	}
 }
