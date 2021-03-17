@@ -4,10 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import java.awt.Image;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import javax.swing.ImageIcon;
 
 import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Rank;
@@ -15,35 +12,39 @@ import br.com.sbk.sbking.core.Suit;
 import br.com.sbk.sbking.gui.models.DeckCardImageInformation;
 
 public class AssetLoader {
-
-	final static Logger logger = LogManager.getLogger(AssetLoader.class);
-	private static Map<Card, Image> ImageByCard = new HashMap<Card, Image>();
-
-	private static Image cachedBack;
+	private static Map<Card, ImageIcon> imageByCard = new HashMap<Card, ImageIcon>();
+	private static ImageIcon cachedBack;
 
 	public static void initAssetLoader() {
-		logger.info("initAssetLoader");
+		loadCache();
+	}
 
+	public static void invalidateAssetLoaderCache() {
+		imageByCard.clear();
+		loadCache();
+	}
+
+	public static ImageIcon getCachedFrontImage(Card card) {
+		return imageByCard.get(card);
+	}
+
+	public static ImageIcon getCachedBack() {
+		return cachedBack;
+	}
+
+	private static void loadCache() {
 		DeckCardImageInformation deckCardImageInformation = new DeckCardImageInformation();
 
 		for (Suit suit : Suit.values()) {
 			for (Rank rank : Rank.values()) {
 				Card card = new Card(suit, rank);
 				
-				Image cardImage = deckCardImageInformation.createFrontImage(card);
-				ImageByCard.put(card, cardImage);
+				ImageIcon cardImage = deckCardImageInformation.createFrontImage(card);
+				imageByCard.put(card, cardImage);
 			}
 		}
 
 		cachedBack = deckCardImageInformation.createBackImage();
-	}
-
-	public static Image getCachedFrontImage(Card card) {
-		return ImageByCard.get(card);
-	}
-
-	public static Image getCachedBack() {
-		return cachedBack;
 	}
 
 }
