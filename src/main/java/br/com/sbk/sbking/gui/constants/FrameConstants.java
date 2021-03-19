@@ -10,7 +10,7 @@ import br.com.sbk.sbking.gui.main.ClientApplicationState;
 public final class FrameConstants {
 	public static final java.awt.Color TABLE_COLOR = new java.awt.Color(0, 100, 0); // Tablecloth green
 
-	public static final int ORIGINAL_TABLE_WIDTH = 1600;
+	public static final int ORIGINAL_TABLE_WIDTH = 2200;
 	public static final int ORIGINAL_TABLE_HEIGHT = 1400;
 
 	public static int TABLE_WIDTH;
@@ -18,14 +18,14 @@ public final class FrameConstants {
 	public static int HALF_WIDTH;
 	public static int HALF_HEIGHT;
 
-	private static double scaleX = 1.0;
-	private static double scaleY = 1.0;
+	private static double scaleX;
+	private static double scaleY;
 
 	@SuppressWarnings("serial")
 	public static Map<Direction, Point> pointOfDirection = new HashMap<Direction, Point>();
 
 	public static void initFrameConstants() {
-		computeConstants(1400, 820);		
+		computeConstants(1400, 820);
 	}
 
 	public static double getScreenScale() {
@@ -37,8 +37,8 @@ public final class FrameConstants {
 		TABLE_HEIGHT = newHeight;
 		HALF_WIDTH = TABLE_WIDTH / 2;
 		HALF_HEIGHT = TABLE_HEIGHT / 2;
-		scaleX = (double)(TABLE_WIDTH)/ORIGINAL_TABLE_WIDTH;
-		scaleY = (double)(TABLE_HEIGHT)/ORIGINAL_TABLE_HEIGHT;
+		scaleX = (double)(Math.min(TABLE_WIDTH, ORIGINAL_TABLE_WIDTH))/ORIGINAL_TABLE_WIDTH;
+		scaleY = (double)(Math.min(TABLE_HEIGHT, ORIGINAL_TABLE_HEIGHT))/ORIGINAL_TABLE_HEIGHT;
 		double scale = getScreenScale();
 
 		double handToTrickSpacingVertical = scale * 60;
