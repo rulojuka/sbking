@@ -1,7 +1,5 @@
 package br.com.sbk.sbking.gui.elements;
 
-import static br.com.sbk.sbking.gui.constants.FrameConstants.HALF_HEIGHT;
-import static br.com.sbk.sbking.gui.constants.FrameConstants.HALF_WIDTH;
 import static javax.swing.SwingConstants.CENTER;
 
 import java.awt.Container;
@@ -11,21 +9,21 @@ import javax.swing.JLabel;
 
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.gui.JElements.SBKingLabel;
+import br.com.sbk.sbking.gui.constants.FrameConstants;
 
 public class CurrentPlayerElement {
 
 	private static final int X_OFFSET = 0;
-	private static final int Y_OFFSET = -130;
+	private static final int Y_OFFSET = -270;
 	private java.awt.Color TURN_LIGHT_COLOR = new java.awt.Color(255, 0, 0);
 
 	public CurrentPlayerElement(Direction currentPlayer, Container container, boolean isMyTurn) {
-
 		int width = 110;
 		int height = 15;
 
-		Point tableCenter = new Point(HALF_WIDTH, HALF_HEIGHT);
+		Point tableCenter = new Point(FrameConstants.HALF_WIDTH, FrameConstants.HALF_HEIGHT);
 		Point currentPlayerPosition = new Point(tableCenter);
-		currentPlayerPosition.translate(X_OFFSET - width / 2, Y_OFFSET);
+		currentPlayerPosition.translate(X_OFFSET - width / 2, 20 + (int)(Y_OFFSET * FrameConstants.getScreenScale()));
 
 		String text;
 
