@@ -7,7 +7,7 @@ public enum ThreePlayersDirection {
     private final String completeName;
     private final char abbreviation;
 
-    private ThreePlayersDirection(String completeName, char abbreviation) {
+    ThreePlayersDirection(String completeName, char abbreviation) {
         this.completeName = completeName;
         this.abbreviation = abbreviation;
     }

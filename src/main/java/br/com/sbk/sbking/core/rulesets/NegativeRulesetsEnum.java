@@ -15,7 +15,7 @@ public enum NegativeRulesetsEnum {
 
     private final NegativeRuleset negativeRuleset;
 
-    private NegativeRulesetsEnum(NegativeRuleset ruleset) {
+    NegativeRulesetsEnum(NegativeRuleset ruleset) {
         this.negativeRuleset = ruleset;
     }
 

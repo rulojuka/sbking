@@ -6,7 +6,7 @@ public enum Suit {
     private final String name;
     private final String symbol;
 
-    private Suit(String name, String symbol) {
+    Suit(String name, String symbol) {
         this.name = name;
         this.symbol = symbol;
     }

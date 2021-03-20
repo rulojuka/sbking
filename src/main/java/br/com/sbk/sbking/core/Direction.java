@@ -8,7 +8,7 @@ public enum Direction {
     private final String completeName;
     private final char abbreviation;
 
-    private Direction(String completeName, char abbreviation) {
+    Direction(String completeName, char abbreviation) {
         this.completeName = completeName;
         this.abbreviation = abbreviation;
     }
