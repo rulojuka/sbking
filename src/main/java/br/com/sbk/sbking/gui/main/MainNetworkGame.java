@@ -10,7 +10,7 @@ public class MainNetworkGame {
 
 	final static Logger logger = LogManager.getLogger(MainNetworkGame.class);
 
-	public static void main(String args[]) {
+	public static void main(String[] args) {
 		ClientApplicationState.startAppState();
 		NetworkClientScreen networkClientScreen = new MinibridgeClientScreen();
 		networkClientScreen.run();
