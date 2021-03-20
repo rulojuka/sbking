@@ -13,7 +13,7 @@ public enum Strain {
     private final String name;
     private final PositiveRuleset positiveRuleset;
 
-    private Strain(String name, PositiveRuleset positiveRuleset) {
+    Strain(String name, PositiveRuleset positiveRuleset) {
         this.name = name;
         this.positiveRuleset = positiveRuleset;
     }

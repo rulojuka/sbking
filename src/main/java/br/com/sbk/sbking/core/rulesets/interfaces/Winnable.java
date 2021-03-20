@@ -5,6 +5,6 @@ import br.com.sbk.sbking.core.Trick;
 
 public interface Winnable {
 
-    public Direction getWinner(Trick trick);
+    Direction getWinner(Trick trick);
 
 }

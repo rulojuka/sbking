@@ -4,6 +4,6 @@ import java.awt.Container;
 
 public interface Painter {
 
-    public void paint(Container container);
+    void paint(Container container);
 
 }

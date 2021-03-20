@@ -7,7 +7,7 @@ public enum SkatRank {
     private final String name;
     private final String symbol;
 
-    private SkatRank(String name, String symbol) {
+    SkatRank(String name, String symbol) {
         this.name = name;
         this.symbol = symbol;
     }

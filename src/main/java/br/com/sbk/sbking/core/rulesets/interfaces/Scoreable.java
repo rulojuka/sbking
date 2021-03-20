@@ -4,12 +4,12 @@ import br.com.sbk.sbking.core.Trick;
 
 public interface Scoreable {
 
-    public int getScoreMultiplier();
+    int getScoreMultiplier();
 
-    public int getPoints(Trick trick);
+    int getPoints(Trick trick);
 
-    public int getTotalPoints();
+    int getTotalPoints();
 
-    public boolean isNegative();
+    boolean isNegative();
 
 }
