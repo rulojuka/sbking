@@ -5,7 +5,6 @@ import java.util.Map;
 import java.awt.Point;
 
 import br.com.sbk.sbking.core.Direction;
-import br.com.sbk.sbking.gui.main.ClientApplicationState;
 
 public final class FrameConstants {
 	public static final java.awt.Color TABLE_COLOR = new java.awt.Color(0, 100, 0); // Tablecloth green

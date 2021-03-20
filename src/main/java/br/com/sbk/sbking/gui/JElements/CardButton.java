@@ -6,7 +6,6 @@ import javax.swing.ImageIcon;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;  
-import java.awt.event.MouseListener;
 
 import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.gui.models.DeckCardImageInformation;
