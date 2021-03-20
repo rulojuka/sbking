@@ -48,21 +48,21 @@ public final class FrameConstants {
         int widthOffset = (int) ((3 * approximateCardWidth + 2 * handToTrickSpacingHorizontal) / 2);
         int heightOffset = (int) ((3 * approximateCardHeight + 2 * handToTrickSpacingVertical) / 2);
 
-        int NORTH_X_CENTER = HALF_WIDTH;
-        int NORTH_Y_CENTER = HALF_HEIGHT - heightOffset;
-        int SOUTH_X_CENTER = HALF_WIDTH;
-        int SOUTH_Y_CENTER = HALF_HEIGHT + heightOffset;
-        int EAST_X_CENTER = HALF_WIDTH + widthOffset;
-        int EAST_Y_CENTER = HALF_HEIGHT;
-        int WEST_X_CENTER = HALF_WIDTH - widthOffset;
-        int WEST_Y_CENTER = HALF_HEIGHT;
+        int northX = HALF_WIDTH;
+        int northY = HALF_HEIGHT - heightOffset;
+        int southX = HALF_WIDTH;
+        int southY = HALF_HEIGHT + heightOffset;
+        int eastX = HALF_WIDTH + widthOffset;
+        int eastY = HALF_HEIGHT;
+        int westX = HALF_WIDTH - widthOffset;
+        int westY = HALF_HEIGHT;
 
         // TODO: cached references to the points stored in pointOfDirection may
         // be invalid. We must prevent caching of those references.
         pointOfDirection.clear();
-        pointOfDirection.put(Direction.NORTH, new Point(NORTH_X_CENTER, NORTH_Y_CENTER));
-        pointOfDirection.put(Direction.EAST, new Point(EAST_X_CENTER, EAST_Y_CENTER));
-        pointOfDirection.put(Direction.SOUTH, new Point(SOUTH_X_CENTER, SOUTH_Y_CENTER));
-        pointOfDirection.put(Direction.WEST, new Point(WEST_X_CENTER, WEST_Y_CENTER));
+        pointOfDirection.put(Direction.NORTH, new Point(northX, northY));
+        pointOfDirection.put(Direction.EAST, new Point(eastX, eastY));
+        pointOfDirection.put(Direction.SOUTH, new Point(southX, southY));
+        pointOfDirection.put(Direction.WEST, new Point(westX, westY));
     }
 }

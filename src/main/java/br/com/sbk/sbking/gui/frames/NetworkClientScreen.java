@@ -93,11 +93,11 @@ public abstract class NetworkClientScreen extends JFrame {
 
     private void setApplicationIcon() {
         String imagePath = "/images/logo/logo.jpg";
-        URL logo_url = getClass().getResource(imagePath);
+        URL logoUrl = getClass().getResource(imagePath);
 
         // Prevents an application crash in case image is non-existent.
-        if (logo_url != null) {
-            ImageIcon img = new ImageIcon(logo_url);
+        if (logoUrl != null) {
+            ImageIcon img = new ImageIcon(logoUrl);
             this.setIconImage(img.getImage());
         }
     }

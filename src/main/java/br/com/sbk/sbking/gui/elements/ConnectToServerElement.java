@@ -63,9 +63,9 @@ public class ConnectToServerElement {
         nicknameTextField.setLocation(HALF_WIDTH - nicknameTextField.getWidth() / 2, HALF_HEIGHT - 100);
         nicknameTextField.setName("nicknameTextField");
 
-        int x_position = HALF_WIDTH - connectToServerButton.getWidth() / 2;
-        int y_position = HALF_HEIGHT - connectToServerButton.getHeight() / 2;
-        connectToServerButton.setLocation(x_position, y_position); // This line needs to go after adding the button to
+        int xPosition = HALF_WIDTH - connectToServerButton.getWidth() / 2;
+        int yPosition = HALF_HEIGHT - connectToServerButton.getHeight() / 2;
+        connectToServerButton.setLocation(xPosition, yPosition); // This line needs to go after adding the button to
         // the container
     }
 
