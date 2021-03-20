@@ -138,15 +138,15 @@ public class Hand implements Serializable {
     }
 
     public int getShortestSuitLength() {
-        Map<Suit,Integer> numberOfCards = new HashMap<Suit,Integer>();
+        Map<Suit, Integer> numberOfCards = new HashMap<Suit, Integer>();
         for (Suit suit : Suit.values()) {
-            numberOfCards.put(suit,0);
+            numberOfCards.put(suit, 0);
         }
         for (Card card : cards) {
             Suit currentSuit = card.getSuit();
             int currentValue = numberOfCards.get(currentSuit);
             currentValue++;
-            numberOfCards.put(currentSuit,currentValue);
+            numberOfCards.put(currentSuit, currentValue);
         }
         return numberOfCards.values().stream().reduce(Math::min).orElse(0);
     }

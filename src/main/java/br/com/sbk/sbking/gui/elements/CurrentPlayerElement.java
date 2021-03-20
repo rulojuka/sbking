@@ -23,7 +23,7 @@ public class CurrentPlayerElement {
 
         Point tableCenter = new Point(FrameConstants.HALF_WIDTH, FrameConstants.HALF_HEIGHT);
         Point currentPlayerPosition = new Point(tableCenter);
-        currentPlayerPosition.translate(X_OFFSET - width / 2, 20 + (int)(Y_OFFSET * FrameConstants.getScreenScale()));
+        currentPlayerPosition.translate(X_OFFSET - width / 2, 20 + (int) (Y_OFFSET * FrameConstants.getScreenScale()));
 
         String text;
 

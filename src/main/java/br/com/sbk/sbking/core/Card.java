@@ -86,16 +86,16 @@ public class Card implements Serializable {
     }
 
     public int getPoints() {
-        Map<Rank,Integer> points = new HashMap<Rank,Integer>();
-        points.put(Rank.ACE,4);
-        points.put(Rank.KING,3);
-        points.put(Rank.QUEEN,2);
-        points.put(Rank.JACK,1);
-        
-        Integer value = points.get(this.rank); 
-        if(value==null){
+        Map<Rank, Integer> points = new HashMap<Rank, Integer>();
+        points.put(Rank.ACE, 4);
+        points.put(Rank.KING, 3);
+        points.put(Rank.QUEEN, 2);
+        points.put(Rank.JACK, 1);
+
+        Integer value = points.get(this.rank);
+        if (value == null) {
             return 0;
-        } else{
+        } else {
             return value;
         }
     }
