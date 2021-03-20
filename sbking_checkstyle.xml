@@ -171,8 +171,9 @@
     <!-- See https://checkstyle.org/config_misc.html -->
     <module name="ArrayTypeStyle"/>
     <module name="FinalParameters"/>
-    <module name="TodoComment"/>
     <module name="UpperEll"/>
+    <!-- We like todo comments :) -->
+    <!-- <module name="TodoComment"/> -->
 
     <!-- https://checkstyle.org/config_filters.html#SuppressionXpathFilter -->
     <module name="SuppressionXpathFilter">
