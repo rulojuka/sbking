@@ -14,7 +14,6 @@ import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.core.Hand;
 import br.com.sbk.sbking.core.Player;
 import br.com.sbk.sbking.gui.JElements.CardButton;
-import br.com.sbk.sbking.gui.JElements.SBKingButton;
 import br.com.sbk.sbking.gui.JElements.SitOrLeaveButton;
 import br.com.sbk.sbking.gui.models.DeckCardImageInformation;
 

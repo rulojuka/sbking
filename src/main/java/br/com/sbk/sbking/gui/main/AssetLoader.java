@@ -1,6 +1,5 @@
 package br.com.sbk.sbking.gui.main;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 

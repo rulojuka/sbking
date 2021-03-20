@@ -6,7 +6,6 @@ import org.apache.logging.log4j.Logger;
 import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.gui.JElements.CardButton;
-import br.com.sbk.sbking.gui.JElements.SBKingButton;
 import br.com.sbk.sbking.gui.JElements.SitOrLeaveButton;
 import br.com.sbk.sbking.networking.client.ClientToServerMessageSender;
 
