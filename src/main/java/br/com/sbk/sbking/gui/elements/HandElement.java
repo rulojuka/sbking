@@ -27,12 +27,12 @@ public class HandElement {
         boolean isVisible, Direction direction) {
         this.deckCardImageInformation = new DeckCardImageInformation();
 
-        int x_offset = (((hand.size() - 1) * deckCardImageInformation.getWidthBetweenCards()) + deckCardImageInformation.getCardWidth()) / 2;
-        x_offset *= -1;
-        int y_offset = deckCardImageInformation.getCardHeight() / 2;
-        y_offset *= -1;
+        int xOffset = (((hand.size() - 1) * deckCardImageInformation.getWidthBetweenCards()) + deckCardImageInformation.getCardWidth()) / 2;
+        xOffset *= -1;
+        int yOffset = deckCardImageInformation.getCardHeight() / 2;
+        yOffset *= -1;
         Point handTopLeftCorner = new Point(handCenter);
-        handTopLeftCorner.translate(x_offset, y_offset);
+        handTopLeftCorner.translate(xOffset, yOffset);
 
         for (int i = hand.size() - 1; i >= 0; i--) { // This way, it draws correctly
             Card card = hand.get(i);

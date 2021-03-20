@@ -14,13 +14,13 @@ public class GameScoreboardElement {
         int width = 300;
         int height = 250;
 
-        int x_offset = width / 2;
-        x_offset *= -1;
-        int y_offset = height / 2;
-        y_offset *= -1;
+        int xOffset = width / 2;
+        xOffset *= -1;
+        int yOffset = height / 2;
+        yOffset *= -1;
 
         Point gameScoreboardTopLeftCorner = new Point(gameScoreboardCenter);
-        gameScoreboardTopLeftCorner.translate(x_offset, y_offset);
+        gameScoreboardTopLeftCorner.translate(xOffset, yOffset);
 
         StringBuilder text = new StringBuilder();
         text.append("<html>");
