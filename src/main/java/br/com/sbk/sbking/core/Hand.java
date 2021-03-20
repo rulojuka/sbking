@@ -21,11 +21,11 @@ public class Hand implements Serializable {
         this.cards.remove(card);
     }
 
-    public Card removeOneRandomCard(){
+    public Card removeOneRandomCard() {
         int size = cards.size();
         int lastCardPosition = size - 1;
         Card removedCard = null;
-        if(size>0){
+        if (size > 0) {
             this.shuffle(); // FIXME make this more performatic
 
             removedCard = cards.get(lastCardPosition);
@@ -44,7 +44,7 @@ public class Hand implements Serializable {
         return this.getCards().size();
     }
 
-    private void shuffle(){
+    private void shuffle() {
         Collections.shuffle(this.cards);
     }
 

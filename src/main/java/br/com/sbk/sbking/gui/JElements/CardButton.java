@@ -27,7 +27,7 @@ public class CardButton extends SBKingButton {
         this.frontImage = deckCardImageInformation.getFrontImage(card);
         this.backImage = deckCardImageInformation.getBackImage();
 
-        offsetWhenSelected = deckCardImageInformation.getCardHeight()/10;
+        offsetWhenSelected = deckCardImageInformation.getCardHeight() / 10;
         
         this.setSize(deckCardImageInformation.getCardWidth(), deckCardImageInformation.getCardHeight());
         this.faceUp = true;
