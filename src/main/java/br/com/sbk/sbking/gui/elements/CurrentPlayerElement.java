@@ -15,7 +15,7 @@ public class CurrentPlayerElement {
 
 	private static final int X_OFFSET = 0;
 	private static final int Y_OFFSET = -270;
-	private java.awt.Color TURN_LIGHT_COLOR = new java.awt.Color(255, 0, 0);
+	private static final java.awt.Color TURN_LIGHT_COLOR = new java.awt.Color(255, 0, 0);
 
 	public CurrentPlayerElement(Direction currentPlayer, Container container, boolean isMyTurn) {
 		int width = 110;
