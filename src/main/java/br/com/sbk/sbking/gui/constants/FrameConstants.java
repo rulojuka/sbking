@@ -36,8 +36,8 @@ public final class FrameConstants {
         TABLE_HEIGHT = newHeight;
         HALF_WIDTH = TABLE_WIDTH / 2;
         HALF_HEIGHT = TABLE_HEIGHT / 2;
-        scaleX = (double)(Math.min(TABLE_WIDTH, ORIGINAL_TABLE_WIDTH))/ORIGINAL_TABLE_WIDTH;
-        scaleY = (double)(Math.min(TABLE_HEIGHT, ORIGINAL_TABLE_HEIGHT))/ORIGINAL_TABLE_HEIGHT;
+        scaleX = (double) (Math.min(TABLE_WIDTH, ORIGINAL_TABLE_WIDTH))/ORIGINAL_TABLE_WIDTH;
+        scaleY = (double) (Math.min(TABLE_HEIGHT, ORIGINAL_TABLE_HEIGHT))/ORIGINAL_TABLE_HEIGHT;
         double scale = getScreenScale();
 
         double handToTrickSpacingVertical = scale * 60;
@@ -45,8 +45,8 @@ public final class FrameConstants {
         double approximateCardWidth = scale * 182;
         double approximateCardHeight = scale * 247;
 
-        int widthOffset = (int)((3*approximateCardWidth + 2*handToTrickSpacingHorizontal)/2);
-        int heightOffset = (int)((3*approximateCardHeight + 2*handToTrickSpacingVertical)/2);
+        int widthOffset = (int) ((3*approximateCardWidth + 2*handToTrickSpacingHorizontal)/2);
+        int heightOffset = (int) ((3*approximateCardHeight + 2*handToTrickSpacingVertical)/2);
 
         int NORTH_X_CENTER = HALF_WIDTH;
         int NORTH_Y_CENTER = HALF_HEIGHT - heightOffset;

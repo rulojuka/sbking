@@ -33,7 +33,7 @@ public class Board implements Serializable {
         }
     }
 
-    public List<Card> removeOneCardFromEachHand(){
+    public List<Card> removeOneCardFromEachHand() {
         List<Card> removedCards = new ArrayList<Card>();
         for (Direction direction : Direction.values()) {
             Card removedCard = this.getHandOf(direction).removeOneRandomCard();

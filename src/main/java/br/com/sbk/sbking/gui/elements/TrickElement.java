@@ -37,7 +37,7 @@ public class TrickElement {
         int x = center.x - deckCardImageInformation.getCardWidth() / 2;
         int y = center.y - deckCardImageInformation.getCardHeight() / 2;
         int xDiff = deckCardImageInformation.getWidthBetweenCards();
-        int yDiff = (int)(deckCardImageInformation.getWidthBetweenCards() * 1.4);
+        int yDiff = (int) (deckCardImageInformation.getWidthBetweenCards() * 1.4);
         int dx;
         int dy;
 
