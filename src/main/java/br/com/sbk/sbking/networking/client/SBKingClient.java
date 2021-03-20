@@ -28,7 +28,7 @@ public class SBKingClient implements Runnable {
 	private Direction direction;
 
 	private Direction positiveOrNegativeChooser;
-	private Direction GameModeOrStrainChooser;
+	private Direction gameModeOrStrainChooser;
 	private PositiveOrNegative positiveOrNegative;
 
 	private Board currentBoard;
@@ -279,19 +279,19 @@ public class SBKingClient implements Runnable {
 	}
 
 	private void setGameModeOrStrainChooser(Direction direction) {
-		this.GameModeOrStrainChooser = direction;
+		this.gameModeOrStrainChooser = direction;
 	}
 
 	private void unsetGameModeOrStrainChooser() {
-		this.GameModeOrStrainChooser = null;
+		this.gameModeOrStrainChooser = null;
 	}
 
 	public boolean isGameModeOrStrainChooserSet() {
-		return this.GameModeOrStrainChooser != null;
+		return this.gameModeOrStrainChooser != null;
 	}
 
 	public Direction getGameModeOrStrainChooser() {
-		return this.GameModeOrStrainChooser;
+		return this.gameModeOrStrainChooser;
 	}
 
 	public void selectedPositive() {
