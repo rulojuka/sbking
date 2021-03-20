@@ -145,7 +145,7 @@ public class Hand implements Serializable {
         for (Card card : cards) {
             Suit currentSuit = card.getSuit();
             int currentValue = numberOfCards.get(currentSuit);
-            currentValue ++;
+            currentValue++;
             numberOfCards.put(currentSuit,currentValue);
         }
         return numberOfCards.values().stream().reduce(Math::min).orElse(0);
