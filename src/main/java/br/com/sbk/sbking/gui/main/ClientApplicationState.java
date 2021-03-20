@@ -26,7 +26,7 @@ public class ClientApplicationState {
 
     public static void checkWindowResize(int newWidth, int newHeight) {
         if (!guiScaleValid) {
-            resizeWindow(newWidth, newHeight);  
+            resizeWindow(newWidth, newHeight);
         }
 
         guiScaleValid = true;
@@ -34,7 +34,7 @@ public class ClientApplicationState {
 
     public static void startAppState() {
         logger.info("Initializing Frame Constants");
-        
+
         FrameConstants.initFrameConstants();
 
         // AssetLoader must be initialized after FrameConstants.
@@ -45,7 +45,7 @@ public class ClientApplicationState {
         logger.info("Resizing Window");
 
         FrameConstants.computeConstants(width, height);
-        
+
         AssetLoader.invalidateAssetLoaderCache();
 
         ClientApplicationState.setGUIHasChanged(true);
