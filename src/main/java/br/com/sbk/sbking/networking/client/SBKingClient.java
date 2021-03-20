@@ -259,7 +259,7 @@ public class SBKingClient implements Runnable {
 	}
 
 	public boolean isDirectionOrSpectatorSet() {
-		return this.direction != null || this.spectator == true;
+		return this.direction != null || this.spectator;
 	}
 
 	private void setPositiveOrNegativeChooser(Direction direction) {
