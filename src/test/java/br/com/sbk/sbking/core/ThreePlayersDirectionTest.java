@@ -53,7 +53,7 @@ public class ThreePlayersDirectionTest {
         assertTrue(hindhand.isHindhand());
         assertFalse(hindhand.isForehand());
     }
-    
+
     @Test
     public void shouldKnowItsImmediateNext() {
         assertTrue(forehand.next() == middlehand);

@@ -5,7 +5,7 @@ import java.awt.Point;
 import javax.swing.ImageIcon;
 
 import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;  
+import java.awt.event.MouseEvent;
 
 import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.gui.models.DeckCardImageInformation;
@@ -28,7 +28,7 @@ public class CardButton extends SBKingButton {
         this.backImage = deckCardImageInformation.getBackImage();
 
         offsetWhenSelected = deckCardImageInformation.getCardHeight() / 10;
-        
+
         this.setSize(deckCardImageInformation.getCardWidth(), deckCardImageInformation.getCardHeight());
         this.faceUp = true;
         this.setIcon(frontImage);

@@ -56,11 +56,11 @@ public abstract class NetworkClientScreen extends JFrame {
     private void initializeContentPane(NetworkClientScreen screen) {
         getContentPane().setLayout(null);
         getContentPane().setBackground(TABLE_COLOR);
-        
+
         Timer resizeDebounceTimer = new Timer(100, new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 ClientApplicationState.checkWindowResize(screen.getWidth(), screen.getHeight());
-            }    
+            }
         });
         resizeDebounceTimer.setRepeats(false);
 

@@ -37,7 +37,6 @@ public class AssetLoader {
         for (Suit suit : Suit.values()) {
             for (Rank rank : Rank.values()) {
                 Card card = new Card(suit, rank);
-                
                 ImageIcon cardImage = deckCardImageInformation.createFrontImage(card);
                 imageByCard.put(card, cardImage);
             }

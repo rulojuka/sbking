@@ -42,5 +42,5 @@ public enum ThreePlayersDirection {
     public char getAbbreviation() {
         return abbreviation;
     }
-    
+
 }

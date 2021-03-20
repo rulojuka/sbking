@@ -14,7 +14,7 @@ public class Board implements Serializable {
 
     public Board(Map hands, Direction dealer) {
         this.hands = hands;
-        
+
         this.sortAllHands();
         this.dealer = dealer;
     }

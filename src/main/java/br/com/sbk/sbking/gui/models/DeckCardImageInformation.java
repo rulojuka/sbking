@@ -18,7 +18,7 @@ public class DeckCardImageInformation {
     private static final String directory = "/images/cards/";
 
     private static final int ORIGINAL_CARD_IMAGE_WIDTH = 182;
-    private static final int ORIGINAL_CARD_IMAGE_HEIGHT = 247; 
+    private static final int ORIGINAL_CARD_IMAGE_HEIGHT = 247;
     private static final int ORIGINAL_WIDTH_BETWEEN_CARDS = 48;
 
     private static double SCALE_FACTOR;
