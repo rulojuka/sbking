@@ -28,9 +28,9 @@ public class DeckCardImageInformation {
 
     public DeckCardImageInformation() {
         SCALE_FACTOR = FrameConstants.getScreenScale();
-        CARD_WIDTH = (int) (ORIGINAL_CARD_IMAGE_WIDTH*SCALE_FACTOR);
-        CARD_HEIGHT = (int) (ORIGINAL_CARD_IMAGE_HEIGHT*SCALE_FACTOR);
-        WIDTH_BETWEEN_CARDS = (int) (ORIGINAL_WIDTH_BETWEEN_CARDS*SCALE_FACTOR);
+        CARD_WIDTH = (int) (ORIGINAL_CARD_IMAGE_WIDTH * SCALE_FACTOR);
+        CARD_HEIGHT = (int) (ORIGINAL_CARD_IMAGE_HEIGHT * SCALE_FACTOR);
+        WIDTH_BETWEEN_CARDS = (int) (ORIGINAL_WIDTH_BETWEEN_CARDS * SCALE_FACTOR);
     }
 
     private String getFilename(Suit suit, Rank rank) {
