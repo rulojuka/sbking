@@ -3,9 +3,8 @@ package br.com.sbk.sbking.gui.main;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import br.com.sbk.sbking.gui.frames.KingNetworkClientScreen;
+import br.com.sbk.sbking.gui.frames.MinibridgeClientScreen;
 import br.com.sbk.sbking.gui.frames.NetworkClientScreen;
-import br.com.sbk.sbking.gui.main.ClientApplicationState;
 
 public class MainNetworkGame {
 
@@ -13,7 +12,7 @@ public class MainNetworkGame {
 
 	public static void main(String args[]) {
 		ClientApplicationState.startAppState();
-		NetworkClientScreen networkClientScreen = new KingNetworkClientScreen();
+		NetworkClientScreen networkClientScreen = new MinibridgeClientScreen();
 		networkClientScreen.run();
 		logger.info("Exiting main thread.");
 	}

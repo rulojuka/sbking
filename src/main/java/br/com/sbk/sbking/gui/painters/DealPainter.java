@@ -16,9 +16,9 @@ public class DealPainter implements Painter {
 
 	final static Logger logger = LogManager.getLogger(DealPainter.class);
 
-	private Direction direction;
-	private ActionListener actionListener;
-	private Deal deal;
+	protected Direction direction;
+	protected ActionListener actionListener;
+	protected Deal deal;
 
 	public DealPainter(ActionListener actionListener, Direction direction, Deal deal) {
 		this.actionListener = actionListener;
