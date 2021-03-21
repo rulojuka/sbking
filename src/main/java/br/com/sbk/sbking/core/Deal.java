@@ -27,6 +27,7 @@ public class Deal implements Serializable {
 
 	private List<Trick> tricks;
 	private Trick currentTrick;
+	private Direction dummy;
 
 	public Deal(Board board, Ruleset ruleset) {
 		this.board = board;
@@ -65,6 +66,10 @@ public class Deal implements Serializable {
 
 	public Direction getCurrentPlayer() {
 		return this.currentPlayer;
+	}
+
+	public void setCurrentPlayer(Direction currentPlayer) {
+		this.currentPlayer = currentPlayer;
 	}
 
 	public int getNorthSouthPoints() {
@@ -248,6 +253,18 @@ public class Deal implements Serializable {
 
 	public void setStartingNumberOfCardsInTheHand(int startingNumberOfCardsInTheHand) {
 		this.startingNumberOfCardsInTheHand = startingNumberOfCardsInTheHand;
+	}
+
+	public void setDummy(Direction direction) {
+		this.dummy = direction;
+	}
+
+	public Direction getDummy() {
+		return this.dummy;
+	}
+
+	public boolean isDummyOpen() {
+		return this.getCompletedTricks() > 0 || !this.getCurrentTrick().isEmpty();
 	}
 
 }

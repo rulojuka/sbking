@@ -109,8 +109,8 @@ public class ClientGameSocket implements Runnable {
 					logger.info("Setting new nickname: --" + nickname + "--");
 					this.playerNetworkInformation.setNickname(nickname);
 				} else {
-					KingGameServer kingGameServer = (KingGameServer) this.table.getGameServer();
 					if (POSITIVE.equals(string) || NEGATIVE.equals(string)) {
+						KingGameServer kingGameServer = (KingGameServer) this.table.getGameServer();
 						PositiveOrNegative positiveOrNegative = new PositiveOrNegative();
 						if (POSITIVE.equals(string)) {
 							positiveOrNegative.setPositive();
@@ -119,6 +119,7 @@ public class ClientGameSocket implements Runnable {
 						}
 						kingGameServer.notifyChoosePositiveOrNegative(positiveOrNegative, this.direction);
 					} else {
+						MinibridgeGameServer kingGameServer = (MinibridgeGameServer) this.table.getGameServer();
 						Ruleset gameModeOrStrain = RulesetFromShortDescriptionIdentifier.identify(string);
 						if (gameModeOrStrain != null) {
 							kingGameServer.notifyChooseGameModeOrStrain(gameModeOrStrain, direction);

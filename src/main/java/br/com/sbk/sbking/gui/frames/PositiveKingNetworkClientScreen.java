@@ -11,12 +11,9 @@ import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.gui.main.ClientApplicationState;
 import br.com.sbk.sbking.gui.painters.ConnectToServerPainter;
 import br.com.sbk.sbking.gui.painters.DealPainter;
-import br.com.sbk.sbking.gui.painters.FinalScoreboardPainter;
 import br.com.sbk.sbking.gui.painters.Painter;
 import br.com.sbk.sbking.gui.painters.SpectatorPainter;
 import br.com.sbk.sbking.gui.painters.WaitingForChoosingGameModeOrStrainPainter;
-import br.com.sbk.sbking.gui.painters.WaitingForChoosingPositiveOrNegativePainter;
-import br.com.sbk.sbking.gui.painters.WaitingForPlayersPainter;
 
 @SuppressWarnings("serial")
 public class PositiveKingNetworkClientScreen extends NetworkClientScreen {
@@ -45,7 +42,8 @@ public class PositiveKingNetworkClientScreen extends NetworkClientScreen {
 		while (true) {
 			sleepFor(300);
 			if (sbKingClient.isSpectator()) {
-				if (sbKingClient.getBoardHasChanged() || sbKingClient.getDealHasChanged() || ClientApplicationState.getGUIHasChanged()) {
+				if (sbKingClient.getBoardHasChanged() || sbKingClient.getDealHasChanged()
+						|| ClientApplicationState.getGUIHasChanged()) {
 					if (!ClientApplicationState.getGUIHasChanged()) {
 						logger.info("Deal has changed. Painting deal.");
 						logger.info("It is a spectator.");

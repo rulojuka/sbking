@@ -48,13 +48,13 @@ public class LobbyServer {
 				try {
 					PlayerNetworkInformation connectedPlayerNetworkInformation = this.connectPlayer(connectingSocket);
 					logger.info("Created new gameServer");
-					GameServer gameServer = new KingGameServer();
+					GameServer gameServer = new MinibridgeGameServer();
 
 					this.table = new Table(connectedPlayerNetworkInformation, gameServer);
 					gameServer.setTable(table);
 					this.ownerConnected = true;
 					logger.info("Created a Table. Owner is " + connectedPlayerNetworkInformation.getSocket().getInetAddress()
-							+ "and GameServer is KingGameServer.");
+							+ "and GameServer is MinibridgeGameServer.");
 					pool.execute(gameServer);
 					logger.info("Executing gameServer in the pool.");
 				} catch (RuntimeException e) {
