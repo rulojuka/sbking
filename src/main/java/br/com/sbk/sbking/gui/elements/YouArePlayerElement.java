@@ -1,7 +1,7 @@
 package br.com.sbk.sbking.gui.elements;
 
-import static br.com.sbk.sbking.gui.constants.FrameConstants.HALF_HEIGHT;
-import static br.com.sbk.sbking.gui.constants.FrameConstants.HALF_WIDTH;
+import static br.com.sbk.sbking.gui.constants.FrameConstants.halfHeight;
+import static br.com.sbk.sbking.gui.constants.FrameConstants.halfWidth;
 import static javax.swing.SwingConstants.CENTER;
 
 import java.awt.Container;
@@ -20,7 +20,7 @@ public class YouArePlayerElement {
     public static void add(Direction direction, Container container) {
         int width = 100;
         int height = 15;
-        Point tableCenter = new Point(HALF_WIDTH, HALF_HEIGHT);
+        Point tableCenter = new Point(halfWidth, halfHeight);
         Point currentPlayerPosition = new Point(tableCenter);
         currentPlayerPosition.translate(X_OFFSET - width / 2, Y_OFFSET);
 

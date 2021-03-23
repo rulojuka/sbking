@@ -1,7 +1,7 @@
 package br.com.sbk.sbking.gui.elements;
 
-import static br.com.sbk.sbking.gui.constants.FrameConstants.HALF_HEIGHT;
-import static br.com.sbk.sbking.gui.constants.FrameConstants.HALF_WIDTH;
+import static br.com.sbk.sbking.gui.constants.FrameConstants.halfHeight;
+import static br.com.sbk.sbking.gui.constants.FrameConstants.halfWidth;
 
 import java.awt.Container;
 import java.awt.event.ActionListener;
@@ -35,7 +35,7 @@ public class ConnectToServerElement {
         JLabel hostnameLabel = new SBKingLabel("Choose server:");
         container.add(hostnameLabel);
         hostnameLabel.setSize(width, height);
-        hostnameLabel.setLocation(HALF_WIDTH - 80, HALF_HEIGHT - 100 - 100 - height - height);
+        hostnameLabel.setLocation(halfWidth - 80, halfHeight - 100 - 100 - height - height);
 
         texts = new ArrayList<String>();
         texts.add("Local");
@@ -44,8 +44,8 @@ public class ConnectToServerElement {
         texts.add("Taís");
         radioButtons = new ArrayList<JRadioButton>();
         SBKingRadioButtonGroupCreator sbKingRadioButtonGroupCreator = new SBKingRadioButtonGroupCreator();
-        ButtonGroup buttonGroup = sbKingRadioButtonGroupCreator.create(texts, HALF_WIDTH - 80,
-                HALF_HEIGHT - 100 - 100 - height);
+        ButtonGroup buttonGroup = sbKingRadioButtonGroupCreator.create(texts, halfWidth - 80,
+                halfHeight - 100 - 100 - height);
         for (Enumeration<AbstractButton> elements = buttonGroup.getElements(); elements.hasMoreElements();) {
             AbstractButton element = elements.nextElement();
             container.add(element);
@@ -55,16 +55,16 @@ public class ConnectToServerElement {
         JLabel nicknameLabel = new SBKingLabel("Enter nickname:");
         container.add(nicknameLabel);
         nicknameLabel.setSize(width, height);
-        nicknameLabel.setLocation(HALF_WIDTH - nicknameLabel.getWidth() / 2, HALF_HEIGHT - 100 - height);
+        nicknameLabel.setLocation(halfWidth - nicknameLabel.getWidth() / 2, halfHeight - 100 - height);
 
         JTextField nicknameTextField = new JTextField("");
         container.add(nicknameTextField);
         nicknameTextField.setSize(width, height);
-        nicknameTextField.setLocation(HALF_WIDTH - nicknameTextField.getWidth() / 2, HALF_HEIGHT - 100);
+        nicknameTextField.setLocation(halfWidth - nicknameTextField.getWidth() / 2, halfHeight - 100);
         nicknameTextField.setName("nicknameTextField");
 
-        int xPosition = HALF_WIDTH - connectToServerButton.getWidth() / 2;
-        int yPosition = HALF_HEIGHT - connectToServerButton.getHeight() / 2;
+        int xPosition = halfWidth - connectToServerButton.getWidth() / 2;
+        int yPosition = halfHeight - connectToServerButton.getHeight() / 2;
         connectToServerButton.setLocation(xPosition, yPosition); // This line needs to go after adding the button to
         // the container
     }

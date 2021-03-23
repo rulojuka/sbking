@@ -1,7 +1,7 @@
 package br.com.sbk.sbking.gui.elements;
 
-import static br.com.sbk.sbking.gui.constants.FrameConstants.HALF_HEIGHT;
-import static br.com.sbk.sbking.gui.constants.FrameConstants.HALF_WIDTH;
+import static br.com.sbk.sbking.gui.constants.FrameConstants.halfHeight;
+import static br.com.sbk.sbking.gui.constants.FrameConstants.halfWidth;
 
 import java.awt.Container;
 import java.awt.Point;
@@ -33,7 +33,7 @@ public class ChooseGameModeOrStrainElement {
     private int xSpacing;
     private int yLabelOffset;
 
-    private static int BUTTON_WIDTH = 80;
+    private static final int BUTTON_WIDTH = 80;
 
     public ChooseGameModeOrStrainElement(Container container, SBKingClient sbKingClient, boolean isPositive) {
         this.container = container;
@@ -48,8 +48,8 @@ public class ChooseGameModeOrStrainElement {
     }
 
     public void add() {
-        int initialX = HALF_WIDTH;
-        int initialY = HALF_HEIGHT;
+        int initialX = halfWidth;
+        int initialY = halfHeight;
 
         elementHeight = 20;
         xSpacing = 5;

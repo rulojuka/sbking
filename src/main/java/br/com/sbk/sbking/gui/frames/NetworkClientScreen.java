@@ -48,7 +48,7 @@ public abstract class NetworkClientScreen extends JFrame {
     private void initializeFrame() {
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(FrameConstants.TABLE_WIDTH, FrameConstants.TABLE_HEIGHT);
+        this.setSize(FrameConstants.tableWidth, FrameConstants.tableHeight);
 
         this.setApplicationIcon();
     }

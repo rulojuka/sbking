@@ -1,7 +1,7 @@
 package br.com.sbk.sbking.gui.painters;
 
-import static br.com.sbk.sbking.gui.constants.FrameConstants.HALF_HEIGHT;
-import static br.com.sbk.sbking.gui.constants.FrameConstants.HALF_WIDTH;
+import static br.com.sbk.sbking.gui.constants.FrameConstants.halfHeight;
+import static br.com.sbk.sbking.gui.constants.FrameConstants.halfWidth;
 
 import java.awt.Container;
 import java.awt.Point;
@@ -19,8 +19,8 @@ public class FinalScoreboardPainter implements Painter {
 
     @Override
     public void paint(Container contentPane) {
-        int xCenterLocation = HALF_WIDTH;
-        int yCenterLocation = HALF_HEIGHT;
+        int xCenterLocation = halfWidth;
+        int yCenterLocation = halfHeight;
         Point centerOfScoreboardPosition = new Point(xCenterLocation, yCenterLocation);
 
         new GameScoreboardElement(gameScoreboard, contentPane, centerOfScoreboardPosition);
