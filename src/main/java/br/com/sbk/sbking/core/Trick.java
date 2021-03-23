@@ -175,22 +175,29 @@ public class Trick implements Serializable {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
+        }
         Trick other = (Trick) obj;
         if (cards == null) {
-            if (other.cards != null)
+            if (other.cards != null) {
                 return false;
-        } else if (!cards.equals(other.cards))
+            }
+        } else if (!cards.equals(other.cards)) {
             return false;
-        if (lastTwo != other.lastTwo)
+        }
+        if (lastTwo != other.lastTwo) {
             return false;
-        if (leader != other.leader)
+        }
+        if (leader != other.leader) {
             return false;
+        }
         return true;
     }
 

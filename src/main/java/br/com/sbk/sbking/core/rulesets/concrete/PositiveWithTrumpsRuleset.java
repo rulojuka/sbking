@@ -38,15 +38,19 @@ public class PositiveWithTrumpsRuleset extends PositiveRuleset {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (!super.equals(obj))
+        }
+        if (!super.equals(obj)) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
+        }
         PositiveWithTrumpsRuleset other = (PositiveWithTrumpsRuleset) obj;
-        if (trumpSuit != other.trumpSuit)
+        if (trumpSuit != other.trumpSuit) {
             return false;
+        }
         return true;
     }
 

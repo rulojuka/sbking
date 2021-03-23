@@ -305,8 +305,9 @@ public class SBKingClient implements Runnable {
     }
 
     public boolean isPositiveOrNegativeSelected() {
-        if (this.positiveOrNegative == null)
+        if (this.positiveOrNegative == null) {
             return false;
+        }
         return this.positiveOrNegative.isSelected();
     }
 

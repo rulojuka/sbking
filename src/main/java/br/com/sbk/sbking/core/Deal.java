@@ -204,42 +204,57 @@ public class Deal implements Serializable {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
+        }
         Deal other = (Deal) obj;
         if (board == null) {
-            if (other.board != null)
+            if (other.board != null) {
                 return false;
-        } else if (!board.equals(other.board))
+            }
+        } else if (!board.equals(other.board)) {
             return false;
-        if (completedTricks != other.completedTricks)
+        }
+        if (completedTricks != other.completedTricks) {
             return false;
-        if (currentPlayer != other.currentPlayer)
+        }
+        if (currentPlayer != other.currentPlayer) {
             return false;
+        }
         if (currentTrick == null) {
-            if (other.currentTrick != null)
+            if (other.currentTrick != null) {
                 return false;
-        } else if (!currentTrick.equals(other.currentTrick))
+            }
+        } else if (!currentTrick.equals(other.currentTrick)) {
             return false;
+        }
         if (ruleset == null) {
-            if (other.ruleset != null)
+            if (other.ruleset != null) {
                 return false;
-        } else if (!ruleset.equals(other.ruleset))
+            }
+        } else if (!ruleset.equals(other.ruleset)) {
             return false;
+        }
         if (score == null) {
-            if (other.score != null)
+            if (other.score != null) {
                 return false;
-        } else if (!score.equals(other.score))
+            }
+        } else if (!score.equals(other.score)) {
             return false;
+        }
         if (tricks == null) {
-            if (other.tricks != null)
+            if (other.tricks != null) {
                 return false;
-        } else if (!tricks.equals(other.tricks))
+            }
+        } else if (!tricks.equals(other.tricks)) {
             return false;
+        }
         return true;
     }
 

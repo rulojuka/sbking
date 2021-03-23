@@ -24,8 +24,9 @@ public class ShuffledDeck {
     }
 
     public Card dealCard() {
-        if (iterator.hasNext())
+        if (iterator.hasNext()) {
             return iterator.next();
+        }
         throw new DealingCardFromAnEmptyDeckException();
     }
 

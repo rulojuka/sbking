@@ -53,20 +53,26 @@ public class Board implements Serializable {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
+        }
         Board other = (Board) obj;
-        if (dealer != other.dealer)
+        if (dealer != other.dealer) {
             return false;
+        }
         if (hands == null) {
-            if (other.hands != null)
+            if (other.hands != null) {
                 return false;
-        } else if (!hands.equals(other.hands))
+            }
+        } else if (!hands.equals(other.hands)) {
             return false;
+        }
         return true;
     }
 

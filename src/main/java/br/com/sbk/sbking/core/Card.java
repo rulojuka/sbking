@@ -57,17 +57,22 @@ public class Card implements Serializable {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (this.getClass() != obj.getClass())
+        }
+        if (this.getClass() != obj.getClass()) {
             return false;
+        }
         Card other = (Card) obj;
-        if (this.getRank() != other.getRank())
+        if (this.getRank() != other.getRank()) {
             return false;
-        if (this.getSuit() != other.getSuit())
+        }
+        if (this.getSuit() != other.getSuit()) {
             return false;
+        }
         return true;
     }
 
