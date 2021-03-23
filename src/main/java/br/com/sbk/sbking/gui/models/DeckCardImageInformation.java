@@ -21,16 +21,16 @@ public class DeckCardImageInformation {
     private static final int ORIGINAL_CARD_IMAGE_HEIGHT = 247;
     private static final int ORIGINAL_WIDTH_BETWEEN_CARDS = 48;
 
-    private static double SCALE_FACTOR;
-    private static int CARD_WIDTH;
-    private static int CARD_HEIGHT;
-    private static int WIDTH_BETWEEN_CARDS;
+    private static double scaleFactor;
+    private static int cardWidth;
+    private static int cardHeight;
+    private static int widthBetweenCards;
 
     public DeckCardImageInformation() {
-        SCALE_FACTOR = FrameConstants.getScreenScale();
-        CARD_WIDTH = (int) (ORIGINAL_CARD_IMAGE_WIDTH * SCALE_FACTOR);
-        CARD_HEIGHT = (int) (ORIGINAL_CARD_IMAGE_HEIGHT * SCALE_FACTOR);
-        WIDTH_BETWEEN_CARDS = (int) (ORIGINAL_WIDTH_BETWEEN_CARDS * SCALE_FACTOR);
+        scaleFactor = FrameConstants.getScreenScale();
+        cardWidth = (int) (ORIGINAL_CARD_IMAGE_WIDTH * scaleFactor);
+        cardHeight = (int) (ORIGINAL_CARD_IMAGE_HEIGHT * scaleFactor);
+        widthBetweenCards = (int) (ORIGINAL_WIDTH_BETWEEN_CARDS * scaleFactor);
     }
 
     private String getFilename(Suit suit, Rank rank) {
@@ -50,7 +50,7 @@ public class DeckCardImageInformation {
     }
 
     private ImageIcon getScaledCardImage(Image img) {
-        return new ImageIcon(img.getScaledInstance(CARD_WIDTH, CARD_HEIGHT, java.awt.Image.SCALE_SMOOTH));
+        return new ImageIcon(img.getScaledInstance(cardWidth, cardHeight, java.awt.Image.SCALE_SMOOTH));
     }
 
     public ImageIcon getBackImage() {
@@ -62,14 +62,14 @@ public class DeckCardImageInformation {
     }
 
     public int getCardWidth() {
-        return CARD_WIDTH;
+        return cardWidth;
     }
 
     public int getCardHeight() {
-        return CARD_HEIGHT;
+        return cardHeight;
     }
 
     public int getWidthBetweenCards() {
-        return WIDTH_BETWEEN_CARDS;
+        return widthBetweenCards;
     }
 }

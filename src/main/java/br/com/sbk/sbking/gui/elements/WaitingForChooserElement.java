@@ -20,8 +20,8 @@ public class WaitingForChooserElement {
         waitingLabel.setHorizontalAlignment(CENTER);
         int width = 300;
         int height = 30;
-        int x = br.com.sbk.sbking.gui.constants.FrameConstants.HALF_WIDTH;
-        int y = br.com.sbk.sbking.gui.constants.FrameConstants.HALF_HEIGHT;
+        int x = br.com.sbk.sbking.gui.constants.FrameConstants.halfWidth;
+        int y = br.com.sbk.sbking.gui.constants.FrameConstants.halfHeight;
         waitingLabel.setSize(width, height);
         waitingLabel.setLocation(x - width / 2, y - height / 2);
         container.add(waitingLabel);

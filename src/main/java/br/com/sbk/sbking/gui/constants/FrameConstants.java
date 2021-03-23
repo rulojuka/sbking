@@ -12,10 +12,10 @@ public final class FrameConstants {
     public static final int ORIGINAL_TABLE_WIDTH = 2200;
     public static final int ORIGINAL_TABLE_HEIGHT = 1400;
 
-    public static int TABLE_WIDTH;
-    public static int TABLE_HEIGHT;
-    public static int HALF_WIDTH;
-    public static int HALF_HEIGHT;
+    public static int tableWidth;
+    public static int tableHeight;
+    public static int halfWidth;
+    public static int halfHeight;
 
     private static double scaleX;
     private static double scaleY;
@@ -32,12 +32,12 @@ public final class FrameConstants {
     }
 
     public static void computeConstants(int newWidth, int newHeight) {
-        TABLE_WIDTH = newWidth;
-        TABLE_HEIGHT = newHeight;
-        HALF_WIDTH = TABLE_WIDTH / 2;
-        HALF_HEIGHT = TABLE_HEIGHT / 2;
-        scaleX = (double) (Math.min(TABLE_WIDTH, ORIGINAL_TABLE_WIDTH)) / ORIGINAL_TABLE_WIDTH;
-        scaleY = (double) (Math.min(TABLE_HEIGHT, ORIGINAL_TABLE_HEIGHT)) / ORIGINAL_TABLE_HEIGHT;
+        tableWidth = newWidth;
+        tableHeight = newHeight;
+        halfWidth = tableWidth / 2;
+        halfHeight = tableHeight / 2;
+        scaleX = (double) (Math.min(tableWidth, ORIGINAL_TABLE_WIDTH)) / ORIGINAL_TABLE_WIDTH;
+        scaleY = (double) (Math.min(tableHeight, ORIGINAL_TABLE_HEIGHT)) / ORIGINAL_TABLE_HEIGHT;
         double scale = getScreenScale();
 
         double handToTrickSpacingVertical = scale * 60;
@@ -48,14 +48,14 @@ public final class FrameConstants {
         int widthOffset = (int) ((3 * approximateCardWidth + 2 * handToTrickSpacingHorizontal) / 2);
         int heightOffset = (int) ((3 * approximateCardHeight + 2 * handToTrickSpacingVertical) / 2);
 
-        int northX = HALF_WIDTH;
-        int northY = HALF_HEIGHT - heightOffset;
-        int southX = HALF_WIDTH;
-        int southY = HALF_HEIGHT + heightOffset;
-        int eastX = HALF_WIDTH + widthOffset;
-        int eastY = HALF_HEIGHT;
-        int westX = HALF_WIDTH - widthOffset;
-        int westY = HALF_HEIGHT;
+        int northX = halfWidth;
+        int northY = halfHeight - heightOffset;
+        int southX = halfWidth;
+        int southY = halfHeight + heightOffset;
+        int eastX = halfWidth + widthOffset;
+        int eastY = halfHeight;
+        int westX = halfWidth - widthOffset;
+        int westY = halfHeight;
 
         // TODO: cached references to the points stored in pointOfDirection may
         // be invalid. We must prevent caching of those references.

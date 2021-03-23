@@ -1,6 +1,6 @@
 package br.com.sbk.sbking.gui.painters;
 
-import static br.com.sbk.sbking.gui.constants.FrameConstants.TABLE_WIDTH;
+import static br.com.sbk.sbking.gui.constants.FrameConstants.tableWidth;
 
 import java.awt.Container;
 import java.awt.Point;
@@ -34,7 +34,7 @@ public class WaitingForChoosingGameModeOrStrainPainter implements Painter {
 
     @Override
     public void paint(Container contentPane) {
-        int xCenterLocation = TABLE_WIDTH - 160;
+        int xCenterLocation = tableWidth - 160;
         int yCenterLocation = 110;
         Point centerOfScoreboardPosition = new Point(xCenterLocation, yCenterLocation);
         new GameScoreboardElement(gameScoreboard, contentPane, centerOfScoreboardPosition);
