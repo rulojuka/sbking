@@ -26,6 +26,10 @@ public class ClientGameSocket implements Runnable {
     private boolean hasDisconnected = false;
     private Direction direction;
 
+    private static final String NICKNAME = "NICKNAME";
+    private static final String POSITIVE = "POSITIVE";
+    private static final String NEGATIVE = "NEGATIVE";
+
     public boolean isSpectator() {
         return direction == null;
     }
@@ -83,7 +87,6 @@ public class ClientGameSocket implements Runnable {
             if (readObject instanceof String) {
                 String string = (String) readObject;
                 logger.info("A spectator sent this message: --" + string + "--");
-                String NICKNAME = "NICKNAME";
                 if (string.startsWith(NICKNAME)) {
                     String nickname = string.substring(NICKNAME.length());
                     logger.info("Setting new nickname: --" + nickname + "--");
@@ -101,9 +104,6 @@ public class ClientGameSocket implements Runnable {
             if (readObject instanceof String) {
                 String string = (String) readObject;
                 logger.info(this.direction + " sent this message: --" + string + "--");
-                String POSITIVE = "POSITIVE";
-                String NEGATIVE = "NEGATIVE";
-                String NICKNAME = "NICKNAME";
                 if (string.startsWith(NICKNAME)) {
                     String nickname = string.substring(NICKNAME.length());
                     logger.info("Setting new nickname: --" + nickname + "--");
