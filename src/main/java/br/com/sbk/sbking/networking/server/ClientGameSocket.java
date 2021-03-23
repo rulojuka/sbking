@@ -11,12 +11,13 @@ import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.core.Player;
-import br.com.sbk.sbking.core.rulesets.RulesetFromShortDescriptionIdentifier;
 import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
+import br.com.sbk.sbking.core.rulesets.RulesetFromShortDescriptionIdentifier;
 import br.com.sbk.sbking.gui.models.KingGameScoreboard;
 import br.com.sbk.sbking.gui.models.PositiveOrNegative;
 import br.com.sbk.sbking.networking.core.serialization.DisconnectedObject;
 import br.com.sbk.sbking.networking.core.serialization.Serializator;
+import br.com.sbk.sbking.networking.messages.MessageConstants;
 
 public class ClientGameSocket implements Runnable {
     static final Logger logger = LogManager.getLogger(ClientGameSocket.class);
@@ -155,92 +156,76 @@ public class ClientGameSocket implements Runnable {
     }
 
     public void sendDeal(Deal deal) {
-        String control = "DEAL";
-        this.getSerializator().tryToSerialize(control);
+        this.getSerializator().tryToSerialize(MessageConstants.DEAL);
         this.getSerializator().tryToSerialize(deal);
     }
 
     public void sendMessage(String string) {
-        String control = "MESSAGE";
-        this.getSerializator().tryToSerialize(control);
+        this.getSerializator().tryToSerialize(MessageConstants.MESSAGE);
         this.getSerializator().tryToSerialize(string);
     }
 
     public void sendBoard(Board board) {
-        String control = "BOARD";
-        this.getSerializator().tryToSerialize(control);
+        this.getSerializator().tryToSerialize(MessageConstants.BOARD);
         this.getSerializator().tryToSerialize(board);
     }
 
     public void sendDirection(Direction direction) {
-        String control = "DIRECTION";
-        this.getSerializator().tryToSerialize(control);
+        this.getSerializator().tryToSerialize(MessageConstants.DIRECTION);
         this.getSerializator().tryToSerialize(direction);
     }
 
     public void sendChooserPositiveNegative(Direction direction) {
-        String control = "CHOOSERPOSITIVENEGATIVE";
-        this.getSerializator().tryToSerialize(control);
+        this.getSerializator().tryToSerialize(MessageConstants.CHOOSERPOSITIVENEGATIVE);
         this.getSerializator().tryToSerialize(direction);
     }
 
     public void sendPositiveOrNegative(String message) {
-        String control = "POSITIVEORNEGATIVE";
-        this.getSerializator().tryToSerialize(control);
+        this.getSerializator().tryToSerialize(MessageConstants.POSITIVEORNEGATIVE);
         this.getSerializator().tryToSerialize(message);
     }
 
     public void sendChooserGameModeOrStrain(Direction chooser) {
-        String control = "CHOOSERGAMEMODEORSTRAIN";
-        this.getSerializator().tryToSerialize(control);
+        this.getSerializator().tryToSerialize(MessageConstants.CHOOSERGAMEMODEORSTRAIN);
         this.getSerializator().tryToSerialize(chooser);
     }
 
     public void sendGameModeOrStrain(String message) {
-        String control = "GAMEMODEORSTRAIN";
-        this.getSerializator().tryToSerialize(control);
+        this.getSerializator().tryToSerialize(MessageConstants.GAMEMODEORSTRAIN);
         this.getSerializator().tryToSerialize(message);
     }
 
     public void sendInitializeDeal() {
-        String control = "INITIALIZEDEAL";
-        this.getSerializator().tryToSerialize(control);
+        this.getSerializator().tryToSerialize(MessageConstants.INITIALIZEDEAL);
     }
 
     public void sendFinishDeal() {
-        String control = "FINISHDEAL";
-        this.getSerializator().tryToSerialize(control);
+        this.getSerializator().tryToSerialize(MessageConstants.FINISHDEAL);
     }
 
     public void sendFinishGame() {
-        String control = "FINISHGAME";
-        this.getSerializator().tryToSerialize(control);
+        this.getSerializator().tryToSerialize(MessageConstants.FINISHGAME);
     }
 
     public void sendGameScoreboard(KingGameScoreboard gameScoreboard) {
-        String control = "GAMESCOREBOARD";
-        this.getSerializator().tryToSerialize(control);
+        this.getSerializator().tryToSerialize(MessageConstants.GAMESCOREBOARD);
         this.getSerializator().tryToSerialize(gameScoreboard);
     }
 
     public void sendInvalidRuleset() {
-        String control = "INVALIDRULESET";
-        this.getSerializator().tryToSerialize(control);
+        this.getSerializator().tryToSerialize(MessageConstants.INVALIDRULESET);
     }
 
     public void sendValidRuleset() {
-        String control = "VALIDRULESET";
-        this.getSerializator().tryToSerialize(control);
+        this.getSerializator().tryToSerialize(MessageConstants.VALIDRULESET);
     }
 
     public void sendIsSpectator() {
-        String control = "ISSPECTATOR";
-        this.getSerializator().tryToSerialize(control);
+        this.getSerializator().tryToSerialize(MessageConstants.ISSPECTATOR);
     }
 
     public void sendIsNotSpectator() {
-        String control = "ISNOTSPECTATOR";
-        this.getSerializator().tryToSerialize(control);
+        this.getSerializator().tryToSerialize(MessageConstants.ISNOTSPECTATOR);
     }
 
     public Socket getSocket() {
