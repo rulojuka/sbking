@@ -110,10 +110,20 @@
 				<configuration>
 					<configLocation>sbking_checkstyle.xml</configLocation>
 					<encoding>UTF-8</encoding>
-					<failOnViolation>false</failOnViolation>
+					<failOnViolation>true</failOnViolation>
 					<enableFilesSummary>false</enableFilesSummary>
 					<logViolationsToConsole>true</logViolationsToConsole>
 				</configuration>
+				<!-- uncomment to make build fail on error -->
+				<!-- <executions>
+					<execution>
+						<id>checkstyle</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions> -->
 			</plugin>
 
 		</plugins>

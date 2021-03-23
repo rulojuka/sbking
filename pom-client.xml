@@ -29,9 +29,9 @@
 		</dependency>
 
 		<dependency>
-				<groupId>org.apache.logging.log4j</groupId>
-				<artifactId>log4j-core</artifactId>
-				<version>2.14.0</version>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>2.14.0</version>
 		</dependency>
 
 	</dependencies>
@@ -58,8 +58,8 @@
 							<descriptorRefs>
 								<descriptorRef>jar-with-dependencies</descriptorRef>
 							</descriptorRefs>
-	<!-- <finalName>${project.artifactId}-${project.version}-complete</finalName> -->
-	<!-- <appendAssemblyId>false</appendAssemblyId> -->
+							<!-- <finalName>${project.artifactId}-${project.version}-complete</finalName> -->
+							<!-- <appendAssemblyId>false</appendAssemblyId> -->
 						</configuration>
 					</execution>
 				</executions>
@@ -110,10 +110,20 @@
 				<configuration>
 					<configLocation>sbking_checkstyle.xml</configLocation>
 					<encoding>UTF-8</encoding>
-					<failOnViolation>false</failOnViolation>
+					<failOnViolation>true</failOnViolation>
 					<enableFilesSummary>false</enableFilesSummary>
 					<logViolationsToConsole>true</logViolationsToConsole>
 				</configuration>
+				<!-- uncomment to make build fail on error -->
+				<!-- <executions>
+					<execution>
+						<id>checkstyle</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions> -->
 			</plugin>
 
 		</plugins>
