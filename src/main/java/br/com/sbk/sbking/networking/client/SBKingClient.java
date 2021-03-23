@@ -16,6 +16,8 @@ import br.com.sbk.sbking.networking.core.properties.NetworkingProperties;
 import br.com.sbk.sbking.networking.core.properties.SystemProperties;
 import br.com.sbk.sbking.networking.core.serialization.Serializator;
 import br.com.sbk.sbking.networking.core.serialization.SerializatorFactory;
+import br.com.sbk.sbking.networking.messages.MessageConstants;
+
 
 public class SBKingClient implements Runnable {
 
@@ -125,54 +127,35 @@ public class SBKingClient implements Runnable {
         String controlMessage = (String) readObject;
         logger.info("Read control: --" + controlMessage + "--");
 
-        final String MESSAGE = "MESSAGE";
-        final String DEAL = "DEAL";
-        final String BOARD = "BOARD";
-        final String INITIALIZEDEAL = "INITIALIZEDEAL";
-        final String FINISHDEAL = "FINISHDEAL";
-        final String DIRECTION = "DIRECTION";
-        final String WAIT = "WAIT";
-        final String CONTINUE = "CONTINUE";
-        final String CHOOSERPOSITIVENEGATIVE = "CHOOSERPOSITIVENEGATIVE";
-        final String CHOOSERGAMEMODEORSTRAIN = "CHOOSERGAMEMODEORSTRAIN";
-        final String POSITIVEORNEGATIVE = "POSITIVEORNEGATIVE";
-        final String GAMEMODEORSTRAIN = "GAMEMODEORSTRAIN";
-        final String FINISHGAME = "FINISHGAME";
-        final String GAMESCOREBOARD = "GAMESCOREBOARD";
-        final String INVALIDRULESET = "INVALIDRULESET";
-        final String VALIDRULESET = "VALIDRULESET";
-        final String ISSPECTATOR = "ISSPECTATOR";
-        final String ISNOTSPECTATOR = "ISNOTSPECTATOR";
-
-        if (MESSAGE.equals(controlMessage)) {
+        if (MessageConstants.MESSAGE.equals(controlMessage)) {
             String string = this.serializator.tryToDeserialize(String.class);
             logger.info("I received a message: --" + string + "--");
-        } else if (BOARD.equals(controlMessage)) {
+        } else if (MessageConstants.BOARD.equals(controlMessage)) {
             Board board = this.serializator.tryToDeserialize(Board.class);
             logger.info("I received a board.");
             this.setCurrentBoard(board);
-        } else if (DEAL.equals(controlMessage)) {
+        } else if (MessageConstants.DEAL.equals(controlMessage)) {
             Deal deal = this.serializator.tryToDeserialize(Deal.class);
             logger.info(
                     "I received a deal that contains this trick: " + deal.getCurrentTrick() + " and will paint it on screen");
             this.setCurrentDeal(deal);
-        } else if (DIRECTION.equals(controlMessage)) {
+        } else if (MessageConstants.DIRECTION.equals(controlMessage)) {
             Direction direction = this.serializator.tryToDeserialize(Direction.class);
             logger.info("I received my direction: " + direction);
             this.initializeDirection(direction);
-        } else if (WAIT.equals(controlMessage)) {
+        } else if (MessageConstants.WAIT.equals(controlMessage)) {
             logger.info("Waiting for a CONTINUE message");
             do {
                 controlMessage = this.serializator.tryToDeserialize(String.class);
-            } while (!CONTINUE.equals(controlMessage));
+            } while (!MessageConstants.CONTINUE.equals(controlMessage));
             logger.info("Received a CONTINUE message");
 
-        } else if (CHOOSERPOSITIVENEGATIVE.equals(controlMessage)) {
+        } else if (MessageConstants.CHOOSERPOSITIVENEGATIVE.equals(controlMessage)) {
             Direction direction = this.serializator.tryToDeserialize(Direction.class);
             logger.info("Received PositiveOrNegative choosers direction: " + direction);
 
             setPositiveOrNegativeChooser(direction);
-        } else if (POSITIVEORNEGATIVE.equals(controlMessage)) {
+        } else if (MessageConstants.POSITIVEORNEGATIVE.equals(controlMessage)) {
             String positiveOrNegative = this.serializator.tryToDeserialize(String.class);
             if ("POSITIVE".equals(positiveOrNegative)) {
                 this.selectedPositive();
@@ -181,30 +164,30 @@ public class SBKingClient implements Runnable {
             } else {
                 logger.info("Could not understand POSITIVE or NEGATIVE.");
             }
-        } else if (CHOOSERGAMEMODEORSTRAIN.equals(controlMessage)) {
+        } else if (MessageConstants.CHOOSERGAMEMODEORSTRAIN.equals(controlMessage)) {
             Direction direction = this.serializator.tryToDeserialize(Direction.class);
             logger.info("Received GameModeOrStrain choosers direction: " + direction);
             setGameModeOrStrainChooser(direction);
-        } else if (GAMEMODEORSTRAIN.equals(controlMessage)) {
+        } else if (MessageConstants.GAMEMODEORSTRAIN.equals(controlMessage)) {
             String gameModeOrStrain = this.serializator.tryToDeserialize(String.class);
             logger.info("Received GameModeOrStrain: " + gameModeOrStrain);
-        } else if (INITIALIZEDEAL.equals(controlMessage)) {
+        } else if (MessageConstants.INITIALIZEDEAL.equals(controlMessage)) {
             this.initializeDeal();
-        } else if (FINISHDEAL.equals(controlMessage)) {
+        } else if (MessageConstants.FINISHDEAL.equals(controlMessage)) {
             this.finishDeal();
-        } else if (FINISHGAME.equals(controlMessage)) {
+        } else if (MessageConstants.FINISHGAME.equals(controlMessage)) {
             this.finishGame();
-        } else if (INVALIDRULESET.equals(controlMessage)) {
+        } else if (MessageConstants.INVALIDRULESET.equals(controlMessage)) {
             this.setRulesetValid(false);
-        } else if (VALIDRULESET.equals(controlMessage)) {
+        } else if (MessageConstants.VALIDRULESET.equals(controlMessage)) {
             this.setRulesetValid(true);
-        } else if (GAMESCOREBOARD.equals(controlMessage)) {
+        } else if (MessageConstants.GAMESCOREBOARD.equals(controlMessage)) {
             this.currentGameScoreboard = this.serializator.tryToDeserialize(KingGameScoreboard.class);
             logger.info("Received GameScoreboard." + this.currentGameScoreboard.toString());
-        } else if (ISSPECTATOR.equals(controlMessage)) {
+        } else if (MessageConstants.ISSPECTATOR.equals(controlMessage)) {
             this.spectator = true;
             logger.info("Received ISSPECTATOR.");
-        } else if (ISNOTSPECTATOR.equals(controlMessage)) {
+        } else if (MessageConstants.ISNOTSPECTATOR.equals(controlMessage)) {
             this.spectator = false;
             logger.info("Received ISNOTSPECTATOR.");
         } else {
