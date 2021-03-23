@@ -5,7 +5,7 @@ public enum ThreePlayersDirection {
     FOREHAND("Forehand", 'F'), MIDDLEHAND("Middlehand", 'M'), HINDHAND("Hindhand", 'H');
 
     private final String completeName;
-	private final char abbreviation;
+    private final char abbreviation;
 
     private ThreePlayersDirection(String completeName, char abbreviation) {
         this.completeName = completeName;
@@ -13,34 +13,34 @@ public enum ThreePlayersDirection {
     }
 
     // Static copy to avoid many copies
-	private static ThreePlayersDirection[] vals = values();
+    private static ThreePlayersDirection[] vals = values();
 
     public ThreePlayersDirection next(int n) {
-		return vals[(this.ordinal() + n) % vals.length];
-	}
+        return vals[(this.ordinal() + n) % vals.length];
+    }
 
-	public ThreePlayersDirection next() {
-		return this.next(1);
-	}
+    public ThreePlayersDirection next() {
+        return this.next(1);
+    }
 
-	public boolean isForehand() {
-		return this == ThreePlayersDirection.FOREHAND;
-	}
+    public boolean isForehand() {
+        return this == ThreePlayersDirection.FOREHAND;
+    }
 
-	public boolean isMiddlehand() {
-		return this == ThreePlayersDirection.MIDDLEHAND;
-	}
+    public boolean isMiddlehand() {
+        return this == ThreePlayersDirection.MIDDLEHAND;
+    }
 
-	public boolean isHindhand() {
-		return this == ThreePlayersDirection.HINDHAND;
-	}
+    public boolean isHindhand() {
+        return this == ThreePlayersDirection.HINDHAND;
+    }
 
     public String getCompleteName() {
-		return completeName;
-	}
+        return completeName;
+    }
 
-	public char getAbbreviation() {
-		return abbreviation;
-	}
+    public char getAbbreviation() {
+        return abbreviation;
+    }
     
 }

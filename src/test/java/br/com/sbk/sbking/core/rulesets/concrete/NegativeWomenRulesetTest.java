@@ -14,51 +14,51 @@ import br.com.sbk.sbking.core.Trick;
 
 public class NegativeWomenRulesetTest {
 
-	private static final int NEGATIVE_WOMEN_SCORE_MULTIPLIER = 50;
-	private static final String NEGATIVE_WOMEN_SHORT_DESCRIPTION = "Negative women";
-	private static final String NEGATIVE_WOMEN_COMPLETE_DESCRIPTION = "Avoid all queens";
-	private static final int TOTAL_NUMBER_OF_WOMEN = 4;
+    private static final int NEGATIVE_WOMEN_SCORE_MULTIPLIER = 50;
+    private static final String NEGATIVE_WOMEN_SHORT_DESCRIPTION = "Negative women";
+    private static final String NEGATIVE_WOMEN_COMPLETE_DESCRIPTION = "Avoid all queens";
+    private static final int TOTAL_NUMBER_OF_WOMEN = 4;
 
-	private NegativeWomenRuleset negativeWomenRuleset;
+    private NegativeWomenRuleset negativeWomenRuleset;
 
-	@Before
-	public void createNegativeWomenRuleset() {
-		this.negativeWomenRuleset = new NegativeWomenRuleset();
-	}
+    @Before
+    public void createNegativeWomenRuleset() {
+        this.negativeWomenRuleset = new NegativeWomenRuleset();
+    }
 
-	@Test
-	public void shouldHaveTheCorrectScoreMultiplier() {
-		assertEquals(NEGATIVE_WOMEN_SCORE_MULTIPLIER, this.negativeWomenRuleset.getScoreMultiplier());
-	}
+    @Test
+    public void shouldHaveTheCorrectScoreMultiplier() {
+        assertEquals(NEGATIVE_WOMEN_SCORE_MULTIPLIER, this.negativeWomenRuleset.getScoreMultiplier());
+    }
 
-	@Test
-	public void shouldHaveTheCorrectPointsPerTrick() {
-		int numberOfWomenInTheTrick = 2;
-		Trick trick = mock(Trick.class);
-		when(trick.getNumberOfWomen()).thenReturn(numberOfWomenInTheTrick);
+    @Test
+    public void shouldHaveTheCorrectPointsPerTrick() {
+        int numberOfWomenInTheTrick = 2;
+        Trick trick = mock(Trick.class);
+        when(trick.getNumberOfWomen()).thenReturn(numberOfWomenInTheTrick);
 
-		assertEquals(numberOfWomenInTheTrick, this.negativeWomenRuleset.getPoints(trick));
-		Mockito.verify(trick, only()).getNumberOfWomen();
-	}
+        assertEquals(numberOfWomenInTheTrick, this.negativeWomenRuleset.getPoints(trick));
+        Mockito.verify(trick, only()).getNumberOfWomen();
+    }
 
-	@Test
-	public void shouldGetShortDescription() {
-		assertEquals(NEGATIVE_WOMEN_SHORT_DESCRIPTION, this.negativeWomenRuleset.getShortDescription());
-	}
+    @Test
+    public void shouldGetShortDescription() {
+        assertEquals(NEGATIVE_WOMEN_SHORT_DESCRIPTION, this.negativeWomenRuleset.getShortDescription());
+    }
 
-	@Test
-	public void shouldGetCompleteDescription() {
-		assertEquals(NEGATIVE_WOMEN_COMPLETE_DESCRIPTION, this.negativeWomenRuleset.getCompleteDescription());
-	}
+    @Test
+    public void shouldGetCompleteDescription() {
+        assertEquals(NEGATIVE_WOMEN_COMPLETE_DESCRIPTION, this.negativeWomenRuleset.getCompleteDescription());
+    }
 
-	@Test
-	public void shouldNotProhibitsHeartsUntilOnlySuitLeft() {
-		assertFalse(this.negativeWomenRuleset.prohibitsHeartsUntilOnlySuitLeft());
-	}
+    @Test
+    public void shouldNotProhibitsHeartsUntilOnlySuitLeft() {
+        assertFalse(this.negativeWomenRuleset.prohibitsHeartsUntilOnlySuitLeft());
+    }
 
-	@Test
-	public void shouldGetTotalPoints() {
-		assertEquals(TOTAL_NUMBER_OF_WOMEN, this.negativeWomenRuleset.getTotalPoints());
-	}
+    @Test
+    public void shouldGetTotalPoints() {
+        assertEquals(TOTAL_NUMBER_OF_WOMEN, this.negativeWomenRuleset.getTotalPoints());
+    }
 
 }

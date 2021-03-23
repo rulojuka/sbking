@@ -11,37 +11,37 @@ import br.com.sbk.sbking.core.rulesets.implementations.NoTrumpSuitWinnable;
 @SuppressWarnings("serial")
 public class NegativeMenRuleset extends NegativeRuleset {
 
-	private static final int NEGATIVE_MEN_SCORE_MULTIPLIER = 30;
+    private static final int NEGATIVE_MEN_SCORE_MULTIPLIER = 30;
 
-	public NegativeMenRuleset() {
-		this.suitFollowable = new DefaultSuitFollowable();
-		this.heartsProhibitable = new DontProhibitsHearts();
-		this.winnable = new NoTrumpSuitWinnable();
-	}
+    public NegativeMenRuleset() {
+        this.suitFollowable = new DefaultSuitFollowable();
+        this.heartsProhibitable = new DontProhibitsHearts();
+        this.winnable = new NoTrumpSuitWinnable();
+    }
 
-	@Override
-	public int getScoreMultiplier() {
-		return NEGATIVE_MEN_SCORE_MULTIPLIER;
-	}
+    @Override
+    public int getScoreMultiplier() {
+        return NEGATIVE_MEN_SCORE_MULTIPLIER;
+    }
 
-	@Override
-	public int getPoints(Trick trick) {
-		return trick.getNumberOfMen();
-	}
+    @Override
+    public int getPoints(Trick trick) {
+        return trick.getNumberOfMen();
+    }
 
-	@Override
-	public String getShortDescription() {
-		return "Negative men";
-	}
+    @Override
+    public String getShortDescription() {
+        return "Negative men";
+    }
 
-	@Override
-	public String getCompleteDescription() {
-		return "Avoid all jacks and kings";
-	}
+    @Override
+    public String getCompleteDescription() {
+        return "Avoid all jacks and kings";
+    }
 
-	@Override
-	public int getTotalPoints() {
-		return NUMBER_OF_MEN;
-	}
+    @Override
+    public int getTotalPoints() {
+        return NUMBER_OF_MEN;
+    }
 
 }

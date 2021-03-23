@@ -8,20 +8,20 @@ import br.com.sbk.sbking.core.rulesets.implementations.NoTrumpSuitWinnable;
 @SuppressWarnings("serial")
 public class PositiveNoTrumpsRuleset extends PositiveRuleset {
 
-	public PositiveNoTrumpsRuleset() {
-		this.suitFollowable = new DefaultSuitFollowable();
-		this.heartsProhibitable = new DontProhibitsHearts();
-		this.winnable = new NoTrumpSuitWinnable();
-	}
+    public PositiveNoTrumpsRuleset() {
+        this.suitFollowable = new DefaultSuitFollowable();
+        this.heartsProhibitable = new DontProhibitsHearts();
+        this.winnable = new NoTrumpSuitWinnable();
+    }
 
-	@Override
-	public String getShortDescription() {
-		return "Positive no trumps";
-	}
+    @Override
+    public String getShortDescription() {
+        return "Positive no trumps";
+    }
 
-	@Override
-	public String getCompleteDescription() {
-		return "Make the most tricks without a trump suit";
-	}
+    @Override
+    public String getCompleteDescription() {
+        return "Make the most tricks without a trump suit";
+    }
 
 }

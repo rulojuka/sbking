@@ -13,53 +13,53 @@ import br.com.sbk.sbking.networking.core.properties.SystemProperties;
 
 public class NetworkingPropertiesTest {
 
-	private FileProperties fileProperties;
-	private SystemProperties systemProperties;
-	private NetworkingProperties networkingProperties;
+    private FileProperties fileProperties;
+    private SystemProperties systemProperties;
+    private NetworkingProperties networkingProperties;
 
-	private final String portString = "60000";
-	private final int portNumber = 60000;
-	private final String host = "localhost";
+    private final String portString = "60000";
+    private final int portNumber = 60000;
+    private final String host = "localhost";
 
-	@Before
-	public void setup() {
-		this.fileProperties = mock(FileProperties.class);
-		this.systemProperties = mock(SystemProperties.class);
-		this.networkingProperties = new NetworkingProperties(fileProperties, systemProperties);
-	}
+    @Before
+    public void setup() {
+        this.fileProperties = mock(FileProperties.class);
+        this.systemProperties = mock(SystemProperties.class);
+        this.networkingProperties = new NetworkingProperties(fileProperties, systemProperties);
+    }
 
-	@Test
-	public void shouldGetHostFromSystemPropertiesIfItReturnsNotNull() {
-		Mockito.when(systemProperties.getHost()).thenReturn(host);
+    @Test
+    public void shouldGetHostFromSystemPropertiesIfItReturnsNotNull() {
+        Mockito.when(systemProperties.getHost()).thenReturn(host);
 
-		assertEquals(host, this.networkingProperties.getHost());
+        assertEquals(host, this.networkingProperties.getHost());
 
-		Mockito.verifyZeroInteractions(fileProperties);
-	}
+        Mockito.verifyZeroInteractions(fileProperties);
+    }
 
-	@Test
-	public void shouldGetHostFromFilePropertiesIfSystemPropertiesReturnsNull() {
-		Mockito.when(systemProperties.getHost()).thenReturn(null);
-		Mockito.when(fileProperties.getHost()).thenReturn(host);
+    @Test
+    public void shouldGetHostFromFilePropertiesIfSystemPropertiesReturnsNull() {
+        Mockito.when(systemProperties.getHost()).thenReturn(null);
+        Mockito.when(fileProperties.getHost()).thenReturn(host);
 
-		assertEquals(host, this.networkingProperties.getHost());
-	}
+        assertEquals(host, this.networkingProperties.getHost());
+    }
 
-	@Test
-	public void shouldGetPortFromSystemPropertiesIfItReturnsNotNull() {
-		Mockito.when(systemProperties.getPort()).thenReturn(portString);
+    @Test
+    public void shouldGetPortFromSystemPropertiesIfItReturnsNotNull() {
+        Mockito.when(systemProperties.getPort()).thenReturn(portString);
 
-		assertEquals(portNumber, this.networkingProperties.getPort());
+        assertEquals(portNumber, this.networkingProperties.getPort());
 
-		Mockito.verifyZeroInteractions(fileProperties);
-	}
+        Mockito.verifyZeroInteractions(fileProperties);
+    }
 
-	@Test
-	public void shouldGetPortFromFilePropertiesIfSystemPropertiesReturnsNull() {
-		Mockito.when(systemProperties.getPort()).thenReturn(null);
-		Mockito.when(fileProperties.getPort()).thenReturn(portString);
+    @Test
+    public void shouldGetPortFromFilePropertiesIfSystemPropertiesReturnsNull() {
+        Mockito.when(systemProperties.getPort()).thenReturn(null);
+        Mockito.when(fileProperties.getPort()).thenReturn(portString);
 
-		assertEquals(portNumber, this.networkingProperties.getPort());
-	}
+        assertEquals(portNumber, this.networkingProperties.getPort());
+    }
 
 }

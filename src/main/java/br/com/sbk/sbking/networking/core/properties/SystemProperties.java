@@ -5,12 +5,12 @@ import static br.com.sbk.sbking.networking.core.properties.PropertiesConstants.P
 
 public class SystemProperties {
 
-	public String getHost() {
-		return System.getProperty(HOST);
-	}
+    public String getHost() {
+        return System.getProperty(HOST);
+    }
 
-	public String getPort() {
-		return System.getProperty(PORT);
-	}
+    public String getPort() {
+        return System.getProperty(PORT);
+    }
 
 }

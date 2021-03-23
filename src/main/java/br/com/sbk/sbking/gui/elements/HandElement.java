@@ -19,54 +19,54 @@ import br.com.sbk.sbking.gui.models.DeckCardImageInformation;
 
 public class HandElement {
 
-	final static Logger logger = LogManager.getLogger(HandElement.class);
+    final static Logger logger = LogManager.getLogger(HandElement.class);
 
-	private DeckCardImageInformation deckCardImageInformation;
+    private DeckCardImageInformation deckCardImageInformation;
 
-	public HandElement(Hand hand, Container container, ActionListener actionListener, Point handCenter, Player player,
-		boolean isVisible, Direction direction) {
-		this.deckCardImageInformation = new DeckCardImageInformation();
+    public HandElement(Hand hand, Container container, ActionListener actionListener, Point handCenter, Player player,
+        boolean isVisible, Direction direction) {
+        this.deckCardImageInformation = new DeckCardImageInformation();
 
-		int x_offset = (((hand.size() - 1) * deckCardImageInformation.getWidthBetweenCards()) + deckCardImageInformation.getCardWidth())/2;
-		x_offset *= -1;
-		int y_offset = deckCardImageInformation.getCardHeight() / 2;
-		y_offset *= -1;
-		Point handTopLeftCorner = new Point(handCenter);
-		handTopLeftCorner.translate(x_offset, y_offset);
+        int x_offset = (((hand.size() - 1) * deckCardImageInformation.getWidthBetweenCards()) + deckCardImageInformation.getCardWidth())/2;
+        x_offset *= -1;
+        int y_offset = deckCardImageInformation.getCardHeight() / 2;
+        y_offset *= -1;
+        Point handTopLeftCorner = new Point(handCenter);
+        handTopLeftCorner.translate(x_offset, y_offset);
 
-		for (int i = hand.size() - 1; i >= 0; i--) { // This way, it draws correctly
-			Card card = hand.get(i);
-			CardButton cardButton = new CardButton(card, deckCardImageInformation);
-			if (!isVisible) {
-				cardButton.flip();
-			}
-			if (actionListener != null && isVisible) {
-				cardButton.addActionListener(actionListener);
-			}
-			container.add(cardButton); // This line needs to go before setting the button location
-			cardButton.setLocation(locationOfCard(i, handTopLeftCorner)); // This line needs to go after adding the
-			// button to the container
-			cardButton.setIsInHand(true);
-		}
+        for (int i = hand.size() - 1; i >= 0; i--) { // This way, it draws correctly
+            Card card = hand.get(i);
+            CardButton cardButton = new CardButton(card, deckCardImageInformation);
+            if (!isVisible) {
+                cardButton.flip();
+            }
+            if (actionListener != null && isVisible) {
+                cardButton.addActionListener(actionListener);
+            }
+            container.add(cardButton); // This line needs to go before setting the button location
+            cardButton.setLocation(locationOfCard(i, handTopLeftCorner)); // This line needs to go after adding the
+            // button to the container
+            cardButton.setIsInHand(true);
+        }
 
-		JButton sitOrLeaveButton = new SitOrLeaveButton(direction);
-		sitOrLeaveButton.addActionListener(actionListener);
-		if (player == null) {
-			sitOrLeaveButton.setText("Click to seat.");
-		} else {
-			sitOrLeaveButton.setText(player.getName());
-		}
+        JButton sitOrLeaveButton = new SitOrLeaveButton(direction);
+        sitOrLeaveButton.addActionListener(actionListener);
+        if (player == null) {
+            sitOrLeaveButton.setText("Click to seat.");
+        } else {
+            sitOrLeaveButton.setText(player.getName());
+        }
 
-		Point startingPoint = handTopLeftCorner;
-		handTopLeftCorner.translate(0, deckCardImageInformation.getCardHeight() + 5);
-		sitOrLeaveButton.setLocation(startingPoint);
-		container.add(sitOrLeaveButton);
-	}
+        Point startingPoint = handTopLeftCorner;
+        handTopLeftCorner.translate(0, deckCardImageInformation.getCardHeight() + 5);
+        sitOrLeaveButton.setLocation(startingPoint);
+        container.add(sitOrLeaveButton);
+    }
 
-	private Point locationOfCard(int index, Point handTopLeftCorner) {
-		Point cardLocation = (Point) handTopLeftCorner.clone();
-		cardLocation.translate(index * deckCardImageInformation.getWidthBetweenCards(), 0);
-		return cardLocation;
-	}
+    private Point locationOfCard(int index, Point handTopLeftCorner) {
+        Point cardLocation = (Point) handTopLeftCorner.clone();
+        cardLocation.translate(index * deckCardImageInformation.getWidthBetweenCards(), 0);
+        return cardLocation;
+    }
 
 }

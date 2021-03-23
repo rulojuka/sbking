@@ -11,38 +11,38 @@ import br.com.sbk.sbking.core.rulesets.implementations.NoTrumpSuitWinnable;
 @SuppressWarnings("serial")
 public class NegativeTricksRuleset extends NegativeRuleset {
 
-	private static final int NEGATIVE_TRICKS_SCORE_MULTIPLIER = 20;
-	private static final int NEGATIVE_POINTS_PER_TRICK = 1;
+    private static final int NEGATIVE_TRICKS_SCORE_MULTIPLIER = 20;
+    private static final int NEGATIVE_POINTS_PER_TRICK = 1;
 
-	public NegativeTricksRuleset() {
-		this.suitFollowable = new DefaultSuitFollowable();
-		this.heartsProhibitable = new DontProhibitsHearts();
-		this.winnable = new NoTrumpSuitWinnable();
-	}
+    public NegativeTricksRuleset() {
+        this.suitFollowable = new DefaultSuitFollowable();
+        this.heartsProhibitable = new DontProhibitsHearts();
+        this.winnable = new NoTrumpSuitWinnable();
+    }
 
-	@Override
-	public int getScoreMultiplier() {
-		return NEGATIVE_TRICKS_SCORE_MULTIPLIER;
-	}
+    @Override
+    public int getScoreMultiplier() {
+        return NEGATIVE_TRICKS_SCORE_MULTIPLIER;
+    }
 
-	@Override
-	public int getPoints(Trick trick) {
-		return NEGATIVE_POINTS_PER_TRICK;
-	}
+    @Override
+    public int getPoints(Trick trick) {
+        return NEGATIVE_POINTS_PER_TRICK;
+    }
 
-	@Override
-	public String getShortDescription() {
-		return "Negative tricks";
-	}
+    @Override
+    public String getShortDescription() {
+        return "Negative tricks";
+    }
 
-	@Override
-	public String getCompleteDescription() {
-		return "Avoid all tricks";
-	}
+    @Override
+    public String getCompleteDescription() {
+        return "Avoid all tricks";
+    }
 
-	@Override
-	public int getTotalPoints() {
-		return NUMBER_OF_TRICKS_IN_A_COMPLETE_HAND;
-	}
+    @Override
+    public int getTotalPoints() {
+        return NUMBER_OF_TRICKS_IN_A_COMPLETE_HAND;
+    }
 
 }

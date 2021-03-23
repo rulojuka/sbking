@@ -14,39 +14,39 @@ import br.com.sbk.sbking.gui.elements.SpecificDirectionBoardElements;
 
 public class DealPainter implements Painter {
 
-	final static Logger logger = LogManager.getLogger(DealPainter.class);
+    final static Logger logger = LogManager.getLogger(DealPainter.class);
 
-	protected Direction direction;
-	protected ActionListener actionListener;
-	protected Deal deal;
+    protected Direction direction;
+    protected ActionListener actionListener;
+    protected Deal deal;
 
-	public DealPainter(ActionListener actionListener, Direction direction, Deal deal) {
-		this.actionListener = actionListener;
-		this.direction = direction;
-		this.deal = deal;
-	}
+    public DealPainter(ActionListener actionListener, Direction direction, Deal deal) {
+        this.actionListener = actionListener;
+        this.direction = direction;
+        this.deal = deal;
+    }
 
-	public DealPainter(ActionListener actionListener, Direction direction, Board board) {
-		this.actionListener = actionListener;
-		this.direction = direction;
-		this.deal = new Deal(board, new NoRuleset());
-	}
+    public DealPainter(ActionListener actionListener, Direction direction, Board board) {
+        this.actionListener = actionListener;
+        this.direction = direction;
+        this.deal = new Deal(board, new NoRuleset());
+    }
 
-	@Override
-	public void paint(Container contentPane) {
-		logger.info("Painting deal that contains this trick: " + deal.getCurrentTrick());
-		contentPane.removeAll();
+    @Override
+    public void paint(Container contentPane) {
+        logger.info("Painting deal that contains this trick: " + deal.getCurrentTrick());
+        contentPane.removeAll();
 
-		// FIXME This should be uncommented when there is a good way to show the last
-		// card for a second before showing the scoresummary
-		// if (deal.isFinished()) {
-		// new ScoreSummaryElement(deal, contentPane);
-		// } else {
-		new SpecificDirectionBoardElements(this.direction, deal, contentPane, actionListener);
-		// }
+        // FIXME This should be uncommented when there is a good way to show the last
+        // card for a second before showing the scoresummary
+        // if (deal.isFinished()) {
+        // new ScoreSummaryElement(deal, contentPane);
+        // } else {
+        new SpecificDirectionBoardElements(this.direction, deal, contentPane, actionListener);
+        // }
 
-		contentPane.validate();
-		contentPane.repaint();
-	}
+        contentPane.validate();
+        contentPane.repaint();
+    }
 
 }

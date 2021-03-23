@@ -12,14 +12,14 @@ import br.com.sbk.sbking.gui.JElements.SBKingLabel;
 
 public class WaitingForPlayersLabelElement {
 
-	public static void add(Container container) {
-		JLabel rulesetLabel = new SBKingLabel("Waiting for players...");
-		rulesetLabel.setHorizontalAlignment(CENTER);
-		int width = 300;
-		int height = 15;
-		rulesetLabel.setSize(width, height);
-		rulesetLabel.setLocation(TABLE_WIDTH / 2 - width / 2, TABLE_HEIGHT / 2 - height / 2);
-		container.add(rulesetLabel);
-	}
+    public static void add(Container container) {
+        JLabel rulesetLabel = new SBKingLabel("Waiting for players...");
+        rulesetLabel.setHorizontalAlignment(CENTER);
+        int width = 300;
+        int height = 15;
+        rulesetLabel.setSize(width, height);
+        rulesetLabel.setLocation(TABLE_WIDTH / 2 - width / 2, TABLE_HEIGHT / 2 - height / 2);
+        container.add(rulesetLabel);
+    }
 
 }

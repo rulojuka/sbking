@@ -5,18 +5,18 @@ public enum SkatRank {
     JACK("Jack", "B"), QUEEN("Queen", "D"), KING("King", "K"), ACE("Ace", "A");
 
     private final String name;
-	private final String symbol;
+    private final String symbol;
 
-	private SkatRank(String name, String symbol) {
-		this.name = name;
-		this.symbol = symbol;
-	}
+    private SkatRank(String name, String symbol) {
+        this.name = name;
+        this.symbol = symbol;
+    }
 
-	public String getName() {
-		return this.name;
-	}
+    public String getName() {
+        return this.name;
+    }
 
-	public String getSymbol() {
-		return this.symbol;
-	}
+    public String getSymbol() {
+        return this.symbol;
+    }
 }

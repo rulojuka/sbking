@@ -5,18 +5,18 @@ import java.io.ObjectInputStream;
 
 public class ObjectInputStreamWrapper {
 
-	private final ObjectInputStream objectInputStream;
+    private final ObjectInputStream objectInputStream;
 
-	public ObjectInputStreamWrapper(ObjectInputStream objectInputStream) throws IOException {
-		this.objectInputStream = objectInputStream;
-	}
+    public ObjectInputStreamWrapper(ObjectInputStream objectInputStream) throws IOException {
+        this.objectInputStream = objectInputStream;
+    }
 
-	public void close() throws IOException {
-		this.objectInputStream.close();
-	}
+    public void close() throws IOException {
+        this.objectInputStream.close();
+    }
 
-	public Object readObject() throws ClassNotFoundException, IOException {
-		return this.objectInputStream.readObject();
-	}
+    public Object readObject() throws ClassNotFoundException, IOException {
+        return this.objectInputStream.readObject();
+    }
 
 }

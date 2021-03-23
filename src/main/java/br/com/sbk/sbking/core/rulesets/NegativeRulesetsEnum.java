@@ -10,17 +10,17 @@ import br.com.sbk.sbking.core.rulesets.concrete.NegativeWomenRuleset;
 
 public enum NegativeRulesetsEnum {
 
-	TRICKS(new NegativeTricksRuleset()), HEARTS(new NegativeHeartsRuleset()), MEN(new NegativeMenRuleset()),
-	WOMEN(new NegativeWomenRuleset()), LASTTWO(new NegativeLastTwoRuleset()), KING(new NegativeKingRuleset());
+    TRICKS(new NegativeTricksRuleset()), HEARTS(new NegativeHeartsRuleset()), MEN(new NegativeMenRuleset()),
+    WOMEN(new NegativeWomenRuleset()), LASTTWO(new NegativeLastTwoRuleset()), KING(new NegativeKingRuleset());
 
-	private final NegativeRuleset negativeRuleset;
+    private final NegativeRuleset negativeRuleset;
 
-	private NegativeRulesetsEnum(NegativeRuleset ruleset) {
-		this.negativeRuleset = ruleset;
-	}
+    private NegativeRulesetsEnum(NegativeRuleset ruleset) {
+        this.negativeRuleset = ruleset;
+    }
 
-	public NegativeRuleset getNegativeRuleset() {
-		return negativeRuleset;
-	}
+    public NegativeRuleset getNegativeRuleset() {
+        return negativeRuleset;
+    }
 
 }

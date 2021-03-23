@@ -17,48 +17,48 @@ import br.com.sbk.sbking.networking.client.SBKingClient;
 
 public class WaitingForChoosingGameModeOrStrainPainter implements Painter {
 
-	private Direction myDirection;
-	private Direction chooserDirection;
-	private boolean isPositive;
-	private SBKingClient sbKingClient;
-	private KingGameScoreboard gameScoreboard;
+    private Direction myDirection;
+    private Direction chooserDirection;
+    private boolean isPositive;
+    private SBKingClient sbKingClient;
+    private KingGameScoreboard gameScoreboard;
 
-	public WaitingForChoosingGameModeOrStrainPainter(Direction myDirection, Direction chooserDirection,
-			boolean isPositive, SBKingClient sbKingClient, KingGameScoreboard gameScoreboard) {
-		this.myDirection = myDirection;
-		this.chooserDirection = chooserDirection;
-		this.isPositive = isPositive;
-		this.sbKingClient = sbKingClient;
-		this.gameScoreboard = gameScoreboard;
-	}
+    public WaitingForChoosingGameModeOrStrainPainter(Direction myDirection, Direction chooserDirection,
+            boolean isPositive, SBKingClient sbKingClient, KingGameScoreboard gameScoreboard) {
+        this.myDirection = myDirection;
+        this.chooserDirection = chooserDirection;
+        this.isPositive = isPositive;
+        this.sbKingClient = sbKingClient;
+        this.gameScoreboard = gameScoreboard;
+    }
 
-	@Override
-	public void paint(Container contentPane) {
-		int xCenterLocation = TABLE_WIDTH - 160;
-		int yCenterLocation = 110;
-		Point centerOfScoreboardPosition = new Point(xCenterLocation, yCenterLocation);
-		new GameScoreboardElement(gameScoreboard, contentPane, centerOfScoreboardPosition);
-		if (myDirection != chooserDirection) {
-			YouArePlayerElement.add(this.myDirection, contentPane);
-			WaitingForChooserElement.add(contentPane, chooserDirection, "Game Mode or Strain.");
-		} else {
-			ChooseGameModeOrStrainElement chooseGameModeOrStrainElement = new ChooseGameModeOrStrainElement(contentPane,
-					this.sbKingClient, this.isPositive);
-			chooseGameModeOrStrainElement.add();
-		}
+    @Override
+    public void paint(Container contentPane) {
+        int xCenterLocation = TABLE_WIDTH - 160;
+        int yCenterLocation = 110;
+        Point centerOfScoreboardPosition = new Point(xCenterLocation, yCenterLocation);
+        new GameScoreboardElement(gameScoreboard, contentPane, centerOfScoreboardPosition);
+        if (myDirection != chooserDirection) {
+            YouArePlayerElement.add(this.myDirection, contentPane);
+            WaitingForChooserElement.add(contentPane, chooserDirection, "Game Mode or Strain.");
+        } else {
+            ChooseGameModeOrStrainElement chooseGameModeOrStrainElement = new ChooseGameModeOrStrainElement(contentPane,
+                    this.sbKingClient, this.isPositive);
+            chooseGameModeOrStrainElement.add();
+        }
 
-		Hand myHand;
-		if (this.sbKingClient.getDeal() != null) {
-			myHand = this.sbKingClient.getDeal().getHandOf(this.myDirection);
-		} else {
-			myHand = this.sbKingClient.getCurrentBoard().getHandOf(this.myDirection);
-		}
+        Hand myHand;
+        if (this.sbKingClient.getDeal() != null) {
+            myHand = this.sbKingClient.getDeal().getHandOf(this.myDirection);
+        } else {
+            myHand = this.sbKingClient.getCurrentBoard().getHandOf(this.myDirection);
+        }
 
-		new HandWhileChoosingElement(contentPane, myHand, this.myDirection);
+        new HandWhileChoosingElement(contentPane, myHand, this.myDirection);
 
-		contentPane.validate();
-		contentPane.repaint();
+        contentPane.validate();
+        contentPane.repaint();
 
-	}
+    }
 
 }

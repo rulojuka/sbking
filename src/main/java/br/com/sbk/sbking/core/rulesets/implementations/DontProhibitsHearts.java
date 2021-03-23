@@ -7,9 +7,9 @@ import br.com.sbk.sbking.core.rulesets.interfaces.HeartsProhibitable;
 @SuppressWarnings("serial")
 public class DontProhibitsHearts implements HeartsProhibitable, Serializable {
 
-	@Override
-	public boolean prohibitsHeartsUntilOnlySuitLeft() {
-		return false;
-	}
+    @Override
+    public boolean prohibitsHeartsUntilOnlySuitLeft() {
+        return false;
+    }
 
 }
