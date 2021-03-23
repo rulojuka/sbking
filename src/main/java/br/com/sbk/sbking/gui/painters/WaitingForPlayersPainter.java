@@ -8,18 +8,18 @@ import br.com.sbk.sbking.gui.elements.YouArePlayerElement;
 
 public class WaitingForPlayersPainter implements Painter {
 
-	private Direction direction;
+    private Direction direction;
 
-	public WaitingForPlayersPainter(Direction direction) {
-		this.direction = direction;
-	}
+    public WaitingForPlayersPainter(Direction direction) {
+        this.direction = direction;
+    }
 
-	@Override
-	public void paint(Container contentPane) {
-		YouArePlayerElement.add(this.direction, contentPane);
-		WaitingForPlayersLabelElement.add(contentPane);
-		contentPane.validate();
-		contentPane.repaint();
-	}
+    @Override
+    public void paint(Container contentPane) {
+        YouArePlayerElement.add(this.direction, contentPane);
+        WaitingForPlayersLabelElement.add(contentPane);
+        contentPane.validate();
+        contentPane.repaint();
+    }
 
 }

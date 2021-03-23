@@ -6,6 +6,6 @@ import br.com.sbk.sbking.core.Trick;
 
 public interface SuitFollowable {
 
-	public boolean followsSuit(Trick trick, Hand hand, Card card);
+    public boolean followsSuit(Trick trick, Hand hand, Card card);
 
 }

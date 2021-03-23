@@ -4,15 +4,15 @@ import br.com.sbk.sbking.gui.models.PositiveOrNegative;
 
 public class PositiveOrNegativeNotification {
 
-	private PositiveOrNegative positiveOrNegative;
+    private PositiveOrNegative positiveOrNegative;
 
-	public void notifyAllWithPositiveOrNegative(PositiveOrNegative positiveOrNegative) {
-		this.positiveOrNegative = positiveOrNegative;
-		this.notifyAll();
-	}
+    public void notifyAllWithPositiveOrNegative(PositiveOrNegative positiveOrNegative) {
+        this.positiveOrNegative = positiveOrNegative;
+        this.notifyAll();
+    }
 
-	public PositiveOrNegative getPositiveOrNegative() {
-		return this.positiveOrNegative;
-	}
+    public PositiveOrNegative getPositiveOrNegative() {
+        return this.positiveOrNegative;
+    }
 
 }

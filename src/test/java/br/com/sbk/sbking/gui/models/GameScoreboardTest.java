@@ -6,11 +6,11 @@ import org.junit.Test;
 
 public class GameScoreboardTest {
 
-	@Test
-	public void getLineShouldReturnFormattedString() {
-		KingGameScoreboard gameScoreboard = new KingGameScoreboard();
-		String firstLine = gameScoreboard.getLine(1);
-		assertEquals("Negative tricks      ---- --- --", firstLine);
-	}
+    @Test
+    public void getLineShouldReturnFormattedString() {
+        KingGameScoreboard gameScoreboard = new KingGameScoreboard();
+        String firstLine = gameScoreboard.getLine(1);
+        assertEquals("Negative tricks      ---- --- --", firstLine);
+    }
 
 }

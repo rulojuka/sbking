@@ -14,42 +14,42 @@ import org.mockito.Mockito;
 
 public class BoardTest {
 
-	private Direction dealer;
-	private Board board;
-	private Map<Direction,Hand> hands = new HashMap<Direction,Hand>();
+    private Direction dealer;
+    private Board board;
+    private Map<Direction,Hand> hands = new HashMap<Direction,Hand>();
 
-	@Before
-	public void createNorthBoard() {
-		dealer = Direction.NORTH;
-		for (Direction direction : Direction.values()) {
-			hands.put(direction, Mockito.mock(Hand.class));
-		}
+    @Before
+    public void createNorthBoard() {
+        dealer = Direction.NORTH;
+        for (Direction direction : Direction.values()) {
+            hands.put(direction, Mockito.mock(Hand.class));
+        }
 
-		board = new Board(hands, dealer);
-	}
+        board = new Board(hands, dealer);
+    }
 
-	@Test
-	public void shouldBeConstructedWith4HandsAndADealer() {
-		assertNotNull(this.board);
-	}
+    @Test
+    public void shouldBeConstructedWith4HandsAndADealer() {
+        assertNotNull(this.board);
+    }
 
-	@Test
-	public void shouldSortAllHands() {
-		for (Direction direction : Direction.values()) {
-			verify(this.hands.get(direction), only()).sort();
-		}
-	}
+    @Test
+    public void shouldSortAllHands() {
+        for (Direction direction : Direction.values()) {
+            verify(this.hands.get(direction), only()).sort();
+        }
+    }
 
-	@Test
-	public void shouldGetCorrectDealer() {
-		assertEquals(this.dealer, this.board.getDealer());
-	}
+    @Test
+    public void shouldGetCorrectDealer() {
+        assertEquals(this.dealer, this.board.getDealer());
+    }
 
-	@Test
-	public void shouldGetHandOfAllPossibleDirections() {
-		for (Direction direction : Direction.values()) {
-			assertEquals(this.hands.get(direction), this.board.getHandOf(direction));
-		}
-	}
+    @Test
+    public void shouldGetHandOfAllPossibleDirections() {
+        for (Direction direction : Direction.values()) {
+            assertEquals(this.hands.get(direction), this.board.getHandOf(direction));
+        }
+    }
 
 }

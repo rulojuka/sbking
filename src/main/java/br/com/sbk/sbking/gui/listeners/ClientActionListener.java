@@ -11,35 +11,35 @@ import br.com.sbk.sbking.networking.client.ClientToServerMessageSender;
 
 public class ClientActionListener implements java.awt.event.ActionListener {
 
-	final static Logger logger = LogManager.getLogger(ClientActionListener.class);
+    final static Logger logger = LogManager.getLogger(ClientActionListener.class);
 
-	private ClientToServerMessageSender networkMessageSender;
+    private ClientToServerMessageSender networkMessageSender;
 
-	public ClientActionListener(ClientToServerMessageSender networkCardPlayer) {
-		super();
-		this.networkMessageSender = networkCardPlayer;
-	}
+    public ClientActionListener(ClientToServerMessageSender networkCardPlayer) {
+        super();
+        this.networkMessageSender = networkCardPlayer;
+    }
 
-	@Override
-	public void actionPerformed(java.awt.event.ActionEvent event) {
+    @Override
+    public void actionPerformed(java.awt.event.ActionEvent event) {
 
-		Object source = event.getSource();
-		logger.info("Performing network action: " + source);
+        Object source = event.getSource();
+        logger.info("Performing network action: " + source);
 
-		if (source instanceof CardButton) {
-			CardButton clickedCardButton = (CardButton) source;
-			Card card = clickedCardButton.getCard();
-			try {
-				networkMessageSender.play(card);
-			} catch (RuntimeException e) {
-				throw e;
-			}
-		} else if (source instanceof SitOrLeaveButton) {
-			SitOrLeaveButton clickedSitOrLeaveButton = (SitOrLeaveButton) source;
-			Direction direction = (Direction) clickedSitOrLeaveButton.getClientProperty("direction");
-			networkMessageSender.sitOrLeave(direction);
-			logger.info("Pedindo para sentar ou sair em: " + direction.getCompleteName());
-		}
+        if (source instanceof CardButton) {
+            CardButton clickedCardButton = (CardButton) source;
+            Card card = clickedCardButton.getCard();
+            try {
+                networkMessageSender.play(card);
+            } catch (RuntimeException e) {
+                throw e;
+            }
+        } else if (source instanceof SitOrLeaveButton) {
+            SitOrLeaveButton clickedSitOrLeaveButton = (SitOrLeaveButton) source;
+            Direction direction = (Direction) clickedSitOrLeaveButton.getClientProperty("direction");
+            networkMessageSender.sitOrLeave(direction);
+            logger.info("Pedindo para sentar ou sair em: " + direction.getCompleteName());
+        }
 
-	}
+    }
 }

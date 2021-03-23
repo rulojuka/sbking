@@ -2,30 +2,30 @@ package br.com.sbk.sbking.core;
 
 public abstract class TrickGame {
 
-	protected Board currentBoard;
-	protected Deal currentDeal;
-	protected Direction dealer = Direction.NORTH;
+    protected Board currentBoard;
+    protected Deal currentDeal;
+    protected Direction dealer = Direction.NORTH;
 
-	public abstract void dealNewBoard();
+    public abstract void dealNewBoard();
 
-	public Direction getDealer() {
-		return this.dealer;
-	}
+    public Direction getDealer() {
+        return this.dealer;
+    }
 
-	public Board getCurrentBoard() {
-		return this.currentBoard;
-	}
+    public Board getCurrentBoard() {
+        return this.currentBoard;
+    }
 
-	public Deal getCurrentDeal() {
-		return this.currentDeal;
-	}
+    public Deal getCurrentDeal() {
+        return this.currentDeal;
+    }
 
-	public abstract boolean isFinished();
+    public abstract boolean isFinished();
 
-	public abstract void finishDeal();
+    public abstract void finishDeal();
 
-	public void setPlayerOf(Direction direction, Player player) {
-		this.currentDeal.setPlayerOf(direction, player);
-	}
+    public void setPlayerOf(Direction direction, Player player) {
+        this.currentDeal.setPlayerOf(direction, player);
+    }
 
 }

@@ -9,9 +9,9 @@ import br.com.sbk.sbking.core.rulesets.interfaces.Winnable;
 @SuppressWarnings("serial")
 public class NoTrumpSuitWinnable implements Winnable, Serializable {
 
-	@Override
-	public Direction getWinner(Trick trick) {
-		return trick.getWinnerWithoutTrumpSuit();
-	}
+    @Override
+    public Direction getWinner(Trick trick) {
+        return trick.getWinnerWithoutTrumpSuit();
+    }
 
 }

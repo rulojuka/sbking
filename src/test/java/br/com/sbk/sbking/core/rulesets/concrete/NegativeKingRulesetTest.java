@@ -14,60 +14,60 @@ import br.com.sbk.sbking.core.Trick;
 
 public class NegativeKingRulesetTest {
 
-	private static final int NEGATIVE_KING_SCORE_MULTIPLIER = 160;
-	private static final String NEGATIVE_KING_SHORT_DESCRIPTION = "Negative king";
-	private static final String NEGATIVE_KING_COMPLETE_DESCRIPTION = "Avoid the King of Hearts";
-	private static final int TOTAL_NUMBER_OF_HEART_KINGS = 1;
+    private static final int NEGATIVE_KING_SCORE_MULTIPLIER = 160;
+    private static final String NEGATIVE_KING_SHORT_DESCRIPTION = "Negative king";
+    private static final String NEGATIVE_KING_COMPLETE_DESCRIPTION = "Avoid the King of Hearts";
+    private static final int TOTAL_NUMBER_OF_HEART_KINGS = 1;
 
-	private NegativeKingRuleset negativeKingRuleset;
+    private NegativeKingRuleset negativeKingRuleset;
 
-	@Before
-	public void createNegativeKingRuleset() {
-		this.negativeKingRuleset = new NegativeKingRuleset();
-	}
+    @Before
+    public void createNegativeKingRuleset() {
+        this.negativeKingRuleset = new NegativeKingRuleset();
+    }
 
-	@Test
-	public void shouldHaveTheCorrectScoreMultiplier() {
-		assertEquals(NEGATIVE_KING_SCORE_MULTIPLIER, this.negativeKingRuleset.getScoreMultiplier());
-	}
+    @Test
+    public void shouldHaveTheCorrectScoreMultiplier() {
+        assertEquals(NEGATIVE_KING_SCORE_MULTIPLIER, this.negativeKingRuleset.getScoreMultiplier());
+    }
 
-	@Test
-	public void shouldHaveTheCorrectPointsPerTrick() {
-		final boolean doesNotHaveKingOfHearts = false;
-		final int pointsInATrickWithoutKingOfHearts = 0;
-		Trick trickWithoutKingOfHearts = mock(Trick.class);
-		when(trickWithoutKingOfHearts.hasKingOfHearts()).thenReturn(doesNotHaveKingOfHearts);
+    @Test
+    public void shouldHaveTheCorrectPointsPerTrick() {
+        final boolean doesNotHaveKingOfHearts = false;
+        final int pointsInATrickWithoutKingOfHearts = 0;
+        Trick trickWithoutKingOfHearts = mock(Trick.class);
+        when(trickWithoutKingOfHearts.hasKingOfHearts()).thenReturn(doesNotHaveKingOfHearts);
 
-		final boolean hasKingOfHearts = true;
-		final int pointsInATrickWithKingOfHearts = 1;
-		Trick trickWithKingOfHearts = mock(Trick.class);
-		when(trickWithKingOfHearts.hasKingOfHearts()).thenReturn(hasKingOfHearts);
+        final boolean hasKingOfHearts = true;
+        final int pointsInATrickWithKingOfHearts = 1;
+        Trick trickWithKingOfHearts = mock(Trick.class);
+        when(trickWithKingOfHearts.hasKingOfHearts()).thenReturn(hasKingOfHearts);
 
-		assertEquals(pointsInATrickWithoutKingOfHearts, this.negativeKingRuleset.getPoints(trickWithoutKingOfHearts));
-		assertEquals(pointsInATrickWithKingOfHearts, this.negativeKingRuleset.getPoints(trickWithKingOfHearts));
+        assertEquals(pointsInATrickWithoutKingOfHearts, this.negativeKingRuleset.getPoints(trickWithoutKingOfHearts));
+        assertEquals(pointsInATrickWithKingOfHearts, this.negativeKingRuleset.getPoints(trickWithKingOfHearts));
 
-		Mockito.verify(trickWithoutKingOfHearts, only()).hasKingOfHearts();
-		Mockito.verify(trickWithKingOfHearts, only()).hasKingOfHearts();
-	}
+        Mockito.verify(trickWithoutKingOfHearts, only()).hasKingOfHearts();
+        Mockito.verify(trickWithKingOfHearts, only()).hasKingOfHearts();
+    }
 
-	@Test
-	public void shouldGetShortDescription() {
-		assertEquals(NEGATIVE_KING_SHORT_DESCRIPTION, this.negativeKingRuleset.getShortDescription());
-	}
+    @Test
+    public void shouldGetShortDescription() {
+        assertEquals(NEGATIVE_KING_SHORT_DESCRIPTION, this.negativeKingRuleset.getShortDescription());
+    }
 
-	@Test
-	public void shouldGetCompleteDescription() {
-		assertEquals(NEGATIVE_KING_COMPLETE_DESCRIPTION, this.negativeKingRuleset.getCompleteDescription());
-	}
+    @Test
+    public void shouldGetCompleteDescription() {
+        assertEquals(NEGATIVE_KING_COMPLETE_DESCRIPTION, this.negativeKingRuleset.getCompleteDescription());
+    }
 
-	@Test
-	public void shouldProhibitsHeartsUntilOnlySuitLeft() {
-		assertTrue(this.negativeKingRuleset.prohibitsHeartsUntilOnlySuitLeft());
-	}
+    @Test
+    public void shouldProhibitsHeartsUntilOnlySuitLeft() {
+        assertTrue(this.negativeKingRuleset.prohibitsHeartsUntilOnlySuitLeft());
+    }
 
-	@Test
-	public void shouldGetTotalPoints() {
-		assertEquals(TOTAL_NUMBER_OF_HEART_KINGS, this.negativeKingRuleset.getTotalPoints());
-	}
+    @Test
+    public void shouldGetTotalPoints() {
+        assertEquals(TOTAL_NUMBER_OF_HEART_KINGS, this.negativeKingRuleset.getTotalPoints());
+    }
 
 }

@@ -9,33 +9,33 @@ import org.mockito.Mockito;
 
 public class ObjectOutputStreamWrapperTest {
 
-	private ObjectOutputStream objectOutputStream;
-	private ObjectOutputStreamWrapper objectOutputStreamWrapper;
+    private ObjectOutputStream objectOutputStream;
+    private ObjectOutputStreamWrapper objectOutputStreamWrapper;
 
-	@Before
-	public void setup() throws IOException {
-		objectOutputStream = Mockito.mock(ObjectOutputStream.class);
-		objectOutputStreamWrapper = new ObjectOutputStreamWrapper(objectOutputStream);
-	}
+    @Before
+    public void setup() throws IOException {
+        objectOutputStream = Mockito.mock(ObjectOutputStream.class);
+        objectOutputStreamWrapper = new ObjectOutputStreamWrapper(objectOutputStream);
+    }
 
-	@Test
-	public void shouldCallCloseOnObjectOutputStreamWhenClosing() throws IOException {
-		objectOutputStreamWrapper.close();
+    @Test
+    public void shouldCallCloseOnObjectOutputStreamWhenClosing() throws IOException {
+        objectOutputStreamWrapper.close();
 
-		Mockito.verify(objectOutputStream).close();
-	}
+        Mockito.verify(objectOutputStream).close();
+    }
 
-	@Test
-	public void couldNotTestResetAndWriteObjectBecauseWriteObjectMethodIsFinal() {
-		// Object anyObject = Mockito.mock(Object.class);
-		// try {
-		// objectOutputStreamWrapper.resetAndWriteObject(anyObject);
-		// Mockito.verify(objectOutputStream).reset(); // This would work
-		// Mockito.verify(objectOutputStream).writeObject(anyObject); // but Mockito
-		// mock is powerless here
-		// } catch (Exception e) {
-		// throw new RuntimeException();
-		// }
-	}
+    @Test
+    public void couldNotTestResetAndWriteObjectBecauseWriteObjectMethodIsFinal() {
+        // Object anyObject = Mockito.mock(Object.class);
+        // try {
+        // objectOutputStreamWrapper.resetAndWriteObject(anyObject);
+        // Mockito.verify(objectOutputStream).reset(); // This would work
+        // Mockito.verify(objectOutputStream).writeObject(anyObject); // but Mockito
+        // mock is powerless here
+        // } catch (Exception e) {
+        // throw new RuntimeException();
+        // }
+    }
 
 }

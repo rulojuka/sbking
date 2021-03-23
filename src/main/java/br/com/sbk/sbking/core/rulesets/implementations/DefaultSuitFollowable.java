@@ -11,19 +11,19 @@ import br.com.sbk.sbking.core.rulesets.interfaces.SuitFollowable;
 @SuppressWarnings("serial")
 public class DefaultSuitFollowable implements SuitFollowable, Serializable {
 
-	@Override
-	public boolean followsSuit(Trick trick, Hand hand, Card card) {
-		if (trick == null) {
-			throw new NullPointerException("Trick is null.");
-		}
-		if (trick.isEmpty()) {
-			return true;
-		}
-		Suit leadSuitOfTrick = trick.getLeadSuit();
-		if (!hand.hasSuit(leadSuitOfTrick) || card.getSuit() == leadSuitOfTrick) {
-			return true;
-		}
-		return false;
-	}
+    @Override
+    public boolean followsSuit(Trick trick, Hand hand, Card card) {
+        if (trick == null) {
+            throw new NullPointerException("Trick is null.");
+        }
+        if (trick.isEmpty()) {
+            return true;
+        }
+        Suit leadSuitOfTrick = trick.getLeadSuit();
+        if (!hand.hasSuit(leadSuitOfTrick) || card.getSuit() == leadSuitOfTrick) {
+            return true;
+        }
+        return false;
+    }
 
 }

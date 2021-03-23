@@ -13,69 +13,69 @@ import br.com.sbk.sbking.gui.models.KingGameScoreboard;
 
 public class PositiveKingGame extends TrickGame {
 
-	private KingGameScoreboard gameScoreboard;
-	private Set<NegativeRuleset> chosenNegativeRulesets = new HashSet<NegativeRuleset>();
-	private int northSouthNegatives = 0;
-	private int eastWestNegatives = 0;
-	private int northSouthPositives = 0;
-	private int eastWestPositives = 0;
-	private int playedHands = 0;
+    private KingGameScoreboard gameScoreboard;
+    private Set<NegativeRuleset> chosenNegativeRulesets = new HashSet<NegativeRuleset>();
+    private int northSouthNegatives = 0;
+    private int eastWestNegatives = 0;
+    private int northSouthPositives = 0;
+    private int eastWestPositives = 0;
+    private int playedHands = 0;
 
-	public PositiveKingGame() {
-		this.gameScoreboard = new KingGameScoreboard();
-		this.dealNewBoard();
+    public PositiveKingGame() {
+        this.gameScoreboard = new KingGameScoreboard();
+        this.dealNewBoard();
 
-	}
+    }
 
-	@Override
-	public void dealNewBoard() {
-		BoardDealer boardDealer = new FourteenHCPPlusDoubletonRuledBoardDealer();
-		this.currentBoard = boardDealer.dealBoard(this.dealer);
-		this.currentDeal = new Deal(currentBoard, new NoRuleset());
-	}
+    @Override
+    public void dealNewBoard() {
+        BoardDealer boardDealer = new FourteenHCPPlusDoubletonRuledBoardDealer();
+        this.currentBoard = boardDealer.dealBoard(this.dealer);
+        this.currentDeal = new Deal(currentBoard, new NoRuleset());
+    }
 
-	public void addRuleset(Ruleset currentGameModeOrStrain) {
-		this.currentDeal = new Deal(this.currentBoard, currentGameModeOrStrain);
-	}
+    public void addRuleset(Ruleset currentGameModeOrStrain) {
+        this.currentDeal = new Deal(this.currentBoard, currentGameModeOrStrain);
+    }
 
-	@Override
-	public boolean isFinished() {
-		return playedHands == TOTAL_GAMES;
-	}
+    @Override
+    public boolean isFinished() {
+        return playedHands == TOTAL_GAMES;
+    }
 
-	@Override
-	public void finishDeal() {
-		Direction currentChooser = this.getCurrentDeal().getDealer().getPositiveOrNegativeChooserWhenDealer();
-		boolean isNorthSouth = currentChooser.isNorthSouth();
-		Ruleset currentRuleset = this.getCurrentDeal().getRuleset();
-		boolean isPositive = currentRuleset instanceof PositiveRuleset;
+    @Override
+    public void finishDeal() {
+        Direction currentChooser = this.getCurrentDeal().getDealer().getPositiveOrNegativeChooserWhenDealer();
+        boolean isNorthSouth = currentChooser.isNorthSouth();
+        Ruleset currentRuleset = this.getCurrentDeal().getRuleset();
+        boolean isPositive = currentRuleset instanceof PositiveRuleset;
 
-		this.getGameScoreboard().addFinishedDeal(this.getCurrentDeal());
-		if (isPositive) {
-			if (isNorthSouth) {
-				this.northSouthPositives++;
-			} else {
-				this.eastWestPositives++;
-			}
-		} else {
-			NegativeRuleset negativeRuleset = (NegativeRuleset) currentRuleset;
-			this.chosenNegativeRulesets.add(negativeRuleset);
-			if (isNorthSouth) {
-				this.northSouthNegatives++;
-			} else {
-				this.eastWestNegatives++;
-			}
-		}
-		this.dealer = this.dealer.next();
-		this.playedHands++;
-	}
+        this.getGameScoreboard().addFinishedDeal(this.getCurrentDeal());
+        if (isPositive) {
+            if (isNorthSouth) {
+                this.northSouthPositives++;
+            } else {
+                this.eastWestPositives++;
+            }
+        } else {
+            NegativeRuleset negativeRuleset = (NegativeRuleset) currentRuleset;
+            this.chosenNegativeRulesets.add(negativeRuleset);
+            if (isNorthSouth) {
+                this.northSouthNegatives++;
+            } else {
+                this.eastWestNegatives++;
+            }
+        }
+        this.dealer = this.dealer.next();
+        this.playedHands++;
+    }
 
-	public KingGameScoreboard getGameScoreboard() {
-		return gameScoreboard;
-	}
+    public KingGameScoreboard getGameScoreboard() {
+        return gameScoreboard;
+    }
 
-	public boolean isGameModePermitted(Ruleset ruleset, Direction chooser) {
-		return (ruleset instanceof PositiveRuleset);
-	}
+    public boolean isGameModePermitted(Ruleset ruleset, Direction chooser) {
+        return (ruleset instanceof PositiveRuleset);
+    }
 
 }

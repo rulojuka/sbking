@@ -17,45 +17,45 @@ import br.com.sbk.sbking.networking.client.SBKingClient;
 
 public class WaitingForChoosingPositiveOrNegativePainter implements Painter {
 
-	private Direction myDirection;
-	private Direction chooserDirection;
-	private SBKingClient sbKingClient;
-	private KingGameScoreboard gameScoreboard;
+    private Direction myDirection;
+    private Direction chooserDirection;
+    private SBKingClient sbKingClient;
+    private KingGameScoreboard gameScoreboard;
 
-	public WaitingForChoosingPositiveOrNegativePainter(Direction myDirection, Direction chooserDirection,
-			SBKingClient sbKingClient, KingGameScoreboard gameScoreboard) {
-		this.myDirection = myDirection;
-		this.chooserDirection = chooserDirection;
-		this.sbKingClient = sbKingClient;
-		this.gameScoreboard = gameScoreboard;
-	}
+    public WaitingForChoosingPositiveOrNegativePainter(Direction myDirection, Direction chooserDirection,
+            SBKingClient sbKingClient, KingGameScoreboard gameScoreboard) {
+        this.myDirection = myDirection;
+        this.chooserDirection = chooserDirection;
+        this.sbKingClient = sbKingClient;
+        this.gameScoreboard = gameScoreboard;
+    }
 
-	@Override
-	public void paint(Container contentPane) {
-		int xCenterLocation = TABLE_WIDTH - 160;
-		int yCenterLocation = 110;
-		Point centerOfScoreboardPosition = new Point(xCenterLocation, yCenterLocation);
-		new GameScoreboardElement(gameScoreboard, contentPane, centerOfScoreboardPosition);
-		if (myDirection != chooserDirection) {
-			YouArePlayerElement.add(this.myDirection, contentPane);
-			WaitingForChooserElement.add(contentPane, chooserDirection, "Positive or Negative.");
-		} else {
-			ChoosePositiveOrNegativeElement choosePositiveOrNegativeElement = new ChoosePositiveOrNegativeElement(contentPane,
-					this.sbKingClient);
-			choosePositiveOrNegativeElement.add();
-		}
+    @Override
+    public void paint(Container contentPane) {
+        int xCenterLocation = TABLE_WIDTH - 160;
+        int yCenterLocation = 110;
+        Point centerOfScoreboardPosition = new Point(xCenterLocation, yCenterLocation);
+        new GameScoreboardElement(gameScoreboard, contentPane, centerOfScoreboardPosition);
+        if (myDirection != chooserDirection) {
+            YouArePlayerElement.add(this.myDirection, contentPane);
+            WaitingForChooserElement.add(contentPane, chooserDirection, "Positive or Negative.");
+        } else {
+            ChoosePositiveOrNegativeElement choosePositiveOrNegativeElement = new ChoosePositiveOrNegativeElement(contentPane,
+                    this.sbKingClient);
+            choosePositiveOrNegativeElement.add();
+        }
 
-		Hand myHand;
-		if (this.sbKingClient.getDeal() != null) {
-			myHand = this.sbKingClient.getDeal().getHandOf(this.myDirection);
-		} else {
-			myHand = this.sbKingClient.getCurrentBoard().getHandOf(this.myDirection);
-		}
+        Hand myHand;
+        if (this.sbKingClient.getDeal() != null) {
+            myHand = this.sbKingClient.getDeal().getHandOf(this.myDirection);
+        } else {
+            myHand = this.sbKingClient.getCurrentBoard().getHandOf(this.myDirection);
+        }
 
-		new HandWhileChoosingElement(contentPane, myHand, this.myDirection);
+        new HandWhileChoosingElement(contentPane, myHand, this.myDirection);
 
-		contentPane.validate();
-		contentPane.repaint();
-	}
+        contentPane.validate();
+        contentPane.repaint();
+    }
 
 }

@@ -11,20 +11,20 @@ import br.com.sbk.sbking.gui.JElements.SBKingLabel;
 
 public class WaitingForChooserElement {
 
-	public static void add(Container container, Direction direction, String text) {
-		String labelTextPrefix = "<html>Waiting for " + direction.toString() + " to choose<br/>";
-		String labelTextSuffix = "</html>";
-		String completeLabelText = labelTextPrefix + text + labelTextSuffix;
+    public static void add(Container container, Direction direction, String text) {
+        String labelTextPrefix = "<html>Waiting for " + direction.toString() + " to choose<br/>";
+        String labelTextSuffix = "</html>";
+        String completeLabelText = labelTextPrefix + text + labelTextSuffix;
 
-		JLabel waitingLabel = new SBKingLabel(completeLabelText);
-		waitingLabel.setHorizontalAlignment(CENTER);
-		int width = 300;
-		int height = 30;
-		int x = br.com.sbk.sbking.gui.constants.FrameConstants.HALF_WIDTH;
-		int y = br.com.sbk.sbking.gui.constants.FrameConstants.HALF_HEIGHT;
-		waitingLabel.setSize(width, height);
-		waitingLabel.setLocation(x - width / 2, y - height / 2);
-		container.add(waitingLabel);
-	}
+        JLabel waitingLabel = new SBKingLabel(completeLabelText);
+        waitingLabel.setHorizontalAlignment(CENTER);
+        int width = 300;
+        int height = 30;
+        int x = br.com.sbk.sbking.gui.constants.FrameConstants.HALF_WIDTH;
+        int y = br.com.sbk.sbking.gui.constants.FrameConstants.HALF_HEIGHT;
+        waitingLabel.setSize(width, height);
+        waitingLabel.setLocation(x - width / 2, y - height / 2);
+        container.add(waitingLabel);
+    }
 
 }
