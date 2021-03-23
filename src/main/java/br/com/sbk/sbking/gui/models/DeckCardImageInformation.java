@@ -15,7 +15,7 @@ import br.com.sbk.sbking.gui.main.AssetLoader;
 
 
 public class DeckCardImageInformation {
-    private static final String directory = "/images/cards/";
+    private static final String DIRECTORY = "/images/cards/";
 
     private static final int ORIGINAL_CARD_IMAGE_WIDTH = 182;
     private static final int ORIGINAL_CARD_IMAGE_HEIGHT = 247;
@@ -38,13 +38,13 @@ public class DeckCardImageInformation {
     }
 
     public ImageIcon createFrontImage(Card card) {
-        String imagePath = directory + getFilename(card.getSuit(), card.getRank());
+        String imagePath = DIRECTORY + getFilename(card.getSuit(), card.getRank());
         URL url = getClass().getResource(imagePath);
         return getScaledCardImage(new ImageIcon(url).getImage());
     }
 
     public ImageIcon createBackImage() {
-        String imagePath = directory + "back.png";
+        String imagePath = DIRECTORY + "back.png";
         URL url = getClass().getResource(imagePath);
         return getScaledCardImage(new ImageIcon(url).getImage());
     }

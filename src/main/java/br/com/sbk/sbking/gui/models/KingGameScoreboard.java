@@ -92,7 +92,7 @@ public class KingGameScoreboard implements Serializable {
         return response;
     }
 
-    private static final Map<Integer, String> names = new HashMap<Integer, String>() {
+    private static final Map<Integer, String> NEGATIVE_GAME_NAMES = new HashMap<Integer, String>() {
         {
             put(1, new NegativeTricksRuleset().getShortDescription());
             put(2, new NegativeHeartsRuleset().getShortDescription());
@@ -104,7 +104,7 @@ public class KingGameScoreboard implements Serializable {
     };
 
     private String getNameOfGameNumber(int number) {
-        String name = names.get(number);
+        String name = NEGATIVE_GAME_NAMES.get(number);
         if (name == null) {
             return "Positive";
         } else {
@@ -112,7 +112,7 @@ public class KingGameScoreboard implements Serializable {
         }
     }
 
-    private static final Map<Ruleset, Integer> positions = new HashMap<Ruleset, Integer>() {
+    private static final Map<Ruleset, Integer> NEGATIVE_POSITIONS = new HashMap<Ruleset, Integer>() {
         {
             put(new NegativeTricksRuleset(), 1);
             put(new NegativeHeartsRuleset(), 2);
@@ -124,7 +124,7 @@ public class KingGameScoreboard implements Serializable {
     };
 
     private int getPositionOfRuleset(Ruleset ruleset) {
-        Integer position = positions.get(ruleset);
+        Integer position = NEGATIVE_POSITIONS.get(ruleset);
         if (position == null) {
             return 6 + this.positivesPlayed;
         } else {
