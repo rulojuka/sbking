@@ -19,14 +19,16 @@ public class PositiveOrNegative {
     }
 
     public boolean isPositive() {
-        if (this.positive == null)
+        if (this.positive == null) {
             throw new RuntimeException("PositiveOrNegative not initialized");
+        }
         return this.positive;
     }
 
     public boolean isNegative() {
-        if (this.negative == null)
+        if (this.negative == null) {
             throw new RuntimeException("PositiveOrNegative not initialized");
+        }
         return this.negative;
     }
 

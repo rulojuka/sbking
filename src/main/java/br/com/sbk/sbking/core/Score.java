@@ -63,22 +63,29 @@ public class Score implements Serializable {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
+        }
         Score other = (Score) obj;
-        if (eastWestPoints != other.eastWestPoints)
+        if (eastWestPoints != other.eastWestPoints) {
             return false;
-        if (northSouthPoints != other.northSouthPoints)
+        }
+        if (northSouthPoints != other.northSouthPoints) {
             return false;
+        }
         if (scoreable == null) {
-            if (other.scoreable != null)
+            if (other.scoreable != null) {
                 return false;
-        } else if (!(scoreable.getClass() == other.scoreable.getClass()))
+            }
+        } else if (!(scoreable.getClass() == other.scoreable.getClass())) {
             return false;
+        }
         return true;
     }
 
