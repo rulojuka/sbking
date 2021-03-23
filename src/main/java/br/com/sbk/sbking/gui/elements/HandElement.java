@@ -19,7 +19,7 @@ import br.com.sbk.sbking.gui.models.DeckCardImageInformation;
 
 public class HandElement {
 
-    final static Logger logger = LogManager.getLogger(HandElement.class);
+    static final Logger logger = LogManager.getLogger(HandElement.class);
 
     private DeckCardImageInformation deckCardImageInformation;
 

@@ -7,7 +7,7 @@ import br.com.sbk.sbking.gui.constants.FrameConstants;
 
 public class ClientApplicationState {
 
-    final static Logger logger = LogManager.getLogger(ClientApplicationState.class);
+    static final Logger logger = LogManager.getLogger(ClientApplicationState.class);
     private static boolean guiHasChanged = false;
     private static boolean guiScaleValid = true;
 

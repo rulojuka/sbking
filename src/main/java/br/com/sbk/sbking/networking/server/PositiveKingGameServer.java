@@ -16,7 +16,7 @@ import br.com.sbk.sbking.networking.server.notifications.PositiveOrNegativeNotif
 
 public class PositiveKingGameServer extends GameServer {
 
-    final static Logger logger = LogManager.getLogger(KingGameServer.class);
+    static final Logger logger = LogManager.getLogger(KingGameServer.class);
 
     private PositiveOrNegativeNotification positiveOrNegativeNotification;
     private GameModeOrStrainNotification gameModeOrStrainNotification;

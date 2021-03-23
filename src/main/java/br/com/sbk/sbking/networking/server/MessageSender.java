@@ -15,7 +15,7 @@ import br.com.sbk.sbking.gui.models.PositiveOrNegative;
 public class MessageSender {
 
     private Collection<ClientGameSocket> playerSockets;
-    final static Logger logger = LogManager.getLogger(MessageSender.class);
+    static final Logger logger = LogManager.getLogger(MessageSender.class);
 
     public MessageSender() {
         this.playerSockets = new ArrayList<ClientGameSocket>();

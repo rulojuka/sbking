@@ -12,7 +12,7 @@ import br.com.sbk.sbking.core.exceptions.PlayedCardInAnotherPlayersTurnException
 import br.com.sbk.sbking.networking.server.notifications.CardPlayNotification;
 
 public abstract class GameServer implements Runnable {
-    final static Logger logger = LogManager.getLogger(GameServer.class);
+    static final  Logger logger = LogManager.getLogger(GameServer.class);
 
     protected CardPlayNotification cardPlayNotification = new CardPlayNotification();
     protected boolean dealHasChanged;

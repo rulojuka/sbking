@@ -17,7 +17,7 @@ import br.com.sbk.sbking.gui.painters.SpectatorPainter;
 @SuppressWarnings("serial")
 public class CagandoNetworkClientScreen extends NetworkClientScreen {
 
-    final static Logger logger = LogManager.getLogger(CagandoNetworkClientScreen.class);
+    static final Logger logger = LogManager.getLogger(CagandoNetworkClientScreen.class);
 
     public CagandoNetworkClientScreen() {
         super();

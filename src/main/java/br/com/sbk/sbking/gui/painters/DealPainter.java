@@ -14,7 +14,7 @@ import br.com.sbk.sbking.gui.elements.SpecificDirectionBoardElements;
 
 public class DealPainter implements Painter {
 
-    final static Logger logger = LogManager.getLogger(DealPainter.class);
+    static final Logger logger = LogManager.getLogger(DealPainter.class);
 
     protected Direction direction;
     protected ActionListener actionListener;

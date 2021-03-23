@@ -50,7 +50,7 @@ public class SBKingClient implements Runnable {
 
     private String nickname;
 
-    final static Logger logger = LogManager.getLogger(SBKingClient.class);
+    static final Logger logger = LogManager.getLogger(SBKingClient.class);
 
     public SBKingClient(String nickname, String hostname) {
         Socket socket = initializeSocketOrExit(hostname);

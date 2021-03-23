@@ -19,7 +19,7 @@ import br.com.sbk.sbking.networking.core.serialization.DisconnectedObject;
 import br.com.sbk.sbking.networking.core.serialization.Serializator;
 
 public class ClientGameSocket implements Runnable {
-    final static Logger logger = LogManager.getLogger(ClientGameSocket.class);
+    static final Logger logger = LogManager.getLogger(ClientGameSocket.class);
 
     private PlayerNetworkInformation playerNetworkInformation;
     private Table table;

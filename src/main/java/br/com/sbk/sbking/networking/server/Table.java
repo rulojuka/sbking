@@ -15,7 +15,7 @@ import br.com.sbk.sbking.core.Player;
 
 public class Table {
 
-  final static Logger logger = LogManager.getLogger(Table.class);
+  static final Logger logger = LogManager.getLogger(Table.class);
 
   private ExecutorService pool;
   private static final int MAXIMUM_NUMBER_OF_PLAYERS_AND_KIBITZERS_IN_A_TABLE = 30;

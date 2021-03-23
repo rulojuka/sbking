@@ -16,7 +16,7 @@ import br.com.sbk.sbking.networking.server.notifications.GameModeOrStrainNotific
 
 public class MinibridgeGameServer extends GameServer {
 
-  final static Logger logger = LogManager.getLogger(MinibridgeGameServer.class);
+  static final Logger logger = LogManager.getLogger(MinibridgeGameServer.class);
 
   private GameModeOrStrainNotification gameModeOrStrainNotification;
   private Ruleset currentGameModeOrStrain;

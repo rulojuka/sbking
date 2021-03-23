@@ -14,7 +14,7 @@ import br.com.sbk.sbking.gui.elements.ScoreSummaryElement;
 
 public class SpectatorPainter implements Painter {
 
-    final static Logger logger = LogManager.getLogger(SpectatorPainter.class);
+    static final Logger logger = LogManager.getLogger(SpectatorPainter.class);
 
     private ActionListener actionListener;
     private Deal deal;

@@ -18,7 +18,7 @@ import br.com.sbk.sbking.networking.core.serialization.SerializatorFactory;
 
 public class LobbyServer {
 
-    final static Logger logger = LogManager.getLogger(LobbyServer.class);
+    static final Logger logger = LogManager.getLogger(LobbyServer.class);
 
     private static final String NETWORKING_CONFIGURATION_FILENAME = "networkConfiguration.cfg";
     private static final int COULD_NOT_GET_PORT_FROM_PROPERTIES_ERROR = 1;
