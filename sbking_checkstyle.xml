@@ -161,16 +161,25 @@
 
     <!-- Checks for class design                         -->
     <!-- See https://checkstyle.org/config_design.html -->
-    <module name="DesignForExtension"/>
+    <module name="DesignForExtension">
+      <property name="severity" value="warning"/>
+    </module>
+
+
     <module name="FinalClass"/>
-    <module name="HideUtilityClassConstructor"/>
+    <module name="HideUtilityClassConstructor">
+      <property name="severity" value="warning"/>
+    </module>
+
     <module name="InterfaceIsType"/>
     <module name="VisibilityModifier"/>
 
     <!-- Miscellaneous other checks.                   -->
     <!-- See https://checkstyle.org/config_misc.html -->
     <module name="ArrayTypeStyle"/>
-    <module name="FinalParameters"/>
+    <module name="FinalParameters">
+      <property name="severity" value="warning"/>
+    </module>
     <module name="UpperEll"/>
     <!-- We like todo comments :) -->
     <!-- <module name="TodoComment"/> -->
