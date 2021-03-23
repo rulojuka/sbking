@@ -18,7 +18,7 @@ import br.com.sbk.sbking.gui.painters.WaitingForChoosingGameModeOrStrainPainter;
 @SuppressWarnings("serial")
 public class PositiveKingNetworkClientScreen extends NetworkClientScreen {
 
-    final static Logger logger = LogManager.getLogger(PositiveKingNetworkClientScreen.class);
+    static final Logger logger = LogManager.getLogger(PositiveKingNetworkClientScreen.class);
 
     public PositiveKingNetworkClientScreen() {
         super();

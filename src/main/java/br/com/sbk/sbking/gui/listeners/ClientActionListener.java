@@ -11,7 +11,7 @@ import br.com.sbk.sbking.networking.client.ClientToServerMessageSender;
 
 public class ClientActionListener implements java.awt.event.ActionListener {
 
-    final static Logger logger = LogManager.getLogger(ClientActionListener.class);
+    static final Logger logger = LogManager.getLogger(ClientActionListener.class);
 
     private ClientToServerMessageSender networkMessageSender;
 

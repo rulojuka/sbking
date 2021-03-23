@@ -19,7 +19,7 @@ import br.com.sbk.sbking.gui.painters.WaitingForChoosingPositiveOrNegativePainte
 @SuppressWarnings("serial")
 public class KingNetworkClientScreen extends NetworkClientScreen {
 
-    final static Logger logger = LogManager.getLogger(KingNetworkClientScreen.class);
+    static final Logger logger = LogManager.getLogger(KingNetworkClientScreen.class);
 
     public KingNetworkClientScreen() {
         super();

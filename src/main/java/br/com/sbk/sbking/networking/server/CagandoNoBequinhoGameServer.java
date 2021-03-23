@@ -12,7 +12,7 @@ import br.com.sbk.sbking.gui.models.KingGameScoreboard;
 
 public class CagandoNoBequinhoGameServer extends GameServer {
 
-    final static Logger logger = LogManager.getLogger(CagandoNoBequinhoGameServer.class);
+    static final Logger logger = LogManager.getLogger(CagandoNoBequinhoGameServer.class);
 
     private CagandoNoBequinhoGame cagandoNoBequinhoGame;
 

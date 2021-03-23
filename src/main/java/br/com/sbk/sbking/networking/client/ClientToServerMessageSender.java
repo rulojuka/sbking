@@ -9,7 +9,7 @@ import org.apache.logging.log4j.LogManager;
 
 public class ClientToServerMessageSender {
 
-    final static Logger logger = LogManager.getLogger(ClientToServerMessageSender.class);
+    static final Logger logger = LogManager.getLogger(ClientToServerMessageSender.class);
 
     private Serializator serializator;
 

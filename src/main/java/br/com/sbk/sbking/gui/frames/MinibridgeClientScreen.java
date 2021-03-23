@@ -18,7 +18,7 @@ import br.com.sbk.sbking.gui.painters.WaitingForChoosingGameModeOrStrainPainter;
 @SuppressWarnings("serial")
 public class MinibridgeClientScreen extends NetworkClientScreen {
 
-  final static Logger logger = LogManager.getLogger(MinibridgeClientScreen.class);
+  static final Logger logger = LogManager.getLogger(MinibridgeClientScreen.class);
 
   public MinibridgeClientScreen() {
     super();

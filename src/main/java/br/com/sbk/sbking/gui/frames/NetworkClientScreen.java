@@ -31,7 +31,7 @@ import br.com.sbk.sbking.networking.client.SBKingClient;
 @SuppressWarnings("serial")
 public abstract class NetworkClientScreen extends JFrame {
 
-    final static Logger logger = LogManager.getLogger(NetworkClientScreen.class);
+    static final Logger logger = LogManager.getLogger(NetworkClientScreen.class);
 
     protected boolean connectedToServer = false;
     protected SBKingClient sbKingClient;
