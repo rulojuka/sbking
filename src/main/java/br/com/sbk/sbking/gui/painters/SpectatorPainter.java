@@ -14,7 +14,7 @@ import br.com.sbk.sbking.gui.elements.ScoreSummaryElement;
 
 public class SpectatorPainter implements Painter {
 
-    static final Logger logger = LogManager.getLogger(SpectatorPainter.class);
+    private static final Logger LOGGER = LogManager.getLogger(SpectatorPainter.class);
 
     private ActionListener actionListener;
     private Deal deal;
@@ -31,7 +31,7 @@ public class SpectatorPainter implements Painter {
 
     @Override
     public void paint(Container contentPane) {
-        logger.info("Painting spectator that contains this trick: " + deal.getCurrentTrick());
+        LOGGER.info("Painting spectator that contains this trick: " + deal.getCurrentTrick());
         contentPane.removeAll();
 
         if (deal.isFinished()) {

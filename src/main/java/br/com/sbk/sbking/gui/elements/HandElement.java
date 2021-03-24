@@ -6,9 +6,6 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.core.Hand;
@@ -19,15 +16,14 @@ import br.com.sbk.sbking.gui.models.DeckCardImageInformation;
 
 public class HandElement {
 
-    static final Logger logger = LogManager.getLogger(HandElement.class);
-
     private DeckCardImageInformation deckCardImageInformation;
 
     public HandElement(Hand hand, Container container, ActionListener actionListener, Point handCenter, Player player,
-        boolean isVisible, Direction direction) {
+            boolean isVisible, Direction direction) {
         this.deckCardImageInformation = new DeckCardImageInformation();
 
-        int xOffset = (((hand.size() - 1) * deckCardImageInformation.getWidthBetweenCards()) + deckCardImageInformation.getCardWidth()) / 2;
+        int xOffset = (((hand.size() - 1) * deckCardImageInformation.getWidthBetweenCards())
+                + deckCardImageInformation.getCardWidth()) / 2;
         xOffset *= -1;
         int yOffset = deckCardImageInformation.getCardHeight() / 2;
         yOffset *= -1;

@@ -8,13 +8,13 @@ import br.com.sbk.sbking.gui.frames.NetworkClientScreen;
 
 public class MainNetworkGame {
 
-    static final Logger logger = LogManager.getLogger(MainNetworkGame.class);
+    private static final Logger LOGGER = LogManager.getLogger(MainNetworkGame.class);
 
     public static void main(String[] args) {
         ClientApplicationState.startAppState();
         NetworkClientScreen networkClientScreen = new MinibridgeClientScreen();
         networkClientScreen.run();
-        logger.info("Exiting main thread.");
+        LOGGER.info("Exiting main thread.");
     }
 
 }

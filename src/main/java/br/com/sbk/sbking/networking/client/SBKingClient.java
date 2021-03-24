@@ -18,7 +18,6 @@ import br.com.sbk.sbking.networking.core.serialization.Serializator;
 import br.com.sbk.sbking.networking.core.serialization.SerializatorFactory;
 import br.com.sbk.sbking.networking.messages.MessageConstants;
 
-
 public class SBKingClient implements Runnable {
 
     private static final String NETWORKING_CONFIGURATION_FILENAME = "networkConfiguration.cfg";
@@ -52,13 +51,13 @@ public class SBKingClient implements Runnable {
 
     private String nickname;
 
-    static final Logger logger = LogManager.getLogger(SBKingClient.class);
+    private static final Logger LOGGER = LogManager.getLogger(SBKingClient.class);
 
     public SBKingClient(String nickname, String hostname) {
         Socket socket = initializeSocketOrExit(hostname);
-        logger.info("Socket initialized.");
+        LOGGER.info("Socket initialized.");
         this.serializator = initializeSerializatorOrExit(socket);
-        logger.info("Serializator initialized.");
+        LOGGER.info("Serializator initialized.");
         ClientToServerMessageSender networkCardPlayer = new ClientToServerMessageSender(this.serializator);
         this.playCardActionListener = new ClientActionListener(networkCardPlayer);
         this.setNickname(nickname);
@@ -72,7 +71,7 @@ public class SBKingClient implements Runnable {
             FileProperties configFile = new FileProperties(NETWORKING_CONFIGURATION_FILENAME);
             NetworkingProperties networkingProperties = new NetworkingProperties(configFile, new SystemProperties());
 
-            logger.info("Given hostname is: " + hostname);
+            LOGGER.info("Given hostname is: " + hostname);
             if (hostname == null || hostname.isEmpty()) {
                 host = networkingProperties.getHost();
             } else {
@@ -80,17 +79,17 @@ public class SBKingClient implements Runnable {
             }
             port = networkingProperties.getPort();
         } catch (Exception e) {
-            logger.fatal("Could not get network information from properties.");
-            logger.debug(e);
+            LOGGER.fatal("Could not get network information from properties.");
+            LOGGER.debug(e);
             System.exit(COULD_NOT_GET_NETWORK_INFORMATION_FROM_PROPERTIES_ERROR);
         }
 
         try {
-            logger.info("Trying to create socket to: " + host + ":" + port);
+            LOGGER.info("Trying to create socket to: " + host + ":" + port);
             return new Socket(host, port);
         } catch (Exception e) {
-            logger.fatal("Could not create socket.");
-            logger.debug(e);
+            LOGGER.fatal("Could not create socket.");
+            LOGGER.debug(e);
             System.exit(COULD_NOT_CREATE_SOCKET_ERROR);
             return null;
         }
@@ -101,9 +100,9 @@ public class SBKingClient implements Runnable {
         try {
             return serializatorFactory.getSerializator(socket);
         } catch (Exception e) {
-            logger.fatal("Could not create serializator.");
-            logger.fatal(e);
-            logger.fatal(e.getStackTrace());
+            LOGGER.fatal("Could not create serializator.");
+            LOGGER.fatal(e);
+            LOGGER.fatal(e.getStackTrace());
             System.exit(COULD_NOT_CREATE_SERIALIZATOR_ERROR);
             return null;
         }
@@ -111,7 +110,7 @@ public class SBKingClient implements Runnable {
 
     @Override
     public void run() {
-        logger.info("Entering on the infinite loop to process commands.");
+        LOGGER.info("Entering on the infinite loop to process commands.");
         while (true) {
             processCommand();
         }
@@ -122,37 +121,37 @@ public class SBKingClient implements Runnable {
     }
 
     private void processCommand() {
-        logger.info("Waiting for a command");
+        LOGGER.info("Waiting for a command");
         Object readObject = this.serializator.tryToDeserialize(Object.class);
         String controlMessage = (String) readObject;
-        logger.info("Read control: --" + controlMessage + "--");
+        LOGGER.info("Read control: --" + controlMessage + "--");
 
         if (MessageConstants.MESSAGE.equals(controlMessage)) {
             String string = this.serializator.tryToDeserialize(String.class);
-            logger.info("I received a message: --" + string + "--");
+            LOGGER.info("I received a message: --" + string + "--");
         } else if (MessageConstants.BOARD.equals(controlMessage)) {
             Board board = this.serializator.tryToDeserialize(Board.class);
-            logger.info("I received a board.");
+            LOGGER.info("I received a board.");
             this.setCurrentBoard(board);
         } else if (MessageConstants.DEAL.equals(controlMessage)) {
             Deal deal = this.serializator.tryToDeserialize(Deal.class);
-            logger.info(
-                    "I received a deal that contains this trick: " + deal.getCurrentTrick() + " and will paint it on screen");
+            LOGGER.info("I received a deal that contains this trick: " + deal.getCurrentTrick()
+                    + " and will paint it on screen");
             this.setCurrentDeal(deal);
         } else if (MessageConstants.DIRECTION.equals(controlMessage)) {
             Direction direction = this.serializator.tryToDeserialize(Direction.class);
-            logger.info("I received my direction: " + direction);
+            LOGGER.info("I received my direction: " + direction);
             this.initializeDirection(direction);
         } else if (MessageConstants.WAIT.equals(controlMessage)) {
-            logger.info("Waiting for a CONTINUE message");
+            LOGGER.info("Waiting for a CONTINUE message");
             do {
                 controlMessage = this.serializator.tryToDeserialize(String.class);
             } while (!MessageConstants.CONTINUE.equals(controlMessage));
-            logger.info("Received a CONTINUE message");
+            LOGGER.info("Received a CONTINUE message");
 
         } else if (MessageConstants.CHOOSERPOSITIVENEGATIVE.equals(controlMessage)) {
             Direction direction = this.serializator.tryToDeserialize(Direction.class);
-            logger.info("Received PositiveOrNegative choosers direction: " + direction);
+            LOGGER.info("Received PositiveOrNegative choosers direction: " + direction);
 
             setPositiveOrNegativeChooser(direction);
         } else if (MessageConstants.POSITIVEORNEGATIVE.equals(controlMessage)) {
@@ -162,15 +161,15 @@ public class SBKingClient implements Runnable {
             } else if ("NEGATIVE".equals(positiveOrNegative)) {
                 this.selectedNegative();
             } else {
-                logger.info("Could not understand POSITIVE or NEGATIVE.");
+                LOGGER.info("Could not understand POSITIVE or NEGATIVE.");
             }
         } else if (MessageConstants.CHOOSERGAMEMODEORSTRAIN.equals(controlMessage)) {
             Direction direction = this.serializator.tryToDeserialize(Direction.class);
-            logger.info("Received GameModeOrStrain choosers direction: " + direction);
+            LOGGER.info("Received GameModeOrStrain choosers direction: " + direction);
             setGameModeOrStrainChooser(direction);
         } else if (MessageConstants.GAMEMODEORSTRAIN.equals(controlMessage)) {
             String gameModeOrStrain = this.serializator.tryToDeserialize(String.class);
-            logger.info("Received GameModeOrStrain: " + gameModeOrStrain);
+            LOGGER.info("Received GameModeOrStrain: " + gameModeOrStrain);
         } else if (MessageConstants.INITIALIZEDEAL.equals(controlMessage)) {
             this.initializeDeal();
         } else if (MessageConstants.FINISHDEAL.equals(controlMessage)) {
@@ -183,15 +182,15 @@ public class SBKingClient implements Runnable {
             this.setRulesetValid(true);
         } else if (MessageConstants.GAMESCOREBOARD.equals(controlMessage)) {
             this.currentGameScoreboard = this.serializator.tryToDeserialize(KingGameScoreboard.class);
-            logger.info("Received GameScoreboard." + this.currentGameScoreboard.toString());
+            LOGGER.info("Received GameScoreboard." + this.currentGameScoreboard.toString());
         } else if (MessageConstants.ISSPECTATOR.equals(controlMessage)) {
             this.spectator = true;
-            logger.info("Received ISSPECTATOR.");
+            LOGGER.info("Received ISSPECTATOR.");
         } else if (MessageConstants.ISNOTSPECTATOR.equals(controlMessage)) {
             this.spectator = false;
-            logger.info("Received ISNOTSPECTATOR.");
+            LOGGER.info("Received ISNOTSPECTATOR.");
         } else {
-            logger.error("Could not understand control.");
+            LOGGER.error("Could not understand control.");
         }
 
         // FIXME remove this if possible
@@ -226,13 +225,13 @@ public class SBKingClient implements Runnable {
     }
 
     public void sendPositive() {
-        logger.debug("Sending positive to server");
+        LOGGER.debug("Sending positive to server");
         String positive = "POSITIVE";
         this.serializator.tryToSerialize(positive);
     }
 
     public void sendNegative() {
-        logger.debug("Sending negative to server");
+        LOGGER.debug("Sending negative to server");
         String negative = "NEGATIVE";
         this.serializator.tryToSerialize(negative);
     }
@@ -315,7 +314,7 @@ public class SBKingClient implements Runnable {
     }
 
     public void sendGameModeOrStrain(String gameModeOrStrain) {
-        logger.debug("Sending Game Mode or Strain to server");
+        LOGGER.debug("Sending Game Mode or Strain to server");
         this.serializator.tryToSerialize(gameModeOrStrain);
     }
 
@@ -394,7 +393,7 @@ public class SBKingClient implements Runnable {
     }
 
     public void sendNickname(String nickname) {
-        logger.debug("Sending nickname to server");
+        LOGGER.debug("Sending nickname to server");
         this.serializator.tryToSerialize("NICKNAME" + nickname);
     }
 

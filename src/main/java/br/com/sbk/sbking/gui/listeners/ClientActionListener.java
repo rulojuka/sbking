@@ -11,7 +11,7 @@ import br.com.sbk.sbking.networking.client.ClientToServerMessageSender;
 
 public class ClientActionListener implements java.awt.event.ActionListener {
 
-    static final Logger logger = LogManager.getLogger(ClientActionListener.class);
+    private static final Logger LOGGER = LogManager.getLogger(ClientActionListener.class);
 
     private ClientToServerMessageSender networkMessageSender;
 
@@ -24,7 +24,7 @@ public class ClientActionListener implements java.awt.event.ActionListener {
     public void actionPerformed(java.awt.event.ActionEvent event) {
 
         Object source = event.getSource();
-        logger.info("Performing network action: " + source);
+        LOGGER.info("Performing network action: " + source);
 
         if (source instanceof CardButton) {
             CardButton clickedCardButton = (CardButton) source;
@@ -38,7 +38,7 @@ public class ClientActionListener implements java.awt.event.ActionListener {
             SitOrLeaveButton clickedSitOrLeaveButton = (SitOrLeaveButton) source;
             Direction direction = (Direction) clickedSitOrLeaveButton.getClientProperty("direction");
             networkMessageSender.sitOrLeave(direction);
-            logger.info("Pedindo para sentar ou sair em: " + direction.getCompleteName());
+            LOGGER.info("Pedindo para sentar ou sair em: " + direction.getCompleteName());
         }
 
     }

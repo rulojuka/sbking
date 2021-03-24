@@ -9,7 +9,7 @@ import org.apache.logging.log4j.LogManager;
 
 public class ClientToServerMessageSender {
 
-    static final Logger logger = LogManager.getLogger(ClientToServerMessageSender.class);
+    private static final Logger LOGGER = LogManager.getLogger(ClientToServerMessageSender.class);
 
     private Serializator serializator;
 
@@ -22,8 +22,8 @@ public class ClientToServerMessageSender {
     }
 
     public void sitOrLeave(Direction direction) {
-        logger.info("Serializator: " + this.serializator);
-        logger.info("Serializing sitOrLeave " + direction.getCompleteName());
+        LOGGER.info("Serializator: " + this.serializator);
+        LOGGER.info("Serializing sitOrLeave " + direction.getCompleteName());
         this.serializator.tryToSerialize(direction);
     }
 

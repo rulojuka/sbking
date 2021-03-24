@@ -6,12 +6,12 @@ import org.apache.logging.log4j.Logger;
 import br.com.sbk.sbking.networking.server.LobbyServer;
 
 public class LobbyServerStarter {
-    private static final Logger logger = LogManager.getLogger(LobbyServerStarter.class);
+    private static final Logger LOGGER = LogManager.getLogger(LobbyServerStarter.class);
 
     public static void main(String[] args) {
-        logger.info("Entering application.");
+        LOGGER.info("Entering application.");
         LobbyServer lobbyServer = new LobbyServer();
         lobbyServer.run();
-        logger.info("Exiting application.");
+        LOGGER.info("Exiting application.");
     }
 }

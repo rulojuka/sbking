@@ -9,7 +9,7 @@ public class Serializator {
 
     private final ObjectInputStreamWrapper objectInputStreamWrapper;
     private final ObjectOutputStreamWrapper objectOutputStreamWrapper;
-    private static final Logger logger = LogManager.getLogger(Serializator.class);
+    private static final Logger LOGGER = LogManager.getLogger(Serializator.class);
 
     public Serializator(ObjectInputStreamWrapper objectInputStreamWrapper,
             ObjectOutputStreamWrapper objectOutputStreamWrapper) {
@@ -27,8 +27,8 @@ public class Serializator {
         try {
             this.objectOutputStreamWrapper.resetAndWriteObject(object);
         } catch (IOException e) {
-            logger.error("Error trying to serialize object:" + object);
-            logger.error(e);
+            LOGGER.error("Error trying to serialize object:" + object);
+            LOGGER.error(e);
         }
     }
 
@@ -44,8 +44,8 @@ public class Serializator {
         try {
             deserializedObject = this.objectInputStreamWrapper.readObject();
         } catch (Exception e) {
-            logger.error("Error trying to deserialize object.");
-            logger.error(e);
+            LOGGER.error("Error trying to deserialize object.");
+            LOGGER.error(e);
             e.printStackTrace();
             return new DisconnectedObject();
         }

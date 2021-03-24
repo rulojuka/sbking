@@ -15,7 +15,7 @@ import br.com.sbk.sbking.core.Player;
 
 public class Table {
 
-  static final Logger logger = LogManager.getLogger(Table.class);
+  private static final Logger LOGGER = LogManager.getLogger(Table.class);
 
   private ExecutorService pool;
   private static final int MAXIMUM_NUMBER_OF_PLAYERS_AND_KIBITZERS_IN_A_TABLE = 30;
@@ -35,15 +35,15 @@ public class Table {
   }
 
   public void moveToSeat(ClientGameSocket spectatorGameSocket, Direction direction) {
-    logger.info("Entered moveToSeat.");
+    LOGGER.info("Entered moveToSeat.");
     ClientGameSocket currentSeatedPlayer = this.playerSockets.get(direction);
     if (currentSeatedPlayer != null) {
-      logger.info("Trying to seat in an occupied seat. First unsitting player from " + direction.getCompleteName());
+      LOGGER.info("Trying to seat in an occupied seat. First unsitting player from " + direction.getCompleteName());
       this.unsit(direction);
     }
 
     if (!spectatorGameSocket.equals(currentSeatedPlayer)) {
-      logger.info("Now trying to seat in an empty seat: " + direction.getCompleteName());
+      LOGGER.info("Now trying to seat in an empty seat: " + direction.getCompleteName());
       this.sitOnEmptySeat(spectatorGameSocket, direction);
     }
 
@@ -53,7 +53,7 @@ public class Table {
   }
 
   private void unsit(Direction direction) {
-    logger.info("Removing player from " + direction.getCompleteName() + "to spectators");
+    LOGGER.info("Removing player from " + direction.getCompleteName() + "to spectators");
     ClientGameSocket currentSeatedPlayer = this.playerSockets.get(direction);
     if (currentSeatedPlayer != null) {
       currentSeatedPlayer.unsetDirection();
@@ -67,12 +67,12 @@ public class Table {
   private void sitOnEmptySeat(ClientGameSocket clientGameSocket, Direction direction) {
     ClientGameSocket currentSeatedPlayer = this.playerSockets.get(direction);
     if (currentSeatedPlayer != null) {
-      logger.error("Trying to seat on occupied seat.");
+      LOGGER.error("Trying to seat on occupied seat.");
       return;
     }
 
     if (clientGameSocket.isSpectator()) {
-      logger.info("Trying to move from espectators to " + direction.getCompleteName() + ".");
+      LOGGER.info("Trying to move from espectators to " + direction.getCompleteName() + ".");
       ClientGameSocket spectatorGameSocket = clientGameSocket;
       spectatorGameSocket.setDirection(direction);
       this.playerSockets.put(direction, spectatorGameSocket);
@@ -81,7 +81,7 @@ public class Table {
       spectatorGameSocket.sendDirection(direction);
       this.gameServer.getDeal().setPlayerOf(direction, spectatorGameSocket.getPlayer());
     } else {
-      logger.info("Trying to move from " + clientGameSocket.getDirection().getCompleteName() + " to "
+      LOGGER.info("Trying to move from " + clientGameSocket.getDirection().getCompleteName() + " to "
           + direction.getCompleteName() + ".");
       Direction from = clientGameSocket.getDirection();
       Direction to = direction;
@@ -98,19 +98,19 @@ public class Table {
   }
 
   private void logAllSockets() {
-    logger.info("--- Logging sockets ---");
+    LOGGER.info("--- Logging sockets ---");
     playerSockets.values().stream().forEach(socket -> printSocket(socket));
     spectatorSockets.stream().forEach(socket -> printSocket(socket));
-    logger.info("--- Finished Logging sockets ---\n\n\n");
+    LOGGER.info("--- Finished Logging sockets ---\n\n\n");
   }
 
   private void printSocket(ClientGameSocket socket) {
     String name = socket.getPlayer().getName();
     Direction direction = socket.getDirection();
     if (socket.isSpectator()) {
-      logger.info("SPEC: " + name);
+      LOGGER.info("SPEC: " + name);
     } else {
-      logger.info("   " + direction.getAbbreviation() + ": " + name);
+      LOGGER.info("   " + direction.getAbbreviation() + ": " + name);
     }
   }
 
@@ -125,7 +125,7 @@ public class Table {
     for (Direction direction : Direction.values()) {
       ClientGameSocket currentPlayerGameSocket = playerSockets.get(direction);
       if (playerGameSocket.equals(currentPlayerGameSocket)) {
-        logger.info("Removing player from " + direction.getCompleteName());
+        LOGGER.info("Removing player from " + direction.getCompleteName());
         playerSockets.remove(direction);
       }
     }
@@ -136,7 +136,7 @@ public class Table {
     ClientGameSocket spectatorGameSocket = new ClientGameSocket(playerNetworkInformation, null, this);
     this.spectatorSockets.add(spectatorGameSocket);
     this.messageSender.addClientGameSocket(spectatorGameSocket);
-    logger.info("Info do spectator:" + spectatorGameSocket);
+    LOGGER.info("Info do spectator:" + spectatorGameSocket);
     this.messageSender.sendDealAll(this.gameServer.getDeal());
     pool.execute(spectatorGameSocket);
 
@@ -152,7 +152,7 @@ public class Table {
     }
     this.spectatorSockets.remove(playerSocket);
     if (playerSocket.getSocket().equals(owner.getSocket())) {
-      logger.info("Removing owner! Something bad happened!");
+      LOGGER.info("Removing owner! Something bad happened!");
     }
   }
 
