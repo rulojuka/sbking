@@ -1,15 +1,12 @@
 package br.com.sbk.sbking.networking.client;
 
+import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
+
 import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.networking.core.serialization.Serializator;
 
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.LogManager;
-
 public class ClientToServerMessageSender {
-
-    private static final Logger LOGGER = LogManager.getLogger(ClientToServerMessageSender.class);
 
     private Serializator serializator;
 

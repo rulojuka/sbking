@@ -1,9 +1,8 @@
 package br.com.sbk.sbking.networking.client;
 
-import java.net.Socket;
+import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.LogManager;
+import java.net.Socket;
 
 import br.com.sbk.sbking.core.Board;
 import br.com.sbk.sbking.core.Deal;
@@ -50,8 +49,6 @@ public class SBKingClient implements Runnable {
     private boolean spectator;
 
     private String nickname;
-
-    private static final Logger LOGGER = LogManager.getLogger(SBKingClient.class);
 
     public SBKingClient(String nickname, String hostname) {
         Socket socket = initializeSocketOrExit(hostname);

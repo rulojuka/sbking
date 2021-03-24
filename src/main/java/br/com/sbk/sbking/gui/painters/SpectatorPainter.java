@@ -1,10 +1,9 @@
 package br.com.sbk.sbking.gui.painters;
 
+import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
+
 import java.awt.Container;
 import java.awt.event.ActionListener;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import br.com.sbk.sbking.core.Board;
 import br.com.sbk.sbking.core.Deal;
@@ -13,8 +12,6 @@ import br.com.sbk.sbking.gui.elements.AllDirectionBoardElements;
 import br.com.sbk.sbking.gui.elements.ScoreSummaryElement;
 
 public class SpectatorPainter implements Painter {
-
-    private static final Logger LOGGER = LogManager.getLogger(SpectatorPainter.class);
 
     private ActionListener actionListener;
     private Deal deal;

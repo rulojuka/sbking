@@ -1,15 +1,13 @@
 package br.com.sbk.sbking.networking.core.serialization;
 
-import java.io.IOException;
+import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import java.io.IOException;
 
 public class Serializator {
 
     private final ObjectInputStreamWrapper objectInputStreamWrapper;
     private final ObjectOutputStreamWrapper objectOutputStreamWrapper;
-    private static final Logger LOGGER = LogManager.getLogger(Serializator.class);
 
     public Serializator(ObjectInputStreamWrapper objectInputStreamWrapper,
             ObjectOutputStreamWrapper objectOutputStreamWrapper) {

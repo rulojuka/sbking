@@ -1,10 +1,9 @@
 package br.com.sbk.sbking.networking.server;
 
+import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
+
 import java.util.ArrayList;
 import java.util.Collection;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import br.com.sbk.sbking.core.Board;
 import br.com.sbk.sbking.core.Deal;
@@ -15,7 +14,6 @@ import br.com.sbk.sbking.gui.models.PositiveOrNegative;
 public class MessageSender {
 
     private Collection<ClientGameSocket> playerSockets;
-    private static final Logger LOGGER = LogManager.getLogger(MessageSender.class);
 
     public MessageSender() {
         this.playerSockets = new ArrayList<ClientGameSocket>();
