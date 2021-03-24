@@ -1,13 +1,11 @@
 package br.com.sbk.sbking.gui.main;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 
 import br.com.sbk.sbking.gui.constants.FrameConstants;
 
 public class ClientApplicationState {
 
-    private static final Logger LOGGER = LogManager.getLogger(ClientApplicationState.class);
     private static boolean guiHasChanged = false;
     private static boolean guiScaleValid = true;
 

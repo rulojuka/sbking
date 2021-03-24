@@ -1,9 +1,8 @@
 package br.com.sbk.sbking.gui.frames;
 
-import java.awt.event.ActionListener;
+import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import java.awt.event.ActionListener;
 
 import br.com.sbk.sbking.core.Board;
 import br.com.sbk.sbking.core.Deal;
@@ -18,8 +17,6 @@ import br.com.sbk.sbking.gui.painters.WaitingForChoosingPositiveOrNegativePainte
 
 @SuppressWarnings("serial")
 public class KingNetworkClientScreen extends NetworkClientScreen {
-
-    private static final Logger LOGGER = LogManager.getLogger(KingNetworkClientScreen.class);
 
     public KingNetworkClientScreen() {
         super();

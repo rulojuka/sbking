@@ -1,7 +1,6 @@
 package br.com.sbk.sbking.networking.server;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 
 import br.com.sbk.sbking.core.CagandoNoBequinhoGame;
 import br.com.sbk.sbking.core.Card;
@@ -11,8 +10,6 @@ import br.com.sbk.sbking.core.Player;
 import br.com.sbk.sbking.gui.models.KingGameScoreboard;
 
 public class CagandoNoBequinhoGameServer extends GameServer {
-
-    private static final Logger LOGGER = LogManager.getLogger(CagandoNoBequinhoGameServer.class);
 
     private CagandoNoBequinhoGame cagandoNoBequinhoGame;
 

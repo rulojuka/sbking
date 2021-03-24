@@ -1,17 +1,14 @@
 package br.com.sbk.sbking.networking.core.properties;
 
+import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 import static br.com.sbk.sbking.networking.core.properties.PropertiesConstants.HOST;
 import static br.com.sbk.sbking.networking.core.properties.PropertiesConstants.PORT;
 
 import java.util.Properties;
 
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.LogManager;
-
 public class FileProperties {
 
     private final Properties configFile;
-    private static final Logger LOGGER = LogManager.getLogger(FileProperties.class);
 
     public FileProperties(String filename) {
         this.configFile = new Properties();

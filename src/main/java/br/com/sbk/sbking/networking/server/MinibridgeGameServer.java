@@ -1,7 +1,6 @@
 package br.com.sbk.sbking.networking.server;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 
 import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Deal;
@@ -15,8 +14,6 @@ import br.com.sbk.sbking.gui.models.PositiveOrNegative;
 import br.com.sbk.sbking.networking.server.notifications.GameModeOrStrainNotification;
 
 public class MinibridgeGameServer extends GameServer {
-
-  private static final Logger LOGGER = LogManager.getLogger(MinibridgeGameServer.class);
 
   private GameModeOrStrainNotification gameModeOrStrainNotification;
   private Ruleset currentGameModeOrStrain;

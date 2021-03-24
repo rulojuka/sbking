@@ -1,13 +1,12 @@
 package br.com.sbk.sbking.networking.server;
 
+import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import br.com.sbk.sbking.core.Player;
 import br.com.sbk.sbking.networking.core.properties.FileProperties;
@@ -17,8 +16,6 @@ import br.com.sbk.sbking.networking.core.serialization.Serializator;
 import br.com.sbk.sbking.networking.core.serialization.SerializatorFactory;
 
 public class LobbyServer {
-
-    private static final Logger LOGGER = LogManager.getLogger(LobbyServer.class);
 
     private static final String NETWORKING_CONFIGURATION_FILENAME = "networkConfiguration.cfg";
     private static final int COULD_NOT_GET_PORT_FROM_PROPERTIES_ERROR = 1;

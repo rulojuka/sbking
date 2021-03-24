@@ -1,18 +1,17 @@
 package br.com.sbk.sbking.networking.server;
 
+import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
+
 import java.io.IOException;
 import java.net.Socket;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import br.com.sbk.sbking.core.Board;
 import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.core.Player;
-import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
 import br.com.sbk.sbking.core.rulesets.RulesetFromShortDescriptionIdentifier;
+import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
 import br.com.sbk.sbking.gui.models.KingGameScoreboard;
 import br.com.sbk.sbking.gui.models.PositiveOrNegative;
 import br.com.sbk.sbking.networking.core.serialization.DisconnectedObject;
@@ -20,7 +19,6 @@ import br.com.sbk.sbking.networking.core.serialization.Serializator;
 import br.com.sbk.sbking.networking.messages.MessageConstants;
 
 public class ClientGameSocket implements Runnable {
-    private static final Logger LOGGER = LogManager.getLogger(ClientGameSocket.class);
 
     private PlayerNetworkInformation playerNetworkInformation;
     private Table table;

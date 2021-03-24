@@ -1,5 +1,7 @@
 package br.com.sbk.sbking.networking.server;
 
+import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -7,15 +9,10 @@ import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.core.Player;
 
 public class Table {
-
-  private static final Logger LOGGER = LogManager.getLogger(Table.class);
 
   private ExecutorService pool;
   private static final int MAXIMUM_NUMBER_OF_PLAYERS_AND_KIBITZERS_IN_A_TABLE = 30;

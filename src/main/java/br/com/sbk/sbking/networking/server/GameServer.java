@@ -1,7 +1,6 @@
 package br.com.sbk.sbking.networking.server;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 
 import br.com.sbk.sbking.core.Board;
 import br.com.sbk.sbking.core.Card;
@@ -12,7 +11,6 @@ import br.com.sbk.sbking.core.exceptions.PlayedCardInAnotherPlayersTurnException
 import br.com.sbk.sbking.networking.server.notifications.CardPlayNotification;
 
 public abstract class GameServer implements Runnable {
-    static final Logger LOGGER = LogManager.getLogger(GameServer.class);
 
     protected CardPlayNotification cardPlayNotification = new CardPlayNotification();
     protected boolean dealHasChanged;

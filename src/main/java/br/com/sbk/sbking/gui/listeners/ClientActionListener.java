@@ -1,7 +1,6 @@
 package br.com.sbk.sbking.gui.listeners;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 
 import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Direction;
@@ -10,8 +9,6 @@ import br.com.sbk.sbking.gui.JElements.SitOrLeaveButton;
 import br.com.sbk.sbking.networking.client.ClientToServerMessageSender;
 
 public class ClientActionListener implements java.awt.event.ActionListener {
-
-    private static final Logger LOGGER = LogManager.getLogger(ClientActionListener.class);
 
     private ClientToServerMessageSender networkMessageSender;
 

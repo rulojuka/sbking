@@ -1,7 +1,12 @@
 package br.com.sbk.sbking.gui.frames;
 
 import static br.com.sbk.sbking.gui.constants.FrameConstants.TABLE_COLOR;
+import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,17 +15,9 @@ import java.util.concurrent.Executors;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.Timer;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import br.com.sbk.sbking.gui.constants.FrameConstants;
 import br.com.sbk.sbking.gui.main.ClientApplicationState;
@@ -29,8 +26,6 @@ import br.com.sbk.sbking.networking.client.SBKingClient;
 
 @SuppressWarnings("serial")
 public abstract class NetworkClientScreen extends JFrame {
-
-    private static final Logger LOGGER = LogManager.getLogger(NetworkClientScreen.class);
 
     protected boolean connectedToServer = false;
     protected SBKingClient sbKingClient;
