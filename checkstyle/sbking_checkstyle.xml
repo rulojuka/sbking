@@ -54,9 +54,8 @@
 
   <!-- https://checkstyle.org/config_filters.html#SuppressionFilter -->
   <module name="SuppressionFilter">
-    <property name="file" value="${org.checkstyle.sun.suppressionfilter.config}"
-              default="checkstyle-suppressions.xml" />
-    <property name="optional" value="true"/>
+    <property name="file" value="checkstyle/suppressions.xml"/>
+    <property name="optional" value="false"/>
   </module>
 
   <!-- Checks whether files end with a new line.                        -->
@@ -154,9 +153,14 @@
     <module name="IllegalInstantiation"/>
     <module name="InnerAssignment"/>
 
-    <!-- TODO bump MagicNumber severity to error once existing violations are resolved -->
+    <!-- TODO bump MagicNumber severity on core to error once existing violations are resolved -->
     <module name="MagicNumber">
-      <property name="severity" value="warning"/>
+        <property name="id" value="core"/>
+        <property name="severity" value="warning"/>
+    </module>
+    <module name="MagicNumber">
+        <property name="id" value="non-core"/>
+        <property name="severity" value="info"/>
     </module>
 
     <module name="MissingSwitchDefault"/>
