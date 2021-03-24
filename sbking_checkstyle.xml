@@ -153,7 +153,12 @@
     <module name="EqualsHashCode"/>
     <module name="IllegalInstantiation"/>
     <module name="InnerAssignment"/>
-    <module name="MagicNumber"/>
+
+    <!-- TODO bump MagicNumber severity to error once existing violations are resolved -->
+    <module name="MagicNumber">
+      <property name="severity" value="warning"/>
+    </module>
+
     <module name="MissingSwitchDefault"/>
     <module name="MultipleVariableDeclarations"/>
     <module name="SimplifyBooleanExpression"/>
