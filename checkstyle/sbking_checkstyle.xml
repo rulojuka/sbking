@@ -153,7 +153,7 @@
     <module name="IllegalInstantiation"/>
     <module name="InnerAssignment"/>
 
-    <!-- TODO bump MagicNumber severity on core to error once existing violations are resolved -->
+    <!-- TODO bump MagicNumber severity on core to error once existing violations are resolved. -->
     <module name="MagicNumber">
         <property name="id" value="core"/>
         <property name="severity" value="warning"/>
@@ -181,6 +181,8 @@
     </module>
 
     <module name="InterfaceIsType"/>
+
+    <!-- TODO bump VisibilityModifier severity to error once existing violations are resolved. -->
     <module name="VisibilityModifier">
       <property name="severity" value="warning"/>
     </module>
