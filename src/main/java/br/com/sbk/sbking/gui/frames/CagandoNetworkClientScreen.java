@@ -1,5 +1,7 @@
 package br.com.sbk.sbking.gui.frames;
 
+import static br.com.sbk.sbking.networking.utils.SleepUtils.sleepFor;
+
 import java.awt.event.ActionListener;
 
 import org.apache.logging.log4j.LogManager;
@@ -31,12 +33,12 @@ public class CagandoNetworkClientScreen extends NetworkClientScreen {
 
         LOGGER.info("Waiting for connectedToServer to be true");
         while (!connectedToServer) {
-            sleepFor(100);
+            sleepFor(100, LOGGER);
         }
 
         LOGGER.info("Waiting for sbKingClient.isDirectionSet() to be true");
         while (!sbKingClient.isDirectionOrSpectatorSet()) {
-            sleepFor(100);
+            sleepFor(100, LOGGER);
         }
 
         while (true) {
@@ -69,15 +71,7 @@ public class CagandoNetworkClientScreen extends NetworkClientScreen {
                 }
 
             }
-            sleepFor(300);
-        }
-    }
-
-    private void sleepFor(int miliseconds) {
-        try {
-            Thread.sleep(miliseconds);
-        } catch (InterruptedException e) {
-            LOGGER.debug(e);
+            sleepFor(300, LOGGER);
         }
     }
 

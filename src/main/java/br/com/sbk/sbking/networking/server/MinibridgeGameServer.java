@@ -1,5 +1,8 @@
 package br.com.sbk.sbking.networking.server;
 
+import static br.com.sbk.sbking.networking.utils.SleepUtils.sleepFor;
+import static br.com.sbk.sbking.networking.utils.SleepUtils.sleepForWithInfo;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -31,8 +34,7 @@ public class MinibridgeGameServer extends GameServer {
   @Override
   public void run() {
 
-    LOGGER.info("Sleeping for 500ms waiting for clients to setup themselves");
-    sleepFor(500);
+    sleepForWithInfo(500, LOGGER, "Waiting for clients to setup themselves");
 
     this.game = new MinibridgeGame();
     this.minibridgeGame = (MinibridgeGame) this.game;
@@ -45,8 +47,7 @@ public class MinibridgeGameServer extends GameServer {
         this.game.setPlayerOf(direction, player);
       }
 
-      LOGGER.info("Sleeping for 300ms waiting for clients to initialize its deals.");
-      sleepFor(300);
+      sleepForWithInfo(300, LOGGER, "Waiting for clients to initialize its deals.");
 
       LOGGER.info("Everything selected! Game commencing!");
 
@@ -56,8 +57,7 @@ public class MinibridgeGameServer extends GameServer {
       }
       do {
         this.gameModeOrStrainNotification = new GameModeOrStrainNotification();
-        LOGGER.info("Sleeping for 300ms waiting for clients to initialize its deals.");
-        sleepFor(300);
+        sleepForWithInfo(300, LOGGER, "Waiting for clients to initialize its deals.");
 
         LOGGER.info("Everything selected! Game commencing!");
 
@@ -68,7 +68,7 @@ public class MinibridgeGameServer extends GameServer {
 
         this.table.getMessageSender().sendInitializeDealAll();
         this.table.getMessageSender().sendBoardAll(this.game.getCurrentBoard());
-        sleepFor(200);
+        sleepFor(200, LOGGER);
         this.table.getMessageSender().sendDealAll(this.game.getCurrentDeal());
 
         PositiveOrNegative positive = new PositiveOrNegative();
@@ -106,8 +106,7 @@ public class MinibridgeGameServer extends GameServer {
       this.table.getMessageSender()
           .sendGameModeOrStrainShortDescriptionAll(this.currentGameModeOrStrain.getShortDescription());
 
-      LOGGER.info("Sleeping for 300ms waiting for everything come out right.");
-      sleepFor(300);
+      sleepForWithInfo(300, LOGGER, "Waiting for everything come out right.");
 
       LOGGER.info("Everything selected! Game commencing!");
       this.minibridgeGame.addRuleset(currentGameModeOrStrain);
@@ -119,8 +118,7 @@ public class MinibridgeGameServer extends GameServer {
 
       this.dealHasChanged = true;
       while (!this.game.getCurrentDeal().isFinished()) {
-        LOGGER.info("Sleeping for 300ms waiting for all clients to prepare themselves.");
-        sleepFor(300);
+        sleepForWithInfo(300, LOGGER, "Waiting for all clients to prepare themselves.");
         if (this.dealHasChanged) {
           LOGGER.info("Sending new 'round' of deals");
           this.table.getMessageSender().sendDealAll(this.game.getCurrentDeal());

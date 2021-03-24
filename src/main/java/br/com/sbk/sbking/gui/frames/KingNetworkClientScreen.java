@@ -1,5 +1,7 @@
 package br.com.sbk.sbking.gui.frames;
 
+import static br.com.sbk.sbking.networking.utils.SleepUtils.sleepFor;
+
 import java.awt.event.ActionListener;
 
 import org.apache.logging.log4j.LogManager;
@@ -32,16 +34,16 @@ public class KingNetworkClientScreen extends NetworkClientScreen {
 
         LOGGER.info("Waiting for connectedToServer to be true");
         while (!connectedToServer) {
-            sleepFor(100);
+            sleepFor(100, LOGGER);
         }
 
         LOGGER.info("Waiting for sbKingClient.isDirectionSet() to be true");
         while (!sbKingClient.isDirectionOrSpectatorSet()) {
-            sleepFor(100);
+            sleepFor(100, LOGGER);
         }
 
         while (true) {
-            sleepFor(300);
+            sleepFor(300, LOGGER);
             if (sbKingClient.isSpectator()) {
                 if (sbKingClient.getBoardHasChanged() || sbKingClient.getDealHasChanged()
                         || ClientApplicationState.getGUIHasChanged()) {
@@ -58,7 +60,7 @@ public class KingNetworkClientScreen extends NetworkClientScreen {
                     }
                 }
             } else {
-                sleepFor(1000);
+                sleepFor(1000, LOGGER);
                 if (sbKingClient.getDealHasChanged() || ClientApplicationState.getGUIHasChanged()) {
                     if (!ClientApplicationState.getGUIHasChanged()) {
                         LOGGER.info("Deal has changed. Painting deal.");
@@ -87,7 +89,7 @@ public class KingNetworkClientScreen extends NetworkClientScreen {
                             paintWaitingForChoosingPositiveOrNegativeScreen(sbKingClient.getDirection(),
                                     sbKingClient.getPositiveOrNegativeChooser());
                             while (!sbKingClient.isPositiveOrNegativeSelected()) {
-                                sleepFor(100);
+                                sleepFor(100, LOGGER);
                             }
                         }
                     } else if (!sbKingClient.isRulesetValidSet()) {
@@ -104,7 +106,7 @@ public class KingNetworkClientScreen extends NetworkClientScreen {
                             paintWaitingForChoosingGameModeOrStrainScreen(sbKingClient.getDirection(),
                                     sbKingClient.getGameModeOrStrainChooser(), sbKingClient.isPositive());
                             while (!sbKingClient.isRulesetValidSet()) {
-                                sleepFor(100);
+                                sleepFor(100, LOGGER);
                             }
                         }
                     }
@@ -128,14 +130,6 @@ public class KingNetworkClientScreen extends NetworkClientScreen {
         } else {
             Painter spectatorPainter = new SpectatorPainter(playCardActionListener, board);
             this.paintPainter(spectatorPainter);
-        }
-    }
-
-    private void sleepFor(int miliseconds) {
-        try {
-            Thread.sleep(miliseconds);
-        } catch (InterruptedException e) {
-            LOGGER.debug(e);
         }
     }
 

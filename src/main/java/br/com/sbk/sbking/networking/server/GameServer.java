@@ -1,5 +1,7 @@
 package br.com.sbk.sbking.networking.server;
 
+import static br.com.sbk.sbking.networking.utils.SleepUtils.sleepForWithInfo;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -57,14 +59,6 @@ public abstract class GameServer implements Runnable {
         cardPlayNotification.notifyAllWithCardAndDirection(card, direction);
     }
 
-    protected void sleepFor(int miliseconds) {
-        try {
-            Thread.sleep(miliseconds);
-        } catch (InterruptedException e) {
-            LOGGER.debug(e);
-        }
-    }
-
     public Deal getDeal() {
         return this.game.getCurrentDeal();
     }
@@ -74,7 +68,7 @@ public abstract class GameServer implements Runnable {
     }
 
     protected void sleepToShowLastCard() {
-        sleepFor(4000);
+        sleepForWithInfo(4000, LOGGER, "Waiting for everyone to see the last card.");
     }
 
 }

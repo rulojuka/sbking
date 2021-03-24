@@ -1,5 +1,8 @@
 package br.com.sbk.sbking.networking.server;
 
+import static br.com.sbk.sbking.networking.utils.SleepUtils.sleepFor;
+import static br.com.sbk.sbking.networking.utils.SleepUtils.sleepForWithInfo;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -33,8 +36,7 @@ public class KingGameServer extends GameServer {
     @Override
     public void run() {
 
-        LOGGER.info("Sleeping for 500ms waiting for clients to setup themselves");
-        sleepFor(500);
+        sleepForWithInfo(500, LOGGER, "Waiting for clients to setup themselves");
 
         this.game = new KingGame();
         this.kingGame = (KingGame) this.game;
@@ -51,10 +53,9 @@ public class KingGameServer extends GameServer {
                 this.gameModeOrStrainNotification = new GameModeOrStrainNotification();
                 this.positiveOrNegativeNotification = new PositiveOrNegativeNotification();
                 this.table.getMessageSender().sendInitializeDealAll();
-                LOGGER.info("Sleeping for 300ms waiting for clients to initialize its deals.");
-                sleepFor(300);
+                sleepForWithInfo(300, LOGGER, "Waiting for clients to initialize its deals.");
                 this.table.getMessageSender().sendBoardAll(this.game.getCurrentBoard());
-                sleepFor(300);
+                sleepFor(300, LOGGER);
                 this.table.getMessageSender()
                         .sendChooserPositiveNegativeAll(this.getCurrentPositiveOrNegativeChooser());
 
@@ -85,7 +86,7 @@ public class KingGameServer extends GameServer {
                         + positiveOrNegativeNotification.getPositiveOrNegative().toString());
                 this.currentPositiveOrNegative = positiveOrNegativeNotification.getPositiveOrNegative();
                 this.table.getMessageSender().sendPositiveOrNegativeAll(this.currentPositiveOrNegative);
-                sleepFor(300);
+                sleepFor(300, LOGGER);
                 this.table.getMessageSender().sendChooserGameModeOrStrainAll(this.getCurrentGameModeOrStrainChooser());
 
                 synchronized (gameModeOrStrainNotification) {
@@ -97,7 +98,7 @@ public class KingGameServer extends GameServer {
                                     "I am waiting for some thread to notify that it wants to choose game Mode Or Strain");
                             gameModeOrStrainNotification.wait(3000);
                             this.table.getMessageSender().sendPositiveOrNegativeAll(this.currentPositiveOrNegative);
-                            sleepFor(300);
+                            sleepFor(300, LOGGER);
                             this.table.getMessageSender()
                                     .sendChooserGameModeOrStrainAll(this.getCurrentGameModeOrStrainChooser());
                         } catch (InterruptedException e) {
@@ -124,8 +125,7 @@ public class KingGameServer extends GameServer {
             this.table.getMessageSender()
                     .sendGameModeOrStrainShortDescriptionAll(this.currentGameModeOrStrain.getShortDescription());
 
-            LOGGER.info("Sleeping for 300ms waiting for everything come out right.");
-            sleepFor(300);
+            sleepForWithInfo(300, LOGGER, "Waiting for everything come out right.");
 
             LOGGER.info("Everything selected! Game commencing!");
             this.kingGame.addRuleset(currentGameModeOrStrain);
@@ -136,8 +136,7 @@ public class KingGameServer extends GameServer {
             }
 
             this.dealHasChanged = true;
-            LOGGER.info("Sleeping for 300ms waiting for all clients to prepare themselves.");
-            sleepFor(300);
+            sleepForWithInfo(300, LOGGER, "Waiting for all clients to prepare themselves.");
             while (!this.game.getCurrentDeal().isFinished()) {
                 if (this.dealHasChanged) {
                     LOGGER.info("Sending new 'round' of deals");
@@ -166,18 +165,15 @@ public class KingGameServer extends GameServer {
 
             LOGGER.info("Sending last 'round' of deals");
             this.table.getMessageSender().sendDealAll(this.game.getCurrentDeal());
-            LOGGER.info("Sleeping for 3000ms for everyone to see the last card.");
-            sleepFor(3000);
+            sleepForWithInfo(3000, LOGGER, "Waiting for everyone to see the last card.");
             this.game.finishDeal();
 
             this.table.getMessageSender().sendGameScoreboardAll(this.kingGame.getGameScoreboard());
 
-            LOGGER.info("Sleeping for 300ms waiting for all clients to prepare themselves.");
-            sleepFor(300);
+            sleepForWithInfo(300, LOGGER, "waiting for all clients to prepare themselves.");
             this.table.getMessageSender().sendFinishDealAll();
             LOGGER.info("Deal finished!");
-            LOGGER.info("Sleeping for 300ms waiting for all clients to prepare themselves.");
-            sleepFor(300);
+            sleepForWithInfo(300, LOGGER, "waiting for all clients to prepare themselves.");
         }
 
         this.table.getMessageSender().sendFinishGameAll();

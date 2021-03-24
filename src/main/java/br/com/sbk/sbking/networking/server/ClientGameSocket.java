@@ -1,5 +1,7 @@
 package br.com.sbk.sbking.networking.server;
 
+import static br.com.sbk.sbking.networking.utils.SleepUtils.sleepForWithInfo;
+
 import java.io.IOException;
 import java.net.Socket;
 
@@ -151,8 +153,7 @@ public class ClientGameSocket implements Runnable {
     }
 
     private void waitForClientSetup() throws IOException, InterruptedException {
-        LOGGER.info("Sleeping for 300ms waiting for client to setup itself");
-        Thread.sleep(300);
+        sleepForWithInfo(300, LOGGER, "Waiting for client to setup itself.");
     }
 
     public void sendDeal(Deal deal) {

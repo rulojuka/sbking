@@ -1,5 +1,7 @@
 package br.com.sbk.sbking.networking.client;
 
+import static br.com.sbk.sbking.networking.utils.SleepUtils.sleepForWithInfo;
+
 import java.net.Socket;
 
 import org.apache.logging.log4j.Logger;
@@ -194,11 +196,7 @@ public class SBKingClient implements Runnable {
         }
 
         // FIXME remove this if possible
-        try {
-            Thread.sleep(300);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        sleepForWithInfo(300, LOGGER, "Waiting for socket to finalize reading.");
     }
 
     private void setCurrentBoard(Board board) {
