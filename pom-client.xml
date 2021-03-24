@@ -114,8 +114,7 @@
 					<enableFilesSummary>false</enableFilesSummary>
 					<logViolationsToConsole>true</logViolationsToConsole>
 				</configuration>
-				<!-- uncomment to make build fail on error -->
-				<!-- <executions>
+				<executions>
 					<execution>
 						<id>checkstyle</id>
 						<phase>validate</phase>
@@ -123,7 +122,7 @@
 							<goal>check</goal>
 						</goals>
 					</execution>
-				</executions> -->
+				</executions>
 			</plugin>
 
 		</plugins>
