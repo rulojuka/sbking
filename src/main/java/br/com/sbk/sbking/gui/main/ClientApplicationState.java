@@ -7,10 +7,9 @@ import br.com.sbk.sbking.gui.constants.FrameConstants;
 
 public class ClientApplicationState {
 
-    static final Logger logger = LogManager.getLogger(ClientApplicationState.class);
+    private static final Logger LOGGER = LogManager.getLogger(ClientApplicationState.class);
     private static boolean guiHasChanged = false;
     private static boolean guiScaleValid = true;
-
 
     public static void setGUIHasChanged(boolean changed) {
         guiHasChanged = changed;
@@ -33,7 +32,7 @@ public class ClientApplicationState {
     }
 
     public static void startAppState() {
-        logger.info("Initializing Frame Constants");
+        LOGGER.info("Initializing Frame Constants");
 
         FrameConstants.initFrameConstants();
 
@@ -42,7 +41,7 @@ public class ClientApplicationState {
     }
 
     public static void resizeWindow(int width, int height) {
-        logger.info("Resizing Window");
+        LOGGER.info("Resizing Window");
 
         FrameConstants.computeConstants(width, height);
 

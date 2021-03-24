@@ -14,7 +14,7 @@ import br.com.sbk.sbking.gui.elements.SpecificDirectionBoardElements;
 
 public class DealPainter implements Painter {
 
-    static final Logger logger = LogManager.getLogger(DealPainter.class);
+    private static final Logger LOGGER = LogManager.getLogger(DealPainter.class);
 
     protected Direction direction;
     protected ActionListener actionListener;
@@ -34,7 +34,7 @@ public class DealPainter implements Painter {
 
     @Override
     public void paint(Container contentPane) {
-        logger.info("Painting deal that contains this trick: " + deal.getCurrentTrick());
+        LOGGER.info("Painting deal that contains this trick: " + deal.getCurrentTrick());
         contentPane.removeAll();
 
         // FIXME This should be uncommented when there is a good way to show the last

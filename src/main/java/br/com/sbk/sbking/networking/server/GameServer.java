@@ -12,7 +12,7 @@ import br.com.sbk.sbking.core.exceptions.PlayedCardInAnotherPlayersTurnException
 import br.com.sbk.sbking.networking.server.notifications.CardPlayNotification;
 
 public abstract class GameServer implements Runnable {
-    static final  Logger logger = LogManager.getLogger(GameServer.class);
+    static final Logger LOGGER = LogManager.getLogger(GameServer.class);
 
     protected CardPlayNotification cardPlayNotification = new CardPlayNotification();
     protected boolean dealHasChanged;
@@ -26,7 +26,7 @@ public abstract class GameServer implements Runnable {
     }
 
     protected void playCard(Card card, Direction direction) {
-        logger.info("It is currently the " + this.game.getCurrentDeal().getCurrentPlayer() + " turn");
+        LOGGER.info("It is currently the " + this.game.getCurrentDeal().getCurrentPlayer() + " turn");
         try {
             if (this.game.getCurrentDeal().getCurrentPlayer() == direction) {
                 syncPlayCard(card);
@@ -35,21 +35,21 @@ public abstract class GameServer implements Runnable {
                 throw new PlayedCardInAnotherPlayersTurnException();
             }
         } catch (Exception e) {
-            logger.debug(e);
+            LOGGER.debug(e);
         }
     }
 
     protected synchronized void syncPlayCard(Card card) {
-        logger.info("Entering synchronized play card");
+        LOGGER.info("Entering synchronized play card");
         this.game.getCurrentDeal().playCard(card);
-        logger.info("Leaving synchronized play card");
+        LOGGER.info("Leaving synchronized play card");
     }
 
     public void notifyPlayCard(Card card, Direction direction) {
         synchronized (cardPlayNotification) {
-            logger.info("Started notifying main thread that I(" + direction + ") want to play the " + card);
+            LOGGER.info("Started notifying main thread that I(" + direction + ") want to play the " + card);
             this.releaseAllWaiters(card, direction);
-            logger.info("Finished notifying main thread that I(" + direction + ") want to play the " + card);
+            LOGGER.info("Finished notifying main thread that I(" + direction + ") want to play the " + card);
         }
     }
 
@@ -61,7 +61,7 @@ public abstract class GameServer implements Runnable {
         try {
             Thread.sleep(miliseconds);
         } catch (InterruptedException e) {
-            logger.debug(e);
+            LOGGER.debug(e);
         }
     }
 

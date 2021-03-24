@@ -17,7 +17,7 @@ import br.com.sbk.sbking.gui.painters.SpectatorPainter;
 @SuppressWarnings("serial")
 public class CagandoNetworkClientScreen extends NetworkClientScreen {
 
-    static final Logger logger = LogManager.getLogger(CagandoNetworkClientScreen.class);
+    private static final Logger LOGGER = LogManager.getLogger(CagandoNetworkClientScreen.class);
 
     public CagandoNetworkClientScreen() {
         super();
@@ -25,26 +25,27 @@ public class CagandoNetworkClientScreen extends NetworkClientScreen {
 
     @Override
     public void run() {
-        logger.info("Starting to paint ConnectToServerScreen");
+        LOGGER.info("Starting to paint ConnectToServerScreen");
         paintConnectToServerScreen();
-        logger.info("Finished painting ConnectToServerScreen");
+        LOGGER.info("Finished painting ConnectToServerScreen");
 
-        logger.info("Waiting for connectedToServer to be true");
+        LOGGER.info("Waiting for connectedToServer to be true");
         while (!connectedToServer) {
             sleepFor(100);
         }
 
-        logger.info("Waiting for sbKingClient.isDirectionSet() to be true");
+        LOGGER.info("Waiting for sbKingClient.isDirectionSet() to be true");
         while (!sbKingClient.isDirectionOrSpectatorSet()) {
             sleepFor(100);
         }
 
         while (true) {
             if (sbKingClient.isSpectator()) {
-                if (sbKingClient.getBoardHasChanged() || sbKingClient.getDealHasChanged() || ClientApplicationState.getGUIHasChanged()) {
+                if (sbKingClient.getBoardHasChanged() || sbKingClient.getDealHasChanged()
+                        || ClientApplicationState.getGUIHasChanged()) {
                     if (!ClientApplicationState.getGUIHasChanged()) {
-                        logger.info("Deal has changed. Painting deal.");
-                        logger.info("It is a spectator.");
+                        LOGGER.info("Deal has changed. Painting deal.");
+                        LOGGER.info("It is a spectator.");
                     }
                     Deal currentDeal = sbKingClient.getDeal();
                     Board currentBoard = sbKingClient.getCurrentBoard();
@@ -57,14 +58,14 @@ public class CagandoNetworkClientScreen extends NetworkClientScreen {
             } else {
                 if (sbKingClient.getDealHasChanged() || ClientApplicationState.getGUIHasChanged()) {
                     if (!ClientApplicationState.getGUIHasChanged()) {
-                        logger.info("Deal has changed. Painting deal.");
-                        logger.info("It is a player.");
+                        LOGGER.info("Deal has changed. Painting deal.");
+                        LOGGER.info("It is a player.");
                     }
                     Deal currentDeal = sbKingClient.getDeal();
 
-                    logger.info("Starting to paint Deal");
+                    LOGGER.info("Starting to paint Deal");
                     paintDeal(currentDeal, sbKingClient.getDirection(), sbKingClient.getPlayCardActionListener());
-                    logger.info("Finished painting Deal");
+                    LOGGER.info("Finished painting Deal");
                 }
 
             }
@@ -76,7 +77,7 @@ public class CagandoNetworkClientScreen extends NetworkClientScreen {
         try {
             Thread.sleep(miliseconds);
         } catch (InterruptedException e) {
-            logger.debug(e);
+            LOGGER.debug(e);
         }
     }
 
@@ -92,7 +93,7 @@ public class CagandoNetworkClientScreen extends NetworkClientScreen {
 
     private void paintSpectatorScreen(Deal deal, ActionListener playCardActionListener) {
         if (deal == null) {
-            logger.error("Deal should not be null here.");
+            LOGGER.error("Deal should not be null here.");
         } else {
             Painter spectatorPainter = new SpectatorPainter(playCardActionListener, deal);
             this.paintPainter(spectatorPainter);
@@ -101,7 +102,7 @@ public class CagandoNetworkClientScreen extends NetworkClientScreen {
 
     private void paintSpectatorScreen(Board board, ActionListener playCardActionListener) {
         if (board == null) {
-            logger.error("Board should not be null here.");
+            LOGGER.error("Board should not be null here.");
         } else {
             Painter spectatorPainter = new SpectatorPainter(playCardActionListener, board);
             this.paintPainter(spectatorPainter);

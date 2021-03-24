@@ -27,11 +27,10 @@ import br.com.sbk.sbking.gui.main.ClientApplicationState;
 import br.com.sbk.sbking.gui.painters.Painter;
 import br.com.sbk.sbking.networking.client.SBKingClient;
 
-
 @SuppressWarnings("serial")
 public abstract class NetworkClientScreen extends JFrame {
 
-    static final Logger logger = LogManager.getLogger(NetworkClientScreen.class);
+    private static final Logger LOGGER = LogManager.getLogger(NetworkClientScreen.class);
 
     protected boolean connectedToServer = false;
     protected SBKingClient sbKingClient;
@@ -81,7 +80,7 @@ public abstract class NetworkClientScreen extends JFrame {
             this.connectedToServer = true;
             pool.execute(this.sbKingClient);
         } else {
-            logger.error("Invalid IP");
+            LOGGER.error("Invalid IP");
         }
     }
 

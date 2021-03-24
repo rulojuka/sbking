@@ -18,7 +18,7 @@ import br.com.sbk.sbking.networking.core.serialization.SerializatorFactory;
 
 public class LobbyServer {
 
-    static final Logger logger = LogManager.getLogger(LobbyServer.class);
+    private static final Logger LOGGER = LogManager.getLogger(LobbyServer.class);
 
     private static final String NETWORKING_CONFIGURATION_FILENAME = "networkConfiguration.cfg";
     private static final int COULD_NOT_GET_PORT_FROM_PROPERTIES_ERROR = 1;
@@ -38,47 +38,48 @@ public class LobbyServer {
         int port = this.getPortFromNetworkingProperties();
 
         try (ServerSocket listener = new ServerSocket(port)) {
-            logger.info("LobbyServer is Running...");
-            logger.info("My InetAddress is: " + listener.getInetAddress());
-            logger.info("Listening for connections on port: " + port);
+            LOGGER.info("LobbyServer is Running...");
+            LOGGER.info("My InetAddress is: " + listener.getInetAddress());
+            LOGGER.info("Listening for connections on port: " + port);
 
             while (!ownerConnected) {
                 Socket connectingSocket = listener.accept();
-                logger.info("The first client is trying to connect!");
+                LOGGER.info("The first client is trying to connect!");
                 try {
                     PlayerNetworkInformation connectedPlayerNetworkInformation = this.connectPlayer(connectingSocket);
-                    logger.info("Created new gameServer");
+                    LOGGER.info("Created new gameServer");
                     GameServer gameServer = new MinibridgeGameServer();
 
                     this.table = new Table(connectedPlayerNetworkInformation, gameServer);
                     gameServer.setTable(table);
                     this.ownerConnected = true;
-                    logger.info("Created a Table. Owner is " + connectedPlayerNetworkInformation.getSocket().getInetAddress()
+                    LOGGER.info("Created a Table. Owner is "
+                            + connectedPlayerNetworkInformation.getSocket().getInetAddress()
                             + "and GameServer is MinibridgeGameServer.");
                     pool.execute(gameServer);
-                    logger.info("Executing gameServer in the pool.");
+                    LOGGER.info("Executing gameServer in the pool.");
                 } catch (RuntimeException e) {
-                    logger.error(e.getMessage());
+                    LOGGER.error(e.getMessage());
                 }
             }
 
             while (true) {
                 Socket connectingPlayerSocket = listener.accept();
-                logger.info("Someone is trying to connect!");
+                LOGGER.info("Someone is trying to connect!");
                 try {
                     PlayerNetworkInformation connectedPlayer = this.connectPlayer(connectingPlayerSocket);
                     this.table.addSpectator(connectedPlayer);
-                    logger.info("Added a spectator.");
+                    LOGGER.info("Added a spectator.");
                 } catch (RuntimeException e) {
-                    logger.error(e.getMessage());
+                    LOGGER.error(e.getMessage());
                     e.printStackTrace();
                 }
             }
         } catch (IOException e) {
-            logger.fatal("Fatal error listening to new connections. Exiting lobby server.");
-            logger.fatal(e);
+            LOGGER.fatal("Fatal error listening to new connections. Exiting lobby server.");
+            LOGGER.fatal(e);
         }
-        logger.info("Lobby has ended. Exiting main thread.");
+        LOGGER.info("Lobby has ended. Exiting main thread.");
     }
 
     private PlayerNetworkInformation connectPlayer(Socket connectingPlayerSocket) {
@@ -95,7 +96,7 @@ public class LobbyServer {
         try {
             return serializatorFactory.getSerializator(socket);
         } catch (Exception e) {
-            logger.debug(e);
+            LOGGER.debug(e);
         }
         return null;
     }
@@ -104,11 +105,12 @@ public class LobbyServer {
         FileProperties fileProperties = new FileProperties(NETWORKING_CONFIGURATION_FILENAME);
         int port = 0;
         try {
-            NetworkingProperties networkingProperties = new NetworkingProperties(fileProperties, new SystemProperties());
+            NetworkingProperties networkingProperties = new NetworkingProperties(fileProperties,
+                    new SystemProperties());
             port = networkingProperties.getPort();
         } catch (Exception e) {
-            logger.fatal("Could not get port from properties.");
-            logger.debug(e);
+            LOGGER.fatal("Could not get port from properties.");
+            LOGGER.debug(e);
             System.exit(COULD_NOT_GET_PORT_FROM_PROPERTIES_ERROR);
         }
 

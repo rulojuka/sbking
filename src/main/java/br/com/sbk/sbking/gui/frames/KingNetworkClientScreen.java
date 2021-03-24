@@ -19,23 +19,23 @@ import br.com.sbk.sbking.gui.painters.WaitingForChoosingPositiveOrNegativePainte
 @SuppressWarnings("serial")
 public class KingNetworkClientScreen extends NetworkClientScreen {
 
-    static final Logger logger = LogManager.getLogger(KingNetworkClientScreen.class);
+    private static final Logger LOGGER = LogManager.getLogger(KingNetworkClientScreen.class);
 
     public KingNetworkClientScreen() {
         super();
     }
 
     public void run() {
-        logger.info("Starting to paint ConnectToServerScreen");
+        LOGGER.info("Starting to paint ConnectToServerScreen");
         paintConnectToServerScreen();
-        logger.info("Finished painting ConnectToServerScreen");
+        LOGGER.info("Finished painting ConnectToServerScreen");
 
-        logger.info("Waiting for connectedToServer to be true");
+        LOGGER.info("Waiting for connectedToServer to be true");
         while (!connectedToServer) {
             sleepFor(100);
         }
 
-        logger.info("Waiting for sbKingClient.isDirectionSet() to be true");
+        LOGGER.info("Waiting for sbKingClient.isDirectionSet() to be true");
         while (!sbKingClient.isDirectionOrSpectatorSet()) {
             sleepFor(100);
         }
@@ -43,10 +43,11 @@ public class KingNetworkClientScreen extends NetworkClientScreen {
         while (true) {
             sleepFor(300);
             if (sbKingClient.isSpectator()) {
-                if (sbKingClient.getBoardHasChanged() || sbKingClient.getDealHasChanged() || ClientApplicationState.getGUIHasChanged()) {
+                if (sbKingClient.getBoardHasChanged() || sbKingClient.getDealHasChanged()
+                        || ClientApplicationState.getGUIHasChanged()) {
                     if (!ClientApplicationState.getGUIHasChanged()) {
-                        logger.info("Deal has changed. Painting deal.");
-                        logger.info("It is a spectator.");
+                        LOGGER.info("Deal has changed. Painting deal.");
+                        LOGGER.info("It is a spectator.");
                     }
                     Deal currentDeal = sbKingClient.getDeal();
                     Board currentBoard = sbKingClient.getCurrentBoard();
@@ -60,10 +61,10 @@ public class KingNetworkClientScreen extends NetworkClientScreen {
                 sleepFor(1000);
                 if (sbKingClient.getDealHasChanged() || ClientApplicationState.getGUIHasChanged()) {
                     if (!ClientApplicationState.getGUIHasChanged()) {
-                        logger.info("Deal has changed. Painting deal.");
-                        logger.info("It is a player.");
+                        LOGGER.info("Deal has changed. Painting deal.");
+                        LOGGER.info("It is a player.");
                     }
-                    logger.info("Starting to paint Deal");
+                    LOGGER.info("Starting to paint Deal");
                     Deal currentDeal = sbKingClient.getDeal();
                     Board currentBoard = sbKingClient.getCurrentBoard();
                     if (currentDeal == null) {
@@ -71,18 +72,18 @@ public class KingNetworkClientScreen extends NetworkClientScreen {
                     } else {
                         paintDeal(currentDeal, sbKingClient.getDirection(), sbKingClient.getPlayCardActionListener());
                     }
-                    logger.info("Finished painting Deal");
+                    LOGGER.info("Finished painting Deal");
                 } else {
                     if (!sbKingClient.isPositiveOrNegativeSelected()) {
-                        logger.info("Positive or Negative not selected yet!");
+                        LOGGER.info("Positive or Negative not selected yet!");
                         if (sbKingClient.getDirection() == null || !sbKingClient.isPositiveOrNegativeChooserSet()) {
-                            logger.info("Direction not set yet.");
-                            logger.info("or Chooser not set yet.");
+                            LOGGER.info("Direction not set yet.");
+                            LOGGER.info("or Chooser not set yet.");
                             continue;
                         } else {
-                            logger.info("paintWaitingForChoosingGameModeOrStrainScreen!");
-                            logger.info("My direction: " + sbKingClient.getDirection());
-                            logger.info("Chooser: " + sbKingClient.getGameModeOrStrainChooser());
+                            LOGGER.info("paintWaitingForChoosingGameModeOrStrainScreen!");
+                            LOGGER.info("My direction: " + sbKingClient.getDirection());
+                            LOGGER.info("Chooser: " + sbKingClient.getGameModeOrStrainChooser());
                             paintWaitingForChoosingPositiveOrNegativeScreen(sbKingClient.getDirection(),
                                     sbKingClient.getPositiveOrNegativeChooser());
                             while (!sbKingClient.isPositiveOrNegativeSelected()) {
@@ -90,15 +91,15 @@ public class KingNetworkClientScreen extends NetworkClientScreen {
                             }
                         }
                     } else if (!sbKingClient.isRulesetValidSet()) {
-                        logger.info("GameModeOrStrain not selected yet!");
+                        LOGGER.info("GameModeOrStrain not selected yet!");
                         if (sbKingClient.getDirection() == null || !sbKingClient.isGameModeOrStrainChooserSet()) {
-                            logger.info("Direction not set yet.");
-                            logger.info("or Chooser not set yet.");
+                            LOGGER.info("Direction not set yet.");
+                            LOGGER.info("or Chooser not set yet.");
                             continue;
                         } else {
-                            logger.info("paintWaitingForChoosingGameModeOrStrainScreen!");
-                            logger.info("My direction: " + sbKingClient.getDirection());
-                            logger.info("Chooser: " + sbKingClient.getGameModeOrStrainChooser());
+                            LOGGER.info("paintWaitingForChoosingGameModeOrStrainScreen!");
+                            LOGGER.info("My direction: " + sbKingClient.getDirection());
+                            LOGGER.info("Chooser: " + sbKingClient.getGameModeOrStrainChooser());
 
                             paintWaitingForChoosingGameModeOrStrainScreen(sbKingClient.getDirection(),
                                     sbKingClient.getGameModeOrStrainChooser(), sbKingClient.isPositive());
@@ -114,7 +115,7 @@ public class KingNetworkClientScreen extends NetworkClientScreen {
 
     private void paintSpectatorScreen(Deal deal, ActionListener playCardActionListener) {
         if (deal == null) {
-            logger.error("Deal should not be null here.");
+            LOGGER.error("Deal should not be null here.");
         } else {
             Painter spectatorPainter = new SpectatorPainter(playCardActionListener, deal);
             this.paintPainter(spectatorPainter);
@@ -123,7 +124,7 @@ public class KingNetworkClientScreen extends NetworkClientScreen {
 
     private void paintSpectatorScreen(Board board, ActionListener playCardActionListener) {
         if (board == null) {
-            logger.error("Board should not be null here.");
+            LOGGER.error("Board should not be null here.");
         } else {
             Painter spectatorPainter = new SpectatorPainter(playCardActionListener, board);
             this.paintPainter(spectatorPainter);
@@ -134,7 +135,7 @@ public class KingNetworkClientScreen extends NetworkClientScreen {
         try {
             Thread.sleep(miliseconds);
         } catch (InterruptedException e) {
-            logger.debug(e);
+            LOGGER.debug(e);
         }
     }
 

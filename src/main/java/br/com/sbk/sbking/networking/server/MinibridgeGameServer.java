@@ -16,7 +16,7 @@ import br.com.sbk.sbking.networking.server.notifications.GameModeOrStrainNotific
 
 public class MinibridgeGameServer extends GameServer {
 
-  static final Logger logger = LogManager.getLogger(MinibridgeGameServer.class);
+  private static final Logger LOGGER = LogManager.getLogger(MinibridgeGameServer.class);
 
   private GameModeOrStrainNotification gameModeOrStrainNotification;
   private Ruleset currentGameModeOrStrain;
@@ -31,7 +31,7 @@ public class MinibridgeGameServer extends GameServer {
   @Override
   public void run() {
 
-    logger.info("Sleeping for 500ms waiting for clients to setup themselves");
+    LOGGER.info("Sleeping for 500ms waiting for clients to setup themselves");
     sleepFor(500);
 
     this.game = new MinibridgeGame();
@@ -45,10 +45,10 @@ public class MinibridgeGameServer extends GameServer {
         this.game.setPlayerOf(direction, player);
       }
 
-      logger.info("Sleeping for 300ms waiting for clients to initialize its deals.");
+      LOGGER.info("Sleeping for 300ms waiting for clients to initialize its deals.");
       sleepFor(300);
 
-      logger.info("Everything selected! Game commencing!");
+      LOGGER.info("Everything selected! Game commencing!");
 
       Deal currentDeal = this.game.getCurrentDeal();
       for (Direction direction : Direction.values()) {
@@ -56,10 +56,10 @@ public class MinibridgeGameServer extends GameServer {
       }
       do {
         this.gameModeOrStrainNotification = new GameModeOrStrainNotification();
-        logger.info("Sleeping for 300ms waiting for clients to initialize its deals.");
+        LOGGER.info("Sleeping for 300ms waiting for clients to initialize its deals.");
         sleepFor(300);
 
-        logger.info("Everything selected! Game commencing!");
+        LOGGER.info("Everything selected! Game commencing!");
 
         currentDeal = this.game.getCurrentDeal();
         for (Direction direction : Direction.values()) {
@@ -77,9 +77,9 @@ public class MinibridgeGameServer extends GameServer {
         synchronized (gameModeOrStrainNotification) {
           // wait until object notifies - which relinquishes the lock on the object too
           while (gameModeOrStrainNotification.getGameModeOrStrain() == null) {
-            logger.info("getGameModeOrStrain:" + gameModeOrStrainNotification.getGameModeOrStrain());
+            LOGGER.info("getGameModeOrStrain:" + gameModeOrStrainNotification.getGameModeOrStrain());
             try {
-              logger.info("I am waiting for some thread to notify that it wants to choose game Mode Or Strain");
+              LOGGER.info("I am waiting for some thread to notify that it wants to choose game Mode Or Strain");
               gameModeOrStrainNotification.wait(3000);
               this.table.getMessageSender().sendChooserGameModeOrStrainAll(this.getCurrentGameModeOrStrainChooser());
             } catch (InterruptedException e) {
@@ -87,7 +87,7 @@ public class MinibridgeGameServer extends GameServer {
             }
           }
         }
-        logger.info("I received that is going to be "
+        LOGGER.info("I received that is going to be "
             + gameModeOrStrainNotification.getGameModeOrStrain().getShortDescription());
         this.currentGameModeOrStrain = gameModeOrStrainNotification.getGameModeOrStrain();
 
@@ -95,7 +95,7 @@ public class MinibridgeGameServer extends GameServer {
             this.getCurrentGameModeOrStrainChooser());
 
         if (!isRulesetPermitted) {
-          logger.info("This ruleset is not permitted. Restarting choose procedure");
+          LOGGER.info("This ruleset is not permitted. Restarting choose procedure");
           this.table.getMessageSender().sendInvalidRulesetAll();
         } else {
           this.table.getMessageSender().sendValidRulesetAll();
@@ -106,10 +106,10 @@ public class MinibridgeGameServer extends GameServer {
       this.table.getMessageSender()
           .sendGameModeOrStrainShortDescriptionAll(this.currentGameModeOrStrain.getShortDescription());
 
-      logger.info("Sleeping for 300ms waiting for everything come out right.");
+      LOGGER.info("Sleeping for 300ms waiting for everything come out right.");
       sleepFor(300);
 
-      logger.info("Everything selected! Game commencing!");
+      LOGGER.info("Everything selected! Game commencing!");
       this.minibridgeGame.addRuleset(currentGameModeOrStrain);
 
       currentDeal = this.game.getCurrentDeal();
@@ -119,17 +119,17 @@ public class MinibridgeGameServer extends GameServer {
 
       this.dealHasChanged = true;
       while (!this.game.getCurrentDeal().isFinished()) {
-        logger.info("Sleeping for 300ms waiting for all clients to prepare themselves.");
+        LOGGER.info("Sleeping for 300ms waiting for all clients to prepare themselves.");
         sleepFor(300);
         if (this.dealHasChanged) {
-          logger.info("Sending new 'round' of deals");
+          LOGGER.info("Sending new 'round' of deals");
           this.table.getMessageSender().sendDealAll(this.game.getCurrentDeal());
           this.dealHasChanged = false;
         }
         synchronized (cardPlayNotification) {
           // wait until object notifies - which relinquishes the lock on the object too
           try {
-            logger.info("I am waiting for some thread to notify that it wants to play a card.");
+            LOGGER.info("I am waiting for some thread to notify that it wants to play a card.");
             cardPlayNotification.wait();
           } catch (InterruptedException e) {
             e.printStackTrace();
@@ -137,7 +137,7 @@ public class MinibridgeGameServer extends GameServer {
         }
         Direction directionToBePlayed = cardPlayNotification.getDirection();
         Card cardToBePlayed = cardPlayNotification.getCard();
-        logger.info("Received notification that " + directionToBePlayed + " wants to play the " + cardToBePlayed);
+        LOGGER.info("Received notification that " + directionToBePlayed + " wants to play the " + cardToBePlayed);
         try {
           this.playCard(cardToBePlayed, directionToBePlayed);
         } catch (Exception e) {
@@ -151,17 +151,17 @@ public class MinibridgeGameServer extends GameServer {
       this.game.finishDeal();
 
       this.table.getMessageSender().sendFinishDealAll();
-      logger.info("Deal finished!");
+      LOGGER.info("Deal finished!");
     }
 
     this.table.getMessageSender().sendFinishGameAll();
-    logger.info("Game has ended.");
+    LOGGER.info("Game has ended.");
   }
 
   @Override
   protected void playCard(Card card, Direction direction) {
     Direction currentDirectionToPlay = this.game.getCurrentDeal().getCurrentPlayer();
-    logger.info("It is currently the " + currentDirectionToPlay + " turn");
+    LOGGER.info("It is currently the " + currentDirectionToPlay + " turn");
     try {
       if (this.isAllowedToPlayCardInTurnOf(direction, currentDirectionToPlay)) {
         syncPlayCard(card);
@@ -170,7 +170,7 @@ public class MinibridgeGameServer extends GameServer {
         throw new PlayedCardInAnotherPlayersTurnException();
       }
     } catch (Exception e) {
-      logger.debug(e);
+      LOGGER.debug(e);
     }
   }
 

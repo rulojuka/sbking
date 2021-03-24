@@ -11,15 +11,15 @@ import org.apache.logging.log4j.LogManager;
 public class FileProperties {
 
     private final Properties configFile;
-    static final Logger logger = LogManager.getLogger(FileProperties.class);
+    private static final Logger LOGGER = LogManager.getLogger(FileProperties.class);
 
     public FileProperties(String filename) {
         this.configFile = new Properties();
         try {
             configFile.load(this.getClass().getClassLoader().getResourceAsStream(filename));
         } catch (Exception e) {
-            logger.error("Error trying to load configuration file: " + filename);
-            logger.debug(e);
+            LOGGER.error("Error trying to load configuration file: " + filename);
+            LOGGER.debug(e);
         }
     }
 

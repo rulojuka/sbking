@@ -20,7 +20,7 @@ import br.com.sbk.sbking.networking.core.serialization.Serializator;
 import br.com.sbk.sbking.networking.messages.MessageConstants;
 
 public class ClientGameSocket implements Runnable {
-    static final Logger logger = LogManager.getLogger(ClientGameSocket.class);
+    private static final Logger LOGGER = LogManager.getLogger(ClientGameSocket.class);
 
     private PlayerNetworkInformation playerNetworkInformation;
     private Table table;
@@ -63,14 +63,14 @@ public class ClientGameSocket implements Runnable {
 
     @Override
     public void run() {
-        logger.info("Connected: " + this.getSocket());
+        LOGGER.info("Connected: " + this.getSocket());
         try {
             setup();
             while (!hasDisconnected) {
                 processCommand();
             }
         } catch (Exception e) {
-            logger.debug("Error:" + this.getSocket(), e);
+            LOGGER.debug("Error:" + this.getSocket(), e);
         } finally {
             disconnect();
         }
@@ -87,27 +87,27 @@ public class ClientGameSocket implements Runnable {
         if (this.isSpectator()) {
             if (readObject instanceof String) {
                 String string = (String) readObject;
-                logger.info("A spectator sent this message: --" + string + "--");
+                LOGGER.info("A spectator sent this message: --" + string + "--");
                 if (string.startsWith(NICKNAME)) {
                     String nickname = string.substring(NICKNAME.length());
-                    logger.info("Setting new nickname: --" + nickname + "--");
+                    LOGGER.info("Setting new nickname: --" + nickname + "--");
                     this.playerNetworkInformation.setNickname(nickname);
                 }
             } else if (readObject instanceof Card) {
                 Card playedCard = (Card) readObject;
-                logger.info("A spectator is trying to play the " + playedCard);
+                LOGGER.info("A spectator is trying to play the " + playedCard);
             } else if (readObject instanceof Direction) {
                 Direction direction = (Direction) readObject;
-                logger.info("A spectator is trying to sit on " + direction);
+                LOGGER.info("A spectator is trying to sit on " + direction);
                 this.table.moveToSeat(this, direction);
             }
         } else {
             if (readObject instanceof String) {
                 String string = (String) readObject;
-                logger.info(this.direction + " sent this message: --" + string + "--");
+                LOGGER.info(this.direction + " sent this message: --" + string + "--");
                 if (string.startsWith(NICKNAME)) {
                     String nickname = string.substring(NICKNAME.length());
-                    logger.info("Setting new nickname: --" + nickname + "--");
+                    LOGGER.info("Setting new nickname: --" + nickname + "--");
                     this.playerNetworkInformation.setNickname(nickname);
                 } else {
                     if (POSITIVE.equals(string) || NEGATIVE.equals(string)) {
@@ -129,29 +129,29 @@ public class ClientGameSocket implements Runnable {
                 }
             } else if (readObject instanceof Card) {
                 Card playedCard = (Card) readObject;
-                logger.info(this.direction + " is trying to play the " + playedCard);
+                LOGGER.info(this.direction + " is trying to play the " + playedCard);
                 table.getGameServer().notifyPlayCard(playedCard, this.direction);
             } else if (readObject instanceof Direction) {
                 Direction direction = (Direction) readObject;
-                logger.info(this.direction + " is trying to leave his sit or sit on " + direction);
+                LOGGER.info(this.direction + " is trying to leave his sit or sit on " + direction);
                 this.table.moveToSeat(this, direction);
             }
         }
     }
 
     private void disconnect() {
-        logger.info("Entered disconnect.");
+        LOGGER.info("Entered disconnect.");
         try {
             this.getSocket().close();
         } catch (IOException e) {
-            logger.debug(e);
+            LOGGER.debug(e);
         }
-        logger.info("Closed: " + this.getSocket() + ". Removing (myself) from playerSocketList");
+        LOGGER.info("Closed: " + this.getSocket() + ". Removing (myself) from playerSocketList");
         this.table.removeClientGameSocket(this);
     }
 
     private void waitForClientSetup() throws IOException, InterruptedException {
-        logger.info("Sleeping for 300ms waiting for client to setup itself");
+        LOGGER.info("Sleeping for 300ms waiting for client to setup itself");
         Thread.sleep(300);
     }
 

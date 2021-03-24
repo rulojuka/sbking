@@ -12,7 +12,7 @@ import br.com.sbk.sbking.gui.models.KingGameScoreboard;
 
 public class CagandoNoBequinhoGameServer extends GameServer {
 
-    static final Logger logger = LogManager.getLogger(CagandoNoBequinhoGameServer.class);
+    private static final Logger LOGGER = LogManager.getLogger(CagandoNoBequinhoGameServer.class);
 
     private CagandoNoBequinhoGame cagandoNoBequinhoGame;
 
@@ -23,7 +23,7 @@ public class CagandoNoBequinhoGameServer extends GameServer {
     @Override
     public void run() {
 
-        logger.info("Sleeping for 500ms waiting for last client to setup itself");
+        LOGGER.info("Sleeping for 500ms waiting for last client to setup itself");
         sleepFor(500);
 
         this.cagandoNoBequinhoGame = (CagandoNoBequinhoGame) this.game;
@@ -37,10 +37,10 @@ public class CagandoNoBequinhoGameServer extends GameServer {
                 this.game.setPlayerOf(direction, player);
             }
 
-            logger.info("Sleeping for 300ms waiting for everything come out right.");
+            LOGGER.info("Sleeping for 300ms waiting for everything come out right.");
             sleepFor(300);
 
-            logger.info("Everything selected! Game commencing!");
+            LOGGER.info("Everything selected! Game commencing!");
 
             Deal currentDeal = this.game.getCurrentDeal();
             for (Direction direction : Direction.values()) {
@@ -49,17 +49,17 @@ public class CagandoNoBequinhoGameServer extends GameServer {
 
             this.dealHasChanged = true;
             while (!this.game.getCurrentDeal().isFinished()) {
-                logger.info("Sleeping for 300ms waiting for all clients to prepare themselves.");
+                LOGGER.info("Sleeping for 300ms waiting for all clients to prepare themselves.");
                 sleepFor(300);
                 if (this.dealHasChanged) {
-                    logger.info("Sending new 'round' of deals");
+                    LOGGER.info("Sending new 'round' of deals");
                     this.table.getMessageSender().sendDealAll(this.game.getCurrentDeal());
                     this.dealHasChanged = false;
                 }
                 synchronized (cardPlayNotification) {
                     // wait until object notifies - which relinquishes the lock on the object too
                     try {
-                        logger.info("I am waiting for some thread to notify that it wants to play a card.");
+                        LOGGER.info("I am waiting for some thread to notify that it wants to play a card.");
                         cardPlayNotification.wait();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -67,7 +67,8 @@ public class CagandoNoBequinhoGameServer extends GameServer {
                 }
                 Direction directionToBePlayed = cardPlayNotification.getDirection();
                 Card cardToBePlayed = cardPlayNotification.getCard();
-                logger.info("Received notification that " + directionToBePlayed + " wants to play the " + cardToBePlayed);
+                LOGGER.info(
+                        "Received notification that " + directionToBePlayed + " wants to play the " + cardToBePlayed);
                 try {
                     this.playCard(cardToBePlayed, directionToBePlayed);
                 } catch (Exception e) {
@@ -82,13 +83,13 @@ public class CagandoNoBequinhoGameServer extends GameServer {
             this.table.getMessageSender().sendGameScoreboardAll(new KingGameScoreboard());
 
             this.table.getMessageSender().sendFinishDealAll();
-            logger.info("Deal finished!");
+            LOGGER.info("Deal finished!");
 
         }
 
         this.table.getMessageSender().sendFinishGameAll();
 
-        logger.info("Game has ended.");
+        LOGGER.info("Game has ended.");
 
     }
 
