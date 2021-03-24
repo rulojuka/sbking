@@ -5,6 +5,9 @@
 "https://checkstyle.org/dtds/suppressions_1_2.dtd">
 
 <suppressions>
+    <!-- Suppress checks annotated with id core for files in gui folder -->
     <suppress id="core" files="[/\\]src[/\\]main[/\\]java[/\\]br[/\\]com[/\\]sbk[/\\]sbking[/\\]gui[/\\].*" />
+
+    <!-- Suppress checks annotated with id non-core for files .*/core/.* folders -->
     <suppress id="non-core" files="[/\\]src[/\\]main[/\\].*[/\\]core[/\\].*" />
 </suppressions>
