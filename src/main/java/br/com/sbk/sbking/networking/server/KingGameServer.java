@@ -32,7 +32,6 @@ public class KingGameServer extends GameServer {
 
     @Override
     public void run() {
-
         LOGGER.info("Sleeping for 500ms waiting for clients to setup themselves");
         sleepFor(500);
 
@@ -126,7 +125,6 @@ public class KingGameServer extends GameServer {
 
             LOGGER.info("Sleeping for 300ms waiting for everything come out right.");
             sleepFor(300);
-
             LOGGER.info("Everything selected! Game commencing!");
             this.kingGame.addRuleset(currentGameModeOrStrain);
 
@@ -169,7 +167,6 @@ public class KingGameServer extends GameServer {
             LOGGER.info("Sleeping for 3000ms for everyone to see the last card.");
             sleepFor(3000);
             this.game.finishDeal();
-
             this.table.getMessageSender().sendGameScoreboardAll(this.kingGame.getGameScoreboard());
 
             LOGGER.info("Sleeping for 300ms waiting for all clients to prepare themselves.");
@@ -181,9 +178,7 @@ public class KingGameServer extends GameServer {
         }
 
         this.table.getMessageSender().sendFinishGameAll();
-
         LOGGER.info("Game has ended.");
-
     }
 
     public void notifyChoosePositiveOrNegative(PositiveOrNegative positiveOrNegative, Direction direction) {
