@@ -99,9 +99,8 @@ public abstract class NetworkClientScreen extends JFrame {
     public String getIpFromServer(String server) {
         Map<String, String> nameToHostname = new HashMap<String, String>();
         nameToHostname.put("Local", "127.0.0.1");
-        nameToHostname.put("Alejandro", "144.126.251.69");
-        nameToHostname.put("Perez", "161.35.251.100");
-        nameToHostname.put("Taís", "144.126.251.87");
+        nameToHostname.put("Perez", "164.90.252.236");
+        nameToHostname.put("Taís", "164.90.254.243");
         String hostname = nameToHostname.get(server);
         if (hostname != null) {
             return hostname;
