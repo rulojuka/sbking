@@ -15,17 +15,32 @@ public class Serializator {
         this.objectOutputStreamWrapper = objectOutputStreamWrapper;
     }
 
-    @Override
-    protected void finalize() throws Exception {
-        this.objectOutputStreamWrapper.close();
-        this.objectInputStreamWrapper.close();
-    }
-
     public void tryToSerialize(Object object) {
         try {
             this.objectOutputStreamWrapper.resetAndWriteObject(object);
         } catch (IOException e) {
             LOGGER.error("Error trying to serialize object:" + object);
+            LOGGER.error(e);
+            this.close();
+        }
+    }
+
+    public void close() {
+        try {
+            this.finalize();
+        } catch (Exception e) {
+            LOGGER.error("Error trying to finalize serializator:");
+            LOGGER.error(e);
+        }
+    }
+
+    @Override
+    protected void finalize() throws Exception {
+        try {
+            this.objectOutputStreamWrapper.close();
+            this.objectInputStreamWrapper.close();
+        } catch (Exception e) {
+            LOGGER.error("Error trying to finalize serializator");
             LOGGER.error(e);
         }
     }
@@ -44,7 +59,7 @@ public class Serializator {
         } catch (Exception e) {
             LOGGER.error("Error trying to deserialize object.");
             LOGGER.error(e);
-            e.printStackTrace();
+            LOGGER.error("Returning new DisconnectedObject");
             return new DisconnectedObject();
         }
         return deserializedObject;

@@ -3,6 +3,7 @@ package br.com.sbk.sbking.networking.server;
 import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.Socket;
 
 import br.com.sbk.sbking.core.Board;
@@ -62,6 +63,7 @@ public class ClientGameSocket implements Runnable {
     @Override
     public void run() {
         LOGGER.info("Connected: " + this.getSocket());
+        InetAddress inetAddress = this.getInetAddress();
         try {
             setup();
             while (!hasDisconnected) {
@@ -71,7 +73,13 @@ public class ClientGameSocket implements Runnable {
             LOGGER.debug("Error:" + this.getSocket(), e);
         } finally {
             disconnect();
+            LOGGER.info("Disconnected gracefully to IP:" + inetAddress);
         }
+        LOGGER.info("Method run() has finished. Should TERMINATE Thread.");
+    }
+
+    private InetAddress getInetAddress() {
+        return this.getSocket().getInetAddress();
     }
 
     private void processCommand() {
@@ -138,13 +146,28 @@ public class ClientGameSocket implements Runnable {
     }
 
     private void disconnect() {
-        LOGGER.info("Entered disconnect.");
+        InetAddress inetAddress = this.getInetAddress();
+        LOGGER.info("Entered disconnect with IP:" + inetAddress);
         try {
-            this.getSocket().close();
-        } catch (IOException e) {
-            LOGGER.debug(e);
+            LOGGER.info("Leaving from table.");
+            this.leaveFromTable();
+            LOGGER.info("Left table.");
+
+            this.playerNetworkInformation.close();
+        } catch (Exception e) {
+            LOGGER.error(e);
+        } finally {
+            this.releaseResources();
         }
-        LOGGER.info("Closed: " + this.getSocket() + ". Removing (myself) from playerSocketList");
+        LOGGER.info("Finished disconnect with IP:" + inetAddress);
+    }
+
+    private void releaseResources() {
+        this.table = null;
+        this.playerNetworkInformation = null;
+    }
+
+    private void leaveFromTable() {
         this.table.removeClientGameSocket(this);
     }
 

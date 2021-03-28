@@ -23,6 +23,10 @@ public class MessageSender {
         this.playerSockets.add(clientGameSocket);
     }
 
+    public void removeClientGameSocket(ClientGameSocket clientGameSocket) {
+        this.playerSockets.remove(clientGameSocket);
+    }
+
     public void sendDealAll(Deal deal) {
         LOGGER.info("Sending everyone the current deal");
         for (ClientGameSocket playerSocket : playerSockets) {

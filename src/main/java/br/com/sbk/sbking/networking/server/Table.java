@@ -141,6 +141,7 @@ public class Table {
   }
 
   public void removeClientGameSocket(ClientGameSocket playerSocket) {
+    this.messageSender.removeClientGameSocket(playerSocket);
     for (Direction direction : Direction.values()) {
       ClientGameSocket current = this.playerSockets.get(direction);
       if (playerSocket.equals(current)) {

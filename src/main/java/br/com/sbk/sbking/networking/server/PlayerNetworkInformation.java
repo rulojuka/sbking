@@ -1,5 +1,8 @@
 package br.com.sbk.sbking.networking.server;
 
+import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
+
+import java.io.IOException;
 import java.net.Socket;
 
 import br.com.sbk.sbking.core.Player;
@@ -30,6 +33,27 @@ public class PlayerNetworkInformation {
 
     public void setNickname(String nickname) {
         this.player.setName(nickname);
+    }
+
+    public void close() {
+        LOGGER.info("Closing socket.");
+        try {
+            this.socket.close();
+        } catch (IOException e) {
+            LOGGER.error(e);
+        }
+        LOGGER.info("Socket closed.");
+
+        LOGGER.info("Closing serializator.");
+        this.getSerializator().close();
+        LOGGER.info("Serializator closed.");
+        this.releaseResources();
+    }
+
+    private void releaseResources() {
+        this.player = null;
+        this.socket = null;
+        this.serializator = null;
     }
 
 }
