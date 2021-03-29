@@ -3,6 +3,7 @@ WORKDIR /tmp/
 COPY pom.xml /tmp/
 RUN mvn dependency:resolve
 COPY src /tmp/src/
+COPY checkstyle/ /tmp/checkstyle/
 RUN mvn package
 
 FROM adoptopenjdk:11-jre-openj9
