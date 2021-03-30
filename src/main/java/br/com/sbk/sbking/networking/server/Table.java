@@ -64,7 +64,7 @@ public class Table {
   private void sitOnEmptySeat(ClientGameSocket clientGameSocket, Direction direction) {
     ClientGameSocket currentSeatedPlayer = this.playerSockets.get(direction);
     if (currentSeatedPlayer != null) {
-      LOGGER.error("Trying to seat on occupied seat.");
+      LOGGER.info("Trying to seat on occupied seat.");
       return;
     }
 

@@ -70,7 +70,7 @@ public class ClientGameSocket implements Runnable {
                 processCommand();
             }
         } catch (Exception e) {
-            LOGGER.debug("Error:" + this.getSocket(), e);
+            LOGGER.error("Error:" + this.getSocket(), e);
         } finally {
             disconnect();
             LOGGER.info("Disconnected gracefully to IP:" + inetAddress);

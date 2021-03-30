@@ -33,7 +33,7 @@ public abstract class GameServer implements Runnable {
                 throw new PlayedCardInAnotherPlayersTurnException();
             }
         } catch (Exception e) {
-            LOGGER.debug(e);
+            LOGGER.error(e);
         }
     }
 
@@ -59,7 +59,7 @@ public abstract class GameServer implements Runnable {
         try {
             Thread.sleep(miliseconds);
         } catch (InterruptedException e) {
-            LOGGER.debug(e);
+            LOGGER.error(e);
         }
     }
 

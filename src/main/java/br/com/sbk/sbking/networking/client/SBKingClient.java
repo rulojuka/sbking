@@ -99,7 +99,6 @@ public class SBKingClient implements Runnable {
         } catch (Exception e) {
             LOGGER.fatal("Could not create serializator.");
             LOGGER.fatal(e);
-            LOGGER.fatal(e.getStackTrace());
             System.exit(COULD_NOT_CREATE_SERIALIZATOR_ERROR);
             return null;
         }
@@ -222,13 +221,13 @@ public class SBKingClient implements Runnable {
     }
 
     public void sendPositive() {
-        LOGGER.debug("Sending positive to server");
+        LOGGER.info("Sending positive to server");
         String positive = "POSITIVE";
         this.serializator.tryToSerialize(positive);
     }
 
     public void sendNegative() {
-        LOGGER.debug("Sending negative to server");
+        LOGGER.info("Sending negative to server");
         String negative = "NEGATIVE";
         this.serializator.tryToSerialize(negative);
     }
@@ -311,7 +310,7 @@ public class SBKingClient implements Runnable {
     }
 
     public void sendGameModeOrStrain(String gameModeOrStrain) {
-        LOGGER.debug("Sending Game Mode or Strain to server");
+        LOGGER.info("Sending Game Mode or Strain to server");
         this.serializator.tryToSerialize(gameModeOrStrain);
     }
 
@@ -390,7 +389,7 @@ public class SBKingClient implements Runnable {
     }
 
     public void sendNickname(String nickname) {
-        LOGGER.debug("Sending nickname to server");
+        LOGGER.info("Sending nickname to server");
         this.serializator.tryToSerialize("NICKNAME" + nickname);
     }
 

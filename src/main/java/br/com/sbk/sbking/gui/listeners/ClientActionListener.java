@@ -1,7 +1,5 @@
 package br.com.sbk.sbking.gui.listeners;
 
-import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
-
 import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.gui.JElements.CardButton;
@@ -21,7 +19,6 @@ public class ClientActionListener implements java.awt.event.ActionListener {
     public void actionPerformed(java.awt.event.ActionEvent event) {
 
         Object source = event.getSource();
-        LOGGER.info("Performing network action: " + source);
 
         if (source instanceof CardButton) {
             CardButton clickedCardButton = (CardButton) source;
@@ -35,7 +32,6 @@ public class ClientActionListener implements java.awt.event.ActionListener {
             SitOrLeaveButton clickedSitOrLeaveButton = (SitOrLeaveButton) source;
             Direction direction = (Direction) clickedSitOrLeaveButton.getClientProperty("direction");
             networkMessageSender.sitOrLeave(direction);
-            LOGGER.info("Pedindo para sentar ou sair em: " + direction.getCompleteName());
         }
 
     }
