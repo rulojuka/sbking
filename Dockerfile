@@ -1,10 +1,12 @@
 FROM maven:3.6.3-adoptopenjdk-11 AS MAVEN_TOOL_CHAIN
 WORKDIR /tmp/
-COPY pom.xml /tmp/
-RUN mvn dependency:resolve
+
+COPY pom-ci.xml /tmp/pom.xml
+COPY pom-server.xml /tmp/
+RUN mvn -f pom-server.xml dependency:resolve-plugins dependency:go-offline -B
+
 COPY src /tmp/src/
-COPY checkstyle/ /tmp/checkstyle/
-RUN mvn package
+RUN mvn -f pom-server.xml package -B
 
 FROM adoptopenjdk:11-jre-openj9
 RUN mkdir /opt/app

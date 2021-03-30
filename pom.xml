@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>br.com.sbk</groupId>
@@ -9,6 +7,7 @@
 	<version>1.0.0-alpha</version>
 	<name>SBKing</name>
 	<description>More information at https://github.com/rulojuka/sbking</description>
+	<packaging>pom</packaging>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -27,44 +26,15 @@
 			<version>2.27.0</version>
 			<scope>test</scope>
 		</dependency>
-
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-core</artifactId>
 			<version>2.14.0</version>
 		</dependency>
-
 	</dependencies>
 
 	<build>
 		<plugins>
-
-			<plugin>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<version>2.2</version>
-				<executions>
-					<execution>
-						<id>jar-with-dependencies</id>
-						<phase>package</phase>
-						<goals>
-							<goal>single</goal>
-						</goals>
-						<configuration>
-							<archive>
-								<manifest>
-									<mainClass>br.com.sbk.sbking.networking.server.main.LobbyServerStarter</mainClass>
-								</manifest>
-							</archive>
-							<descriptorRefs>
-								<descriptorRef>jar-with-dependencies</descriptorRef>
-							</descriptorRefs>
-							<!-- <finalName>${project.artifactId}-${project.version}-complete</finalName> -->
-							<!-- <appendAssemblyId>false</appendAssemblyId> -->
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.8.0</version>
@@ -96,7 +66,6 @@
 				</executions>
 			</plugin>
 
-
 			<plugin>
 				<groupId>com.github.spotbugs</groupId>
 				<artifactId>spotbugs-maven-plugin</artifactId>
@@ -124,7 +93,6 @@
 					</execution>
 				</executions>
 			</plugin>
-
 		</plugins>
 	</build>
 
@@ -134,7 +102,7 @@
 			<plugin>
 				<groupId>com.github.spotbugs</groupId>
 				<artifactId>spotbugs-maven-plugin</artifactId>
-				<version>3.1.12-SNAPSHOT</version>
+				<version>3.1.11</version>
 			</plugin>
 		</plugins>
 	</reporting>
