@@ -5,6 +5,6 @@ import org.apache.logging.log4j.Logger;
 
 public class SBKingLogger {
 
-  public static final Logger LOGGER = LogManager.getLogger();
+  public static final Logger LOGGER = LogManager.getLogger(SBKingLogger.class);
 
 }
