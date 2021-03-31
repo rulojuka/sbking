@@ -39,7 +39,7 @@ public class ConnectToServerElement {
 
         texts = new ArrayList<String>();
         texts.add("Local");
-        texts.add("Alejandro");
+        texts.add("Dev");
         texts.add("Perez");
         texts.add("Taís");
         radioButtons = new ArrayList<JRadioButton>();
