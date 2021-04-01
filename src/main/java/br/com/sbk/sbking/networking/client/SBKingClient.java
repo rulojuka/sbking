@@ -23,7 +23,7 @@ public class SBKingClient implements Runnable {
     private static final int COULD_NOT_GET_NETWORK_INFORMATION_FROM_PROPERTIES_ERROR = 1;
     private static final int COULD_NOT_CREATE_SOCKET_ERROR = 2;
     private static final int COULD_NOT_CREATE_SERIALIZATOR_ERROR = 3;
-    private final Serializator serializator;
+    private Serializator serializator;
 
     private Direction direction;
 
@@ -50,15 +50,22 @@ public class SBKingClient implements Runnable {
 
     private String nickname;
 
+    private String hostname;
+
     public SBKingClient(String nickname, String hostname) {
-        Socket socket = initializeSocketOrExit(hostname);
+        this.hostname = hostname;
+        this.nickname = nickname;
+        startNetworkClient();
+    }
+
+    private void startNetworkClient() {
+        Socket socket = initializeSocketOrExit(this.hostname);
         LOGGER.info("Socket initialized.");
         this.serializator = initializeSerializatorOrExit(socket);
         LOGGER.info("Serializator initialized.");
         ClientToServerMessageSender networkCardPlayer = new ClientToServerMessageSender(this.serializator);
         this.playCardActionListener = new ClientActionListener(networkCardPlayer);
-        this.setNickname(nickname);
-        this.sendNickname(nickname);
+        this.sendNickname(this.nickname);
     }
 
     private Socket initializeSocketOrExit(String hostname) {
@@ -119,7 +126,22 @@ public class SBKingClient implements Runnable {
     private void processCommand() {
         LOGGER.info("Waiting for a command");
         Object readObject = this.serializator.tryToDeserialize(Object.class);
-        String controlMessage = (String) readObject;
+        String controlMessage;
+        try {
+            controlMessage = (String) readObject;
+        } catch (Exception e) {
+            LOGGER.error("*******************************");
+            LOGGER.error("Can't cast readObject to String");
+            LOGGER.error("*******************************");
+
+            LOGGER.error("");
+
+            // restart network client
+            startNetworkClient();
+
+            return;
+        }
+
         LOGGER.info("Read control: --" + controlMessage + "--");
 
         if (MessageConstants.MESSAGE.equals(controlMessage)) {
@@ -382,10 +404,6 @@ public class SBKingClient implements Runnable {
 
     public String getNickname() {
         return nickname;
-    }
-
-    private void setNickname(String nickname) {
-        this.nickname = nickname;
     }
 
     public void sendNickname(String nickname) {
