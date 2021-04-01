@@ -4,6 +4,11 @@ import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 
 import java.net.Socket;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.Timer;
+
 import br.com.sbk.sbking.core.Board;
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
@@ -13,6 +18,7 @@ import br.com.sbk.sbking.gui.models.PositiveOrNegative;
 import br.com.sbk.sbking.networking.core.properties.FileProperties;
 import br.com.sbk.sbking.networking.core.properties.NetworkingProperties;
 import br.com.sbk.sbking.networking.core.properties.SystemProperties;
+import br.com.sbk.sbking.networking.core.serialization.DisconnectedObject;
 import br.com.sbk.sbking.networking.core.serialization.Serializator;
 import br.com.sbk.sbking.networking.core.serialization.SerializatorFactory;
 import br.com.sbk.sbking.networking.messages.MessageConstants;
@@ -49,13 +55,23 @@ public class SBKingClient implements Runnable {
     private boolean spectator;
 
     private String nickname;
-
     private String hostname;
 
     public SBKingClient(String nickname, String hostname) {
         this.hostname = hostname;
         this.nickname = nickname;
         startNetworkClient();
+        startPingTimer();
+    }
+
+    private void startPingTimer() {
+        Timer periodicalyPingServerTimer = new Timer(5000, new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                sendPingToServer();
+            }
+        });
+        periodicalyPingServerTimer.setRepeats(true);
+        periodicalyPingServerTimer.start();
     }
 
     private void startNetworkClient() {
@@ -111,6 +127,16 @@ public class SBKingClient implements Runnable {
         }
     }
 
+    public void tryToReconnect() {
+        LOGGER.info("Reconnecting client to server");
+        // Restart socket, serializator and action listener
+        startNetworkClient();
+        // Reseat player on table if previously seated
+        if (this.direction != null) {
+            playCardActionListener.sendSitOrLeaveMessage(this.direction);
+        }
+    }
+
     @Override
     public void run() {
         LOGGER.info("Entering on the infinite loop to process commands.");
@@ -126,24 +152,17 @@ public class SBKingClient implements Runnable {
     private void processCommand() {
         LOGGER.info("Waiting for a command");
         Object readObject = this.serializator.tryToDeserialize(Object.class);
+        if (readObject instanceof DisconnectedObject) {
+            LOGGER.error("Received a DisconnectedObject.");
+            tryToReconnect();
+            return;
+        }
+
         String controlMessage;
         try {
             controlMessage = (String) readObject;
         } catch (Exception e) {
-            LOGGER.error("*******************************");
-            LOGGER.error("Can't cast readObject to String");
-            LOGGER.error("*******************************");
-
-            LOGGER.error("");
-
-            // restart network client
-            startNetworkClient();
-
-            // Reseat player on table
-            if (this.direction != null) {
-                playCardActionListener.sendSitOrLeaveMessage(this.direction);
-            }
-
+            LOGGER.error("Can't convert readObject to String");
             return;
         }
 
@@ -207,7 +226,7 @@ public class SBKingClient implements Runnable {
             this.currentGameScoreboard = this.serializator.tryToDeserialize(KingGameScoreboard.class);
             LOGGER.info("Received GameScoreboard." + this.currentGameScoreboard.toString());
         } else if (MessageConstants.ISSPECTATOR.equals(controlMessage)) {
-            // maybe set this.direction = NULL here?
+            this.direction = null;
             this.spectator = true;
             LOGGER.info("Received ISSPECTATOR.");
         } else if (MessageConstants.ISNOTSPECTATOR.equals(controlMessage)) {
@@ -417,4 +436,8 @@ public class SBKingClient implements Runnable {
         this.serializator.tryToSerialize("NICKNAME" + nickname);
     }
 
+    private void sendPingToServer() {
+        LOGGER.info("Sending ping to server");
+        this.serializator.tryToSerialize("PING");
+    }
 }

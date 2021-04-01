@@ -26,10 +26,6 @@ public class ClientGameSocket implements Runnable {
     private boolean hasDisconnected = false;
     private Direction direction;
 
-    private static final String NICKNAME = "NICKNAME";
-    private static final String POSITIVE = "POSITIVE";
-    private static final String NEGATIVE = "NEGATIVE";
-
     public boolean isSpectator() {
         return direction == null;
     }
@@ -94,8 +90,8 @@ public class ClientGameSocket implements Runnable {
             if (readObject instanceof String) {
                 String string = (String) readObject;
                 LOGGER.info("A spectator sent this message: --" + string + "--");
-                if (string.startsWith(NICKNAME)) {
-                    String nickname = string.substring(NICKNAME.length());
+                if (string.startsWith(MessageConstants.NICKNAME)) {
+                    String nickname = string.substring(MessageConstants.NICKNAME.length());
                     LOGGER.info("Setting new nickname: --" + nickname + "--");
                     this.playerNetworkInformation.setNickname(nickname);
                 }
@@ -111,15 +107,15 @@ public class ClientGameSocket implements Runnable {
             if (readObject instanceof String) {
                 String string = (String) readObject;
                 LOGGER.info(this.direction + " sent this message: --" + string + "--");
-                if (string.startsWith(NICKNAME)) {
-                    String nickname = string.substring(NICKNAME.length());
+                if (string.startsWith(MessageConstants.NICKNAME)) {
+                    String nickname = string.substring(MessageConstants.NICKNAME.length());
                     LOGGER.info("Setting new nickname: --" + nickname + "--");
                     this.playerNetworkInformation.setNickname(nickname);
                 } else {
-                    if (POSITIVE.equals(string) || NEGATIVE.equals(string)) {
+                    if (MessageConstants.POSITIVE.equals(string) || MessageConstants.NEGATIVE.equals(string)) {
                         KingGameServer kingGameServer = (KingGameServer) this.table.getGameServer();
                         PositiveOrNegative positiveOrNegative = new PositiveOrNegative();
-                        if (POSITIVE.equals(string)) {
+                        if (MessageConstants.POSITIVE.equals(string)) {
                             positiveOrNegative.setPositive();
                         } else {
                             positiveOrNegative.setNegative();
@@ -268,5 +264,4 @@ public class ClientGameSocket implements Runnable {
     public PlayerNetworkInformation getPlayerNetworkInformation() {
         return playerNetworkInformation;
     }
-
 }
