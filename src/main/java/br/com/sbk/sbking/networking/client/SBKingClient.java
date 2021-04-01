@@ -139,6 +139,11 @@ public class SBKingClient implements Runnable {
             // restart network client
             startNetworkClient();
 
+            // Reseat player on table
+            if (this.direction != null) {
+                playCardActionListener.sendSitOrLeaveMessage(this.direction);
+            }
+
             return;
         }
 
@@ -202,6 +207,7 @@ public class SBKingClient implements Runnable {
             this.currentGameScoreboard = this.serializator.tryToDeserialize(KingGameScoreboard.class);
             LOGGER.info("Received GameScoreboard." + this.currentGameScoreboard.toString());
         } else if (MessageConstants.ISSPECTATOR.equals(controlMessage)) {
+            // maybe set this.direction = NULL here?
             this.spectator = true;
             LOGGER.info("Received ISSPECTATOR.");
         } else if (MessageConstants.ISNOTSPECTATOR.equals(controlMessage)) {

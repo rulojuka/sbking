@@ -17,7 +17,6 @@ public class ClientActionListener implements java.awt.event.ActionListener {
 
     @Override
     public void actionPerformed(java.awt.event.ActionEvent event) {
-
         Object source = event.getSource();
 
         if (source instanceof CardButton) {
@@ -31,8 +30,11 @@ public class ClientActionListener implements java.awt.event.ActionListener {
         } else if (source instanceof SitOrLeaveButton) {
             SitOrLeaveButton clickedSitOrLeaveButton = (SitOrLeaveButton) source;
             Direction direction = (Direction) clickedSitOrLeaveButton.getClientProperty("direction");
-            networkMessageSender.sitOrLeave(direction);
+            sendSitOrLeaveMessage(direction);
         }
+    }
 
+    public void sendSitOrLeaveMessage(Direction direction) {
+        networkMessageSender.sitOrLeave(direction);
     }
 }
