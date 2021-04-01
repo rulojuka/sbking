@@ -23,4 +23,9 @@ public final class MessageConstants {
     public static final String VALIDRULESET = "VALIDRULESET";
     public static final String ISSPECTATOR = "ISSPECTATOR";
     public static final String ISNOTSPECTATOR = "ISNOTSPECTATOR";
+
+    public static final String NICKNAME = "NICKNAME";
+    public static final String POSITIVE = "POSITIVE";
+    public static final String NEGATIVE = "NEGATIVE";
+    public static final String PING = "PING";
 }
