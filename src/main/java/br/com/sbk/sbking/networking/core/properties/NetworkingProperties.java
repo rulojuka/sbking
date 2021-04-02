@@ -29,4 +29,8 @@ public class NetworkingProperties {
         }
     }
 
+    public String getIP(String serverName) {
+        return this.fileProperties.getIP(serverName);
+    }
+
 }

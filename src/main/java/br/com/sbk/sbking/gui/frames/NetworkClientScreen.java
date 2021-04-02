@@ -8,8 +8,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.regex.Matcher;
@@ -23,10 +21,14 @@ import br.com.sbk.sbking.gui.constants.FrameConstants;
 import br.com.sbk.sbking.gui.main.ClientApplicationState;
 import br.com.sbk.sbking.gui.painters.Painter;
 import br.com.sbk.sbking.networking.client.SBKingClient;
+import br.com.sbk.sbking.networking.core.properties.FileProperties;
+import br.com.sbk.sbking.networking.core.properties.NetworkingProperties;
+import br.com.sbk.sbking.networking.core.properties.SystemProperties;
 
 @SuppressWarnings("serial")
 public abstract class NetworkClientScreen extends JFrame {
-
+    // TODO centralize this constant, since this is being declared in three different places
+    private static final String NETWORKING_CONFIGURATION_FILENAME = "networkConfiguration.cfg";
     protected boolean connectedToServer = false;
     protected SBKingClient sbKingClient;
 
@@ -97,16 +99,24 @@ public abstract class NetworkClientScreen extends JFrame {
     }
 
     public String getIpFromServer(String server) {
-        Map<String, String> nameToHostname = new HashMap<String, String>();
-        nameToHostname.put("Local", "127.0.0.1");
-        nameToHostname.put("Dev", "143.198.113.93");
-        nameToHostname.put("Perez", "164.90.252.236");
-        nameToHostname.put("Taís", "164.90.254.243");
-        String hostname = nameToHostname.get(server);
-        if (hostname != null) {
-            return hostname;
-        } else {
-            return "127.0.0.1";
+        // NETWORKING_CONFIGURATION_FILENAME should contain a property entry for every server selection radio button.
+        FileProperties fileProperties = new FileProperties(NETWORKING_CONFIGURATION_FILENAME);
+        try {
+            NetworkingProperties networkingProperties = new NetworkingProperties(fileProperties,
+                    new SystemProperties());
+            String hostname = networkingProperties.getIP(server);
+            if (hostname != null) {
+                return hostname;
+            } else {
+                return "127.0.0.1";
+            }
+        } catch (Exception e) {
+            LOGGER.fatal("Could not get server IP from properties.");
+            LOGGER.debug(e);
+
+            // TODO refactor all System.exit codes to centralized constant file.
+            System.exit(1);
+            return "";
         }
     }
 

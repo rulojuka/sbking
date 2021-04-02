@@ -4,6 +4,7 @@ import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 import static br.com.sbk.sbking.networking.core.properties.PropertiesConstants.HOST;
 import static br.com.sbk.sbking.networking.core.properties.PropertiesConstants.PORT;
 
+import java.io.InputStreamReader;
 import java.util.Properties;
 
 public class FileProperties {
@@ -13,7 +14,7 @@ public class FileProperties {
     public FileProperties(String filename) {
         this.configFile = new Properties();
         try {
-            configFile.load(this.getClass().getClassLoader().getResourceAsStream(filename));
+            configFile.load(new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream(filename), "UTF-8"));
         } catch (Exception e) {
             LOGGER.error("Error trying to load configuration file: " + filename);
             LOGGER.debug(e);
@@ -26,6 +27,10 @@ public class FileProperties {
 
     public String getPort() {
         return configFile.getProperty(PORT);
+    }
+
+    public String getIP(String serverName) {
+        return configFile.getProperty(serverName);
     }
 
 }
