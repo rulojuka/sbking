@@ -12,6 +12,7 @@ import javax.swing.Timer;
 import br.com.sbk.sbking.core.Board;
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
+import br.com.sbk.sbking.core.constants.ErrorCodes;
 import br.com.sbk.sbking.gui.listeners.ClientActionListener;
 import br.com.sbk.sbking.gui.models.KingGameScoreboard;
 import br.com.sbk.sbking.gui.models.PositiveOrNegative;
@@ -26,9 +27,6 @@ import br.com.sbk.sbking.networking.messages.MessageConstants;
 public class SBKingClient implements Runnable {
 
     private static final String NETWORKING_CONFIGURATION_FILENAME = "networkConfiguration.cfg";
-    private static final int COULD_NOT_GET_NETWORK_INFORMATION_FROM_PROPERTIES_ERROR = 1;
-    private static final int COULD_NOT_CREATE_SOCKET_ERROR = 2;
-    private static final int COULD_NOT_CREATE_SERIALIZATOR_ERROR = 3;
     private Serializator serializator;
 
     private Direction direction;
@@ -101,7 +99,7 @@ public class SBKingClient implements Runnable {
         } catch (Exception e) {
             LOGGER.fatal("Could not get network information from properties.");
             LOGGER.debug(e);
-            System.exit(COULD_NOT_GET_NETWORK_INFORMATION_FROM_PROPERTIES_ERROR);
+            System.exit(ErrorCodes.COULD_NOT_GET_NETWORK_INFORMATION_FROM_PROPERTIES_ERROR);
         }
 
         try {
@@ -110,7 +108,7 @@ public class SBKingClient implements Runnable {
         } catch (Exception e) {
             LOGGER.fatal("Could not create socket.");
             LOGGER.debug(e);
-            System.exit(COULD_NOT_CREATE_SOCKET_ERROR);
+            System.exit(ErrorCodes.COULD_NOT_CREATE_SOCKET_ERROR);
             return null;
         }
     }
@@ -122,7 +120,7 @@ public class SBKingClient implements Runnable {
         } catch (Exception e) {
             LOGGER.fatal("Could not create serializator.");
             LOGGER.fatal(e);
-            System.exit(COULD_NOT_CREATE_SERIALIZATOR_ERROR);
+            System.exit(ErrorCodes.COULD_NOT_CREATE_SERIALIZATOR_ERROR);
             return null;
         }
     }

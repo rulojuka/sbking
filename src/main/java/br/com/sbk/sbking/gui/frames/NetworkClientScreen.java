@@ -17,6 +17,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.Timer;
 
+import br.com.sbk.sbking.core.constants.ErrorCodes;
 import br.com.sbk.sbking.gui.constants.FrameConstants;
 import br.com.sbk.sbking.gui.main.ClientApplicationState;
 import br.com.sbk.sbking.gui.painters.Painter;
@@ -114,8 +115,7 @@ public abstract class NetworkClientScreen extends JFrame {
             LOGGER.fatal("Could not get server IP from properties.");
             LOGGER.debug(e);
 
-            // TODO refactor all System.exit codes to centralized constant file.
-            System.exit(1);
+            System.exit(ErrorCodes.COULD_NOT_GET_SERVER_IP_FROM_PROPERTIES_ERROR);
             return "";
         }
     }
