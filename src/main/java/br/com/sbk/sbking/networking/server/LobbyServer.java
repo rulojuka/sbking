@@ -9,6 +9,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import br.com.sbk.sbking.core.Player;
+import br.com.sbk.sbking.core.constants.ErrorCodes;
 import br.com.sbk.sbking.networking.core.properties.FileProperties;
 import br.com.sbk.sbking.networking.core.properties.NetworkingProperties;
 import br.com.sbk.sbking.networking.core.properties.SystemProperties;
@@ -18,7 +19,6 @@ import br.com.sbk.sbking.networking.core.serialization.SerializatorFactory;
 public class LobbyServer {
 
     private static final String NETWORKING_CONFIGURATION_FILENAME = "networkConfiguration.cfg";
-    private static final int COULD_NOT_GET_PORT_FROM_PROPERTIES_ERROR = 1;
 
     private Table table;
 
@@ -108,7 +108,7 @@ public class LobbyServer {
         } catch (Exception e) {
             LOGGER.fatal("Could not get port from properties.");
             LOGGER.debug(e);
-            System.exit(COULD_NOT_GET_PORT_FROM_PROPERTIES_ERROR);
+            System.exit(ErrorCodes.COULD_NOT_GET_PORT_FROM_PROPERTIES_ERROR);
         }
 
         return port;
