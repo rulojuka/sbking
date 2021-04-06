@@ -16,6 +16,12 @@ import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
 @SuppressWarnings("serial")
 public class Deal implements Serializable {
 
+    /**
+     * @deprecated Kryo needs a no-arg constructor
+     */
+    private Deal() {
+    }
+
     private Board board;
     private int completedTricks;
     private int startingNumberOfCardsInTheHand;

@@ -7,9 +7,9 @@ import br.com.sbk.sbking.networking.server.LobbyServer;
 public class LobbyServerStarter {
 
     public static void main(String[] args) {
-        LOGGER.info("Entering application.");
+        LOGGER.info("Entering Main Thread.");
         LobbyServer lobbyServer = new LobbyServer();
         lobbyServer.run();
-        LOGGER.info("Exiting application.");
+        LOGGER.info("Exiting Main Thread.");
     }
 }

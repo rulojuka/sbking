@@ -7,6 +7,12 @@ import br.com.sbk.sbking.core.rulesets.interfaces.Scoreable;
 @SuppressWarnings("serial")
 public class Score implements Serializable {
 
+    /**
+     * @deprecated Kryo needs a no-arg constructor
+     */
+    private Score() {
+    }
+
     private int northSouthPoints = 0;
     private int eastWestPoints = 0;
     private Scoreable scoreable;

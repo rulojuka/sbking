@@ -7,6 +7,12 @@ import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
 @SuppressWarnings("serial")
 public class GameModeSummary implements Serializable {
 
+    /**
+     * @deprecated Kryo needs a no-arg constructor
+     */
+    private GameModeSummary() {
+    }
+
     private Direction chosenBy;
     private Ruleset ruleset;
     private Integer orderOfPlay;

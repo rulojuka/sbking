@@ -8,8 +8,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.net.URL;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -22,24 +20,23 @@ import br.com.sbk.sbking.gui.constants.FrameConstants;
 import br.com.sbk.sbking.gui.main.ClientApplicationState;
 import br.com.sbk.sbking.gui.painters.Painter;
 import br.com.sbk.sbking.networking.client.SBKingClient;
+import br.com.sbk.sbking.networking.client.SBKingClientFactory;
 import br.com.sbk.sbking.networking.core.properties.FileProperties;
 import br.com.sbk.sbking.networking.core.properties.NetworkingProperties;
 import br.com.sbk.sbking.networking.core.properties.SystemProperties;
 
 @SuppressWarnings("serial")
 public abstract class NetworkClientScreen extends JFrame {
-    // TODO centralize this constant, since this is being declared in three different places
+
     private static final String NETWORKING_CONFIGURATION_FILENAME = "networkConfiguration.cfg";
+
     protected boolean connectedToServer = false;
     protected SBKingClient sbKingClient;
-
-    protected ExecutorService pool;
 
     public NetworkClientScreen() {
         super();
         initializeFrame();
         initializeContentPane(this);
-        pool = Executors.newFixedThreadPool(4);
     }
 
     private void initializeFrame() {
@@ -74,9 +71,19 @@ public abstract class NetworkClientScreen extends JFrame {
     public void connectToServer(String nickname, String hostname) {
         hostname = hostname.trim();
         if (isValidIP(hostname)) {
-            this.sbKingClient = new SBKingClient(nickname, hostname);
+            int port = 0;
+            try {
+                FileProperties configFile = new FileProperties(NETWORKING_CONFIGURATION_FILENAME);
+                NetworkingProperties networkingProperties = new NetworkingProperties(configFile,
+                        new SystemProperties());
+                port = networkingProperties.getPort();
+            } catch (Exception e) {
+                LOGGER.fatal("Could not get port from properties.");
+                LOGGER.debug(e);
+                System.exit(ErrorCodes.COULD_NOT_GET_PORT_FROM_PROPERTIES_ERROR);
+            }
+            this.sbKingClient = SBKingClientFactory.createWithKryonetConnection(nickname, hostname, port);
             this.connectedToServer = true;
-            pool.execute(this.sbKingClient);
         } else {
             LOGGER.error("Invalid IP");
         }
@@ -100,7 +107,8 @@ public abstract class NetworkClientScreen extends JFrame {
     }
 
     public String getIpFromServer(String server) {
-        // NETWORKING_CONFIGURATION_FILENAME should contain a property entry for every server selection radio button.
+        // NETWORKING_CONFIGURATION_FILENAME should contain a property entry for every
+        // server selection radio button.
         FileProperties fileProperties = new FileProperties(NETWORKING_CONFIGURATION_FILENAME);
         try {
             NetworkingProperties networkingProperties = new NetworkingProperties(fileProperties,

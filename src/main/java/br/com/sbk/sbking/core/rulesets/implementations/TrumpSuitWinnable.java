@@ -10,6 +10,12 @@ import br.com.sbk.sbking.core.rulesets.interfaces.Winnable;
 @SuppressWarnings("serial")
 public class TrumpSuitWinnable implements Winnable, Serializable {
 
+    /**
+     * @deprecated Kryo needs a no-arg constructor
+     */
+    private TrumpSuitWinnable() {
+    }
+
     private Suit trumpSuit;
 
     public TrumpSuitWinnable(Suit trumpSuit) {
