@@ -6,10 +6,9 @@ import java.awt.Container;
 import java.awt.Point;
 
 import br.com.sbk.sbking.core.Direction;
-import br.com.sbk.sbking.core.Hand;
 import br.com.sbk.sbking.gui.elements.ChoosePositiveOrNegativeElement;
 import br.com.sbk.sbking.gui.elements.GameScoreboardElement;
-import br.com.sbk.sbking.gui.elements.HandWhileChoosingElement;
+import br.com.sbk.sbking.gui.elements.SpecificDirectionBoardElements;
 import br.com.sbk.sbking.gui.elements.WaitingForChooserElement;
 import br.com.sbk.sbking.gui.elements.YouArePlayerElement;
 import br.com.sbk.sbking.gui.models.KingGameScoreboard;
@@ -40,19 +39,13 @@ public class WaitingForChoosingPositiveOrNegativePainter implements Painter {
             YouArePlayerElement.add(this.myDirection, contentPane);
             WaitingForChooserElement.add(contentPane, chooserDirection, "Positive or Negative.");
         } else {
-            ChoosePositiveOrNegativeElement choosePositiveOrNegativeElement = new ChoosePositiveOrNegativeElement(contentPane,
-                    this.sbKingClient);
+            ChoosePositiveOrNegativeElement choosePositiveOrNegativeElement = new ChoosePositiveOrNegativeElement(
+                    contentPane, this.sbKingClient);
             choosePositiveOrNegativeElement.add();
         }
 
-        Hand myHand;
-        if (this.sbKingClient.getDeal() != null) {
-            myHand = this.sbKingClient.getDeal().getHandOf(this.myDirection);
-        } else {
-            myHand = this.sbKingClient.getCurrentBoard().getHandOf(this.myDirection);
-        }
-
-        new HandWhileChoosingElement(contentPane, myHand, this.myDirection);
+        new SpecificDirectionBoardElements(this.myDirection, this.sbKingClient.getDeal(), contentPane,
+                this.sbKingClient.getPlayCardActionListener());
 
         contentPane.validate();
         contentPane.repaint();
