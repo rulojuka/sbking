@@ -1,4 +1,4 @@
-package br.com.sbk.sbking.networking.server;
+package br.com.sbk.sbking.networking.server.gameServer;
 
 import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 
@@ -8,6 +8,8 @@ import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.core.TrickGame;
 import br.com.sbk.sbking.core.exceptions.PlayedCardInAnotherPlayersTurnException;
+import br.com.sbk.sbking.networking.server.SBKingServer;
+import br.com.sbk.sbking.networking.server.Table;
 import br.com.sbk.sbking.networking.server.notifications.CardPlayNotification;
 
 public abstract class GameServer implements Runnable {
@@ -16,11 +18,16 @@ public abstract class GameServer implements Runnable {
     protected boolean dealHasChanged;
     protected Direction nextDirection = Direction.values()[0];
     protected Table table;
+    protected SBKingServer sbkingServer = null;
 
     protected TrickGame game;
 
     public void setTable(Table table) {
         this.table = table;
+    }
+
+    public void setSBKingServer(SBKingServer sbkingServer) {
+        this.sbkingServer = sbkingServer;
     }
 
     protected void playCard(Card card, Direction direction) {
@@ -73,6 +80,26 @@ public abstract class GameServer implements Runnable {
 
     protected void sleepToShowLastCard() {
         sleepFor(4000);
+    }
+
+    public SBKingServer getSBKingServer() {
+        return this.sbkingServer;
+    }
+
+    protected void sendDealAll() {
+        this.getSBKingServer().sendDealAll(this.game.getCurrentDeal());
+    }
+
+    protected void sendInitializeDealAll() {
+        this.getSBKingServer().sendInitializeDealAll();
+    }
+
+    protected void sendInvalidRulesetAll() {
+        this.getSBKingServer().sendInvalidRulesetAll();
+    }
+
+    protected void sendValidRulesetAll() {
+        this.getSBKingServer().sendValidRulesetAll();
     }
 
 }

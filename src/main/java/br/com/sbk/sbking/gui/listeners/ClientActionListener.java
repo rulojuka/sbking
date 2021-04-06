@@ -4,15 +4,15 @@ import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.gui.JElements.CardButton;
 import br.com.sbk.sbking.gui.JElements.SitOrLeaveButton;
-import br.com.sbk.sbking.networking.client.ClientToServerMessageSender;
+import br.com.sbk.sbking.networking.kryonet.KryonetSBKingClientActionListener;
 
 public class ClientActionListener implements java.awt.event.ActionListener {
 
-    private ClientToServerMessageSender networkMessageSender;
+    private KryonetSBKingClientActionListener client;
 
-    public ClientActionListener(ClientToServerMessageSender networkCardPlayer) {
+    public ClientActionListener(KryonetSBKingClientActionListener client) {
         super();
-        this.networkMessageSender = networkCardPlayer;
+        this.client = client;
     }
 
     @Override
@@ -23,18 +23,15 @@ public class ClientActionListener implements java.awt.event.ActionListener {
             CardButton clickedCardButton = (CardButton) source;
             Card card = clickedCardButton.getCard();
             try {
-                networkMessageSender.play(card);
+                client.play(card);
             } catch (RuntimeException e) {
                 throw e;
             }
         } else if (source instanceof SitOrLeaveButton) {
             SitOrLeaveButton clickedSitOrLeaveButton = (SitOrLeaveButton) source;
             Direction direction = (Direction) clickedSitOrLeaveButton.getClientProperty("direction");
-            sendSitOrLeaveMessage(direction);
+            client.sitOrLeave(direction);
         }
     }
 
-    public void sendSitOrLeaveMessage(Direction direction) {
-        networkMessageSender.sitOrLeave(direction);
-    }
 }

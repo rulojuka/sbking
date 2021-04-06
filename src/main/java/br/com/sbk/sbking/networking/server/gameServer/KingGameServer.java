@@ -1,4 +1,4 @@
-package br.com.sbk.sbking.networking.server;
+package br.com.sbk.sbking.networking.server.gameServer;
 
 import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 
@@ -46,13 +46,12 @@ public class KingGameServer extends GameServer {
 
                 this.gameModeOrStrainNotification = new GameModeOrStrainNotification();
                 this.positiveOrNegativeNotification = new PositiveOrNegativeNotification();
-                this.table.getMessageSender().sendInitializeDealAll();
+                this.sendInitializeDealAll();
                 LOGGER.info("Sleeping for 300ms waiting for clients to initialize its deals.");
                 sleepFor(300);
-                this.table.getMessageSender().sendBoardAll(this.game.getCurrentBoard());
+                this.getSBKingServer().sendBoardAll(this.game.getCurrentBoard());
                 sleepFor(300);
-                this.table.getMessageSender()
-                        .sendChooserPositiveNegativeAll(this.getCurrentPositiveOrNegativeChooser());
+                this.sendPositiveOrNegativeChooserAll();
 
                 synchronized (positiveOrNegativeNotification) {
                     // wait until object notifies - which relinquishes the lock on the object too
@@ -69,8 +68,7 @@ public class KingGameServer extends GameServer {
                             LOGGER.info(
                                     "I am waiting for some thread to notify that it wants to choose game Mode Or Strain");
                             positiveOrNegativeNotification.wait(3000);
-                            this.table.getMessageSender()
-                                    .sendChooserPositiveNegativeAll(this.getCurrentGamePositiveOrNegativeChooser());
+                            this.sendPositiveOrNegativeChooserAll();
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
@@ -80,9 +78,9 @@ public class KingGameServer extends GameServer {
                 LOGGER.info("I received that is going to be "
                         + positiveOrNegativeNotification.getPositiveOrNegative().toString());
                 this.currentPositiveOrNegative = positiveOrNegativeNotification.getPositiveOrNegative();
-                this.table.getMessageSender().sendPositiveOrNegativeAll(this.currentPositiveOrNegative);
+                this.sendPositiveOrNegativeAll();
                 sleepFor(300);
-                this.table.getMessageSender().sendChooserGameModeOrStrainAll(this.getCurrentGameModeOrStrainChooser());
+                this.sendGameModeOrStrainChooserAll();
 
                 synchronized (gameModeOrStrainNotification) {
                     // wait until object notifies - which relinquishes the lock on the object too
@@ -92,10 +90,10 @@ public class KingGameServer extends GameServer {
                             LOGGER.info(
                                     "I am waiting for some thread to notify that it wants to choose game Mode Or Strain");
                             gameModeOrStrainNotification.wait(3000);
-                            this.table.getMessageSender().sendPositiveOrNegativeAll(this.currentPositiveOrNegative);
+                            this.sendPositiveOrNegativeAll();
                             sleepFor(300);
-                            this.table.getMessageSender()
-                                    .sendChooserGameModeOrStrainAll(this.getCurrentGameModeOrStrainChooser());
+                            this.sendGameModeOrStrainChooserAll();
+
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
@@ -110,15 +108,12 @@ public class KingGameServer extends GameServer {
 
                 if (!isRulesetPermitted) {
                     LOGGER.info("This ruleset is not permitted. Restarting choose procedure");
-                    this.table.getMessageSender().sendInvalidRulesetAll();
+                    this.sendInvalidRulesetAll();
                 } else {
-                    this.table.getMessageSender().sendValidRulesetAll();
+                    this.sendValidRulesetAll();
                 }
 
             } while (!isRulesetPermitted);
-
-            this.table.getMessageSender()
-                    .sendGameModeOrStrainShortDescriptionAll(this.currentGameModeOrStrain.getShortDescription());
 
             LOGGER.info("Sleeping for 300ms waiting for everything come out right.");
             sleepFor(300);
@@ -136,7 +131,7 @@ public class KingGameServer extends GameServer {
             while (!this.game.getCurrentDeal().isFinished()) {
                 if (this.dealHasChanged) {
                     LOGGER.info("Sending new 'round' of deals");
-                    this.table.getMessageSender().sendDealAll(this.game.getCurrentDeal());
+                    this.sendDealAll();
                     this.dealHasChanged = false;
                 }
                 synchronized (cardPlayNotification) {
@@ -160,21 +155,19 @@ public class KingGameServer extends GameServer {
             }
 
             LOGGER.info("Sending last 'round' of deals");
-            this.table.getMessageSender().sendDealAll(this.game.getCurrentDeal());
+            this.sendDealAll();
             LOGGER.info("Sleeping for 3000ms for everyone to see the last card.");
             sleepFor(3000);
             this.game.finishDeal();
-            this.table.getMessageSender().sendGameScoreboardAll(this.kingGame.getGameScoreboard());
 
             LOGGER.info("Sleeping for 300ms waiting for all clients to prepare themselves.");
             sleepFor(300);
-            this.table.getMessageSender().sendFinishDealAll();
+            this.sbkingServer.sendFinishDealAll();
             LOGGER.info("Deal finished!");
             LOGGER.info("Sleeping for 300ms waiting for all clients to prepare themselves.");
             sleepFor(300);
         }
 
-        this.table.getMessageSender().sendFinishGameAll();
         LOGGER.info("Game has ended.");
     }
 
@@ -206,8 +199,16 @@ public class KingGameServer extends GameServer {
         return this.game.getDealer().getGameModeOrStrainChooserWhenDealer();
     }
 
-    private Direction getCurrentGamePositiveOrNegativeChooser() {
-        return this.game.getDealer().getPositiveOrNegativeChooserWhenDealer();
+    private void sendGameModeOrStrainChooserAll() {
+        this.sbkingServer.sendGameModeOrStrainChooserAll(this.getCurrentGameModeOrStrainChooser());
+    }
+
+    private void sendPositiveOrNegativeChooserAll() {
+        this.sbkingServer.sendPositiveOrNegativeChooserAll(this.getCurrentPositiveOrNegativeChooser());
+    }
+
+    private void sendPositiveOrNegativeAll() {
+        this.sbkingServer.sendPositiveOrNegativeAll(this.currentPositiveOrNegative);
     }
 
 }

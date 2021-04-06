@@ -1,4 +1,4 @@
-package br.com.sbk.sbking.networking.server;
+package br.com.sbk.sbking.networking.server.gameServer;
 
 import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 
@@ -7,7 +7,6 @@ import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.core.Player;
-import br.com.sbk.sbking.gui.models.KingGameScoreboard;
 
 public class CagandoNoBequinhoGameServer extends GameServer {
 
@@ -50,7 +49,7 @@ public class CagandoNoBequinhoGameServer extends GameServer {
                 sleepFor(300);
                 if (this.dealHasChanged) {
                     LOGGER.info("Sending new 'round' of deals");
-                    this.table.getMessageSender().sendDealAll(this.game.getCurrentDeal());
+                    this.sendDealAll();
                     this.dealHasChanged = false;
                 }
                 synchronized (cardPlayNotification) {
@@ -73,18 +72,15 @@ public class CagandoNoBequinhoGameServer extends GameServer {
                 }
             }
 
-            this.table.getMessageSender().sendDealAll(this.game.getCurrentDeal());
+            this.sendDealAll();
             this.sleepToShowLastCard();
 
             this.game.finishDeal();
-            this.table.getMessageSender().sendGameScoreboardAll(new KingGameScoreboard());
 
-            this.table.getMessageSender().sendFinishDealAll();
+            this.sbkingServer.sendFinishDealAll();
             LOGGER.info("Deal finished!");
 
         }
-
-        this.table.getMessageSender().sendFinishGameAll();
 
         LOGGER.info("Game has ended.");
 

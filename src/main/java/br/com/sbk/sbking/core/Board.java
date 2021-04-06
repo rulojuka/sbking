@@ -9,6 +9,12 @@ import java.util.Map;
 @SuppressWarnings("serial")
 public class Board implements Serializable {
 
+    /**
+     * @deprecated Kryo needs a no-arg constructor
+     */
+    private Board() {
+    }
+
     private Map<Direction, Hand> hands = new HashMap<Direction, Hand>();
     private Direction dealer;
 

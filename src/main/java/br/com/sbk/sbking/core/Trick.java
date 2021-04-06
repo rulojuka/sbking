@@ -15,6 +15,12 @@ import br.com.sbk.sbking.core.exceptions.TrickAlreadyFullException;
 @SuppressWarnings("serial")
 public class Trick implements Serializable {
 
+    /**
+     * @deprecated Kryo needs a no-arg constructor
+     */
+    private Trick() {
+    }
+
     private List<Card> cards;
     private Direction leader;
     private boolean lastTwo;

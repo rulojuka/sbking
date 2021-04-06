@@ -1,21 +1,35 @@
 package br.com.sbk.sbking.core;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 @SuppressWarnings("serial")
 public class Player implements Serializable {
 
-  private String name;
+  private UUID identifier;
+  private String nickname;
 
-  public Player(String name) {
-    this.name = name;
+  /**
+   * @deprecated Kryo needs a no-arg constructor
+   */
+  private Player() {
   }
 
-  public String getName() {
-    return name;
+  public Player(UUID identifier, String nickname) {
+    this.identifier = identifier;
+    this.nickname = nickname;
   }
 
-  public void setName(String name) {
-    this.name = name;
+  public UUID getIdentifier() {
+    return identifier;
   }
+
+  public String getNickname() {
+    return nickname;
+  }
+
+  public void setNickname(String name) {
+    this.nickname = name;
+  }
+
 }

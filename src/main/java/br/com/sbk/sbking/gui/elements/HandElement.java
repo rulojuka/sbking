@@ -50,7 +50,7 @@ public class HandElement {
         if (player == null) {
             sitOrLeaveButton.setText("Click to seat.");
         } else {
-            sitOrLeaveButton.setText(player.getName());
+            sitOrLeaveButton.setText(player.getNickname());
         }
 
         Point startingPoint = handTopLeftCorner;

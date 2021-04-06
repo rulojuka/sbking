@@ -1,4 +1,4 @@
-package br.com.sbk.sbking.networking.server;
+package br.com.sbk.sbking.networking.server.gameServer;
 
 import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 
@@ -56,10 +56,10 @@ public class PositiveKingGameServer extends GameServer {
                     currentDeal.setPlayerOf(direction, this.table.getPlayerOf(direction));
                 }
 
-                this.table.getMessageSender().sendInitializeDealAll();
-                this.table.getMessageSender().sendBoardAll(this.game.getCurrentBoard());
+                this.sendInitializeDealAll();
+                this.getSBKingServer().sendBoardAll(this.game.getCurrentBoard());
                 sleepFor(200);
-                this.table.getMessageSender().sendDealAll(this.game.getCurrentDeal());
+                this.sendDealAll();
 
                 PositiveOrNegative positive = new PositiveOrNegative();
                 positive.setPositive();
@@ -72,8 +72,7 @@ public class PositiveKingGameServer extends GameServer {
                             LOGGER.info(
                                     "I am waiting for some thread to notify that it wants to choose game Mode Or Strain");
                             gameModeOrStrainNotification.wait(3000);
-                            this.table.getMessageSender()
-                                    .sendChooserGameModeOrStrainAll(this.getCurrentGameModeOrStrainChooser());
+                            this.sendGameModeOrStrainChooserAll();
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
@@ -88,15 +87,12 @@ public class PositiveKingGameServer extends GameServer {
 
                 if (!isRulesetPermitted) {
                     LOGGER.info("This ruleset is not permitted. Restarting choose procedure");
-                    this.table.getMessageSender().sendInvalidRulesetAll();
+                    this.sendInvalidRulesetAll();
                 } else {
-                    this.table.getMessageSender().sendValidRulesetAll();
+                    this.sendValidRulesetAll();
                 }
 
             } while (!isRulesetPermitted);
-
-            this.table.getMessageSender()
-                    .sendGameModeOrStrainShortDescriptionAll(this.currentGameModeOrStrain.getShortDescription());
 
             LOGGER.info("Sleeping for 300ms waiting for everything come out right.");
             sleepFor(300);
@@ -115,7 +111,7 @@ public class PositiveKingGameServer extends GameServer {
                 sleepFor(300);
                 if (this.dealHasChanged) {
                     LOGGER.info("Sending new 'round' of deals");
-                    this.table.getMessageSender().sendDealAll(this.game.getCurrentDeal());
+                    this.sendDealAll();
                     this.dealHasChanged = false;
                 }
                 synchronized (cardPlayNotification) {
@@ -138,18 +134,15 @@ public class PositiveKingGameServer extends GameServer {
                 }
             }
 
-            this.table.getMessageSender().sendDealAll(this.game.getCurrentDeal());
+            this.sendDealAll();
             this.sleepToShowLastCard();
 
             this.game.finishDeal();
-            this.table.getMessageSender().sendGameScoreboardAll(this.positiveKingGame.getGameScoreboard());
 
-            this.table.getMessageSender().sendFinishDealAll();
+            this.sbkingServer.sendFinishDealAll();
             LOGGER.info("Deal finished!");
 
         }
-
-        this.table.getMessageSender().sendFinishGameAll();
 
         LOGGER.info("Game has ended.");
 
@@ -181,6 +174,10 @@ public class PositiveKingGameServer extends GameServer {
 
     private Direction getCurrentGameModeOrStrainChooser() {
         return this.game.getDealer().getGameModeOrStrainChooserWhenDealer();
+    }
+
+    private void sendGameModeOrStrainChooserAll() {
+        this.sbkingServer.sendGameModeOrStrainChooserAll(this.getCurrentGameModeOrStrainChooser());
     }
 
 }
