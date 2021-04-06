@@ -10,7 +10,6 @@ import org.junit.Test;
 
 import br.com.sbk.sbking.core.Suit;
 import br.com.sbk.sbking.core.Trick;
-import br.com.sbk.sbking.core.rulesets.concrete.PositiveWithTrumpsRuleset;
 
 public class PositiveWithTrumpsRulesetTest {
 
@@ -19,11 +18,12 @@ public class PositiveWithTrumpsRulesetTest {
     private static final String POSITIVE_SPADES_SHORT_DESCRIPTION = "Positive spades";
     private static final String POSITIVE_SPADES_COMPLETE_DESCRIPTION = "Make the most tricks with spades as trump suit";
     private PositiveWithTrumpsRuleset positiveWithTrumpRuleset;
+    private Suit trumpSuit;
 
     @Before
     public void createPositiveNoTrumpsRuleset() {
-        Suit spades = Suit.SPADES;
-        this.positiveWithTrumpRuleset = new PositiveWithTrumpsRuleset(spades);
+        trumpSuit = Suit.SPADES;
+        this.positiveWithTrumpRuleset = new PositiveWithTrumpsRuleset(trumpSuit);
     }
 
     @Test
@@ -51,6 +51,11 @@ public class PositiveWithTrumpsRulesetTest {
     @Test
     public void shouldNotProhibitsHeartsUntilOnlySuitLeft() {
         assertFalse(this.positiveWithTrumpRuleset.prohibitsHeartsUntilOnlySuitLeft());
+    }
+
+    @Test
+    public void shouldGetTrumpSuit() {
+        assertEquals(trumpSuit, this.positiveWithTrumpRuleset.getTrumpSuit());
     }
 
 }

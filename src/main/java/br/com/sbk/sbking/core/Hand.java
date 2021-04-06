@@ -67,6 +67,10 @@ public class Hand implements Serializable {
 
     }
 
+    public void sortByTrumpSuit(Suit suit) {
+        Collections.sort(this.cards, new CardInsideHandWithSuitComparator(suit));
+    }
+
     public boolean containsCard(Card card) {
         return this.getCards().contains(card);
     }

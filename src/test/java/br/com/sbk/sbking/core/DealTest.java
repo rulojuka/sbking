@@ -3,7 +3,9 @@ package br.com.sbk.sbking.core;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.any;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -317,6 +319,21 @@ public class DealTest {
         }
 
         assertEquals(oneCompletedTricks, deal.getCompletedTricks());
+
+    }
+
+    @Test
+    public void shouldSortAllHandsByTrumpSuit() {
+        Board board = mock(Board.class);
+        Ruleset ruleset = mock(Ruleset.class);
+        Direction dealer = Direction.NORTH;
+        when(board.getDealer()).thenReturn(dealer);
+        Deal deal = new Deal(board, ruleset);
+        Suit anySuit = Suit.CLUBS;
+
+        deal.sortAllHandsByTrumpSuit(anySuit);
+
+        verify(board, atLeastOnce()).sortAllHandsByTrumpSuit(anySuit);
 
     }
 

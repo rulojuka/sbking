@@ -33,6 +33,12 @@ public class Board implements Serializable {
         }
     }
 
+    public void sortAllHandsByTrumpSuit(Suit suit) {
+        for (Direction direction : Direction.values()) {
+            this.getHandOf(direction).sortByTrumpSuit(suit);
+        }
+    }
+
     public List<Card> removeOneCardFromEachHand() {
         List<Card> removedCards = new ArrayList<Card>();
         for (Direction direction : Direction.values()) {
