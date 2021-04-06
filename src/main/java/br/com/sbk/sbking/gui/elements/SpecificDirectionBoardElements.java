@@ -16,11 +16,12 @@ public class SpecificDirectionBoardElements {
         for (Direction currentDirection : Direction.values()) {
             if (currentDirection.equals(direction)) {
                 new HandElement(deal.getHandOf(currentDirection), container, actionListener,
-                        FrameConstants.pointOfDirection.get(currentDirection), deal.getPlayerOf(currentDirection), true, direction);
+                        FrameConstants.pointOfDirection.get(currentDirection), deal.getPlayerOf(currentDirection), true,
+                        currentDirection);
             } else {
                 new HandElement(deal.getHandOf(currentDirection), container, actionListener,
-                        FrameConstants.pointOfDirection.get(currentDirection), deal.getPlayerOf(currentDirection), false,
-                        currentDirection);
+                        FrameConstants.pointOfDirection.get(currentDirection), deal.getPlayerOf(currentDirection),
+                        false, currentDirection);
             }
         }
 
@@ -29,7 +30,8 @@ public class SpecificDirectionBoardElements {
 
         new ScoreboardElement(deal, container, new Point(container.getWidth() - 150, 10));
 
-        new TrickElement(deal.getCurrentTrick(), container, new Point(container.getWidth() / 2, container.getHeight() / 2));
+        new TrickElement(deal.getCurrentTrick(), container,
+                new Point(container.getWidth() / 2, container.getHeight() / 2));
 
         new RulesetElement(deal.getRuleset(), container, new Point(150, 10));
     }
