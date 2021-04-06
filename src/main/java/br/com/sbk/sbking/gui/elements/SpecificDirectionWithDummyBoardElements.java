@@ -10,17 +10,17 @@ import br.com.sbk.sbking.gui.constants.FrameConstants;
 
 public class SpecificDirectionWithDummyBoardElements {
 
-  public SpecificDirectionWithDummyBoardElements(Direction direction, Deal deal, Container container,
+  public SpecificDirectionWithDummyBoardElements(Direction playerDirection, Deal deal, Container container,
       ActionListener actionListener, Direction dummy, boolean dummyVisible) {
 
-    for (Direction currentDirection : Direction.values()) {
-      boolean shouldDrawVisible = this.shouldDrawVisible(direction, currentDirection, dummy, dummyVisible);
-      new HandElement(deal.getHandOf(currentDirection), container, actionListener,
-          FrameConstants.pointOfDirection.get(currentDirection), deal.getPlayerOf(currentDirection), shouldDrawVisible,
-          direction);
+    for (Direction currentHandDirection : Direction.values()) {
+      boolean shouldDrawVisible = this.shouldDrawVisible(playerDirection, currentHandDirection, dummy, dummyVisible);
+      new HandElement(deal.getHandOf(currentHandDirection), container, actionListener,
+          FrameConstants.pointOfDirection.get(currentHandDirection), deal.getPlayerOf(currentHandDirection),
+          shouldDrawVisible, currentHandDirection);
     }
 
-    boolean isMyTurn = deal.getCurrentPlayer().equals(direction);
+    boolean isMyTurn = deal.getCurrentPlayer().equals(playerDirection);
     new CurrentPlayerElement(deal.getCurrentPlayer(), container, isMyTurn);
 
     new ScoreboardElement(deal, container, new Point(container.getWidth() - 150, 10));
@@ -33,7 +33,16 @@ public class SpecificDirectionWithDummyBoardElements {
   private boolean shouldDrawVisible(Direction playerDirection, Direction currentDirection, Direction dummy,
       boolean dummyVisible) {
     if (dummyVisible) {
-      return currentDirection == playerDirection || currentDirection == dummy;
+      if (currentDirection == playerDirection) {
+        return true;
+      }
+      if (currentDirection == dummy) {
+        return true;
+      }
+      if (playerDirection == dummy && currentDirection == dummy.next(2)) {
+        return true;
+      }
+      return false;
     } else {
       return currentDirection == playerDirection;
     }
