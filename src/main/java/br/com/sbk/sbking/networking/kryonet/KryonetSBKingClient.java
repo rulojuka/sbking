@@ -16,6 +16,7 @@ import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.ChoosePositi
 import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.MoveToSeatMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.PlayCardMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.SetNicknameMessage;
+import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.UndoMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ServerToClient.BoardMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ServerToClient.DealMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ServerToClient.FinishDealMessage;
@@ -106,6 +107,10 @@ public class KryonetSBKingClient extends Client {
 
   public void sendChooseGameModeOrStrain(String gameModeOrStrain) {
     this.sendMessage(new ChooseGameModeOrStrainMessage(gameModeOrStrain));
+  }
+
+  public void sendUndo() {
+    this.sendMessage(new UndoMessage());
   }
 
 }

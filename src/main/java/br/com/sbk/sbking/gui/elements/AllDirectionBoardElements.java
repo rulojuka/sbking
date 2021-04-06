@@ -20,7 +20,8 @@ public class AllDirectionBoardElements {
 
         new ScoreboardElement(deal, container, new Point(container.getWidth() - 150, 10));
 
-        new TrickElement(deal.getCurrentTrick(), container, new Point(container.getWidth() / 2, container.getHeight() / 2));
+        new TrickElement(deal.getCurrentTrick(), container,
+                new Point(container.getWidth() / 2, container.getHeight() / 2));
 
         new RulesetElement(deal.getRuleset(), container, new Point(150, 10));
     }

@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -336,4 +337,241 @@ public class DealTest {
 
     }
 
+    private Deal initDeal(Hand handOfCurrentPlayer) {
+        Direction dealer = Direction.NORTH;
+        Board board = mock(Board.class);
+        Ruleset ruleset = mock(Ruleset.class);
+        Card card = mock(Card.class);
+
+        when(board.getHandOf(any(Direction.class))).thenReturn(handOfCurrentPlayer);
+        when(handOfCurrentPlayer.containsCard(card)).thenReturn(true);
+        when(board.getDealer()).thenReturn(dealer);
+
+        return new Deal(board, ruleset);
+    }
+
+    private Deal initDeal(Hand handOfCurrentPlayer, Board board) {
+        Direction dealer = Direction.NORTH;
+        Ruleset ruleset = mock(Ruleset.class);
+        Card card = mock(Card.class);
+
+        when(board.getHandOf(any(Direction.class))).thenReturn(handOfCurrentPlayer);
+        when(handOfCurrentPlayer.containsCard(card)).thenReturn(true);
+        when(board.getDealer()).thenReturn(dealer);
+
+        return new Deal(board, ruleset);
+    }
+
+    private Deal initDeal(Hand handOfCurrentPlayer, Ruleset ruleset) {
+        Direction dealer = Direction.NORTH;
+        Board board = mock(Board.class);
+        Card card = mock(Card.class);
+
+        when(board.getHandOf(any(Direction.class))).thenReturn(handOfCurrentPlayer);
+        when(handOfCurrentPlayer.containsCard(card)).thenReturn(true);
+        when(board.getDealer()).thenReturn(dealer);
+        when(ruleset.followsSuit(any(), any(), any())).thenReturn(true);
+
+        return new Deal(board, ruleset);
+    }
+
+    private void playNTimesCard(Deal deal, int n, Hand handOfCurrentPlayer) {
+        for (int i = 0; i < n; i++) {
+            Card card = mock(Card.class);
+            when(handOfCurrentPlayer.containsCard(card)).thenReturn(true);
+            deal.playCard(card);
+        }
+    }
+
+    @Test
+    public void getTricksShouldReturnEmptyListIfDealHasNoTricks() {
+        Hand handOfCurrentPlayer = mock(Hand.class);
+        Deal deal = this.initDeal(handOfCurrentPlayer);
+
+        assertTrue(deal.getTricks().isEmpty());
+    }
+
+    @Test
+    public void undoShouldDoNothingWhenDealHasNoTricks() {
+        Hand handOfCurrentPlayer = mock(Hand.class);
+        Deal deal = this.initDeal(handOfCurrentPlayer);
+        Direction directionThatCallsUndo = Direction.NORTH;
+
+        deal.undo(directionThatCallsUndo);
+
+        assertTrue(deal.getTricks().isEmpty());
+    }
+
+    @Test
+    public void undoShouldDoNothingWhenFirstTrickAndCallerHasNotPlayed() {
+        Hand handOfCurrentPlayer = mock(Hand.class);
+        Board board = mock(Board.class);
+        Deal deal = this.initDeal(handOfCurrentPlayer, board);
+        Direction directionThatCallsUndo = Direction.EAST;
+        playNTimesCard(deal, 1, handOfCurrentPlayer);
+        Direction currentPlayerBeforeUndo = deal.getCurrentPlayer();
+
+        deal.undo(directionThatCallsUndo);
+
+        Direction currentPlayerAfterUndo = deal.getCurrentPlayer();
+        verify(board, never()).putCardInHand(any());
+        assertEquals(currentPlayerBeforeUndo, currentPlayerAfterUndo);
+    }
+
+    @Test
+    public void undoShouldRemoveTrickAndSetCurrentPlayerWhenFirstPlayerAskedForUndo() {
+        Hand handOfCurrentPlayer = mock(Hand.class);
+        Deal deal = this.initDeal(handOfCurrentPlayer);
+        Direction currentPlayer = deal.getCurrentPlayer();
+        Direction directionThatCallsUndo = currentPlayer;
+        playNTimesCard(deal, 1, handOfCurrentPlayer);
+
+        deal.undo(directionThatCallsUndo);
+
+        Direction currentPlayerAfterUndo = deal.getCurrentPlayer();
+        assertTrue(deal.getCurrentTrick().getCards().isEmpty());
+        assertEquals(0, deal.getTricks().size());
+        assertEquals(directionThatCallsUndo, currentPlayerAfterUndo);
+    }
+
+    @Test
+    public void undoShouldRemoveCardAndSetCurrentPlayerWhenLastPlayerAskedForUndo() {
+        Hand handOfCurrentPlayer = mock(Hand.class);
+        Ruleset ruleset = mock(Ruleset.class);
+        Deal deal = this.initDeal(handOfCurrentPlayer, ruleset);
+        when(ruleset.getWinner(any())).thenReturn(Direction.NORTH);
+        playNTimesCard(deal, 3, handOfCurrentPlayer);
+        Direction currentPlayer = deal.getCurrentPlayer();
+        playNTimesCard(deal, 1, handOfCurrentPlayer);
+        Direction directionThatCallsUndo = currentPlayer;
+
+        deal.undo(directionThatCallsUndo);
+
+        Direction currentPlayerAfterUndo = deal.getCurrentPlayer();
+        assertEquals(3, deal.getCurrentTrick().getCards().size());
+        assertEquals(1, deal.getTricks().size());
+        assertEquals(directionThatCallsUndo, currentPlayerAfterUndo);
+    }
+
+    @Test
+    public void undoShouldDoNothingWhenFirstTrickHasMoreThanOneCardAndCallerHasNotPlayedYet() {
+        Hand handOfCurrentPlayer = mock(Hand.class);
+        Ruleset ruleset = mock(Ruleset.class);
+        Deal deal = this.initDeal(handOfCurrentPlayer, ruleset);
+        playNTimesCard(deal, 2, handOfCurrentPlayer);
+        Direction currentPlayer = deal.getCurrentPlayer();
+        Direction directionThatCallsUndo = currentPlayer.next();
+
+        deal.undo(directionThatCallsUndo);
+
+        Direction currentPlayerAfterUndo = deal.getCurrentPlayer();
+        assertEquals(2, deal.getCurrentTrick().getCards().size());
+        assertEquals(1, deal.getTricks().size());
+        assertEquals(currentPlayer, currentPlayerAfterUndo);
+    }
+
+    @Test
+    public void undoShouldRemoveTwoTricksWhenLeaderOfThePreviousTrickAsksForUndoOnCurrentTrickBeforePlayCard() {
+        Hand handOfCurrentPlayer = mock(Hand.class);
+        Ruleset ruleset = mock(Ruleset.class);
+        Deal deal = this.initDeal(handOfCurrentPlayer, ruleset);
+        Direction firstPlayer = deal.getCurrentPlayer();
+        Direction anyOtherPlayer = firstPlayer.next(3);
+        when(ruleset.getWinner(any())).thenReturn(firstPlayer);
+        int numberOfTricks = 10;
+        playNTimesCard(deal, numberOfTricks * 4 - 1, handOfCurrentPlayer);
+        when(ruleset.getWinner(any())).thenReturn(anyOtherPlayer);
+        playNTimesCard(deal, 2, handOfCurrentPlayer);
+
+        deal.undo(firstPlayer);
+
+        Direction currentPlayerAfterUndo = deal.getCurrentPlayer();
+        assertEquals(4, deal.getCurrentTrick().getCards().size());
+        assertEquals(numberOfTricks - 1, deal.getTricks().size());
+        assertEquals(firstPlayer, currentPlayerAfterUndo);
+    }
+
+    @Test
+    public void undoShouldUpdateScoreWhenCallHappensImmediatelyAfterCurrentTrickIsComplete() {
+        Hand handOfCurrentPlayer = mock(Hand.class);
+        Ruleset ruleset = mock(Ruleset.class);
+        Deal deal = this.initDeal(handOfCurrentPlayer, ruleset);
+        Direction firstPlayer = deal.getCurrentPlayer();
+        when(ruleset.getWinner(any())).thenReturn(firstPlayer);
+        int anyNumberOfTricks = 10;
+        playNTimesCard(deal, anyNumberOfTricks * 4 - 1, handOfCurrentPlayer);
+        Score previousScore = deal.getScore();
+        playNTimesCard(deal, 1, handOfCurrentPlayer);
+
+        deal.undo(firstPlayer);
+
+        Direction currentPlayerAfterUndo = deal.getCurrentPlayer();
+        Score scoreAfterUndo = deal.getScore();
+        assertEquals(4, deal.getCurrentTrick().getCards().size());
+        assertEquals(anyNumberOfTricks - 1, deal.getTricks().size());
+        assertEquals(firstPlayer, currentPlayerAfterUndo);
+        assertEquals(previousScore, scoreAfterUndo);
+    }
+
+    @Test
+    public void undoShouldUpdateCompletedTricksWhenFirstTrickIsCompleteAndAnyPlayerCallsUndo() {
+        Hand handOfCurrentPlayer = mock(Hand.class);
+        Ruleset ruleset = mock(Ruleset.class);
+        Deal deal = this.initDeal(handOfCurrentPlayer, ruleset);
+        Direction firstPlayer = deal.getCurrentPlayer();
+        Direction anyPlayer = firstPlayer;
+        when(ruleset.getWinner(any())).thenReturn(firstPlayer);
+        playNTimesCard(deal, 1, handOfCurrentPlayer);
+
+        deal.undo(anyPlayer);
+
+        int completedTricksAfterUndo = deal.getCompletedTricks();
+        Direction currentPlayerAfterUndo = deal.getCurrentPlayer();
+        assertEquals(0, deal.getCurrentTrick().getCards().size());
+        assertEquals(0, deal.getTricks().size());
+        assertEquals(firstPlayer, currentPlayerAfterUndo);
+        assertEquals(0, completedTricksAfterUndo);
+    }
+
+    @Test
+    public void undoShouldUpdateCompletedTricksWhenNotFirstTrickAndTrickIsCompleteAndAnyPlayerCallsUndo() {
+        Hand handOfCurrentPlayer = mock(Hand.class);
+        Ruleset ruleset = mock(Ruleset.class);
+        Deal deal = this.initDeal(handOfCurrentPlayer, ruleset);
+        Direction firstPlayer = deal.getCurrentPlayer();
+        Direction anyPlayer = firstPlayer;
+        when(ruleset.getWinner(any())).thenReturn(firstPlayer);
+        int anyNumberOfTricksDifferentThanOne = 13;
+        playNTimesCard(deal, anyNumberOfTricksDifferentThanOne * 4, handOfCurrentPlayer);
+
+        deal.undo(anyPlayer);
+
+        int completedTricksAfterUndo = deal.getCompletedTricks();
+        Direction currentPlayerAfterUndo = deal.getCurrentPlayer();
+        assertEquals(4, deal.getCurrentTrick().getCards().size());
+        assertEquals(anyNumberOfTricksDifferentThanOne - 1, deal.getTricks().size());
+        assertEquals(firstPlayer, currentPlayerAfterUndo);
+        assertEquals(anyNumberOfTricksDifferentThanOne - 1, completedTricksAfterUndo);
+    }
+
+    @Test
+    public void undoShouldNotChangeTrickWhenUndoWasNotCalledByTheLeader() {
+        Hand handOfCurrentPlayer = mock(Hand.class);
+        Ruleset ruleset = mock(Ruleset.class);
+        Deal deal = this.initDeal(handOfCurrentPlayer, ruleset);
+        Direction firstPlayer = deal.getCurrentPlayer();
+        Direction lastPlayer = firstPlayer.next();
+        int anyNumberOfTricks = 2;
+        when(ruleset.getWinner(any())).thenReturn(firstPlayer);
+        playNTimesCard(deal, anyNumberOfTricks * 4, handOfCurrentPlayer);
+
+        deal.undo(lastPlayer);
+
+        int completedTricksAfterUndo = deal.getCompletedTricks();
+        Direction currentPlayerAfterUndo = deal.getCurrentPlayer();
+        assertEquals(1, deal.getCurrentTrick().getCards().size());
+        assertEquals(anyNumberOfTricks, deal.getTricks().size());
+        assertEquals(lastPlayer, currentPlayerAfterUndo);
+        assertEquals(anyNumberOfTricks - 1, completedTricksAfterUndo);
+    }
 }

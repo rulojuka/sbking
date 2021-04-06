@@ -122,4 +122,23 @@ public class DirectionTest {
         assertEquals(WEST_ABBREVIATION, west.getAbbreviation());
     }
 
+    @Test
+    public void differenceBetweenShouldReturnZeroWhenGivenTwoTimesTheSameDirection() {
+        Direction leader = Direction.WEST;
+
+        int result = Direction.differenceBetween(leader, leader);
+
+        assertEquals(0, result);
+    }
+
+    @Test
+    public void differenceBetweenShouldReturnDistanceBetweenTwoNeighbors() {
+        Direction leader = Direction.WEST;
+        Direction direction = Direction.SOUTH;
+        Direction direction2 = Direction.NORTH;
+
+        assertEquals(3, Direction.differenceBetween(leader, direction));
+        assertEquals(1, Direction.differenceBetween(leader, direction2));
+    }
+
 }

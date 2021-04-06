@@ -42,6 +42,14 @@ public class Score {
         eastWestPoints += this.scoreable.getPoints(trick);
     }
 
+    public void subtractTrickFromDirection(Trick trick, Direction winner) {
+        if (winner.isNorthSouth()) {
+            this.northSouthPoints -= this.scoreable.getPoints(trick);
+        } else {
+            this.eastWestPoints -= this.scoreable.getPoints(trick);
+        }
+    }
+
     public int getAlreadyPlayedPoints() {
         return this.eastWestPoints + this.northSouthPoints;
     }
@@ -91,5 +99,4 @@ public class Score {
         }
         return true;
     }
-
 }

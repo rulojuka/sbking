@@ -171,4 +171,9 @@ public class SBKingServer {
     this.table.addSpectator(new PlayerNetworkInformation(this.identifierToPlayerMap.get(identifier)));
   }
 
+  public void undo(UUID playerIdentifier) {
+    Direction direction = this.playerDirections.get(playerIdentifier);
+    this.table.undo(direction);
+  }
+
 }

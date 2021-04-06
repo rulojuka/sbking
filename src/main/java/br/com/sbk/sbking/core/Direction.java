@@ -67,4 +67,12 @@ public enum Direction {
     public Direction getGameModeOrStrainChooserWhenDealer() {
         return this.next(3);
     }
+
+    public static int differenceBetween(Direction leader, Direction direction) {
+        int result = (direction.ordinal() - leader.ordinal()) % vals.length;
+        if (result < 0) {
+            return vals.length + result;
+        }
+        return result;
+    }
 }
