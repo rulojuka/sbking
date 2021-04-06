@@ -28,6 +28,9 @@ public class SpecificDirectionWithDummyBoardElements {
     new TrickElement(deal.getCurrentTrick(), container, new Point(container.getWidth() / 2, container.getHeight() / 2));
 
     new RulesetElement(deal.getRuleset(), container, new Point(150, 10));
+
+    new UndoElement(container, new Point(150, container.getHeight() - 50), actionListener);
+
   }
 
   private boolean shouldDrawVisible(Direction playerDirection, Direction currentDirection, Direction dummy,

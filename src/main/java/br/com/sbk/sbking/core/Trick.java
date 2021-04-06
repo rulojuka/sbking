@@ -5,7 +5,9 @@ import static br.com.sbk.sbking.core.GameConstants.COMPLETE_TRICK_NUMBER_OF_CARD
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -51,6 +53,14 @@ public class Trick {
 
     public List<Card> getCards() {
         return Collections.unmodifiableList(this.cards);
+    }
+
+    public Map<Card, Direction> getCardDirectionMap() {
+        Map<Card, Direction> mapDirectionCard = new HashMap<Card, Direction>();
+        for (Card card : this.cards) {
+            mapDirectionCard.put(card, this.directionOfCard(card));
+        }
+        return mapDirectionCard;
     }
 
     public Suit getLeadSuit() {
@@ -208,6 +218,30 @@ public class Trick {
     @Override
     public String toString() {
         return this.cards.toString();
+    }
+
+    public boolean hasCardOf(Direction direction) {
+        int stepsBetween = Direction.differenceBetween(this.getLeader(), direction);
+        int minNumberOfCardsThatShouldBePlayedForDirectionToBeIncluded = stepsBetween + 1;
+        int numberOfCardsInTable = this.getCards().size();
+        return minNumberOfCardsThatShouldBePlayedForDirectionToBeIncluded <= numberOfCardsInTable;
+    }
+
+    public Map<Card, Direction> getCardsFromLastUpTo(Direction direction) {
+        Map<Card, Direction> cardsUpToDirection = new HashMap<Card, Direction>();
+        int directionPosition = Direction.differenceBetween(this.leader, direction);
+        for (int i = this.cards.size() - 1; i >= directionPosition; i--) {
+            Direction currentDirection = this.directionOfCard(this.cards.get(i));
+            cardsUpToDirection.put(this.cards.get(i), currentDirection);
+        }
+        return cardsUpToDirection;
+    }
+
+    public void removeCardsFromLastUpTo(Direction direction) {
+        int directionIndex = Direction.differenceBetween(this.getLeader(), direction);
+        for (int i = this.cards.size() - 1; i >= directionIndex; i--) {
+            this.cards.remove(i);
+        }
     }
 
 }

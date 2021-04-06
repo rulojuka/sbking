@@ -19,6 +19,7 @@ import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.ChoosePositi
 import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.MoveToSeatMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.PlayCardMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.SetNicknameMessage;
+import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.UndoMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ServerToClient.BoardMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ServerToClient.DealMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ServerToClient.FinishDealMessage;
@@ -75,6 +76,8 @@ public class KryonetSBKingServer extends Server {
       this.sbkingServer.chooseNegative(playerIdentifier);
     } else if (message instanceof ChooseGameModeOrStrainMessage) {
       this.sbkingServer.chooseGameModeOrStrain((String) content, playerIdentifier);
+    } else if (message instanceof UndoMessage) {
+      this.sbkingServer.undo(playerIdentifier);
     } else {
       LOGGER.error("Could not understand message.");
       LOGGER.error(message);

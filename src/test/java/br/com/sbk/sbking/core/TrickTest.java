@@ -2,6 +2,7 @@ package br.com.sbk.sbking.core;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.atLeast;
 import static org.mockito.Mockito.atLeastOnce;
@@ -13,7 +14,9 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -391,6 +394,125 @@ public class TrickTest {
         verify(queenOfHearts, only()).isHeart();
         verify(kingOfHearts, only()).isHeart();
         verify(aceOfSpades, only()).isHeart();
+    }
+
+    @Test
+    public void getCardDirectionMapShouldReturnAMapContainingTheDirectionOfEachCard() {
+        Direction leader = Direction.SOUTH;
+        Trick trick = new Trick(leader);
+        int numberOfCards = 4;
+
+        List<Card> cards = new ArrayList<Card>();
+        for (int i = 0; i < numberOfCards; i++) {
+            Card card = mock(Card.class);
+            cards.add(card);
+            trick.addCard(card);
+        }
+
+        Map<Card, Direction> cardDirectionMap = trick.getCardDirectionMap();
+
+        for (int i = 0; i < numberOfCards; i++) {
+            assertEquals(leader.next(i), cardDirectionMap.get(cards.get(i)));
+        }
+    }
+
+    @Test
+    public void hasCardOfShouldReturnTrueWhenDirectionHasAlreadyPlayed() {
+        Trick trick = this.trickWithTwoCardsAndNorthAsLeader();
+        assertTrue(trick.hasCardOf(Direction.EAST));
+    }
+
+    @Test
+    public void hasCardOfShouldReturnFalseWhenDirectionHasNotPlayedYet() {
+        Trick trick = this.trickWithTwoCardsAndNorthAsLeader();
+        assertFalse(trick.hasCardOf(Direction.SOUTH));
+    }
+
+    @Test
+    public void hasCardOfShouldReturnFalseWhenTheLeaderHasNotPlayedYet() {
+        Direction leader = Direction.NORTH;
+        Trick trickWithNoCards = new Trick(leader);
+        assertFalse(trickWithNoCards.hasCardOf(leader));
+    }
+
+    private Trick trickWithTwoCardsAndNorthAsLeader() {
+        Direction leader = Direction.NORTH;
+        Trick trick = new Trick(leader);
+
+        Card firstCard = mock(Card.class);
+        Card secondCard = mock(Card.class);
+
+        trick.addCard(firstCard);
+        trick.addCard(secondCard);
+
+        return trick;
+    }
+
+    @Test
+    public void removeCardsUpToDirectionShouldEliminateAllAndOnlyTheCardsUpToThatDirection() {
+        Trick trick = this.trickWithTwoCardsAndNorthAsLeader();
+        trick.addCard(mock(Card.class));
+        trick.removeCardsFromLastUpTo(Direction.EAST);
+        assertFalse(trick.hasCardOf(Direction.EAST));
+        assertFalse(trick.hasCardOf(Direction.SOUTH));
+        assertTrue(trick.hasCardOf(Direction.NORTH));
+        assertEquals(1, trick.getCards().size());
+    }
+
+    @Test
+    public void removeCardsUpToDirectionShouldNotFailWhenTrickHasNoCards() {
+        Trick trick = new Trick(Direction.NORTH);
+        trick.removeCardsFromLastUpTo(Direction.EAST);
+    }
+
+    @Test
+    public void removeCardsUpToLeaderShouldEliminateAllCardsFromTrick() {
+        Trick trick = this.trickWithTwoCardsAndNorthAsLeader();
+        trick.removeCardsFromLastUpTo(Direction.NORTH);
+        assertTrue(trick.isEmpty());
+    }
+
+    @Test
+    public void getCardsFromLastUpToLast() {
+        Direction leader = Direction.NORTH;
+        Trick trick = new Trick(leader);
+        Direction next = leader.next();
+        Card firstCard = mock(Card.class);
+        Card secondCard = mock(Card.class);
+        trick.addCard(firstCard);
+        trick.addCard(secondCard);
+
+        Map<Card, Direction> cardsUpToEast = trick.getCardsFromLastUpTo(next);
+
+        Direction directionFromFirstCard = cardsUpToEast.get(firstCard);
+        Direction directionFromSecondCard = cardsUpToEast.get(secondCard);
+        assertNull(directionFromFirstCard);
+        assertEquals(next, directionFromSecondCard);
+    }
+
+    @Test
+    public void getCardsFromLastUpToDirectionThatDidNotPlayed() {
+        Direction leader = Direction.NORTH;
+        Trick trick = new Trick(leader);
+        Card firstCard = mock(Card.class);
+        trick.addCard(firstCard);
+
+        assertTrue(trick.getCardsFromLastUpTo(leader.next()).isEmpty());
+    }
+
+    @Test
+    public void getCardsFromLastUpToLeader() {
+        Direction leader = Direction.NORTH;
+        Trick trick = new Trick(leader);
+        Card firstCard = mock(Card.class);
+        Card secondCard = mock(Card.class);
+        trick.addCard(firstCard);
+        trick.addCard(secondCard);
+
+        Map<Card, Direction> cardsUpToLeader = trick.getCardsFromLastUpTo(leader);
+
+        assertEquals(leader, cardsUpToLeader.get(firstCard));
+        assertEquals(leader.next(), cardsUpToLeader.get(secondCard));
     }
 
 }

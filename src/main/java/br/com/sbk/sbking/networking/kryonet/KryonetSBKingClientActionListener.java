@@ -19,4 +19,8 @@ public class KryonetSBKingClientActionListener {
     client.sitOrLeave(direction);
   }
 
+  public void undo() {
+    client.sendUndo();
+  }
+
 }

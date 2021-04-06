@@ -101,4 +101,8 @@ public abstract class GameServer implements Runnable {
         this.getSBKingServer().sendValidRulesetAll();
     }
 
+    public void undo(Direction direction) {
+        this.getDeal().undo(direction);
+    }
+
 }

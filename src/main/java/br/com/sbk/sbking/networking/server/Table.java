@@ -178,4 +178,8 @@ public class Table {
     this.getSBKingServer().sendDealAll(this.gameServer.getDeal());
   }
 
+  public void undo(Direction direction) {
+    this.gameServer.undo(direction);
+    this.sendDealAll();
+  }
 }

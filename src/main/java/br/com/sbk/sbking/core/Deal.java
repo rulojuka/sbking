@@ -290,4 +290,78 @@ public class Deal {
         this.board.sortAllHandsByTrumpSuit(trumpSuit);
     }
 
+    public void undo(Direction direction) {
+        Map<Card, Direction> removedCardsUpToDirection = this.removeCardsUpTo(direction);
+        if (!removedCardsUpToDirection.isEmpty()) {
+            this.giveBackCardsToHands(removedCardsUpToDirection);
+            if (this.currentTrick.isComplete()) {
+                Direction winnerOfTrick = this.ruleset.getWinner(this.currentTrick);
+                this.setCurrentPlayer(winnerOfTrick);
+            } else {
+                this.setCurrentPlayer(direction);
+            }
+        }
+        this.removeLastTrickIfEmpty();
+    }
+
+    private void removeLastTrickIfEmpty() {
+        if (tricks.isEmpty()) {
+            return;
+        }
+        if (this.completedTricks < this.tricks.size()) {
+            Trick lastTrick = this.tricks.get(this.completedTricks);
+            if (lastTrick != null && lastTrick.isEmpty()) {
+                this.tricks.remove(this.completedTricks);
+                if (this.completedTricks > 0) {
+                    this.currentTrick = this.tricks.get(this.completedTricks - 1);
+                }
+            }
+        }
+    }
+
+    private Map<Card, Direction> removeCardsUpTo(Direction direction) {
+        Map<Card, Direction> playedCardsUpToDirection = new HashMap<Card, Direction>();
+        if (this.currentTrick == null) {
+            return playedCardsUpToDirection;
+        } else if (this.currentTrick.hasCardOf(direction)) {
+            if (this.currentTrick.isComplete()) {
+                this.undoScore(this.currentTrick);
+                this.completedTricks--;
+            }
+            playedCardsUpToDirection = this.currentTrick.getCardsFromLastUpTo(direction);
+            this.currentTrick.removeCardsFromLastUpTo(direction);
+            return playedCardsUpToDirection;
+        } else if (this.tricks.size() >= 2) {
+            playedCardsUpToDirection = this.currentTrick.getCardDirectionMap();
+            this.removeCurrentTrick();
+            playedCardsUpToDirection.putAll(this.currentTrick.getCardsFromLastUpTo(direction));
+            this.currentTrick.removeCardsFromLastUpTo(direction);
+            this.completedTricks--;
+            return playedCardsUpToDirection;
+        }
+        return playedCardsUpToDirection;
+    }
+
+    private void removeCurrentTrick() {
+        Trick trickToBeRemoved = this.getCurrentTrick();
+        this.setCurrentPlayer(trickToBeRemoved.getLeader());
+        this.tricks.remove(this.tricks.size() - 1);
+        this.currentTrick = this.tricks.get(this.tricks.size() - 1);
+        Trick newCurrentTrick = this.getCurrentTrick();
+        this.undoScore(newCurrentTrick);
+    }
+
+    private void giveBackCardsToHands(Map<Card, Direction> cardDirectionMap) {
+        this.board.putCardInHand(cardDirectionMap);
+    }
+
+    private void undoScore(Trick trick) {
+        Direction winnerDirection = this.ruleset.getWinner(trick);
+        score.subtractTrickFromDirection(trick, winnerDirection);
+    }
+
+    public List<Trick> getTricks() {
+        return this.tricks;
+    }
+
 }

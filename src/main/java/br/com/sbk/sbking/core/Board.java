@@ -86,4 +86,11 @@ public class Board {
         return true;
     }
 
+    public void putCardInHand(Map<Card, Direction> cardDirectionMap) {
+        for (Map.Entry<Card, Direction> cardDirection : cardDirectionMap.entrySet()) {
+            this.hands.get(cardDirection.getValue()).addCard(cardDirection.getKey());
+            this.hands.get(cardDirection.getValue()).sort();
+        }
+    }
+
 }
