@@ -282,4 +282,8 @@ public class Deal implements Serializable {
         return this.getCompletedTricks() > 0 || !this.getCurrentTrick().isEmpty();
     }
 
+    public void sortAllHandsByTrumpSuit(Suit trumpSuit) {
+        this.board.sortAllHandsByTrumpSuit(trumpSuit);
+    }
+
 }

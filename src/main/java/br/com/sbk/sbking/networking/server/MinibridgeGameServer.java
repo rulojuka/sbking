@@ -10,6 +10,7 @@ import br.com.sbk.sbking.core.Player;
 import br.com.sbk.sbking.core.exceptions.PlayedCardInAnotherPlayersTurnException;
 import br.com.sbk.sbking.core.exceptions.SelectedPositiveOrNegativeInAnotherPlayersTurnException;
 import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
+import br.com.sbk.sbking.core.rulesets.concrete.PositiveWithTrumpsRuleset;
 import br.com.sbk.sbking.gui.models.PositiveOrNegative;
 import br.com.sbk.sbking.networking.server.notifications.GameModeOrStrainNotification;
 
@@ -108,8 +109,13 @@ public class MinibridgeGameServer extends GameServer {
 
       LOGGER.info("Everything selected! Game commencing!");
       this.minibridgeGame.addRuleset(currentGameModeOrStrain);
-
       currentDeal = this.game.getCurrentDeal();
+
+      if (currentGameModeOrStrain instanceof PositiveWithTrumpsRuleset) {
+        PositiveWithTrumpsRuleset positiveWithTrumpsRuleset = (PositiveWithTrumpsRuleset) currentGameModeOrStrain;
+        currentDeal.sortAllHandsByTrumpSuit(positiveWithTrumpsRuleset.getTrumpSuit());
+      }
+
       for (Direction direction : Direction.values()) {
         currentDeal.setPlayerOf(direction, this.table.getPlayerOf(direction));
       }

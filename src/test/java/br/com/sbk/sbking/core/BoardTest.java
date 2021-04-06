@@ -2,6 +2,8 @@ package br.com.sbk.sbking.core;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.only;
 import static org.mockito.Mockito.verify;
 
@@ -10,19 +12,18 @@ import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
 
 public class BoardTest {
 
     private Direction dealer;
     private Board board;
-    private Map<Direction,Hand> hands = new HashMap<Direction,Hand>();
+    private Map<Direction, Hand> hands = new HashMap<Direction, Hand>();
 
     @Before
     public void createNorthBoard() {
         dealer = Direction.NORTH;
         for (Direction direction : Direction.values()) {
-            hands.put(direction, Mockito.mock(Hand.class));
+            hands.put(direction, mock(Hand.class));
         }
 
         board = new Board(hands, dealer);
@@ -50,6 +51,18 @@ public class BoardTest {
         for (Direction direction : Direction.values()) {
             assertEquals(this.hands.get(direction), this.board.getHandOf(direction));
         }
+    }
+
+    @Test
+    public void shouldSortAllHandsByTrumpSuit() {
+        Suit anySuit = Suit.CLUBS;
+
+        this.board.sortAllHandsByTrumpSuit(anySuit);
+
+        for (Direction direction : Direction.values()) {
+            verify(this.hands.get(direction), atLeastOnce()).sortByTrumpSuit(anySuit);
+        }
+
     }
 
 }
