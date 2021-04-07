@@ -16,7 +16,6 @@ public abstract class GameServer implements Runnable {
 
     protected CardPlayNotification cardPlayNotification = new CardPlayNotification();
     protected boolean dealHasChanged;
-    protected Direction nextDirection = Direction.values()[0];
     protected Table table;
     protected SBKingServer sbkingServer = null;
 

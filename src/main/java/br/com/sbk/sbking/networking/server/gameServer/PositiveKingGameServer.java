@@ -61,9 +61,6 @@ public class PositiveKingGameServer extends GameServer {
                 sleepFor(200);
                 this.sendDealAll();
 
-                PositiveOrNegative positive = new PositiveOrNegative();
-                positive.setPositive();
-
                 synchronized (gameModeOrStrainNotification) {
                     // wait until object notifies - which relinquishes the lock on the object too
                     while (gameModeOrStrainNotification.getGameModeOrStrain() == null) {

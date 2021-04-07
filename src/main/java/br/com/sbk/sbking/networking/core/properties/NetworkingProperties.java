@@ -22,10 +22,10 @@ public class NetworkingProperties {
     public int getPort() {
         String portFromSystem = this.systemProperties.getPort();
         if (portFromSystem != null) {
-            return new Integer(portFromSystem);
+            return Integer.parseInt(portFromSystem);
         } else {
             String port = this.fileProperties.getPort();
-            return new Integer(port);
+            return Integer.parseInt(port);
         }
     }
 
