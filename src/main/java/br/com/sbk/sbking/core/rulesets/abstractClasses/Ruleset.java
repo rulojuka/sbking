@@ -1,7 +1,5 @@
 package br.com.sbk.sbking.core.rulesets.abstractClasses;
 
-import java.io.Serializable;
-
 import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.core.Hand;
@@ -12,9 +10,7 @@ import br.com.sbk.sbking.core.rulesets.interfaces.Scoreable;
 import br.com.sbk.sbking.core.rulesets.interfaces.SuitFollowable;
 import br.com.sbk.sbking.core.rulesets.interfaces.Winnable;
 
-@SuppressWarnings("serial")
-public abstract class Ruleset
-        implements SuitFollowable, Scoreable, Descriptionable, HeartsProhibitable, Winnable, Serializable {
+public abstract class Ruleset implements SuitFollowable, Scoreable, Descriptionable, HeartsProhibitable, Winnable {
 
     protected SuitFollowable suitFollowable;
     protected HeartsProhibitable heartsProhibitable;

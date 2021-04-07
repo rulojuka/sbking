@@ -8,7 +8,6 @@ import br.com.sbk.sbking.core.rulesets.implementations.DefaultSuitFollowable;
 import br.com.sbk.sbking.core.rulesets.implementations.DontProhibitsHearts;
 import br.com.sbk.sbking.core.rulesets.implementations.NoTrumpSuitWinnable;
 
-@SuppressWarnings("serial")
 public class NegativeWomenRuleset extends NegativeRuleset {
 
     private static final int NEGATIVE_WOMEN_SCORE_MULTIPLIER = 50;

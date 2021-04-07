@@ -1,11 +1,9 @@
 package br.com.sbk.sbking.core;
 
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-@SuppressWarnings("serial")
-public class Card implements Serializable {
+public class Card {
 
     private Suit suit;
     private Rank rank;

@@ -4,7 +4,6 @@ import static br.com.sbk.sbking.core.GameConstants.NUMBER_OF_TRICKS_IN_A_COMPLET
 
 import br.com.sbk.sbking.core.Trick;
 
-@SuppressWarnings("serial")
 public abstract class PositiveRuleset extends Ruleset {
 
     private static final int POSITIVE_SCORE_MULTIPLIER = 25;

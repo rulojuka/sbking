@@ -1,10 +1,8 @@
 package br.com.sbk.sbking.core;
 
-import java.io.Serializable;
 import java.util.UUID;
 
-@SuppressWarnings("serial")
-public class Player implements Serializable {
+public class Player {
 
   private UUID identifier;
   private String nickname;

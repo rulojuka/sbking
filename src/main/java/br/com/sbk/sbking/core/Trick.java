@@ -2,7 +2,6 @@ package br.com.sbk.sbking.core;
 
 import static br.com.sbk.sbking.core.GameConstants.COMPLETE_TRICK_NUMBER_OF_CARDS;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -12,8 +11,7 @@ import java.util.TreeSet;
 
 import br.com.sbk.sbking.core.exceptions.TrickAlreadyFullException;
 
-@SuppressWarnings("serial")
-public class Trick implements Serializable {
+public class Trick {
 
     /**
      * @deprecated Kryo needs a no-arg constructor

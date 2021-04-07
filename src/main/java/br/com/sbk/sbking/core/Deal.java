@@ -2,7 +2,6 @@ package br.com.sbk.sbking.core;
 
 import static br.com.sbk.sbking.core.GameConstants.NUMBER_OF_TRICKS_IN_A_COMPLETE_HAND;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,8 +12,7 @@ import br.com.sbk.sbking.core.exceptions.PlayedCardInAnotherPlayersTurnException
 import br.com.sbk.sbking.core.exceptions.PlayedHeartsWhenProhibitedException;
 import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
 
-@SuppressWarnings("serial")
-public class Deal implements Serializable {
+public class Deal {
 
     /**
      * @deprecated Kryo needs a no-arg constructor

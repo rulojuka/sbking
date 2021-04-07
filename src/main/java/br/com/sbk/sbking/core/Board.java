@@ -1,13 +1,11 @@
 package br.com.sbk.sbking.core;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@SuppressWarnings("serial")
-public class Board implements Serializable {
+public class Board {
 
     /**
      * @deprecated Kryo needs a no-arg constructor

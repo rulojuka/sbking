@@ -8,7 +8,6 @@ import br.com.sbk.sbking.core.rulesets.implementations.DefaultSuitFollowable;
 import br.com.sbk.sbking.core.rulesets.implementations.DontProhibitsHearts;
 import br.com.sbk.sbking.core.rulesets.implementations.NoTrumpSuitWinnable;
 
-@SuppressWarnings("serial")
 public class NegativeTricksRuleset extends NegativeRuleset {
 
     private static final int NEGATIVE_TRICKS_SCORE_MULTIPLIER = 20;
