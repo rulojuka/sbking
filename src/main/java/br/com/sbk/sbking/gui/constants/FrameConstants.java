@@ -20,7 +20,6 @@ public final class FrameConstants {
     private static double scaleX;
     private static double scaleY;
 
-    @SuppressWarnings("serial")
     public static Map<Direction, Point> pointOfDirection = new HashMap<Direction, Point>();
 
     public static void initFrameConstants() {

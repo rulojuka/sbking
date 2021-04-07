@@ -1,6 +1,5 @@
 package br.com.sbk.sbking.gui.models;
 
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,8 +17,7 @@ import br.com.sbk.sbking.core.rulesets.concrete.NegativeMenRuleset;
 import br.com.sbk.sbking.core.rulesets.concrete.NegativeTricksRuleset;
 import br.com.sbk.sbking.core.rulesets.concrete.NegativeWomenRuleset;
 
-@SuppressWarnings("serial")
-public class KingGameScoreboard implements Serializable {
+public class KingGameScoreboard {
 
     private GameModeSummary[] games = new GameModeSummary[10];
     private int gamesPlayed = 0;
@@ -92,6 +90,7 @@ public class KingGameScoreboard implements Serializable {
         return response;
     }
 
+    @SuppressWarnings("serial")
     private static final Map<Integer, String> NEGATIVE_GAME_NAMES = new HashMap<Integer, String>() {
         {
             put(1, new NegativeTricksRuleset().getShortDescription());
@@ -112,6 +111,7 @@ public class KingGameScoreboard implements Serializable {
         }
     }
 
+    @SuppressWarnings("serial")
     private static final Map<Ruleset, Integer> NEGATIVE_POSITIONS = new HashMap<Ruleset, Integer>() {
         {
             put(new NegativeTricksRuleset(), 1);

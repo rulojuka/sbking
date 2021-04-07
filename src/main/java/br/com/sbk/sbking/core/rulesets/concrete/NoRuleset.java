@@ -3,7 +3,6 @@ package br.com.sbk.sbking.core.rulesets.concrete;
 import br.com.sbk.sbking.core.Trick;
 import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
 
-@SuppressWarnings("serial")
 public class NoRuleset extends Ruleset {
 
     @Override

@@ -1,6 +1,5 @@
 package br.com.sbk.sbking.core;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -8,8 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@SuppressWarnings("serial")
-public class Hand implements Serializable {
+public class Hand {
 
     private List<Card> cards = new ArrayList<Card>();
 

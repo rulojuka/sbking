@@ -1,11 +1,8 @@
 package br.com.sbk.sbking.core;
 
-import java.io.Serializable;
-
 import br.com.sbk.sbking.core.rulesets.interfaces.Scoreable;
 
-@SuppressWarnings("serial")
-public class Score implements Serializable {
+public class Score {
 
     /**
      * @deprecated Kryo needs a no-arg constructor

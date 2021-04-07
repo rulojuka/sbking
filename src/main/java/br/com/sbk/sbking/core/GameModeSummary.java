@@ -1,11 +1,8 @@
 package br.com.sbk.sbking.core;
 
-import java.io.Serializable;
-
 import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
 
-@SuppressWarnings("serial")
-public class GameModeSummary implements Serializable {
+public class GameModeSummary {
 
     /**
      * @deprecated Kryo needs a no-arg constructor

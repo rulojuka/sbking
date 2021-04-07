@@ -1,11 +1,8 @@
 package br.com.sbk.sbking.core.rulesets.implementations;
 
-import java.io.Serializable;
-
 import br.com.sbk.sbking.core.rulesets.interfaces.HeartsProhibitable;
 
-@SuppressWarnings("serial")
-public class ProhibitsHearts implements HeartsProhibitable, Serializable {
+public class ProhibitsHearts implements HeartsProhibitable {
 
     @Override
     public boolean prohibitsHeartsUntilOnlySuitLeft() {
