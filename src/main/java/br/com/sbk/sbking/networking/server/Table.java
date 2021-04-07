@@ -17,7 +17,6 @@ public class Table {
   private Map<Direction, ClientGameSocket> playerSockets;
   private Collection<ClientGameSocket> spectatorSockets;
   private Map<UUID, ClientGameSocket> allSockets;
-  private PlayerNetworkInformation owner;
   private GameServer gameServer;
 
   public Table(GameServer gameServer) {
@@ -156,9 +155,6 @@ public class Table {
       }
     }
     this.spectatorSockets.remove(playerSocket);
-    if (playerSocket.getPlayer().getIdentifier().equals(owner.getPlayer().getIdentifier())) {
-      LOGGER.info("Removing owner! Something bad happened!");
-    }
   }
 
   public GameServer getGameServer() {

@@ -14,7 +14,6 @@ public class MinibridgeBoardDealer implements BoardDealer {
    */
   @Override
   public Board dealBoard(Direction dealer) {
-    Map<Direction, Integer> hcps = new HashMap<Direction, Integer>();
     ShuffledBoardDealer shuffledBoardDealer = new ShuffledBoardDealer();
     int dealerPartnershipHCP;
     int nonDealerPartnershipHCP;
@@ -25,7 +24,6 @@ public class MinibridgeBoardDealer implements BoardDealer {
       this.board = shuffledBoardDealer.dealBoard(dealer);
       for (Direction direction : Direction.values()) {
         int hcp = this.board.getHandOf(direction).getHCP();
-        hcps.put(direction, hcp);
         if (direction.isNorthSouth() == dealer.isNorthSouth()) {
           dealerPartnershipHCP += hcp;
         } else {

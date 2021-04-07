@@ -20,7 +20,7 @@ public class GameModeSummaryTest {
     @Before
     public void setup() {
         this.ruleset = Mockito.mock(Ruleset.class);
-        this.orderOfPlay = new Integer(10);
+        this.orderOfPlay = Integer.valueOf(10);
         this.orderOfPlayString = "10";
         this.score = Mockito.mock(Score.class);
         northChosenGameModeSummary = new GameModeSummary(north, ruleset, orderOfPlay, score);

@@ -9,7 +9,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import br.com.sbk.sbking.core.Trick;
-import br.com.sbk.sbking.core.rulesets.concrete.PositiveNoTrumpsRuleset;
 
 public class PositiveNoTrumpsRulesetTest {
 

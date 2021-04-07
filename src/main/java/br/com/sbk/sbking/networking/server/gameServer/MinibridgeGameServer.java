@@ -11,7 +11,6 @@ import br.com.sbk.sbking.core.exceptions.PlayedCardInAnotherPlayersTurnException
 import br.com.sbk.sbking.core.exceptions.SelectedPositiveOrNegativeInAnotherPlayersTurnException;
 import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
 import br.com.sbk.sbking.core.rulesets.concrete.PositiveWithTrumpsRuleset;
-import br.com.sbk.sbking.gui.models.PositiveOrNegative;
 import br.com.sbk.sbking.networking.server.notifications.GameModeOrStrainNotification;
 
 public class MinibridgeGameServer extends GameServer {
@@ -74,9 +73,6 @@ public class MinibridgeGameServer extends GameServer {
         this.getSBKingServer().sendBoardAll(this.game.getCurrentBoard());
         sleepFor(200);
         this.sendDealAll();
-
-        PositiveOrNegative positive = new PositiveOrNegative();
-        positive.setPositive();
 
         synchronized (gameModeOrStrainNotification) {
           // wait until object notifies - which relinquishes the lock on the object too

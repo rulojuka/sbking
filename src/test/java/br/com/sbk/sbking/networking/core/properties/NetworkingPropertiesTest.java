@@ -7,10 +7,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import br.com.sbk.sbking.networking.core.properties.FileProperties;
-import br.com.sbk.sbking.networking.core.properties.NetworkingProperties;
-import br.com.sbk.sbking.networking.core.properties.SystemProperties;
-
 public class NetworkingPropertiesTest {
 
     private FileProperties fileProperties;
