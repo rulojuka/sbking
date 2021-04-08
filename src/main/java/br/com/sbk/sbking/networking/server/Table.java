@@ -147,14 +147,14 @@ public class Table {
     logAllPlayers();
   }
 
-  public void removeClientGameSocket(ClientGameSocket playerSocket) {
-    for (Direction direction : Direction.values()) {
-      ClientGameSocket current = this.playerSockets.get(direction);
-      if (playerSocket.equals(current)) {
-        this.playerSockets.remove(direction);
-      }
+  private void removeClientGameSocket(ClientGameSocket playerSocket) {
+    this.removeFromPlayers(playerSocket);
+    this.removeFromSpectators(playerSocket);
+    Direction direction = playerSocket.getDirection();
+    if (direction != null) {
+      this.gameServer.getDeal().unsetPlayerOf(direction);
+      this.sendDealAll();
     }
-    this.spectatorSockets.remove(playerSocket);
   }
 
   public GameServer getGameServer() {
@@ -182,4 +182,12 @@ public class Table {
     this.gameServer.undo(direction);
     this.sendDealAll();
   }
+
+  public void removePlayer(UUID identifier) {
+    ClientGameSocket clientGameSocket = this.allSockets.get(identifier);
+    if (clientGameSocket != null) {
+      this.removeClientGameSocket(clientGameSocket);
+    }
+  }
+
 }
