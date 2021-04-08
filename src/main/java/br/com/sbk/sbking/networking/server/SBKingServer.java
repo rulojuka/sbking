@@ -176,4 +176,8 @@ public class SBKingServer {
     this.table.undo(direction);
   }
 
+  public void removePlayer(UUID identifier) {
+    this.table.removePlayer(identifier);
+  }
+
 }

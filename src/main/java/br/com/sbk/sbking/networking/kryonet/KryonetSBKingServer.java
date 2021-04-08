@@ -2,8 +2,8 @@ package br.com.sbk.sbking.networking.kryonet;
 
 import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import com.esotericsoftware.kryonet.Server;
@@ -36,9 +36,8 @@ import br.com.sbk.sbking.networking.server.SBKingServer;
 
 public class KryonetSBKingServer extends Server {
 
-  private Map<UUID, ConnectionWithIdentifier> connections = new HashMap<UUID, ConnectionWithIdentifier>();
+  private List<ConnectionWithIdentifier> connections = new ArrayList<ConnectionWithIdentifier>();
   private SBKingServer sbkingServer;
-  private UUID lastConnected;
 
   public KryonetSBKingServer(SBKingServer sbkingServer) {
     this.sbkingServer = sbkingServer;
@@ -46,18 +45,14 @@ public class KryonetSBKingServer extends Server {
 
   public void addConnection(ConnectionWithIdentifier connectionWithIdentifier) {
     UUID identifier = connectionWithIdentifier.getIdentifier();
-    this.connections.put(identifier, connectionWithIdentifier);
-    this.lastConnected = identifier;
+    this.connections.add(connectionWithIdentifier);
     this.sbkingServer.addUnnammedPlayer(identifier);
     this.sbkingServer.addSpectator(identifier);
   }
 
   public void removeConnection(ConnectionWithIdentifier connectionWithIdentifier) {
-    this.connections.remove(connectionWithIdentifier.getIdentifier());
-  }
-
-  public UUID getLastConnected() {
-    return this.lastConnected;
+    this.connections.remove(connectionWithIdentifier);
+    this.sbkingServer.removePlayer(connectionWithIdentifier.getIdentifier());
   }
 
   protected void onMessage(SBKingMessage message, ConnectionWithIdentifier connectionWithIdentifier) {
@@ -85,7 +80,18 @@ public class KryonetSBKingServer extends Server {
   }
 
   private void sendOneTo(SBKingMessage message, UUID playerIdentifier) {
-    this.sendOneTo(message, this.connections.get(playerIdentifier));
+    ConnectionWithIdentifier connectionToSend = this.connections.stream()
+        .filter(connection -> playerIdentifier.equals(connection.getIdentifier())).findFirst().orElse(null);
+    if (connectionToSend != null) {
+      this.sendOneTo(message, connectionToSend);
+    } else {
+      String errorMessage = "Did not found connection with UUID:" + playerIdentifier;
+      IllegalArgumentException illegalArgumentException = new IllegalArgumentException(errorMessage);
+      LOGGER.error(errorMessage);
+      LOGGER.error("Failed to send message:" + message);
+      LOGGER.error(illegalArgumentException);
+      LOGGER.error(illegalArgumentException.getStackTrace());
+    }
   }
 
   private void sendOneTo(SBKingMessage message, ConnectionWithIdentifier connectionWithIdentifier) {
@@ -101,9 +107,7 @@ public class KryonetSBKingServer extends Server {
 
   private void sendAll(SBKingMessage message) {
     LOGGER.debug("Sending everyone " + message.getClass().toString());
-    for (ConnectionWithIdentifier connection : connections.values()) {
-      connection.sendTCP(message);
-    }
+    this.sendToAllTCP(message); // This will need to change when there are multiple tables.
   }
 
   public void sendFinishDealAll() {
