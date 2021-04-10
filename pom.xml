@@ -3,11 +3,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>br.com.sbk</groupId>
-	<artifactId>sbking</artifactId>
 	<version>1.0.0-alpha</version>
 	<name>SBKing</name>
 	<description>More information at https://github.com/rulojuka/sbking</description>
-	<packaging>pom</packaging>
+	<packaging>jar</packaging>
+
+	<artifactId>sbking-server</artifactId>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -67,6 +68,30 @@
 
 	<build>
 		<plugins>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>2.2</version>
+				<executions>
+					<execution>
+						<id>jar-with-dependencies</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+						<configuration>
+							<archive>
+								<manifest>
+									<mainClass>br.com.sbk.sbking.networking.server.main.LobbyServerStarter</mainClass>
+								</manifest>
+							</archive>
+							<descriptorRefs>
+								<descriptorRef>jar-with-dependencies</descriptorRef>
+							</descriptorRefs>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.8.0</version>
