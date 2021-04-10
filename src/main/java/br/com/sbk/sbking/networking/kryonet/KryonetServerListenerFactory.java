@@ -16,7 +16,8 @@ import br.com.sbk.sbking.networking.kryonet.messages.ServerToClient.TextMessage;
 
 public class KryonetServerListenerFactory {
 
-  public static Listener getServerListener(Server server, BlockingQueue<SBKingMessageWithIdentifier> messageQueue) {
+  public static Listener getServerListener(Server server,
+      BlockingQueue<SBKingMessageWithIdentifier> serverMessageQueue) {
     return new Listener() {
       public void connected(Connection connection) {
         LOGGER.debug("Entered --connected-- lifecycle method.");
@@ -94,7 +95,7 @@ public class KryonetServerListenerFactory {
         try {
           SBKingMessageWithIdentifier messageWithIdentifier = new SBKingMessageWithIdentifier(message,
               connectionWithIdentifier.getIdentifier());
-          messageQueue.add(messageWithIdentifier);
+          serverMessageQueue.add(messageWithIdentifier);
         } catch (IllegalStateException e) {
           LOGGER.error("Could not add message to the queue because of insuficcient space. Dropping message:");
           LOGGER.error(message);

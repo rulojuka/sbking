@@ -11,7 +11,6 @@ public class KryonetClientFactory {
     // registered by the same method for both the client and server.
     KryonetUtils.register(client);
 
-    client.addListener(KryonetClientListenerFactory.getClientListener(client));
     return client;
   }
 
