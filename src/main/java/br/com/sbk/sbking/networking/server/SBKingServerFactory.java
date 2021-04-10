@@ -19,12 +19,12 @@ public class SBKingServerFactory {
 
   public static SBKingServer createWithKryonetConnection(Table table, int port, GameServer gameServer) {
     SBKingServer sbKingServer = new SBKingServer(table);
-    BlockingQueue<SBKingMessageWithIdentifier> messageQueue = new LinkedBlockingQueue<SBKingMessageWithIdentifier>();
+    BlockingQueue<SBKingMessageWithIdentifier> serverMessageQueue = new LinkedBlockingQueue<SBKingMessageWithIdentifier>();
     KryonetSBKingServer server = KryonetServerFactory.getRegisteredServer(sbKingServer);
 
-    Listener kryonetServerListener = KryonetServerListenerFactory.getServerListener(server, messageQueue); // Producer
+    Listener kryonetServerListener = KryonetServerListenerFactory.getServerListener(server, serverMessageQueue); // Producer
     SBKingServerMessageConsumer sbKingServerMessageConsumer = new SBKingServerMessageConsumer(sbKingServer,
-        messageQueue); // Consumer
+        serverMessageQueue); // Consumer
 
     new Thread(sbKingServerMessageConsumer, "msg-consumer").start();
     server.addListener(kryonetServerListener);

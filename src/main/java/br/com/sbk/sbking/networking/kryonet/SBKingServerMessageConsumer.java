@@ -21,12 +21,12 @@ import br.com.sbk.sbking.networking.server.SBKingServer;
 public class SBKingServerMessageConsumer implements Runnable {
 
   private SBKingServer sbkingServer;
-  private BlockingQueue<SBKingMessageWithIdentifier> messageQueue;
+  private BlockingQueue<SBKingMessageWithIdentifier> serverMessageQueue;
 
   public SBKingServerMessageConsumer(SBKingServer sbkingServer,
-      BlockingQueue<SBKingMessageWithIdentifier> messageQueue) {
+      BlockingQueue<SBKingMessageWithIdentifier> serverMessageQueue) {
     this.sbkingServer = sbkingServer;
-    this.messageQueue = messageQueue;
+    this.serverMessageQueue = serverMessageQueue;
   }
 
   @Override
@@ -34,7 +34,7 @@ public class SBKingServerMessageConsumer implements Runnable {
     try {
       while (true) {
         // BlockingQueue.take() blocks until a message is available.
-        SBKingMessageWithIdentifier messageWithIdentifier = messageQueue.take();
+        SBKingMessageWithIdentifier messageWithIdentifier = serverMessageQueue.take();
         this.consume(messageWithIdentifier.getMessage(), messageWithIdentifier.getIdentifier());
       }
     } catch (InterruptedException e) {
