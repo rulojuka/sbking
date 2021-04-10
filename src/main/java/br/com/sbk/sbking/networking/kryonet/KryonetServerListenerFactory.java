@@ -3,6 +3,7 @@ package br.com.sbk.sbking.networking.kryonet;
 import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 
 import java.util.UUID;
+import java.util.concurrent.BlockingQueue;
 
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.FrameworkMessage;
@@ -10,11 +11,12 @@ import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
 
 import br.com.sbk.sbking.networking.kryonet.messages.SBKingMessage;
+import br.com.sbk.sbking.networking.kryonet.messages.SBKingMessageWithIdentifier;
 import br.com.sbk.sbking.networking.kryonet.messages.ServerToClient.TextMessage;
 
 public class KryonetServerListenerFactory {
 
-  public static Listener getServerListener(Server server) {
+  public static Listener getServerListener(Server server, BlockingQueue<SBKingMessageWithIdentifier> messageQueue) {
     return new Listener() {
       public void connected(Connection connection) {
         LOGGER.debug("Entered --connected-- lifecycle method.");
@@ -85,7 +87,19 @@ public class KryonetServerListenerFactory {
         LOGGER.debug("Received " + message.getClass() + " message.");
         LOGGER.debug("Content is " + message.getContent() + ".");
         // This possibly needs to be in a Thread
-        kryonetSBKingServer.onMessage(message, connectionWithPlayer);
+        addToQueue(message, connectionWithPlayer);
+      }
+
+      private void addToQueue(SBKingMessage message, ConnectionWithIdentifier connectionWithIdentifier) {
+        try {
+          SBKingMessageWithIdentifier messageWithIdentifier = new SBKingMessageWithIdentifier(message,
+              connectionWithIdentifier.getIdentifier());
+          messageQueue.add(messageWithIdentifier);
+        } catch (IllegalStateException e) {
+          LOGGER.error("Could not add message to the queue because of insuficcient space. Dropping message:");
+          LOGGER.error(message);
+          LOGGER.error(e);
+        }
       }
 
       public void disconnected(Connection connection) {
