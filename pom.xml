@@ -11,6 +11,9 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<sonar.projectKey>rulojuka_sbking</sonar.projectKey>
+		<sonar.organization>rulojuka</sonar.organization>
+		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 	</properties>
 
 	<repositories>
