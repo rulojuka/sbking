@@ -15,7 +15,7 @@ kill_server:
 	@./kill_sbking_server.sh
 
 package_server:
-	mvn -f pom-server.xml package
+	mvn package
 
 copy_server:
 	cp target/sbking-server-1.0.0-alpha-jar-with-dependencies.jar ./sbking-server.jar
