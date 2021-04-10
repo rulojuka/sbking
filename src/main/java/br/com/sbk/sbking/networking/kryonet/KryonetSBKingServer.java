@@ -9,17 +9,9 @@ import java.util.UUID;
 import com.esotericsoftware.kryonet.Server;
 
 import br.com.sbk.sbking.core.Board;
-import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.networking.kryonet.messages.SBKingMessage;
-import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.ChooseGameModeOrStrainMessage;
-import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.ChooseNegativeMessage;
-import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.ChoosePositiveMessage;
-import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.MoveToSeatMessage;
-import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.PlayCardMessage;
-import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.SetNicknameMessage;
-import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.UndoMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ServerToClient.BoardMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ServerToClient.DealMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ServerToClient.FinishDealMessage;
@@ -36,11 +28,12 @@ import br.com.sbk.sbking.networking.server.SBKingServer;
 
 public class KryonetSBKingServer extends Server {
 
-  private List<ConnectionWithIdentifier> connections = new ArrayList<ConnectionWithIdentifier>();
+  private List<ConnectionWithIdentifier> connections;
   private SBKingServer sbkingServer;
 
   public KryonetSBKingServer(SBKingServer sbkingServer) {
     this.sbkingServer = sbkingServer;
+    this.connections = new ArrayList<ConnectionWithIdentifier>();
   }
 
   public void addConnection(ConnectionWithIdentifier connectionWithIdentifier) {
@@ -53,30 +46,6 @@ public class KryonetSBKingServer extends Server {
   public void removeConnection(ConnectionWithIdentifier connectionWithIdentifier) {
     this.connections.remove(connectionWithIdentifier);
     this.sbkingServer.removePlayer(connectionWithIdentifier.getIdentifier());
-  }
-
-  protected void onMessage(SBKingMessage message, ConnectionWithIdentifier connectionWithIdentifier) {
-    LOGGER.debug("Entered --onMessage--");
-    Object content = message.getContent();
-    UUID playerIdentifier = connectionWithIdentifier.getIdentifier();
-    if (message instanceof SetNicknameMessage) {
-      this.sbkingServer.setNickname(playerIdentifier, (String) content);
-    } else if (message instanceof PlayCardMessage) {
-      this.sbkingServer.play((Card) content, playerIdentifier);
-    } else if (message instanceof MoveToSeatMessage) {
-      this.sbkingServer.moveToSeat((Direction) content, playerIdentifier);
-    } else if (message instanceof ChoosePositiveMessage) {
-      this.sbkingServer.choosePositive(playerIdentifier);
-    } else if (message instanceof ChooseNegativeMessage) {
-      this.sbkingServer.chooseNegative(playerIdentifier);
-    } else if (message instanceof ChooseGameModeOrStrainMessage) {
-      this.sbkingServer.chooseGameModeOrStrain((String) content, playerIdentifier);
-    } else if (message instanceof UndoMessage) {
-      this.sbkingServer.undo(playerIdentifier);
-    } else {
-      LOGGER.error("Could not understand message.");
-      LOGGER.error(message);
-    }
   }
 
   private void sendOneTo(SBKingMessage message, UUID playerIdentifier) {
