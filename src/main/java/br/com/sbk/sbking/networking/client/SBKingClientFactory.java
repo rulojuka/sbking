@@ -20,8 +20,9 @@ public class SBKingClientFactory {
   public static SBKingClient createWithKryonetConnection(String nickname, String hostname, int port) {
     SBKingClient sbKingClient = new SBKingClient();
     BlockingQueue<SBKingMessage> clientMessageQueue = new LinkedBlockingQueue<SBKingMessage>();
-    KryonetSBKingClient kryonetSBKingClient = KryonetClientFactory.getRegisteredClient(sbKingClient);
-    kryonetSBKingClient.addListener(KryonetClientListenerFactory.getClientListener(clientMessageQueue)); // Producer
+    KryonetSBKingClient kryonetSBKingClient = KryonetClientFactory.getRegisteredClient();
+    kryonetSBKingClient
+        .addListener(KryonetClientListenerFactory.getClientListener(kryonetSBKingClient, clientMessageQueue)); // Producer
     SBKingClientMessageConsumer sbKingClientMessageConsumer = new SBKingClientMessageConsumer(sbKingClient,
         clientMessageQueue); // Consumer
     new Thread(sbKingClientMessageConsumer, "msg-consumer").start();
@@ -29,7 +30,7 @@ public class SBKingClientFactory {
         new ClientActionListener(new KryonetSBKingClientActionListener(kryonetSBKingClient)));
     LOGGER.info("Trying to connect.");
     try {
-      kryonetSBKingClient.connect(50000, hostname, port);
+      kryonetSBKingClient.connect(5000, hostname, port);
       LOGGER.info("Connected.");
       // Server communication after connection can go here, or in
       // Listener#connected().
