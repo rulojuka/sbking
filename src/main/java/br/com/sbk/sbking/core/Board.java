@@ -43,7 +43,8 @@ public class Board {
     public List<Card> removeOneCardFromEachHand() {
         List<Card> removedCards = new ArrayList<Card>();
         for (Direction direction : Direction.values()) {
-            Card removedCard = this.getHandOf(direction).removeOneRandomCard();
+            Hand currentHand = this.getHandOf(direction);
+            Card removedCard = currentHand.removeOneRandomCard();
             removedCards.add(removedCard);
         }
         return removedCards;
@@ -86,7 +87,6 @@ public class Board {
     public void putCardInHand(Map<Card, Direction> cardDirectionMap) {
         for (Map.Entry<Card, Direction> cardDirection : cardDirectionMap.entrySet()) {
             this.hands.get(cardDirection.getValue()).addCard(cardDirection.getKey());
-            this.hands.get(cardDirection.getValue()).sort(new CardInsideHandComparator());
         }
     }
 

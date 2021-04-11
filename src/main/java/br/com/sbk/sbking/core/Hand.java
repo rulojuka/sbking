@@ -7,8 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import br.com.sbk.sbking.core.cardComparators.CardInsideHandComparator;
-
 public class Hand {
 
     private List<Card> cards = new ArrayList<Card>();
@@ -30,8 +28,6 @@ public class Hand {
 
             removedCard = cards.get(lastCardPosition);
             cards.remove(lastCardPosition);
-
-            this.sort(new CardInsideHandComparator());
         }
         return removedCard;
     }

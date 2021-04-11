@@ -2,6 +2,7 @@ package br.com.sbk.sbking.core;
 
 import java.util.List;
 
+import br.com.sbk.sbking.core.cardComparators.CardInsideHandComparator;
 import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
 import br.com.sbk.sbking.core.rulesets.concrete.PositiveNoTrumpsRuleset;
 import br.com.sbk.sbking.core.rulesets.concrete.PositiveWithTrumpsRuleset;
@@ -41,6 +42,7 @@ public class CagandoNoBequinhoGame extends TrickGame {
         for (int i = 0; i < numberOfRemovedCards; i++) {
             removedCards = this.currentBoard.removeOneCardFromEachHand();
         }
+        this.currentBoard.sortAllHands(new CardInsideHandComparator());
 
         if (removedCards == null || removedCards.isEmpty()) {
             this.trumpCard = null;
