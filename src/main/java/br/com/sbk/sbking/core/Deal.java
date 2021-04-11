@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import br.com.sbk.sbking.core.cardComparators.CardInsideHandWithSuitComparator;
 import br.com.sbk.sbking.core.exceptions.DoesNotFollowSuitException;
 import br.com.sbk.sbking.core.exceptions.PlayedCardInAnotherPlayersTurnException;
 import br.com.sbk.sbking.core.exceptions.PlayedHeartsWhenProhibitedException;
@@ -287,7 +288,9 @@ public class Deal {
     }
 
     public void sortAllHandsByTrumpSuit(Suit trumpSuit) {
-        this.board.sortAllHandsByTrumpSuit(trumpSuit);
+        CardInsideHandWithSuitComparator cardInsideHandWithSuitComparator = new CardInsideHandWithSuitComparator(
+                trumpSuit);
+        this.board.sortAllHands(cardInsideHandWithSuitComparator);
     }
 
     public void undo(Direction direction) {

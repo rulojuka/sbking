@@ -1,8 +1,11 @@
-package br.com.sbk.sbking.core;
+package br.com.sbk.sbking.core.cardComparators;
 
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
+
+import br.com.sbk.sbking.core.Card;
+import br.com.sbk.sbking.core.Suit;
 
 public class CardInsideHandWithSuitComparator implements Comparator<Card> {
 

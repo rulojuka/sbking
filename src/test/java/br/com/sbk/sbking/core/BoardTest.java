@@ -2,16 +2,19 @@ package br.com.sbk.sbking.core;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.only;
+import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.verify;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import br.com.sbk.sbking.core.cardComparators.CardInsideHandComparator;
 
 public class BoardTest {
 
@@ -22,6 +25,7 @@ public class BoardTest {
     @Before
     public void createNorthBoard() {
         dealer = Direction.NORTH;
+        hands.clear();
         for (Direction direction : Direction.values()) {
             hands.put(direction, mock(Hand.class));
         }
@@ -36,8 +40,18 @@ public class BoardTest {
 
     @Test
     public void shouldSortAllHands() {
+        Comparator<Card> comparator = mock(CardInsideHandComparator.class);
         for (Direction direction : Direction.values()) {
-            verify(this.hands.get(direction), only()).sort();
+            Hand currentMock = this.hands.get(direction);
+            // To clear constructor calls to sort
+            reset(currentMock);
+        }
+
+        this.board.sortAllHands(comparator);
+
+        for (Direction direction : Direction.values()) {
+            Hand currentMock = this.hands.get(direction);
+            verify(currentMock, only()).sort(comparator);
         }
     }
 
@@ -51,18 +65,6 @@ public class BoardTest {
         for (Direction direction : Direction.values()) {
             assertEquals(this.hands.get(direction), this.board.getHandOf(direction));
         }
-    }
-
-    @Test
-    public void shouldSortAllHandsByTrumpSuit() {
-        Suit anySuit = Suit.CLUBS;
-
-        this.board.sortAllHandsByTrumpSuit(anySuit);
-
-        for (Direction direction : Direction.values()) {
-            verify(this.hands.get(direction), atLeastOnce()).sortByTrumpSuit(anySuit);
-        }
-
     }
 
 }

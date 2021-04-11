@@ -12,6 +12,7 @@ import static org.mockito.Mockito.when;
 
 import org.junit.Test;
 
+import br.com.sbk.sbking.core.cardComparators.CardInsideHandWithSuitComparator;
 import br.com.sbk.sbking.core.exceptions.DoesNotFollowSuitException;
 import br.com.sbk.sbking.core.exceptions.PlayedCardInAnotherPlayersTurnException;
 import br.com.sbk.sbking.core.exceptions.PlayedHeartsWhenProhibitedException;
@@ -334,7 +335,7 @@ public class DealTest {
 
         deal.sortAllHandsByTrumpSuit(anySuit);
 
-        verify(board, atLeastOnce()).sortAllHandsByTrumpSuit(anySuit);
+        verify(board, atLeastOnce()).sortAllHands(any(CardInsideHandWithSuitComparator.class));
 
     }
 
