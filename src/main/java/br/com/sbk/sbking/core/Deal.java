@@ -38,6 +38,7 @@ public class Deal {
         this.board = board;
         this.ruleset = ruleset;
         this.currentPlayer = leader;
+        this.board.sortAllHands(ruleset.getComparator());
         this.score = new Score(ruleset);
         this.completedTricks = 0;
         this.startingNumberOfCardsInTheHand = NUMBER_OF_TRICKS_IN_A_COMPLETE_HAND;
@@ -356,6 +357,7 @@ public class Deal {
 
     private void giveBackCardsToHands(Map<Card, Direction> cardDirectionMap) {
         this.board.putCardInHand(cardDirectionMap);
+        this.board.sortAllHands(ruleset.getComparator());
     }
 
     private void undoScore(Trick trick) {

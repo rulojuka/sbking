@@ -10,6 +10,8 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.Comparator;
+
 import org.junit.Test;
 
 import br.com.sbk.sbking.core.cardComparators.CardInsideHandWithSuitComparator;
@@ -71,7 +73,26 @@ public class DealTest {
 
     @Test
     public void shouldConstructADealWithNoCompletedTricks() {
-        // FIXME fail("Not implemented yet.");
+        Board board = mock(Board.class);
+        when(board.getDealer()).thenReturn(Direction.NORTH);
+        Ruleset ruleset = mock(Ruleset.class);
+
+        Deal deal = new Deal(board, ruleset, leader);
+
+        assertEquals(0, deal.getCompletedTricks());
+    }
+
+    @Test
+    public void shouldConstructADealWithASortedBoard() {
+        Board board = mock(Board.class);
+        when(board.getDealer()).thenReturn(Direction.NORTH);
+        Ruleset ruleset = mock(Ruleset.class);
+        Comparator<Card> comparator = mock(Comparator.class);
+        when(ruleset.getComparator()).thenReturn(comparator);
+
+        new Deal(board, ruleset, leader);
+
+        verify(board, atLeastOnce()).sortAllHands(comparator);
     }
 
     @Test
