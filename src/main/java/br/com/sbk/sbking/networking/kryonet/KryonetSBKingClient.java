@@ -6,7 +6,6 @@ import com.esotericsoftware.kryonet.Client;
 
 import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Direction;
-import br.com.sbk.sbking.networking.client.SBKingClient;
 import br.com.sbk.sbking.networking.kryonet.messages.SBKingMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.ChooseGameModeOrStrainMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.ChooseNegativeMessage;
@@ -18,11 +17,7 @@ import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.UndoMessage;
 
 public class KryonetSBKingClient extends Client {
 
-  private SBKingClient sbkingClient;
-
-  public KryonetSBKingClient(SBKingClient sbkingClient) {
-    this.sbkingClient = sbkingClient;
-  }
+  private String nickname;
 
   private void sendMessage(SBKingMessage message) {
     LOGGER.debug("Sending " + message.getClass().toString() + " to server.");
@@ -37,8 +32,13 @@ public class KryonetSBKingClient extends Client {
     this.sendMessage(new MoveToSeatMessage(direction));
   }
 
-  public void sendSetNickname(String nickname) {
+  public void setAndSendNickname(String nickname) {
+    this.nickname = nickname;
     this.sendMessage(new SetNicknameMessage(nickname));
+  }
+
+  public void sendNickname() {
+    this.sendMessage(new SetNicknameMessage(this.nickname));
   }
 
   public void sendChoosePositiveMessage() {

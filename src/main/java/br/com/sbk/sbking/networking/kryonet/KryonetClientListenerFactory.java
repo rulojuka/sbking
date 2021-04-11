@@ -4,6 +4,7 @@ import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 
 import java.util.concurrent.BlockingQueue;
 
+import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.FrameworkMessage;
 import com.esotericsoftware.kryonet.Listener;
@@ -12,7 +13,7 @@ import br.com.sbk.sbking.networking.kryonet.messages.SBKingMessage;
 
 public class KryonetClientListenerFactory {
 
-  public static Listener getClientListener(BlockingQueue<SBKingMessage> clientMessageQueue) {
+  public static Listener getClientListener(Client client, BlockingQueue<SBKingMessage> clientMessageQueue) {
     return new Listener() {
       public void connected(Connection connection) {
         LOGGER.debug("Entered --connected-- lifecycle method.");
@@ -53,7 +54,23 @@ public class KryonetClientListenerFactory {
       }
 
       public void disconnected(Connection connection) {
+        KryonetSBKingClient kryonetSBKingClient = null;
         LOGGER.debug("Entered --disconnected-- lifecycle method.");
+        LOGGER.info("Lost connection to server. Trying to reconnect!");
+
+        try {
+          kryonetSBKingClient = (KryonetSBKingClient) client;
+        } catch (Exception e) {
+          LOGGER.fatal("client should be a KryonetSBKingClient");
+          LOGGER.fatal(client);
+          return;
+        }
+
+        // This runs in another Thread because kryonet throws IllegalStateException:
+        // "Cannot connect on the connection's update thread." when run in the same
+        // Thread
+        ReconnectToServerRunner reconnectToServerRunner = new ReconnectToServerRunner(kryonetSBKingClient);
+        new Thread(reconnectToServerRunner, "reconnect").start();
       }
     };
   }

@@ -202,6 +202,6 @@ public class SBKingClient {
     }
 
     public void sendSetNickname(String nickname) {
-        this.kryonetSBKingClient.sendSetNickname(nickname);
+        this.kryonetSBKingClient.setAndSendNickname(nickname);
     }
 }

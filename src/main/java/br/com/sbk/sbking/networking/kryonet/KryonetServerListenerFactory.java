@@ -123,6 +123,7 @@ public class KryonetServerListenerFactory {
           return;
         }
 
+        LOGGER.info("Lost connection to UUID: " + connectionWithPlayer.getIdentifier());
         kryonetSBKingServer.removeConnection(connectionWithPlayer);
       }
     };

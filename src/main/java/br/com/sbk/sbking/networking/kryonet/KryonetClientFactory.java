@@ -1,10 +1,8 @@
 package br.com.sbk.sbking.networking.kryonet;
 
-import br.com.sbk.sbking.networking.client.SBKingClient;
-
 public class KryonetClientFactory {
-  public static KryonetSBKingClient getRegisteredClient(SBKingClient sbkingClient) {
-    KryonetSBKingClient client = new KryonetSBKingClient(sbkingClient);
+  public static KryonetSBKingClient getRegisteredClient() {
+    KryonetSBKingClient client = new KryonetSBKingClient();
     client.start();
 
     // For consistency, the classes to be sent over the network are
