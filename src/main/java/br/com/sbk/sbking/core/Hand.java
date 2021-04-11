@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import br.com.sbk.sbking.core.cardComparators.CardInsideHandComparator;
+
 public class Hand {
 
     private List<Card> cards = new ArrayList<Card>();
@@ -29,7 +31,7 @@ public class Hand {
             removedCard = cards.get(lastCardPosition);
             cards.remove(lastCardPosition);
 
-            this.sort();
+            this.sort(new CardInsideHandComparator());
         }
         return removedCard;
     }
@@ -46,27 +48,8 @@ public class Hand {
         Collections.shuffle(this.cards);
     }
 
-    public void sort() {
-        Collections.sort(this.cards, new CardInsideHandComparator());
-    }
-
-    private static class CardInsideHandComparator implements Comparator<Card> {
-
-        @Override
-        public int compare(Card card1, Card card2) {
-            int suitDifference = card1.compareSuit(card2);
-            if (suitDifference != 0) {
-                return -suitDifference;
-            } else {
-                int rankDifference = card1.compareRank(card2);
-                return -rankDifference;
-            }
-        }
-
-    }
-
-    public void sortByTrumpSuit(Suit suit) {
-        Collections.sort(this.cards, new CardInsideHandWithSuitComparator(suit));
+    public void sort(Comparator<Card> comparator) {
+        Collections.sort(this.cards, comparator);
     }
 
     public boolean containsCard(Card card) {

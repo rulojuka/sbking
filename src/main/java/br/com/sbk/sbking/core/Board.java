@@ -1,9 +1,12 @@
 package br.com.sbk.sbking.core;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import br.com.sbk.sbking.core.cardComparators.CardInsideHandComparator;
 
 public class Board {
 
@@ -16,10 +19,10 @@ public class Board {
     private Map<Direction, Hand> hands = new HashMap<Direction, Hand>();
     private Direction dealer;
 
-    public Board(Map hands, Direction dealer) {
+    public Board(Map<Direction, Hand> hands, Direction dealer) {
         this.hands = hands;
 
-        this.sortAllHands();
+        this.sortAllHands(new CardInsideHandComparator());
         this.dealer = dealer;
     }
 
@@ -31,15 +34,9 @@ public class Board {
         return this.hands.get(direction);
     }
 
-    private void sortAllHands() {
+    public void sortAllHands(Comparator<Card> comparator) {
         for (Direction direction : Direction.values()) {
-            this.getHandOf(direction).sort();
-        }
-    }
-
-    public void sortAllHandsByTrumpSuit(Suit suit) {
-        for (Direction direction : Direction.values()) {
-            this.getHandOf(direction).sortByTrumpSuit(suit);
+            this.getHandOf(direction).sort(comparator);
         }
     }
 
@@ -89,7 +86,7 @@ public class Board {
     public void putCardInHand(Map<Card, Direction> cardDirectionMap) {
         for (Map.Entry<Card, Direction> cardDirection : cardDirectionMap.entrySet()) {
             this.hands.get(cardDirection.getValue()).addCard(cardDirection.getKey());
-            this.hands.get(cardDirection.getValue()).sort();
+            this.hands.get(cardDirection.getValue()).sort(new CardInsideHandComparator());
         }
     }
 

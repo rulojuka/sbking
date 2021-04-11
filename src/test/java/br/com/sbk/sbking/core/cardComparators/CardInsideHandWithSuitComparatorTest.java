@@ -1,8 +1,12 @@
-package br.com.sbk.sbking.core;
+package br.com.sbk.sbking.core.cardComparators;
 
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
+
+import br.com.sbk.sbking.core.Card;
+import br.com.sbk.sbking.core.Rank;
+import br.com.sbk.sbking.core.Suit;
 
 public class CardInsideHandWithSuitComparatorTest {
 

@@ -4,13 +4,13 @@ import static br.com.sbk.sbking.core.GameConstants.COMPLETE_TRICK_NUMBER_OF_CARD
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import br.com.sbk.sbking.core.cardComparators.RankComparator;
 import br.com.sbk.sbking.core.exceptions.TrickAlreadyFullException;
 
 public class Trick {
@@ -77,20 +77,13 @@ public class Trick {
     }
 
     private Card highestCardOfSuit(Suit suit) {
-        SortedSet<Card> sortedCardsOfSuit = new TreeSet<Card>(new CardOfSameSuitComparator());
+        SortedSet<Card> sortedCardsOfSuit = new TreeSet<Card>(new RankComparator());
         for (Card card : this.getCards()) {
             if (card.getSuit() == suit) {
                 sortedCardsOfSuit.add(card);
             }
         }
         return sortedCardsOfSuit.last();
-    }
-
-    private static class CardOfSameSuitComparator implements Comparator<Card> {
-        @Override
-        public int compare(Card card1, Card card2) {
-            return card1.compareRank(card2);
-        }
     }
 
     private Direction directionOfCard(Card card) {
