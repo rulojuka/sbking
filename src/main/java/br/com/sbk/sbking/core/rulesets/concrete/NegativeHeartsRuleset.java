@@ -13,6 +13,7 @@ public class NegativeHeartsRuleset extends NegativeRuleset {
     private static final int NEGATIVE_HEARTS_SCORE_MULTIPLIER = 20;
 
     public NegativeHeartsRuleset() {
+        super();
         this.suitFollowable = new DefaultSuitFollowable();
         this.heartsProhibitable = new ProhibitsHearts();
         this.winnable = new NoTrumpSuitWinnable();

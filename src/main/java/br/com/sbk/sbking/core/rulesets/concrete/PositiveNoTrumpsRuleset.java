@@ -8,6 +8,7 @@ import br.com.sbk.sbking.core.rulesets.implementations.NoTrumpSuitWinnable;
 public class PositiveNoTrumpsRuleset extends PositiveRuleset {
 
     public PositiveNoTrumpsRuleset() {
+        super();
         this.suitFollowable = new DefaultSuitFollowable();
         this.heartsProhibitable = new DontProhibitsHearts();
         this.winnable = new NoTrumpSuitWinnable();

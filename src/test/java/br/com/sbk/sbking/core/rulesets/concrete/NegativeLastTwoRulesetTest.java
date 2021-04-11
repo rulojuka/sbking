@@ -2,6 +2,7 @@ package br.com.sbk.sbking.core.rulesets.concrete;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.only;
 import static org.mockito.Mockito.when;
@@ -11,6 +12,7 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import br.com.sbk.sbking.core.Trick;
+import br.com.sbk.sbking.core.cardComparators.CardInsideHandComparator;
 
 public class NegativeLastTwoRulesetTest {
 
@@ -68,6 +70,11 @@ public class NegativeLastTwoRulesetTest {
     @Test
     public void shouldGetTotalPoints() {
         assertEquals(TOTAL_NUMBER_OF_LAST_TWO_TRICKS, this.negativeLastTwoRuleset.getTotalPoints());
+    }
+
+    @Test
+    public void shouldGetComparator() {
+        assertTrue(this.negativeLastTwoRuleset.getComparator() instanceof CardInsideHandComparator);
     }
 
 }

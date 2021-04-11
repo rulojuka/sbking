@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import br.com.sbk.sbking.core.Trick;
+import br.com.sbk.sbking.core.cardComparators.CardInsideHandComparator;
 
 public class NegativeHeartsRulesetTest {
 
@@ -60,6 +61,11 @@ public class NegativeHeartsRulesetTest {
     @Test
     public void shouldGetTotalPoints() {
         assertEquals(TOTAL_NUMBER_OF_HEARTS_CARDS, this.negativeHeartsRuleset.getTotalPoints());
+    }
+
+    @Test
+    public void shouldGetComparator() {
+        assertTrue(this.negativeHeartsRuleset.getComparator() instanceof CardInsideHandComparator);
     }
 
 }

@@ -2,6 +2,7 @@ package br.com.sbk.sbking.core.rulesets.concrete;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verifyZeroInteractions;
 
@@ -9,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import br.com.sbk.sbking.core.Trick;
+import br.com.sbk.sbking.core.cardComparators.CardInsideHandComparator;
 
 public class PositiveNoTrumpsRulesetTest {
 
@@ -48,6 +50,11 @@ public class PositiveNoTrumpsRulesetTest {
     @Test
     public void shouldNotProhibitsHeartsUntilOnlySuitLeft() {
         assertFalse(this.positiveNoTrumpsRuleset.prohibitsHeartsUntilOnlySuitLeft());
+    }
+
+    @Test
+    public void shouldGetComparator() {
+        assertTrue(this.positiveNoTrumpsRuleset.getComparator() instanceof CardInsideHandComparator);
     }
 
 }

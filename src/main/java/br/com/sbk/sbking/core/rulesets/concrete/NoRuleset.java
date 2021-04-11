@@ -5,6 +5,10 @@ import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
 
 public class NoRuleset extends Ruleset {
 
+    public NoRuleset() {
+        super();
+    }
+
     @Override
     public int getScoreMultiplier() {
         return 0;

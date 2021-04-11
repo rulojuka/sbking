@@ -14,6 +14,7 @@ public class NegativeTricksRuleset extends NegativeRuleset {
     private static final int NEGATIVE_POINTS_PER_TRICK = 1;
 
     public NegativeTricksRuleset() {
+        super();
         this.suitFollowable = new DefaultSuitFollowable();
         this.heartsProhibitable = new DontProhibitsHearts();
         this.winnable = new NoTrumpSuitWinnable();

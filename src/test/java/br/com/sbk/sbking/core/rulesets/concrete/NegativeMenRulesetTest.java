@@ -2,6 +2,7 @@ package br.com.sbk.sbking.core.rulesets.concrete;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.only;
 import static org.mockito.Mockito.when;
@@ -11,6 +12,7 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import br.com.sbk.sbking.core.Trick;
+import br.com.sbk.sbking.core.cardComparators.CardInsideHandComparator;
 
 public class NegativeMenRulesetTest {
 
@@ -59,6 +61,11 @@ public class NegativeMenRulesetTest {
     @Test
     public void shouldGetTotalPoints() {
         assertEquals(TOTAL_NUMBER_OF_MEN, this.negativeMenRuleset.getTotalPoints());
+    }
+
+    @Test
+    public void shouldGetComparator() {
+        assertTrue(this.negativeMenRuleset.getComparator() instanceof CardInsideHandComparator);
     }
 
 }
