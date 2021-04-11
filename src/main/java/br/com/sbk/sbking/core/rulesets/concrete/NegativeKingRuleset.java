@@ -13,6 +13,7 @@ public class NegativeKingRuleset extends NegativeRuleset {
     private static final int NEGATIVE_KING_SCORE_MULTIPLIER = 160;
 
     public NegativeKingRuleset() {
+        super();
         this.suitFollowable = new DefaultSuitFollowable();
         this.heartsProhibitable = new ProhibitsHearts();
         this.winnable = new NoTrumpSuitWinnable();

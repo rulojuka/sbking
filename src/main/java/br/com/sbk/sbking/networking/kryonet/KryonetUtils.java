@@ -21,6 +21,9 @@ import br.com.sbk.sbking.core.Rank;
 import br.com.sbk.sbking.core.Score;
 import br.com.sbk.sbking.core.Suit;
 import br.com.sbk.sbking.core.Trick;
+import br.com.sbk.sbking.core.cardComparators.CardInsideHandComparator;
+import br.com.sbk.sbking.core.cardComparators.CardInsideHandWithSuitComparator;
+import br.com.sbk.sbking.core.cardComparators.RankComparator;
 import br.com.sbk.sbking.core.rulesets.concrete.NegativeHeartsRuleset;
 import br.com.sbk.sbking.core.rulesets.concrete.NegativeKingRuleset;
 import br.com.sbk.sbking.core.rulesets.concrete.NegativeLastTwoRuleset;
@@ -101,6 +104,10 @@ public class KryonetUtils {
     kryo.register(NoTrumpSuitWinnable.class);
     kryo.register(ProhibitsHearts.class);
     kryo.register(TrumpSuitWinnable.class);
+    // Card comparators
+    kryo.register(CardInsideHandComparator.class);
+    kryo.register(CardInsideHandWithSuitComparator.class);
+    kryo.register(RankComparator.class);
 
     // Server to Client Message classes
     kryo.register(BoardMessage.class);

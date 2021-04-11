@@ -1,6 +1,7 @@
 package br.com.sbk.sbking.core.rulesets.concrete;
 
 import br.com.sbk.sbking.core.Suit;
+import br.com.sbk.sbking.core.cardComparators.CardInsideHandWithSuitComparator;
 import br.com.sbk.sbking.core.rulesets.abstractClasses.PositiveRuleset;
 import br.com.sbk.sbking.core.rulesets.implementations.DefaultSuitFollowable;
 import br.com.sbk.sbking.core.rulesets.implementations.DontProhibitsHearts;
@@ -17,10 +18,12 @@ public class PositiveWithTrumpsRuleset extends PositiveRuleset {
     private Suit trumpSuit;
 
     public PositiveWithTrumpsRuleset(Suit trumpSuit) {
+        super();
         this.suitFollowable = new DefaultSuitFollowable();
         this.heartsProhibitable = new DontProhibitsHearts();
         this.winnable = new TrumpSuitWinnable(trumpSuit);
         this.trumpSuit = trumpSuit;
+        this.cardComparator = new CardInsideHandWithSuitComparator(this.trumpSuit);
     }
 
     @Override

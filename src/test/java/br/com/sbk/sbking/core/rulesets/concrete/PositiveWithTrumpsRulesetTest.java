@@ -2,6 +2,7 @@ package br.com.sbk.sbking.core.rulesets.concrete;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verifyZeroInteractions;
 
@@ -10,6 +11,7 @@ import org.junit.Test;
 
 import br.com.sbk.sbking.core.Suit;
 import br.com.sbk.sbking.core.Trick;
+import br.com.sbk.sbking.core.cardComparators.CardInsideHandWithSuitComparator;
 
 public class PositiveWithTrumpsRulesetTest {
 
@@ -56,6 +58,12 @@ public class PositiveWithTrumpsRulesetTest {
     @Test
     public void shouldGetTrumpSuit() {
         assertEquals(trumpSuit, this.positiveWithTrumpRuleset.getTrumpSuit());
+    }
+
+    @Test
+    public void shouldGetComparator() {
+        assertEquals(trumpSuit, this.positiveWithTrumpRuleset.getTrumpSuit());
+        assertTrue(this.positiveWithTrumpRuleset.getComparator() instanceof CardInsideHandWithSuitComparator);
     }
 
 }

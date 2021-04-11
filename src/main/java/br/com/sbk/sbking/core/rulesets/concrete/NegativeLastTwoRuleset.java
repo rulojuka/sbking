@@ -13,6 +13,7 @@ public class NegativeLastTwoRuleset extends NegativeRuleset {
     private static final int NEGATIVE_LAST_TWO_SCORE_MULTIPLIER = 90;
 
     public NegativeLastTwoRuleset() {
+        super();
         this.suitFollowable = new DefaultSuitFollowable();
         this.heartsProhibitable = new DontProhibitsHearts();
         this.winnable = new NoTrumpSuitWinnable();

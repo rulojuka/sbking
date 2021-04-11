@@ -13,6 +13,7 @@ public class NegativeWomenRuleset extends NegativeRuleset {
     private static final int NEGATIVE_WOMEN_SCORE_MULTIPLIER = 50;
 
     public NegativeWomenRuleset() {
+        super();
         this.suitFollowable = new DefaultSuitFollowable();
         this.heartsProhibitable = new DontProhibitsHearts();
         this.winnable = new NoTrumpSuitWinnable();
