@@ -28,14 +28,24 @@ public class LobbyServer {
     public void run() {
         int port = this.getPortFromNetworkingProperties();
         LOGGER.info("LobbyServer is Running...");
-        LOGGER.info("Listening for connections on port: " + port);
 
         GameServer gameServer = new MinibridgeGameServer();
         LOGGER.info("Created new MinibridgeGameServer");
         this.table = new Table(gameServer);
-        gameServer.setTable(this.table);
 
-        SBKingServerFactory.createWithKryonetConnection(this.table, port, gameServer);
+        SBKingServer sbkingServer = SBKingServerFactory.createWithKryonetConnection(this.table, port, gameServer);
+        LOGGER.info("Listening for connections on port: " + port);
+
+        LOGGER.info("Sleeping while nobody is connected");
+        while (sbkingServer.nobodyIsConnected()) {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                LOGGER.error(e);
+            }
+        }
+        LOGGER.info("Finished sleeping because someone is connected");
+        LOGGER.info("Executing game server");
 
         pool.execute(gameServer);
     }

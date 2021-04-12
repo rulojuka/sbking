@@ -2,7 +2,6 @@ package br.com.sbk.sbking.networking.server.gameServer;
 
 import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 
-import br.com.sbk.sbking.core.Board;
 import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
@@ -71,10 +70,6 @@ public abstract class GameServer implements Runnable {
 
     public Deal getDeal() {
         return this.game.getCurrentDeal();
-    }
-
-    public Board getBoard() {
-        return this.game.getCurrentBoard();
     }
 
     protected void sleepToShowLastCard() {
