@@ -14,7 +14,6 @@ import br.com.sbk.sbking.core.Player;
 import br.com.sbk.sbking.core.rulesets.RulesetFromShortDescriptionIdentifier;
 import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
 import br.com.sbk.sbking.gui.models.PositiveOrNegative;
-import br.com.sbk.sbking.networking.kryonet.IdentifierToPlayerMap;
 import br.com.sbk.sbking.networking.kryonet.KryonetSBKingServer;
 import br.com.sbk.sbking.networking.server.gameServer.GameServer;
 import br.com.sbk.sbking.networking.server.gameServer.KingGameServer;
@@ -28,14 +27,14 @@ import br.com.sbk.sbking.networking.server.gameServer.MinibridgeGameServer;
  */
 public class SBKingServer {
 
-  IdentifierToPlayerMap identifierToPlayerMap;
+  private Map<UUID, Player> identifierToPlayerMap = new HashMap<UUID, Player>();
   KryonetSBKingServer kryonetSBKingServer = null;
   private Table table;
   private Map<UUID, Direction> playerDirections = new HashMap<UUID, Direction>();
 
   public SBKingServer(Table table) {
     this.table = table;
-    this.identifierToPlayerMap = new IdentifierToPlayerMap();
+    this.identifierToPlayerMap = new HashMap<UUID, Player>();
   }
 
   public void setKryonetSBKingServer(KryonetSBKingServer kryonetSBKingServer) {
@@ -168,7 +167,8 @@ public class SBKingServer {
   }
 
   public void addSpectator(UUID identifier) {
-    this.table.addSpectator(new PlayerNetworkInformation(this.identifierToPlayerMap.get(identifier)));
+    Player player = this.identifierToPlayerMap.get(identifier);
+    this.table.addSpectator(player);
   }
 
   public void undo(UUID playerIdentifier) {
