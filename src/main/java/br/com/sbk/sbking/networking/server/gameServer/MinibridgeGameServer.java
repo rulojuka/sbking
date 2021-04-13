@@ -3,7 +3,6 @@ package br.com.sbk.sbking.networking.server.gameServer;
 import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 
 import br.com.sbk.sbking.core.Card;
-import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.core.MinibridgeGame;
 import br.com.sbk.sbking.core.exceptions.PlayedCardInAnotherPlayersTurnException;
@@ -31,14 +30,11 @@ public class MinibridgeGameServer extends GameServer {
     while (!game.isFinished()) {
       this.game.dealNewBoard();
 
-      this.initializePlayers();
+      this.copyPlayersFromTableToGame();
 
       LOGGER.info("Everything selected! Game commencing!");
 
-      Deal currentDeal = this.game.getCurrentDeal();
-      for (Direction direction : Direction.values()) {
-        currentDeal.setPlayerOf(direction, this.table.getPlayerOf(direction));
-      }
+      this.copyPlayersFromTableToDeal();
       do {
         this.gameModeOrStrainNotification = new GameModeOrStrainNotification();
         LOGGER.info("Sleeping for 300ms waiting for clients to initialize its deals.");
@@ -46,10 +42,7 @@ public class MinibridgeGameServer extends GameServer {
 
         LOGGER.info("Everything selected! Game commencing!");
 
-        currentDeal = this.game.getCurrentDeal();
-        for (Direction direction : Direction.values()) {
-          currentDeal.setPlayerOf(direction, this.table.getPlayerOf(direction));
-        }
+        this.copyPlayersFromTableToDeal();
 
         this.sendInitializeDealAll();
         this.getSBKingServer().sendBoardAll(this.game.getCurrentBoard());
@@ -90,16 +83,13 @@ public class MinibridgeGameServer extends GameServer {
 
       LOGGER.info("Everything selected! Game commencing!");
       this.minibridgeGame.addRuleset(currentGameModeOrStrain);
-      currentDeal = this.game.getCurrentDeal();
 
       if (currentGameModeOrStrain instanceof PositiveWithTrumpsRuleset) {
         PositiveWithTrumpsRuleset positiveWithTrumpsRuleset = (PositiveWithTrumpsRuleset) currentGameModeOrStrain;
-        currentDeal.sortAllHandsByTrumpSuit(positiveWithTrumpsRuleset.getTrumpSuit());
+        this.game.getCurrentDeal().sortAllHandsByTrumpSuit(positiveWithTrumpsRuleset.getTrumpSuit());
       }
 
-      for (Direction direction : Direction.values()) {
-        currentDeal.setPlayerOf(direction, this.table.getPlayerOf(direction));
-      }
+      copyPlayersFromTableToDeal();
 
       this.dealHasChanged = true;
       while (!this.game.getCurrentDeal().isFinished()) {

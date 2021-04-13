@@ -101,10 +101,16 @@ public abstract class GameServer implements Runnable {
         this.getDeal().undo(direction);
     }
 
-    protected void initializePlayers() {
+    protected void copyPlayersFromTableToGame() {
         for (Direction direction : Direction.values()) {
             Player player = this.table.getPlayerOf(direction);
             this.game.setPlayerOf(direction, player);
+        }
+    }
+
+    protected void copyPlayersFromTableToDeal() {
+        for (Direction direction : Direction.values()) {
+            this.game.getCurrentDeal().setPlayerOf(direction, this.table.getPlayerOf(direction));
         }
     }
 
