@@ -13,7 +13,7 @@ public class CagandoNoBequinhoGame extends TrickGame {
 
     public CagandoNoBequinhoGame() {
         super();
-        this.currentNumberOfCardsInAHand = 13;
+        this.currentNumberOfCardsInAHand = 2;
         this.dealNewBoard();
     }
 
@@ -34,6 +34,8 @@ public class CagandoNoBequinhoGame extends TrickGame {
 
     @Override
     public void dealNewBoard() {
+        BoardDealer boardDealer = new ShuffledBoardDealer();
+        this.currentBoard = boardDealer.dealBoard(this.dealer);
         int numberOfRemovedCards = 13 - this.currentNumberOfCardsInAHand;
         List<Card> removedCards = null;
         for (int i = 0; i < numberOfRemovedCards; i++) {
@@ -53,7 +55,12 @@ public class CagandoNoBequinhoGame extends TrickGame {
     }
 
     private void addRuleset(Ruleset positiveRuleset) {
-        this.currentDeal = new Deal(this.currentBoard, positiveRuleset);
+        this.currentDeal = new Deal(this.currentBoard, positiveRuleset, this.getLeader());
+    }
+
+    @Override
+    public Direction getLeader() {
+        return this.dealer;
     }
 
 }

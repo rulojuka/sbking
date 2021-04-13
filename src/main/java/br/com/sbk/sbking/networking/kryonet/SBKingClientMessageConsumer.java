@@ -61,12 +61,7 @@ public class SBKingClientMessageConsumer implements Runnable {
     } else if (message instanceof PositiveOrNegativeChooserMessage) {
       this.sbkingClient.setPositiveOrNegativeChooser((Direction) content);
     } else if (message instanceof PositiveOrNegativeMessage) {
-      boolean isPositive = (Boolean) content;
-      if (isPositive) {
-        this.sbkingClient.selectedPositive();
-      } else {
-        this.sbkingClient.selectedNegative();
-      }
+      this.sbkingClient.setPositiveOrNegative((String) content);
     } else if (message instanceof GameModeOrStrainChooserMessage) {
       this.sbkingClient.setGameModeOrStrainChooser((Direction) content);
     } else if (message instanceof InitializeDealMessage) {

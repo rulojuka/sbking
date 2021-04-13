@@ -204,4 +204,16 @@ public class SBKingClient {
     public void sendSetNickname(String nickname) {
         this.kryonetSBKingClient.setAndSendNickname(nickname);
     }
+
+    public void setPositiveOrNegative(String content) {
+        String positive = "POSITIVE";
+        String negative = "NEGATIVE";
+        if (positive.equals(content)) {
+            this.selectedPositive();
+        } else if (negative.equals(content)) {
+            this.selectedNegative();
+        } else {
+            throw new IllegalArgumentException("Content must be POSITIVE or NEGATIVE");
+        }
+    }
 }

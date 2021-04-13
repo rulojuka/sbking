@@ -18,6 +18,7 @@ import br.com.sbk.sbking.networking.kryonet.KryonetSBKingServer;
 import br.com.sbk.sbking.networking.server.gameServer.GameServer;
 import br.com.sbk.sbking.networking.server.gameServer.KingGameServer;
 import br.com.sbk.sbking.networking.server.gameServer.MinibridgeGameServer;
+import br.com.sbk.sbking.networking.server.gameServer.PositiveKingGameServer;
 
 /**
  * This class has two responsibilities: 1: receiving method calls from the
@@ -95,6 +96,9 @@ public class SBKingServer {
       } else if (gameServer instanceof KingGameServer) {
         KingGameServer kingGameServer = (KingGameServer) this.table.getGameServer();
         kingGameServer.notifyChooseGameModeOrStrain(gameModeOrStrain, directionFromIdentifier);
+      } else if (gameServer instanceof PositiveKingGameServer) {
+        PositiveKingGameServer positiveKingGameServer = (PositiveKingGameServer) this.table.getGameServer();
+        positiveKingGameServer.notifyChooseGameModeOrStrain(gameModeOrStrain, directionFromIdentifier);
       }
     }
   }
