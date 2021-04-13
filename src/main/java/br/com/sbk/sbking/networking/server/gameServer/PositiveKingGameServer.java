@@ -5,7 +5,6 @@ import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
-import br.com.sbk.sbking.core.Player;
 import br.com.sbk.sbking.core.PositiveKingGame;
 import br.com.sbk.sbking.core.exceptions.SelectedPositiveOrNegativeInAnotherPlayersTurnException;
 import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
@@ -24,24 +23,16 @@ public class PositiveKingGameServer extends GameServer {
 
     public PositiveKingGameServer() {
         this.game = new PositiveKingGame();
+        this.positiveKingGame = (PositiveKingGame) this.game;
     }
 
     @Override
     public void run() {
 
-        LOGGER.info("Sleeping for 500ms waiting for clients to setup themselves");
-        sleepFor(500);
-
-        this.game = new PositiveKingGame();
-        this.positiveKingGame = (PositiveKingGame) this.game;
-
         while (!game.isFinished()) {
             this.game.dealNewBoard();
 
-            for (Direction direction : Direction.values()) {
-                Player player = this.table.getPlayerOf(direction);
-                this.game.setPlayerOf(direction, player);
-            }
+            this.initializePlayers();
 
             do {
                 this.gameModeOrStrainNotification = new GameModeOrStrainNotification();

@@ -6,11 +6,8 @@ import br.com.sbk.sbking.core.CagandoNoBequinhoGame;
 import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
-import br.com.sbk.sbking.core.Player;
 
 public class CagandoNoBequinhoGameServer extends GameServer {
-
-    private CagandoNoBequinhoGame cagandoNoBequinhoGame;
 
     public CagandoNoBequinhoGameServer() {
         this.game = new CagandoNoBequinhoGame();
@@ -19,22 +16,9 @@ public class CagandoNoBequinhoGameServer extends GameServer {
     @Override
     public void run() {
 
-        LOGGER.info("Sleeping for 500ms waiting for last client to setup itself");
-        sleepFor(500);
-
-        this.cagandoNoBequinhoGame = (CagandoNoBequinhoGame) this.game;
-
         while (!game.isFinished()) {
 
-            this.cagandoNoBequinhoGame.dealNewBoard();
-
-            for (Direction direction : Direction.values()) {
-                Player player = this.table.getPlayerOf(direction);
-                this.game.setPlayerOf(direction, player);
-            }
-
-            LOGGER.info("Sleeping for 300ms waiting for everything come out right.");
-            sleepFor(300);
+            this.initializePlayers();
 
             LOGGER.info("Everything selected! Game commencing!");
 

@@ -5,6 +5,7 @@ import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
+import br.com.sbk.sbking.core.Player;
 import br.com.sbk.sbking.core.TrickGame;
 import br.com.sbk.sbking.core.exceptions.PlayedCardInAnotherPlayersTurnException;
 import br.com.sbk.sbking.networking.server.SBKingServer;
@@ -98,6 +99,13 @@ public abstract class GameServer implements Runnable {
 
     public void undo(Direction direction) {
         this.getDeal().undo(direction);
+    }
+
+    protected void initializePlayers() {
+        for (Direction direction : Direction.values()) {
+            Player player = this.table.getPlayerOf(direction);
+            this.game.setPlayerOf(direction, player);
+        }
     }
 
 }
