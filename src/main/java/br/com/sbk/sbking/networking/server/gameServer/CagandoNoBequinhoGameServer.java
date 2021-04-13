@@ -4,7 +4,6 @@ import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 
 import br.com.sbk.sbking.core.CagandoNoBequinhoGame;
 import br.com.sbk.sbking.core.Card;
-import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
 
 public class CagandoNoBequinhoGameServer extends GameServer {
@@ -18,14 +17,11 @@ public class CagandoNoBequinhoGameServer extends GameServer {
 
         while (!game.isFinished()) {
 
-            this.initializePlayers();
+            this.copyPlayersFromTableToGame();
 
             LOGGER.info("Everything selected! Game commencing!");
 
-            Deal currentDeal = this.game.getCurrentDeal();
-            for (Direction direction : Direction.values()) {
-                currentDeal.setPlayerOf(direction, this.table.getPlayerOf(direction));
-            }
+            this.copyPlayersFromTableToDeal();
 
             this.dealHasChanged = true;
             while (!this.game.getCurrentDeal().isFinished()) {

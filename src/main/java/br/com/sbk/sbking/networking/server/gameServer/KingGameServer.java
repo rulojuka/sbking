@@ -3,7 +3,6 @@ package br.com.sbk.sbking.networking.server.gameServer;
 import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 
 import br.com.sbk.sbking.core.Card;
-import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.core.KingGame;
 import br.com.sbk.sbking.core.exceptions.SelectedPositiveOrNegativeInAnotherPlayersTurnException;
@@ -34,7 +33,7 @@ public class KingGameServer extends GameServer {
             this.game.dealNewBoard();
 
             do {
-                this.initializePlayers();
+                this.copyPlayersFromTableToGame();
 
                 this.gameModeOrStrainNotification = new GameModeOrStrainNotification();
                 this.positiveOrNegativeNotification = new PositiveOrNegativeNotification();
@@ -112,10 +111,7 @@ public class KingGameServer extends GameServer {
             LOGGER.info("Everything selected! Game commencing!");
             this.kingGame.addRuleset(currentGameModeOrStrain);
 
-            Deal currentDeal = this.game.getCurrentDeal();
-            for (Direction direction : Direction.values()) {
-                currentDeal.setPlayerOf(direction, this.table.getPlayerOf(direction));
-            }
+            this.copyPlayersFromTableToDeal();
 
             this.dealHasChanged = true;
             LOGGER.info("Sleeping for 300ms waiting for all clients to prepare themselves.");
