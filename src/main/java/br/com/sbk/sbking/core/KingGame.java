@@ -33,11 +33,11 @@ public class KingGame extends TrickGame {
     @Override
     public void dealNewBoard() {
         this.currentBoard = this.boardDealer.dealBoard(this.dealer);
-        this.currentDeal = new Deal(currentBoard, new NoRuleset());
+        this.currentDeal = new Deal(currentBoard, new NoRuleset(), this.getLeader());
     }
 
     public void addRuleset(Ruleset currentGameModeOrStrain) {
-        this.currentDeal = new Deal(this.currentBoard, currentGameModeOrStrain);
+        this.currentDeal = new Deal(this.currentBoard, currentGameModeOrStrain, this.getLeader());
     }
 
     @Override
@@ -97,6 +97,11 @@ public class KingGame extends TrickGame {
                 return eastWestNegatives < MAXIMUM_NEGATIVES_PERMITTED_BY_DIRECTION;
             }
         }
+    }
+
+    @Override
+    public Direction getLeader() {
+        return this.dealer.next(2);
     }
 
 }

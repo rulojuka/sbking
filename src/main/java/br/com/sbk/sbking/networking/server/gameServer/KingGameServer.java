@@ -49,7 +49,7 @@ public class KingGameServer extends GameServer {
                 this.sendInitializeDealAll();
                 LOGGER.info("Sleeping for 300ms waiting for clients to initialize its deals.");
                 sleepFor(300);
-                this.getSBKingServer().sendBoardAll(this.game.getCurrentBoard());
+                this.getSBKingServer().sendDealAll(this.game.getCurrentDeal());
                 sleepFor(300);
                 this.sendPositiveOrNegativeChooserAll();
 

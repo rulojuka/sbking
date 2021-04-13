@@ -33,10 +33,10 @@ public class Deal {
     private Trick currentTrick;
     private Direction dummy;
 
-    public Deal(Board board, Ruleset ruleset) {
+    public Deal(Board board, Ruleset ruleset, Direction leader) {
         this.board = board;
         this.ruleset = ruleset;
-        this.currentPlayer = this.board.getDealer().getLeaderWhenDealer();
+        this.currentPlayer = leader;
         this.score = new Score(ruleset);
         this.completedTricks = 0;
         this.startingNumberOfCardsInTheHand = NUMBER_OF_TRICKS_IN_A_COMPLETE_HAND;

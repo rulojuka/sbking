@@ -24,6 +24,8 @@ public abstract class TrickGame {
 
     public abstract void finishDeal();
 
+    public abstract Direction getLeader();
+
     public void setPlayerOf(Direction direction, Player player) {
         this.currentDeal.setPlayerOf(direction, player);
     }

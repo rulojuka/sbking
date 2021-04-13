@@ -31,11 +31,11 @@ public class PositiveKingGame extends TrickGame {
     public void dealNewBoard() {
         BoardDealer boardDealer = new FourteenHCPPlusDoubletonRuledBoardDealer();
         this.currentBoard = boardDealer.dealBoard(this.dealer);
-        this.currentDeal = new Deal(currentBoard, new NoRuleset());
+        this.currentDeal = new Deal(currentBoard, new NoRuleset(), this.getLeader());
     }
 
     public void addRuleset(Ruleset currentGameModeOrStrain) {
-        this.currentDeal = new Deal(this.currentBoard, currentGameModeOrStrain);
+        this.currentDeal = new Deal(this.currentBoard, currentGameModeOrStrain, this.getLeader());
     }
 
     @Override
@@ -76,6 +76,11 @@ public class PositiveKingGame extends TrickGame {
 
     public boolean isGameModePermitted(Ruleset ruleset, Direction chooser) {
         return (ruleset instanceof PositiveRuleset);
+    }
+
+    @Override
+    public Direction getLeader() {
+        return this.dealer.next(2);
     }
 
 }
