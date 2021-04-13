@@ -18,6 +18,7 @@ import javax.swing.Timer;
 import br.com.sbk.sbking.core.constants.ErrorCodes;
 import br.com.sbk.sbking.gui.constants.FrameConstants;
 import br.com.sbk.sbking.gui.main.ClientApplicationState;
+import br.com.sbk.sbking.gui.painters.ConnectToServerPainter;
 import br.com.sbk.sbking.gui.painters.Painter;
 import br.com.sbk.sbking.networking.client.SBKingClient;
 import br.com.sbk.sbking.networking.client.SBKingClientFactory;
@@ -132,5 +133,10 @@ public abstract class NetworkClientScreen extends JFrame {
         this.getContentPane().removeAll();
         painter.paint(this.getContentPane());
         ClientApplicationState.setGUIHasChanged(false);
+    }
+
+    protected void paintConnectToServerScreen() {
+        Painter connectToServerPainter = new ConnectToServerPainter(this);
+        this.paintPainter(connectToServerPainter);
     }
 }

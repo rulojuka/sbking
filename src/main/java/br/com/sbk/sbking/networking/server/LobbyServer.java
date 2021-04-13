@@ -10,7 +10,7 @@ import br.com.sbk.sbking.networking.core.properties.FileProperties;
 import br.com.sbk.sbking.networking.core.properties.NetworkingProperties;
 import br.com.sbk.sbking.networking.core.properties.SystemProperties;
 import br.com.sbk.sbking.networking.server.gameServer.GameServer;
-import br.com.sbk.sbking.networking.server.gameServer.KingGameServer;
+import br.com.sbk.sbking.networking.server.gameServer.MinibridgeGameServer;
 
 public class LobbyServer {
 
@@ -29,7 +29,7 @@ public class LobbyServer {
         int port = this.getPortFromNetworkingProperties();
         LOGGER.info("LobbyServer is Running...");
 
-        GameServer gameServer = new KingGameServer();
+        GameServer gameServer = new MinibridgeGameServer();
         LOGGER.info("Created new MinibridgeGameServer");
         this.table = new Table(gameServer);
 

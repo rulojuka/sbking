@@ -8,7 +8,6 @@ import br.com.sbk.sbking.core.Board;
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.gui.main.ClientApplicationState;
-import br.com.sbk.sbking.gui.painters.ConnectToServerPainter;
 import br.com.sbk.sbking.gui.painters.DealPainter;
 import br.com.sbk.sbking.gui.painters.Painter;
 import br.com.sbk.sbking.gui.painters.SpectatorPainter;
@@ -112,11 +111,6 @@ public class PositiveKingNetworkClientScreen extends NetworkClientScreen {
         } catch (InterruptedException e) {
             LOGGER.debug(e);
         }
-    }
-
-    private void paintConnectToServerScreen() {
-        Painter connectToServerPainter = new ConnectToServerPainter(this);
-        this.paintPainter(connectToServerPainter);
     }
 
     private void paintWaitingForChoosingGameModeOrStrainScreen(Direction direction, Direction chooser,

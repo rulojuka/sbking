@@ -30,31 +30,19 @@ public class MinibridgeGameServer extends GameServer {
     while (!game.isFinished()) {
       this.game.dealNewBoard();
 
-      this.copyPlayersFromTableToGame();
-
-      LOGGER.info("Everything selected! Game commencing!");
-
-      this.copyPlayersFromTableToDeal();
       do {
-        this.gameModeOrStrainNotification = new GameModeOrStrainNotification();
-        LOGGER.info("Sleeping for 300ms waiting for clients to initialize its deals.");
-        sleepFor(300);
-
-        LOGGER.info("Everything selected! Game commencing!");
-
+        this.copyPlayersFromTableToGame();
         this.copyPlayersFromTableToDeal();
-
         this.sendInitializeDealAll();
-        this.getSBKingServer().sendBoardAll(this.game.getCurrentBoard());
-        sleepFor(200);
         this.sendDealAll();
 
+        this.gameModeOrStrainNotification = new GameModeOrStrainNotification();
         synchronized (gameModeOrStrainNotification) {
           // wait until object notifies - which relinquishes the lock on the object too
           while (gameModeOrStrainNotification.getGameModeOrStrain() == null) {
-            LOGGER.info("getGameModeOrStrain:" + gameModeOrStrainNotification.getGameModeOrStrain());
+            LOGGER.debug("getGameModeOrStrain:" + gameModeOrStrainNotification.getGameModeOrStrain());
             try {
-              LOGGER.info("I am waiting for some thread to notify that it wants to choose game Mode Or Strain");
+              LOGGER.debug("I am waiting for some thread to notify that it wants to choose game Mode Or Strain");
               gameModeOrStrainNotification.wait(3000);
               this.sendGameModeOrStrainChooserAll();
             } catch (InterruptedException e) {
@@ -78,9 +66,6 @@ public class MinibridgeGameServer extends GameServer {
 
       } while (!isRulesetPermitted);
 
-      LOGGER.info("Sleeping for 300ms waiting for everything come out right.");
-      sleepFor(300);
-
       LOGGER.info("Everything selected! Game commencing!");
       this.minibridgeGame.addRuleset(currentGameModeOrStrain);
 
@@ -89,12 +74,8 @@ public class MinibridgeGameServer extends GameServer {
         this.game.getCurrentDeal().sortAllHandsByTrumpSuit(positiveWithTrumpsRuleset.getTrumpSuit());
       }
 
-      copyPlayersFromTableToDeal();
-
       this.dealHasChanged = true;
       while (!this.game.getCurrentDeal().isFinished()) {
-        LOGGER.info("Sleeping for 300ms waiting for all clients to prepare themselves.");
-        sleepFor(300);
         if (this.dealHasChanged) {
           LOGGER.info("Sending new 'round' of deals");
           this.sendDealAll();
