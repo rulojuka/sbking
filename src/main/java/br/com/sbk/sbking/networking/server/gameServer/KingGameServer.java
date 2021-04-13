@@ -6,7 +6,6 @@ import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.core.KingGame;
-import br.com.sbk.sbking.core.Player;
 import br.com.sbk.sbking.core.exceptions.SelectedPositiveOrNegativeInAnotherPlayersTurnException;
 import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
 import br.com.sbk.sbking.gui.models.PositiveOrNegative;
@@ -25,24 +24,17 @@ public class KingGameServer extends GameServer {
 
     public KingGameServer() {
         this.game = new KingGame();
+        this.kingGame = (KingGame) this.game;
     }
 
     @Override
     public void run() {
-        LOGGER.info("Sleeping for 500ms waiting for clients to setup themselves");
-        sleepFor(500);
-
-        this.game = new KingGame();
-        this.kingGame = (KingGame) this.game;
 
         while (!game.isFinished()) {
             this.game.dealNewBoard();
 
             do {
-                for (Direction direction : Direction.values()) {
-                    Player player = this.table.getPlayerOf(direction);
-                    this.game.setPlayerOf(direction, player);
-                }
+                this.initializePlayers();
 
                 this.gameModeOrStrainNotification = new GameModeOrStrainNotification();
                 this.positiveOrNegativeNotification = new PositiveOrNegativeNotification();

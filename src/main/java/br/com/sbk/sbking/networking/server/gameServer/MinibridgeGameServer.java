@@ -6,7 +6,6 @@ import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.core.MinibridgeGame;
-import br.com.sbk.sbking.core.Player;
 import br.com.sbk.sbking.core.exceptions.PlayedCardInAnotherPlayersTurnException;
 import br.com.sbk.sbking.core.exceptions.SelectedPositiveOrNegativeInAnotherPlayersTurnException;
 import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
@@ -23,33 +22,16 @@ public class MinibridgeGameServer extends GameServer {
 
   public MinibridgeGameServer() {
     this.game = new MinibridgeGame();
+    this.minibridgeGame = (MinibridgeGame) this.game;
   }
 
   @Override
   public void run() {
 
-    LOGGER.info("Sleeping for 500ms waiting for clients to setup themselves");
-    sleepFor(500);
-
-    LOGGER.info("Sleeping while nobody is connected");
-    while (this.sbkingServer.nobodyIsConnected()) {
-      sleepFor(500);
-    }
-    LOGGER.info("Finished sleeping because someone is connected");
-
-    this.game = new MinibridgeGame();
-    this.minibridgeGame = (MinibridgeGame) this.game;
-
     while (!game.isFinished()) {
       this.game.dealNewBoard();
 
-      for (Direction direction : Direction.values()) {
-        Player player = this.table.getPlayerOf(direction);
-        this.game.setPlayerOf(direction, player);
-      }
-
-      LOGGER.info("Sleeping for 300ms waiting for clients to initialize its deals.");
-      sleepFor(300);
+      this.initializePlayers();
 
       LOGGER.info("Everything selected! Game commencing!");
 
