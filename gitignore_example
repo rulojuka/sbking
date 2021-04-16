@@ -15,3 +15,6 @@ TODO
 
 # vscode
 .vscode/
+
+# configuration file example
+src/main/resources/config.dev.xml
