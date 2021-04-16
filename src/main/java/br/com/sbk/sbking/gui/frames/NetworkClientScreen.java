@@ -15,7 +15,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.Timer;
 
-import br.com.sbk.sbking.core.constants.ErrorCodes;
 import br.com.sbk.sbking.gui.constants.FrameConstants;
 import br.com.sbk.sbking.gui.main.ClientApplicationState;
 import br.com.sbk.sbking.gui.painters.ConnectToServerPainter;
@@ -29,15 +28,15 @@ import br.com.sbk.sbking.networking.core.properties.SystemProperties;
 @SuppressWarnings("serial")
 public abstract class NetworkClientScreen extends JFrame {
 
-    private static final String NETWORKING_CONFIGURATION_FILENAME = "networkConfiguration.cfg";
-
     protected boolean connectedToServer = false;
     protected SBKingClient sbKingClient;
+    private NetworkingProperties networkingProperties;
 
     public NetworkClientScreen() {
         super();
         initializeFrame();
         initializeContentPane(this);
+        this.networkingProperties = new NetworkingProperties(new FileProperties(), new SystemProperties());
     }
 
     private void initializeFrame() {
@@ -72,17 +71,7 @@ public abstract class NetworkClientScreen extends JFrame {
     public void connectToServer(String nickname, String hostname) {
         hostname = hostname.trim();
         if (isValidIP(hostname)) {
-            int port = 0;
-            try {
-                FileProperties configFile = new FileProperties(NETWORKING_CONFIGURATION_FILENAME);
-                NetworkingProperties networkingProperties = new NetworkingProperties(configFile,
-                        new SystemProperties());
-                port = networkingProperties.getPort();
-            } catch (Exception e) {
-                LOGGER.fatal("Could not get port from properties.");
-                LOGGER.debug(e);
-                System.exit(ErrorCodes.COULD_NOT_GET_PORT_FROM_PROPERTIES_ERROR);
-            }
+            int port = networkingProperties.getPort();
             this.sbKingClient = SBKingClientFactory.createWithKryonetConnection(nickname, hostname, port);
             this.connectedToServer = true;
         } else {
@@ -107,26 +96,8 @@ public abstract class NetworkClientScreen extends JFrame {
         }
     }
 
-    public String getIpFromServer(String server) {
-        // NETWORKING_CONFIGURATION_FILENAME should contain a property entry for every
-        // server selection radio button.
-        FileProperties fileProperties = new FileProperties(NETWORKING_CONFIGURATION_FILENAME);
-        try {
-            NetworkingProperties networkingProperties = new NetworkingProperties(fileProperties,
-                    new SystemProperties());
-            String hostname = networkingProperties.getIP(server);
-            if (hostname != null) {
-                return hostname;
-            } else {
-                return "127.0.0.1";
-            }
-        } catch (Exception e) {
-            LOGGER.fatal("Could not get server IP from properties.");
-            LOGGER.debug(e);
-
-            System.exit(ErrorCodes.COULD_NOT_GET_SERVER_IP_FROM_PROPERTIES_ERROR);
-            return "";
-        }
+    public String getIpFromServer() {
+        return this.networkingProperties.getHost();
     }
 
     protected void paintPainter(Painter painter) {

@@ -71,6 +71,17 @@
 			<artifactId>kryo</artifactId>
 			<version>2.20</version>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-configuration2</artifactId>
+			<version>2.7</version>
+		</dependency>
+		<!-- This commons-beanutils is needed for commons-configuration2 because the maven package is broken. -->
+		<dependency>
+			<groupId>commons-beanutils</groupId>
+			<artifactId>commons-beanutils</artifactId>
+			<version>1.9.4</version>
+		</dependency>
 	</dependencies>
 
 	<build>

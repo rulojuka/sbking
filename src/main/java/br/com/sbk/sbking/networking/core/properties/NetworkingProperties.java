@@ -24,13 +24,8 @@ public class NetworkingProperties {
         if (portFromSystem != null) {
             return Integer.parseInt(portFromSystem);
         } else {
-            String port = this.fileProperties.getPort();
-            return Integer.parseInt(port);
+            return this.fileProperties.getPort();
         }
-    }
-
-    public String getIP(String serverName) {
-        return this.fileProperties.getIP(serverName);
     }
 
 }

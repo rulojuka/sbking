@@ -53,7 +53,7 @@ public class NetworkingPropertiesTest {
     @Test
     public void shouldGetPortFromFilePropertiesIfSystemPropertiesReturnsNull() {
         Mockito.when(systemProperties.getPort()).thenReturn(null);
-        Mockito.when(fileProperties.getPort()).thenReturn(portString);
+        Mockito.when(fileProperties.getPort()).thenReturn(portNumber);
 
         assertEquals(portNumber, this.networkingProperties.getPort());
     }

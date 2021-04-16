@@ -3,7 +3,6 @@ package br.com.sbk.sbking.gui.painters;
 import java.awt.Component;
 import java.awt.Container;
 
-import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 import br.com.sbk.sbking.gui.JElements.SBKingButton;
@@ -40,12 +39,7 @@ public class ConnectToServerPainter implements Painter {
                     JTextField nicknameTextField = (JTextField) component;
                     nickname = nicknameTextField.getText();
                 }
-                if (component instanceof JRadioButton) {
-                    JRadioButton radioButton = (JRadioButton) component;
-                    if (radioButton.isSelected()) {
-                        hostname = networkClientScreen.getIpFromServer(radioButton.getName());
-                    }
-                }
+                hostname = networkClientScreen.getIpFromServer();
             }
             networkClientScreen.connectToServer(nickname, hostname);
         }

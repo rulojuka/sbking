@@ -14,8 +14,6 @@ import br.com.sbk.sbking.networking.server.gameServer.MinibridgeGameServer;
 
 public class LobbyServer {
 
-    private static final String NETWORKING_CONFIGURATION_FILENAME = "networkConfiguration.cfg";
-
     private Table table;
 
     private static final int MAXIMUM_NUMBER_OF_CONCURRENT_GAME_SERVERS = 2;
@@ -51,7 +49,7 @@ public class LobbyServer {
     }
 
     private int getPortFromNetworkingProperties() {
-        FileProperties fileProperties = new FileProperties(NETWORKING_CONFIGURATION_FILENAME);
+        FileProperties fileProperties = new FileProperties();
         int port = 0;
         try {
             NetworkingProperties networkingProperties = new NetworkingProperties(fileProperties,
