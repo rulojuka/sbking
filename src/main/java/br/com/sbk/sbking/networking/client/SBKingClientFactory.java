@@ -35,7 +35,8 @@ public class SBKingClientFactory {
       // Server communication after connection can go here, or in
       // Listener#connected().
     } catch (IOException ex) {
-      ex.printStackTrace();
+      LOGGER.fatal("Could not connect to server");
+      LOGGER.fatal(ex);
       System.exit(ErrorCodes.COULD_NOT_CONNECT_TO_SERVER);
     }
     sbKingClient.setKryonetSBKingClient(kryonetSBKingClient);

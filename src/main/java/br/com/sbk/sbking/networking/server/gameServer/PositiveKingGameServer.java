@@ -44,7 +44,6 @@ public class PositiveKingGameServer extends GameServer {
                 this.copyPlayersFromTableToDeal();
 
                 this.sendInitializeDealAll();
-                this.getSBKingServer().sendBoardAll(this.game.getCurrentBoard());
                 sleepFor(200);
                 this.sendDealAll();
 
@@ -58,7 +57,7 @@ public class PositiveKingGameServer extends GameServer {
                             gameModeOrStrainNotification.wait(3000);
                             this.sendGameModeOrStrainChooserAll();
                         } catch (InterruptedException e) {
-                            e.printStackTrace();
+                            LOGGER.error(e);
                         }
                     }
                 }
@@ -101,7 +100,7 @@ public class PositiveKingGameServer extends GameServer {
                         LOGGER.info("I am waiting for some thread to notify that it wants to play a card.");
                         cardPlayNotification.wait();
                     } catch (InterruptedException e) {
-                        e.printStackTrace();
+                        LOGGER.error(e);
                     }
                 }
                 Direction directionToBePlayed = cardPlayNotification.getDirection();

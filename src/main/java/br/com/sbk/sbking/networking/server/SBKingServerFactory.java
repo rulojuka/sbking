@@ -13,12 +13,11 @@ import br.com.sbk.sbking.networking.kryonet.KryonetServerFactory;
 import br.com.sbk.sbking.networking.kryonet.KryonetServerListenerFactory;
 import br.com.sbk.sbking.networking.kryonet.SBKingServerMessageConsumer;
 import br.com.sbk.sbking.networking.kryonet.messages.SBKingMessageWithIdentifier;
-import br.com.sbk.sbking.networking.server.gameServer.GameServer;
 
 public class SBKingServerFactory {
 
-  public static SBKingServer createWithKryonetConnection(Table table, int port, GameServer gameServer) {
-    SBKingServer sbKingServer = new SBKingServer(table);
+  public static SBKingServer createWithKryonetConnection(int port) {
+    SBKingServer sbKingServer = new SBKingServer();
     BlockingQueue<SBKingMessageWithIdentifier> serverMessageQueue = new LinkedBlockingQueue<SBKingMessageWithIdentifier>();
     KryonetSBKingServer server = KryonetServerFactory.getRegisteredServer(sbKingServer);
 
@@ -37,7 +36,6 @@ public class SBKingServerFactory {
     server.start();
 
     // bindings
-    gameServer.setSBKingServer(sbKingServer);
     sbKingServer.setKryonetSBKingServer(server);
 
     return sbKingServer;

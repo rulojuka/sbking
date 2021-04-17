@@ -38,7 +38,7 @@ public class CagandoNoBequinhoGameServer extends GameServer {
                         LOGGER.info("I am waiting for some thread to notify that it wants to play a card.");
                         cardPlayNotification.wait();
                     } catch (InterruptedException e) {
-                        e.printStackTrace();
+                        LOGGER.error(e);
                     }
                 }
                 Direction directionToBePlayed = cardPlayNotification.getDirection();

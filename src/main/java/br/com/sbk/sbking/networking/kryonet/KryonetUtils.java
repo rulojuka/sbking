@@ -47,7 +47,6 @@ import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.MoveToSeatMe
 import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.PlayCardMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.SetNicknameMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.UndoMessage;
-import br.com.sbk.sbking.networking.kryonet.messages.ServerToClient.BoardMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ServerToClient.DealMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ServerToClient.FinishDealMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ServerToClient.GameModeOrStrainChooserMessage;
@@ -60,6 +59,7 @@ import br.com.sbk.sbking.networking.kryonet.messages.ServerToClient.PositiveOrNe
 import br.com.sbk.sbking.networking.kryonet.messages.ServerToClient.TextMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ServerToClient.ValidRulesetMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ServerToClient.YourDirectionIsMessage;
+import br.com.sbk.sbking.networking.kryonet.messages.ServerToClient.YourTableIsMessage;
 
 public class KryonetUtils {
   // This registers objects that are going to be sent over the network.
@@ -111,7 +111,6 @@ public class KryonetUtils {
     kryo.register(RankComparator.class);
 
     // Server to Client Message classes
-    kryo.register(BoardMessage.class);
     kryo.register(DealMessage.class);
     kryo.register(FinishDealMessage.class);
     kryo.register(GameModeOrStrainChooserMessage.class);
@@ -125,6 +124,7 @@ public class KryonetUtils {
     kryo.register(UndoMessage.class);
     kryo.register(ValidRulesetMessage.class);
     kryo.register(YourDirectionIsMessage.class);
+    kryo.register(YourTableIsMessage.class);
 
     // Client to Server Message classes
     kryo.register(ChooseGameModeOrStrainMessage.class);

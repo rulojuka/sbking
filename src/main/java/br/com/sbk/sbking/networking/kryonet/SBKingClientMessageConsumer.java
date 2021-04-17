@@ -4,12 +4,10 @@ import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 
 import java.util.concurrent.BlockingQueue;
 
-import br.com.sbk.sbking.core.Board;
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.networking.client.SBKingClient;
 import br.com.sbk.sbking.networking.kryonet.messages.SBKingMessage;
-import br.com.sbk.sbking.networking.kryonet.messages.ServerToClient.BoardMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ServerToClient.DealMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ServerToClient.FinishDealMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ServerToClient.GameModeOrStrainChooserMessage;
@@ -22,6 +20,7 @@ import br.com.sbk.sbking.networking.kryonet.messages.ServerToClient.PositiveOrNe
 import br.com.sbk.sbking.networking.kryonet.messages.ServerToClient.TextMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ServerToClient.ValidRulesetMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ServerToClient.YourDirectionIsMessage;
+import br.com.sbk.sbking.networking.kryonet.messages.ServerToClient.YourTableIsMessage;
 
 public class SBKingClientMessageConsumer implements Runnable {
 
@@ -52,8 +51,6 @@ public class SBKingClientMessageConsumer implements Runnable {
     Object content = message.getContent();
     if (message instanceof TextMessage) {
       LOGGER.info("Received message from server: " + content);
-    } else if (message instanceof BoardMessage) {
-      this.sbkingClient.setCurrentBoard((Board) content);
     } else if (message instanceof DealMessage) {
       this.sbkingClient.setCurrentDeal((Deal) content);
     } else if (message instanceof YourDirectionIsMessage) {
@@ -76,6 +73,8 @@ public class SBKingClientMessageConsumer implements Runnable {
       this.sbkingClient.setSpectator(true);
     } else if (message instanceof IsNotSpectatorMessage) {
       this.sbkingClient.setSpectator(false);
+    } else if (message instanceof YourTableIsMessage) {
+      this.sbkingClient.setGameName((String) content);
     } else {
       LOGGER.error("Could not understand message.");
       LOGGER.error(message);

@@ -19,18 +19,7 @@ public class LobbyScreen implements SBKingScreen {
 
     LOGGER.info("Entered Lobby Screen");
     sbkingClientJFrame.paintPainter(new LobbyScreenPainter(this.sbkingClient));
-    while (true) {
-      sleepFor(10000);
-    }
-    // LOGGER.info("Finished Lobby Screen");
-  }
-
-  private void sleepFor(int miliseconds) {
-    try {
-      Thread.sleep(miliseconds);
-    } catch (InterruptedException e) {
-      LOGGER.debug(e);
-    }
+    LOGGER.info("isDirectionOrSpectatorSet. Leaving Lobby Screen");
   }
 
 }

@@ -8,11 +8,10 @@ import java.util.UUID;
 
 import com.esotericsoftware.kryonet.Server;
 
-import br.com.sbk.sbking.core.Board;
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
+import br.com.sbk.sbking.networking.kryonet.messages.GameNameFromGameServerIdentifier;
 import br.com.sbk.sbking.networking.kryonet.messages.SBKingMessage;
-import br.com.sbk.sbking.networking.kryonet.messages.ServerToClient.BoardMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ServerToClient.DealMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ServerToClient.FinishDealMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ServerToClient.GameModeOrStrainChooserMessage;
@@ -24,7 +23,10 @@ import br.com.sbk.sbking.networking.kryonet.messages.ServerToClient.PositiveOrNe
 import br.com.sbk.sbking.networking.kryonet.messages.ServerToClient.PositiveOrNegativeMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ServerToClient.ValidRulesetMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ServerToClient.YourDirectionIsMessage;
+import br.com.sbk.sbking.networking.kryonet.messages.ServerToClient.YourTableIsMessage;
 import br.com.sbk.sbking.networking.server.SBKingServer;
+import br.com.sbk.sbking.networking.server.Table;
+import br.com.sbk.sbking.networking.server.gameServer.GameServer;
 
 public class KryonetSBKingServer extends Server {
 
@@ -40,7 +42,13 @@ public class KryonetSBKingServer extends Server {
     UUID identifier = connectionWithIdentifier.getIdentifier();
     this.connections.add(connectionWithIdentifier);
     this.sbkingServer.addUnnammedPlayer(identifier);
-    this.sbkingServer.addSpectator(identifier);
+    Table table = this.sbkingServer.getTable();
+    if (table != null) {
+      GameServer gameServer = table.getGameServer();
+      String gameName = GameNameFromGameServerIdentifier.identify(gameServer.getClass());
+      this.sendYourTableIsTo(gameName, identifier);
+      this.sbkingServer.addSpectator(identifier);
+    }
   }
 
   public void removeConnection(ConnectionWithIdentifier connectionWithIdentifier) {
@@ -95,12 +103,12 @@ public class KryonetSBKingServer extends Server {
     this.sendOneTo(new IsNotSpectatorMessage(), playerIdentifier);
   }
 
-  public void sendBoardAll(Board board) {
-    this.sendAll(new BoardMessage(board));
-  }
-
   public void sendDealAll(Deal deal) {
     this.sendAll(new DealMessage(deal));
+  }
+
+  public void sendDealTo(Deal deal, UUID playerIdentifier) {
+    this.sendOneTo(new DealMessage(deal), playerIdentifier);
   }
 
   public void sendGameModeOrStrainChooserAll(Direction direction) {
@@ -133,5 +141,9 @@ public class KryonetSBKingServer extends Server {
 
   public boolean nobodyIsConnected() {
     return this.connections.isEmpty();
+  }
+
+  public void sendYourTableIsTo(String gameName, UUID playerIdentifier) {
+    this.sendOneTo(new YourTableIsMessage(gameName), playerIdentifier);
   }
 }

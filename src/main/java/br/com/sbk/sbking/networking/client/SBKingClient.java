@@ -1,6 +1,5 @@
 package br.com.sbk.sbking.networking.client;
 
-import br.com.sbk.sbking.core.Board;
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.gui.listeners.ClientActionListener;
@@ -16,9 +15,6 @@ public class SBKingClient {
     private Direction gameModeOrStrainChooser;
     private PositiveOrNegative positiveOrNegative;
 
-    private Board currentBoard;
-    private boolean boardHasChanged = true;
-
     private Deal currentDeal;
     private boolean dealHasChanged = true;
 
@@ -31,6 +27,8 @@ public class SBKingClient {
     private boolean spectator;
 
     private KryonetSBKingClient kryonetSBKingClient;
+
+    private String gameName;
 
     public void setPlayCardActionListener(ClientActionListener playCardActionListener) {
         this.playCardActionListener = playCardActionListener;
@@ -46,11 +44,6 @@ public class SBKingClient {
 
     public void initializeDirection(Direction direction) {
         this.direction = direction;
-    }
-
-    public void setCurrentBoard(Board board) {
-        this.currentBoard = board;
-        this.boardHasChanged = true;
     }
 
     public void finishDeal() {
@@ -164,15 +157,6 @@ public class SBKingClient {
         return this.rulesetValid != null;
     }
 
-    public Board getCurrentBoard() {
-        this.boardHasChanged = false;
-        return this.currentBoard;
-    }
-
-    public boolean getBoardHasChanged() {
-        return this.boardHasChanged;
-    }
-
     public ClientActionListener getPlayCardActionListener() {
         return this.playCardActionListener;
     }
@@ -219,5 +203,13 @@ public class SBKingClient {
 
     public void sendCreateTable(String gameName) {
         this.kryonetSBKingClient.sendCreateTableMessage(gameName);
+    }
+
+    public void setGameName(String gameName) {
+        this.gameName = gameName;
+    }
+
+    public String getGameName() {
+        return gameName;
     }
 }
