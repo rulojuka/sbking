@@ -1,7 +1,5 @@
 package br.com.sbk.sbking.gui.painters;
 
-import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
-
 import java.awt.Component;
 import java.awt.Container;
 
@@ -30,7 +28,6 @@ public class ConnectToServerPainter implements Painter {
 
     class ConnectToScreenActionListener implements java.awt.event.ActionListener {
         public void actionPerformed(java.awt.event.ActionEvent event) {
-            LOGGER.info("Apertou botão!");
             SBKingButton button = (SBKingButton) event.getSource();
             Component[] components = button.getParent().getComponents();
 

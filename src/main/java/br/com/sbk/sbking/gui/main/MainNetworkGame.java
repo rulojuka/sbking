@@ -3,6 +3,7 @@ package br.com.sbk.sbking.gui.main;
 import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 
 import br.com.sbk.sbking.gui.frames.SBKingClientJFrame;
+import br.com.sbk.sbking.gui.screens.LobbyScreen;
 import br.com.sbk.sbking.gui.screens.MinibridgeScreen;
 import br.com.sbk.sbking.gui.screens.SBKingScreen;
 import br.com.sbk.sbking.gui.screens.WelcomeScreen;
@@ -20,6 +21,10 @@ public class MainNetworkGame {
         SBKingClient sbkingClient = welcomeScreen.getSBKingClient();
 
         SBKingScreen currentScreen;
+
+        currentScreen = new LobbyScreen(sbkingClient);
+        currentScreen.runAt(sbkingClientJFrame);
+
         currentScreen = new MinibridgeScreen(sbkingClient);
         currentScreen.runAt(sbkingClientJFrame);
 
