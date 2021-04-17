@@ -68,7 +68,7 @@ public class ChoosePositiveOrNegativeElement {
 
         radioButtons = new ArrayList<JRadioButton>();
         SBKingRadioButtonGroupCreator sbKingRadioButtonGroupCreator = new SBKingRadioButtonGroupCreator();
-        ButtonGroup buttonGroup = sbKingRadioButtonGroupCreator.create(texts, x, y);
+        ButtonGroup buttonGroup = sbKingRadioButtonGroupCreator.create(texts, x, y, 160);
         for (Enumeration<AbstractButton> elements = buttonGroup.getElements(); elements.hasMoreElements();) {
             AbstractButton element = elements.nextElement();
             container.add(element);

@@ -7,10 +7,9 @@ import javax.swing.JRadioButton;
 
 public class SBKingRadioButtonGroupCreator {
 
-  private static int elementWidth = 160;
   private static int elementHeight = 20;
 
-  public ButtonGroup create(List<String> texts, int x, int y) {
+  public ButtonGroup create(List<String> texts, int x, int y, int elementWidth) {
     ButtonGroup buttonGroup = new ButtonGroup();
 
     for (String text : texts) {

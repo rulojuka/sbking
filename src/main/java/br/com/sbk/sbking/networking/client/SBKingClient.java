@@ -216,4 +216,8 @@ public class SBKingClient {
             throw new IllegalArgumentException("Content must be POSITIVE or NEGATIVE");
         }
     }
+
+    public void sendCreateTable(String gameName) {
+        this.kryonetSBKingClient.sendCreateTableMessage(gameName);
+    }
 }

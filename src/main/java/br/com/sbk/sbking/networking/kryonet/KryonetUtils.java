@@ -42,6 +42,7 @@ import br.com.sbk.sbking.gui.models.KingGameScoreboard;
 import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.ChooseGameModeOrStrainMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.ChooseNegativeMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.ChoosePositiveMessage;
+import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.CreateTableMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.MoveToSeatMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.PlayCardMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.SetNicknameMessage;
@@ -129,6 +130,7 @@ public class KryonetUtils {
     kryo.register(ChooseGameModeOrStrainMessage.class);
     kryo.register(ChooseNegativeMessage.class);
     kryo.register(ChoosePositiveMessage.class);
+    kryo.register(CreateTableMessage.class);
     kryo.register(MoveToSeatMessage.class);
     kryo.register(PlayCardMessage.class);
     kryo.register(SetNicknameMessage.class);
