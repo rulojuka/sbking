@@ -4,7 +4,7 @@ import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 
 import br.com.sbk.sbking.gui.frames.SBKingClientJFrame;
 import br.com.sbk.sbking.gui.screens.MinibridgeScreen;
-import br.com.sbk.sbking.gui.screens.PositiveKingScreen;
+import br.com.sbk.sbking.gui.screens.SBKingScreen;
 import br.com.sbk.sbking.gui.screens.WelcomeScreen;
 import br.com.sbk.sbking.networking.client.SBKingClient;
 
@@ -14,14 +14,14 @@ public class MainNetworkGame {
         ClientApplicationState.startAppState();
         SBKingClientJFrame sbkingClientJFrame = new SBKingClientJFrame();
 
-        WelcomeScreen welcomeScreen = new WelcomeScreen(sbkingClientJFrame);
-        welcomeScreen.run();
+        WelcomeScreen welcomeScreen = new WelcomeScreen();
+        welcomeScreen.runAt(sbkingClientJFrame);
 
         SBKingClient sbkingClient = welcomeScreen.getSBKingClient();
-        MinibridgeScreen minibridgeScreen = new MinibridgeScreen(sbkingClientJFrame, sbkingClient);
-        minibridgeScreen.run();
 
-        PositiveKingScreen screen = new PositiveKingScreen(sbkingClientJFrame, sbkingClient);
+        SBKingScreen currentScreen;
+        currentScreen = new MinibridgeScreen(sbkingClient);
+        currentScreen.runAt(sbkingClientJFrame);
 
         LOGGER.info("Exiting main thread.");
     }
