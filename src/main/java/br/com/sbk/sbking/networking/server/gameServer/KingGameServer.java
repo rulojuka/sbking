@@ -51,7 +51,7 @@ public class KingGameServer extends GameServer {
                                 "I am waiting for some thread to notify that it wants to choose positive or negative");
                         positiveOrNegativeNotification.wait(3000);
                     } catch (InterruptedException e) {
-                        e.printStackTrace();
+                        LOGGER.error(e);
                     }
 
                     while (positiveOrNegativeNotification.getPositiveOrNegative() == null) {
@@ -61,7 +61,7 @@ public class KingGameServer extends GameServer {
                             positiveOrNegativeNotification.wait(3000);
                             this.sendPositiveOrNegativeChooserAll();
                         } catch (InterruptedException e) {
-                            e.printStackTrace();
+                            LOGGER.error(e);
                         }
                     }
                 }
@@ -86,7 +86,7 @@ public class KingGameServer extends GameServer {
                             this.sendGameModeOrStrainChooserAll();
 
                         } catch (InterruptedException e) {
-                            e.printStackTrace();
+                            LOGGER.error(e);
                         }
                     }
                 }
@@ -128,7 +128,7 @@ public class KingGameServer extends GameServer {
                         LOGGER.info("I am waiting for some thread to notify that it wants to play a card.");
                         cardPlayNotification.wait();
                     } catch (InterruptedException e) {
-                        e.printStackTrace();
+                        LOGGER.error(e);
                     }
                 }
                 Direction directionToBePlayed = cardPlayNotification.getDirection();

@@ -2,14 +2,13 @@ package br.com.sbk.sbking.gui.screens;
 
 import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 
-import br.com.sbk.sbking.core.Board;
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.gui.frames.SBKingClientJFrame;
 import br.com.sbk.sbking.gui.main.ClientApplicationState;
 import br.com.sbk.sbking.gui.painters.Painter;
 import br.com.sbk.sbking.networking.client.SBKingClient;
 
-public class PositiveKingScreen extends GameScreen implements SBKingScreen {
+public class PositiveKingScreen extends GameScreen {
 
     public PositiveKingScreen(SBKingClient sbkingClient) {
         super(sbkingClient);
@@ -25,23 +24,17 @@ public class PositiveKingScreen extends GameScreen implements SBKingScreen {
         while (true) {
             sleepFor(300);
             if (sbkingClient.isSpectator()) {
-                if (sbkingClient.getBoardHasChanged() || sbkingClient.getDealHasChanged()
-                        || ClientApplicationState.getGUIHasChanged()) {
+                if (sbkingClient.getDealHasChanged() || ClientApplicationState.getGUIHasChanged()) {
                     if (!ClientApplicationState.getGUIHasChanged()) {
                         LOGGER.info("Deal has changed. Painting deal.");
                         LOGGER.info("It is a spectator.");
                     }
                     Deal currentDeal = sbkingClient.getDeal();
-                    Board currentBoard = sbkingClient.getCurrentBoard();
-                    Painter painter;
-                    if (currentDeal == null) {
-                        painter = this.painterFactory.getSpectatorPainter(currentBoard,
+                    if (currentDeal != null) {
+                        Painter painter = this.painterFactory.getSpectatorPainter(currentDeal,
                                 sbkingClient.getPlayCardActionListener());
-                    } else {
-                        painter = this.painterFactory.getSpectatorPainter(currentDeal,
-                                sbkingClient.getPlayCardActionListener());
+                        sbkingClientJFrame.paintPainter(painter);
                     }
-                    sbkingClientJFrame.paintPainter(painter);
                 }
             } else {
                 sleepFor(1000);

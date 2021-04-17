@@ -4,7 +4,6 @@ import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 
 import java.awt.event.ActionListener;
 
-import br.com.sbk.sbking.core.Board;
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.networking.client.SBKingClient;
@@ -21,25 +20,12 @@ public class PainterFactory {
     return new DealPainter(playCardActionListener, direction, deal);
   }
 
-  public Painter getDealPainter(Board board, Direction direction, ActionListener playCardActionListener) {
-    return new DealPainter(playCardActionListener, direction, board);
-  }
-
   public Painter getSpectatorPainter(Deal deal, ActionListener playCardActionListener) {
     if (deal == null) {
       LOGGER.error("Deal should not be null here.");
       return null;
     } else {
       return new SpectatorPainter(playCardActionListener, deal);
-    }
-  }
-
-  public Painter getSpectatorPainter(Board board, ActionListener playCardActionListener) {
-    if (board == null) {
-      LOGGER.error("Board should not be null here.");
-      return null;
-    } else {
-      return new SpectatorPainter(playCardActionListener, board);
     }
   }
 

@@ -5,7 +5,7 @@ import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 import br.com.sbk.sbking.gui.painters.PainterFactory;
 import br.com.sbk.sbking.networking.client.SBKingClient;
 
-public abstract class GameScreen {
+public abstract class GameScreen implements SBKingScreen {
 
   protected PainterFactory painterFactory;
   protected SBKingClient sbkingClient;

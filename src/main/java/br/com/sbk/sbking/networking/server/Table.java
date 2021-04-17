@@ -150,7 +150,6 @@ public class Table {
     this.getSBKingServer().sendIsSpectatorTo(identifier);
     allPlayers.put(identifier, player);
 
-    this.sendDealAll();
     logAllPlayers();
   }
 
@@ -181,8 +180,12 @@ public class Table {
     return this.gameServer.getSBKingServer();
   }
 
-  private void sendDealAll() {
+  public void sendDealAll() {
     this.getSBKingServer().sendDealAll(this.gameServer.getDeal());
+  }
+
+  public void sendDealTo(Player player) {
+    this.getSBKingServer().sendDealTo(this.gameServer.getDeal(), player.getIdentifier());
   }
 
   public void undo(Direction direction) {

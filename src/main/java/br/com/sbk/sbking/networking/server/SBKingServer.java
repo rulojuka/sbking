@@ -5,8 +5,9 @@ import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
-import br.com.sbk.sbking.core.Board;
 import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
@@ -15,6 +16,7 @@ import br.com.sbk.sbking.core.rulesets.RulesetFromShortDescriptionIdentifier;
 import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
 import br.com.sbk.sbking.gui.models.PositiveOrNegative;
 import br.com.sbk.sbking.networking.kryonet.KryonetSBKingServer;
+import br.com.sbk.sbking.networking.kryonet.messages.GameNameFromGameServerIdentifier;
 import br.com.sbk.sbking.networking.server.gameServer.GameServer;
 import br.com.sbk.sbking.networking.server.gameServer.KingGameServer;
 import br.com.sbk.sbking.networking.server.gameServer.MinibridgeGameServer;
@@ -32,10 +34,13 @@ public class SBKingServer {
   KryonetSBKingServer kryonetSBKingServer = null;
   private Table table;
   private Map<UUID, Direction> playerDirections = new HashMap<UUID, Direction>();
+  private static final int MAXIMUM_NUMBER_OF_CONCURRENT_GAME_SERVERS = 2;
+  private ExecutorService pool;
 
-  public SBKingServer(Table table) {
-    this.table = table;
+  public SBKingServer() {
+    this.table = null;
     this.identifierToPlayerMap = new HashMap<UUID, Player>();
+    this.pool = Executors.newFixedThreadPool(MAXIMUM_NUMBER_OF_CONCURRENT_GAME_SERVERS);
   }
 
   public void setKryonetSBKingServer(KryonetSBKingServer kryonetSBKingServer) {
@@ -119,12 +124,12 @@ public class SBKingServer {
     this.kryonetSBKingServer.sendIsNotSpectatorTo(playerIdentifier);
   }
 
-  public void sendBoardAll(Board board) {
-    this.kryonetSBKingServer.sendBoardAll(board);
-  }
-
   public void sendDealAll(Deal deal) {
     this.kryonetSBKingServer.sendDealAll(deal);
+  }
+
+  public void sendDealTo(Deal deal, UUID playerIdentifier) {
+    this.kryonetSBKingServer.sendDealTo(deal, playerIdentifier);
   }
 
   public void sendGameModeOrStrainChooserAll(Direction direction) {
@@ -173,6 +178,7 @@ public class SBKingServer {
   public void addSpectator(UUID identifier) {
     Player player = this.identifierToPlayerMap.get(identifier);
     this.table.addSpectator(player);
+    this.table.sendDealTo(player);
   }
 
   public void undo(UUID playerIdentifier) {
@@ -182,6 +188,34 @@ public class SBKingServer {
 
   public void removePlayer(UUID identifier) {
     this.table.removePlayer(identifier);
+  }
+
+  public Table getTable() {
+    return this.table;
+  }
+
+  public void createTable(Class<? extends GameServer> gameServerClass) {
+    GameServer gameServer;
+    try {
+      gameServer = gameServerClass.getDeclaredConstructor().newInstance();
+    } catch (Exception e) {
+      LOGGER.fatal("Could not initialize GameServer with received gameServerClass.");
+      return;
+    }
+    this.table = new Table(gameServer);
+    gameServer.setSBKingServer(this);
+
+    LOGGER.info("Created new table!");
+
+    LOGGER.info("Adding everyone as spectator to the new table");
+    String gameName = GameNameFromGameServerIdentifier.identify(gameServerClass);
+    for (Player player : this.identifierToPlayerMap.values()) {
+      this.kryonetSBKingServer.sendYourTableIsTo(gameName, player.getIdentifier());
+    }
+    for (Player player : this.identifierToPlayerMap.values()) {
+      this.table.addSpectator(player);
+    }
+    pool.execute(gameServer);
   }
 
 }
