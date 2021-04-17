@@ -1,4 +1,4 @@
-package br.com.sbk.sbking.gui.frames;
+package br.com.sbk.sbking.gui.screens;
 
 import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 
@@ -7,29 +7,26 @@ import java.awt.event.ActionListener;
 import br.com.sbk.sbking.core.Board;
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
+import br.com.sbk.sbking.gui.frames.SBKingClientJFrame;
 import br.com.sbk.sbking.gui.main.ClientApplicationState;
 import br.com.sbk.sbking.gui.painters.DealWithDummyPainter;
 import br.com.sbk.sbking.gui.painters.Painter;
 import br.com.sbk.sbking.gui.painters.SpectatorPainter;
 import br.com.sbk.sbking.gui.painters.WaitingForChoosingGameModeOrStrainPainter;
+import br.com.sbk.sbking.networking.client.SBKingClient;
 
 @SuppressWarnings("serial")
-public class MinibridgeClientScreen extends NetworkClientScreen {
+public class MinibridgeScreen {
 
-  public MinibridgeClientScreen() {
-    super();
+  private SBKingClient sbKingClient;
+  private SBKingClientJFrame sbkingClientJFrame;
+
+  public MinibridgeScreen(SBKingClientJFrame sbkingClientJFrame, SBKingClient sbKingClient) {
+    this.sbkingClientJFrame = sbkingClientJFrame;
+    this.sbKingClient = sbKingClient;
   }
 
   public void run() {
-    LOGGER.info("Starting to paint ConnectToServerScreen");
-    paintConnectToServerScreen();
-    LOGGER.info("Finished painting ConnectToServerScreen");
-
-    LOGGER.info("Waiting for connectedToServer to be true");
-    while (!connectedToServer) {
-      sleepFor(100);
-    }
-
     LOGGER.info("Waiting for sbKingClient.isDirectionSet() to be true");
     while (!sbKingClient.isDirectionOrSpectatorSet()) {
       sleepFor(100);
@@ -91,7 +88,7 @@ public class MinibridgeClientScreen extends NetworkClientScreen {
       LOGGER.error("Deal should not be null here.");
     } else {
       Painter spectatorPainter = new SpectatorPainter(playCardActionListener, deal);
-      this.paintPainter(spectatorPainter);
+      sbkingClientJFrame.paintPainter(spectatorPainter);
     }
   }
 
@@ -100,7 +97,7 @@ public class MinibridgeClientScreen extends NetworkClientScreen {
       LOGGER.error("Board should not be null here.");
     } else {
       Painter spectatorPainter = new SpectatorPainter(playCardActionListener, board);
-      this.paintPainter(spectatorPainter);
+      sbkingClientJFrame.paintPainter(spectatorPainter);
     }
   }
 
@@ -116,13 +113,13 @@ public class MinibridgeClientScreen extends NetworkClientScreen {
     boolean dummyVisible = this.sbKingClient.getDeal().isDummyOpen();
     Direction dummy = this.sbKingClient.getDeal().getDummy();
     Painter dealPainter = new DealWithDummyPainter(playCardActionListener, direction, deal, dummy, dummyVisible);
-    this.paintPainter(dealPainter);
+    sbkingClientJFrame.paintPainter(dealPainter);
   }
 
   private void paintWaitingForChoosingGameModeOrStrainScreen(Direction direction, Direction chooser,
       boolean isPositive) {
     Painter waitingForChoosingGameModeOrStrainPainter = new WaitingForChoosingGameModeOrStrainPainter(direction,
         chooser, true, this.sbKingClient, this.sbKingClient.getCurrentGameScoreboard());
-    this.paintPainter(waitingForChoosingGameModeOrStrainPainter);
+    sbkingClientJFrame.paintPainter(waitingForChoosingGameModeOrStrainPainter);
   }
 }
