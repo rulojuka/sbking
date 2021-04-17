@@ -13,16 +13,14 @@ import br.com.sbk.sbking.networking.core.properties.FileProperties;
 import br.com.sbk.sbking.networking.core.properties.NetworkingProperties;
 import br.com.sbk.sbking.networking.core.properties.SystemProperties;
 
-public class WelcomeScreen {
+public class WelcomeScreen implements SBKingScreen {
 
   private NetworkingProperties networkingProperties;
   private boolean connectedToServer = false;
   private SBKingClient sbkingClient;
-  private SBKingClientJFrame sbkingClientJFrame;
 
-  public WelcomeScreen(SBKingClientJFrame sbkingClientJFrame) {
+  public WelcomeScreen() {
     super();
-    this.sbkingClientJFrame = sbkingClientJFrame;
     this.networkingProperties = new NetworkingProperties(new FileProperties(), new SystemProperties());
   }
 
@@ -51,7 +49,8 @@ public class WelcomeScreen {
     return mtch.find();
   }
 
-  public void run() {
+  @Override
+  public void runAt(SBKingClientJFrame sbkingClientJFrame) {
     LOGGER.info("Starting to paint ConnectToServerScreen");
     sbkingClientJFrame.paintPainter(new ConnectToServerPainter(this));
     LOGGER.info("Finished painting ConnectToServerScreen");

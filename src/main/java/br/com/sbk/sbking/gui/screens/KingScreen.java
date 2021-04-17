@@ -2,32 +2,21 @@ package br.com.sbk.sbking.gui.screens;
 
 import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 
-import java.awt.event.ActionListener;
-
 import br.com.sbk.sbking.core.Board;
 import br.com.sbk.sbking.core.Deal;
-import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.gui.frames.SBKingClientJFrame;
 import br.com.sbk.sbking.gui.main.ClientApplicationState;
-import br.com.sbk.sbking.gui.painters.DealPainter;
 import br.com.sbk.sbking.gui.painters.Painter;
-import br.com.sbk.sbking.gui.painters.SpectatorPainter;
-import br.com.sbk.sbking.gui.painters.WaitingForChoosingGameModeOrStrainPainter;
-import br.com.sbk.sbking.gui.painters.WaitingForChoosingPositiveOrNegativePainter;
 import br.com.sbk.sbking.networking.client.SBKingClient;
 
-@SuppressWarnings("serial")
-public class KingScreen {
+public class KingScreen extends GameScreen implements SBKingScreen {
 
-    private SBKingClientJFrame sbkingClientJFrame;
-    private SBKingClient sbkingClient;
-
-    public KingScreen(SBKingClientJFrame sbkingClientJFrame, SBKingClient sbkingClient) {
-        this.sbkingClientJFrame = sbkingClientJFrame;
-        this.sbkingClient = sbkingClient;
+    public KingScreen(SBKingClient sbkingClient) {
+        super(sbkingClient);
     }
 
-    public void run() {
+    @Override
+    public void runAt(SBKingClientJFrame sbkingClientJFrame) {
         LOGGER.info("Waiting for sbKingClient.isDirectionSet() to be true");
         while (!sbkingClient.isDirectionOrSpectatorSet()) {
             sleepFor(100);
@@ -44,11 +33,15 @@ public class KingScreen {
                     }
                     Deal currentDeal = sbkingClient.getDeal();
                     Board currentBoard = sbkingClient.getCurrentBoard();
+                    Painter painter;
                     if (currentDeal == null) {
-                        paintSpectatorScreen(currentBoard, sbkingClient.getPlayCardActionListener());
+                        painter = this.painterFactory.getSpectatorPainter(currentBoard,
+                                sbkingClient.getPlayCardActionListener());
                     } else {
-                        paintSpectatorScreen(currentDeal, sbkingClient.getPlayCardActionListener());
+                        painter = this.painterFactory.getSpectatorPainter(currentDeal,
+                                sbkingClient.getPlayCardActionListener());
                     }
+                    sbkingClientJFrame.paintPainter(painter);
                 }
             } else {
                 sleepFor(1000);
@@ -60,11 +53,15 @@ public class KingScreen {
                     LOGGER.info("Starting to paint Deal");
                     Deal currentDeal = sbkingClient.getDeal();
                     Board currentBoard = sbkingClient.getCurrentBoard();
+                    Painter painter;
                     if (currentDeal == null) {
-                        paintDeal(currentBoard, sbkingClient.getDirection(), sbkingClient.getPlayCardActionListener());
+                        painter = this.painterFactory.getDealPainter(currentBoard, sbkingClient.getDirection(),
+                                sbkingClient.getPlayCardActionListener());
                     } else {
-                        paintDeal(currentDeal, sbkingClient.getDirection(), sbkingClient.getPlayCardActionListener());
+                        painter = this.painterFactory.getDealPainter(currentDeal, sbkingClient.getDirection(),
+                                sbkingClient.getPlayCardActionListener());
                     }
+                    sbkingClientJFrame.paintPainter(painter);
                     LOGGER.info("Finished painting Deal");
                 } else {
                     if (!sbkingClient.isPositiveOrNegativeSelected()) {
@@ -77,8 +74,9 @@ public class KingScreen {
                             LOGGER.info("paintWaitingForChoosingGameModeOrStrainScreen!");
                             LOGGER.info("My direction: " + sbkingClient.getDirection());
                             LOGGER.info("Chooser: " + sbkingClient.getGameModeOrStrainChooser());
-                            paintWaitingForChoosingPositiveOrNegativeScreen(sbkingClient.getDirection(),
-                                    sbkingClient.getPositiveOrNegativeChooser());
+                            Painter painter = this.painterFactory.getWaitingForChoosingPositiveOrNegativePainter(
+                                    sbkingClient.getDirection(), sbkingClient.getPositiveOrNegativeChooser());
+                            sbkingClientJFrame.paintPainter(painter);
                             while (!sbkingClient.isPositiveOrNegativeSelected()) {
                                 sleepFor(100);
                             }
@@ -94,8 +92,10 @@ public class KingScreen {
                             LOGGER.info("My direction: " + sbkingClient.getDirection());
                             LOGGER.info("Chooser: " + sbkingClient.getGameModeOrStrainChooser());
 
-                            paintWaitingForChoosingGameModeOrStrainScreen(sbkingClient.getDirection(),
-                                    sbkingClient.getGameModeOrStrainChooser(), sbkingClient.isPositive());
+                            Painter painter = this.painterFactory.getWaitingForChoosingGameModeOrStrainPainter(
+                                    sbkingClient.getDirection(), sbkingClient.getGameModeOrStrainChooser(),
+                                    sbkingClient.isPositive());
+                            sbkingClientJFrame.paintPainter(painter);
                             while (!sbkingClient.isRulesetValidSet()) {
                                 sleepFor(100);
                             }
@@ -104,55 +104,6 @@ public class KingScreen {
                 }
             }
         }
-    }
-
-    private void paintSpectatorScreen(Deal deal, ActionListener playCardActionListener) {
-        if (deal == null) {
-            LOGGER.error("Deal should not be null here.");
-        } else {
-            Painter spectatorPainter = new SpectatorPainter(playCardActionListener, deal);
-            sbkingClientJFrame.paintPainter(spectatorPainter);
-        }
-    }
-
-    private void paintSpectatorScreen(Board board, ActionListener playCardActionListener) {
-        if (board == null) {
-            LOGGER.error("Board should not be null here.");
-        } else {
-            Painter spectatorPainter = new SpectatorPainter(playCardActionListener, board);
-            sbkingClientJFrame.paintPainter(spectatorPainter);
-        }
-    }
-
-    private void sleepFor(int miliseconds) {
-        try {
-            Thread.sleep(miliseconds);
-        } catch (InterruptedException e) {
-            LOGGER.debug(e);
-        }
-    }
-
-    private void paintWaitingForChoosingGameModeOrStrainScreen(Direction direction, Direction chooser,
-            boolean isPositive) {
-        Painter waitingForChoosingGameModeOrStrainPainter = new WaitingForChoosingGameModeOrStrainPainter(direction,
-                chooser, isPositive, this.sbkingClient, this.sbkingClient.getCurrentGameScoreboard());
-        sbkingClientJFrame.paintPainter(waitingForChoosingGameModeOrStrainPainter);
-    }
-
-    private void paintWaitingForChoosingPositiveOrNegativeScreen(Direction direction, Direction chooser) {
-        Painter waitingForChoosingPositiveOrNegativePainter = new WaitingForChoosingPositiveOrNegativePainter(direction,
-                chooser, this.sbkingClient, this.sbkingClient.getCurrentGameScoreboard());
-        sbkingClientJFrame.paintPainter(waitingForChoosingPositiveOrNegativePainter);
-    }
-
-    private void paintDeal(Deal deal, Direction direction, ActionListener playCardActionListener) {
-        Painter dealPainter = new DealPainter(playCardActionListener, direction, deal);
-        sbkingClientJFrame.paintPainter(dealPainter);
-    }
-
-    private void paintDeal(Board board, Direction direction, ActionListener playCardActionListener) {
-        Painter dealPainter = new DealPainter(playCardActionListener, direction, board);
-        sbkingClientJFrame.paintPainter(dealPainter);
     }
 
 }
