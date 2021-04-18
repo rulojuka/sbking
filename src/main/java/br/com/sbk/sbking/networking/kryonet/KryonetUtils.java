@@ -38,11 +38,13 @@ import br.com.sbk.sbking.core.rulesets.implementations.DontProhibitsHearts;
 import br.com.sbk.sbking.core.rulesets.implementations.NoTrumpSuitWinnable;
 import br.com.sbk.sbking.core.rulesets.implementations.ProhibitsHearts;
 import br.com.sbk.sbking.core.rulesets.implementations.TrumpSuitWinnable;
+import br.com.sbk.sbking.dto.LobbyScreenTableDTO;
 import br.com.sbk.sbking.gui.models.KingGameScoreboard;
 import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.ChooseGameModeOrStrainMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.ChooseNegativeMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.ChoosePositiveMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.CreateTableMessage;
+import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.GetTablesMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.MoveToSeatMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.PlayCardMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.SetNicknameMessage;
@@ -50,6 +52,7 @@ import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.UndoMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ServerToClient.DealMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ServerToClient.FinishDealMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ServerToClient.GameModeOrStrainChooserMessage;
+import br.com.sbk.sbking.networking.kryonet.messages.ServerToClient.GetTablesResponseMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ServerToClient.InitializeDealMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ServerToClient.InvalidRulesetMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ServerToClient.IsNotSpectatorMessage;
@@ -109,11 +112,14 @@ public class KryonetUtils {
     kryo.register(CardInsideHandComparator.class);
     kryo.register(CardInsideHandWithSuitComparator.class);
     kryo.register(RankComparator.class);
+    // DTOs
+    kryo.register(LobbyScreenTableDTO.class);
 
     // Server to Client Message classes
     kryo.register(DealMessage.class);
     kryo.register(FinishDealMessage.class);
     kryo.register(GameModeOrStrainChooserMessage.class);
+    kryo.register(GetTablesResponseMessage.class);
     kryo.register(InitializeDealMessage.class);
     kryo.register(InvalidRulesetMessage.class);
     kryo.register(IsNotSpectatorMessage.class);
@@ -131,6 +137,7 @@ public class KryonetUtils {
     kryo.register(ChooseNegativeMessage.class);
     kryo.register(ChoosePositiveMessage.class);
     kryo.register(CreateTableMessage.class);
+    kryo.register(GetTablesMessage.class);
     kryo.register(MoveToSeatMessage.class);
     kryo.register(PlayCardMessage.class);
     kryo.register(SetNicknameMessage.class);

@@ -17,6 +17,17 @@ public class KryonetClientListenerFactory {
     return new Listener() {
       public void connected(Connection connection) {
         LOGGER.debug("Entered --connected-- lifecycle method.");
+        KryonetSBKingClient kryonetSBKingClient = null;
+
+        try {
+          kryonetSBKingClient = (KryonetSBKingClient) client;
+        } catch (Exception e) {
+          LOGGER.fatal("client should be a KryonetSBKingClient");
+          LOGGER.fatal(client);
+          return;
+        }
+
+        kryonetSBKingClient.sendGetTablesMessage();
       }
 
       public void received(Connection connection, Object object) {

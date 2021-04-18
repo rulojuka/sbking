@@ -1,29 +1,42 @@
 package br.com.sbk.sbking.dto;
 
 import java.util.Map;
+import java.util.UUID;
 
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.core.Player;
-import br.com.sbk.sbking.core.TrickGame;
+import br.com.sbk.sbking.networking.server.Table;
 
 public class LobbyScreenTableDTO {
 
-    private final Map<Direction, Player> playersDirection;
-    private final TrickGame trickGame;
-    private final int numberOfSpectators;
+    private UUID id;
+    private Map<Direction, Player> playersDirections;
+    private String gameName;
+    private int numberOfSpectators;
 
-    public LobbyScreenTableDTO(Map<Direction, Player> playersDirection, TrickGame trickGame, int numberOfSpectators) {
-        this.playersDirection = playersDirection;
-        this.trickGame = trickGame;
-        this.numberOfSpectators = numberOfSpectators;
+    /**
+     * @deprecated Kryo needs a no-arg constructor
+     */
+    private LobbyScreenTableDTO() {
+    }
+
+    public LobbyScreenTableDTO(Table table) {
+        this.id = table.getId();
+        this.playersDirections = table.getPlayersDirections();
+        this.gameName = table.getGameName();
+        this.numberOfSpectators = table.getNumberOfSpectators();
+    }
+
+    public UUID getId() {
+        return id;
     }
 
     public Map<Direction, Player> getPlayersDirection() {
-        return this.playersDirection;
+        return this.playersDirections;
     }
 
-    public TrickGame getGameScreen() {
-        return this.trickGame;
+    public String getGameName() {
+        return this.gameName;
     }
 
     public int getNumberOfSpectators() {
