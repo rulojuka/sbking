@@ -10,10 +10,12 @@ import com.esotericsoftware.kryonet.Server;
 
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
+import br.com.sbk.sbking.dto.LobbyScreenTableDTO;
 import br.com.sbk.sbking.networking.kryonet.messages.SBKingMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ServerToClient.DealMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ServerToClient.FinishDealMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ServerToClient.GameModeOrStrainChooserMessage;
+import br.com.sbk.sbking.networking.kryonet.messages.ServerToClient.GetTablesResponseMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ServerToClient.InitializeDealMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ServerToClient.InvalidRulesetMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ServerToClient.IsNotSpectatorMessage;
@@ -135,6 +137,10 @@ public class KryonetSBKingServer extends Server {
 
   public void sendYourTableIsTo(String gameName, UUID playerIdentifier) {
     this.sendOneTo(new YourTableIsMessage(gameName), playerIdentifier);
+  }
+
+  public void sendTablesTo(List<LobbyScreenTableDTO> tablesDTO, UUID playerIdentifier) {
+    this.sendOneTo(new GetTablesResponseMessage(tablesDTO), playerIdentifier);
   }
 
   // public void enterTable(){

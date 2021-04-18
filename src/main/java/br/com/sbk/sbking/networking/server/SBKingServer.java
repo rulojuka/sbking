@@ -3,10 +3,12 @@ package br.com.sbk.sbking.networking.server;
 import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
 
 import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Deal;
@@ -14,6 +16,7 @@ import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.core.Player;
 import br.com.sbk.sbking.core.rulesets.RulesetFromShortDescriptionIdentifier;
 import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
+import br.com.sbk.sbking.dto.LobbyScreenTableDTO;
 import br.com.sbk.sbking.gui.models.PositiveOrNegative;
 import br.com.sbk.sbking.networking.kryonet.KryonetSBKingServer;
 import br.com.sbk.sbking.networking.server.gameServer.GameServer;
@@ -250,6 +253,12 @@ public class SBKingServer {
     tables.put(table.getId(), table);
     pool.execute(gameServer);
     LOGGER.info("Created new table and executed its gameServer!");
+  }
+
+  public void sendTablesTo(UUID playerIdentifier) {
+    List<LobbyScreenTableDTO> tablesDTO = this.tables.values().stream().map(LobbyScreenTableDTO::new)
+        .collect(Collectors.toList());
+    this.kryonetSBKingServer.sendTablesTo(tablesDTO, playerIdentifier);
   }
 
 }

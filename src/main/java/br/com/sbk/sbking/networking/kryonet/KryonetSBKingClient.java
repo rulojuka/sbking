@@ -11,6 +11,7 @@ import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.ChooseGameMo
 import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.ChooseNegativeMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.ChoosePositiveMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.CreateTableMessage;
+import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.GetTablesMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.MoveToSeatMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.PlayCardMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.SetNicknameMessage;
@@ -60,6 +61,10 @@ public class KryonetSBKingClient extends Client {
 
   public void sendCreateTableMessage(String gameName) {
     this.sendMessage(new CreateTableMessage(gameName));
+  }
+
+  public void sendGetTablesMessage() {
+    this.sendMessage(new GetTablesMessage());
   }
 
 }
