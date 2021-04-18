@@ -16,7 +16,6 @@ import br.com.sbk.sbking.core.rulesets.RulesetFromShortDescriptionIdentifier;
 import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
 import br.com.sbk.sbking.gui.models.PositiveOrNegative;
 import br.com.sbk.sbking.networking.kryonet.KryonetSBKingServer;
-import br.com.sbk.sbking.networking.kryonet.messages.GameNameFromGameServerIdentifier;
 import br.com.sbk.sbking.networking.server.gameServer.GameServer;
 import br.com.sbk.sbking.networking.server.gameServer.KingGameServer;
 import br.com.sbk.sbking.networking.server.gameServer.MinibridgeGameServer;
@@ -30,15 +29,18 @@ import br.com.sbk.sbking.networking.server.gameServer.PositiveKingGameServer;
  */
 public class SBKingServer {
 
+  private KryonetSBKingServer kryonetSBKingServer = null;
+
   private Map<UUID, Player> identifierToPlayerMap = new HashMap<UUID, Player>();
-  KryonetSBKingServer kryonetSBKingServer = null;
-  private Table table;
-  private Map<UUID, Direction> playerDirections = new HashMap<UUID, Direction>();
-  private static final int MAXIMUM_NUMBER_OF_CONCURRENT_GAME_SERVERS = 2;
+  private Map<UUID, Table> tables;
+  private Map<Player, Table> playersTable;
+
+  private static final int MAXIMUM_NUMBER_OF_CONCURRENT_GAME_SERVERS = 10;
   private ExecutorService pool;
 
   public SBKingServer() {
-    this.table = null;
+    this.tables = new HashMap<UUID, Table>();
+    this.playersTable = new HashMap<Player, Table>();
     this.identifierToPlayerMap = new HashMap<UUID, Player>();
     this.pool = Executors.newFixedThreadPool(MAXIMUM_NUMBER_OF_CONCURRENT_GAME_SERVERS);
   }
@@ -53,29 +55,40 @@ public class SBKingServer {
   }
 
   private Direction getDirectionFromIdentifier(UUID playerIdentifier) {
-    return playerDirections.get(playerIdentifier);
+    Player player = identifierToPlayerMap.get(playerIdentifier);
+    Table table = playersTable.get(player);
+    if (table != null) {
+      return table.getDirectionFrom(player);
+    }
+    return null;
   }
 
   public void play(Card card, UUID playerIdentifier) {
     Direction from = this.getDirectionFromIdentifier(playerIdentifier);
-    this.table.getGameServer().notifyPlayCard(card, from); // FIXME Law of Demeter
+    Player player = this.identifierToPlayerMap.get(playerIdentifier);
+    Table table = this.playersTable.get(player);
+    if (table == null) {
+      return;
+    }
+    table.getGameServer().notifyPlayCard(card, from); // FIXME Law of Demeter
   }
 
   public void moveToSeat(Direction direction, UUID playerIdentifier) {
-    Direction from = this.getDirectionFromIdentifier(playerIdentifier);
-    Direction to = direction;
-    LOGGER.debug("Moving from: " + from + "  to: " + to);
-    this.table.moveToSeat(playerIdentifier, to);
-    // Should also remove the previously seated player from the map
-    if (from != null && from.equals(to)) {
-      playerDirections.remove(playerIdentifier);
-    } else {
-      playerDirections.put(playerIdentifier, to);
+    Player player = identifierToPlayerMap.get(playerIdentifier);
+    Table table = playersTable.get(player);
+    if (player == null || table == null) {
+      return;
     }
+    table.moveToSeat(player, direction);
   }
 
   public void choosePositive(UUID playerIdentifier) {
-    KingGameServer kingGameServer = (KingGameServer) this.table.getGameServer();
+    Player player = identifierToPlayerMap.get(playerIdentifier);
+    Table table = playersTable.get(player);
+    if (player == null || table == null) {
+      return;
+    }
+    KingGameServer kingGameServer = (KingGameServer) table.getGameServer();
     PositiveOrNegative positiveOrNegative = new PositiveOrNegative();
     positiveOrNegative.setPositive();
     kingGameServer.notifyChoosePositiveOrNegative(positiveOrNegative,
@@ -83,7 +96,12 @@ public class SBKingServer {
   }
 
   public void chooseNegative(UUID playerIdentifier) {
-    KingGameServer kingGameServer = (KingGameServer) this.table.getGameServer();
+    Player player = identifierToPlayerMap.get(playerIdentifier);
+    Table table = playersTable.get(player);
+    if (player == null || table == null) {
+      return;
+    }
+    KingGameServer kingGameServer = (KingGameServer) table.getGameServer();
     PositiveOrNegative positiveOrNegative = new PositiveOrNegative();
     positiveOrNegative.setNegative();
     kingGameServer.notifyChoosePositiveOrNegative(positiveOrNegative,
@@ -91,18 +109,23 @@ public class SBKingServer {
   }
 
   public void chooseGameModeOrStrain(String gameModeOrStrainString, UUID playerIdentifier) {
-    GameServer gameServer = this.table.getGameServer();
+    Player player = identifierToPlayerMap.get(playerIdentifier);
+    Table table = playersTable.get(player);
+    if (player == null || table == null) {
+      return;
+    }
+    GameServer gameServer = table.getGameServer();
     Ruleset gameModeOrStrain = RulesetFromShortDescriptionIdentifier.identify(gameModeOrStrainString);
     Direction directionFromIdentifier = this.getDirectionFromIdentifier(playerIdentifier);
     if (gameModeOrStrain != null && directionFromIdentifier != null) {
       if (gameServer instanceof MinibridgeGameServer) {
-        MinibridgeGameServer minibridgeGameServer = (MinibridgeGameServer) this.table.getGameServer();
+        MinibridgeGameServer minibridgeGameServer = (MinibridgeGameServer) table.getGameServer();
         minibridgeGameServer.notifyChooseGameModeOrStrain(gameModeOrStrain, directionFromIdentifier);
       } else if (gameServer instanceof KingGameServer) {
-        KingGameServer kingGameServer = (KingGameServer) this.table.getGameServer();
+        KingGameServer kingGameServer = (KingGameServer) table.getGameServer();
         kingGameServer.notifyChooseGameModeOrStrain(gameModeOrStrain, directionFromIdentifier);
       } else if (gameServer instanceof PositiveKingGameServer) {
-        PositiveKingGameServer positiveKingGameServer = (PositiveKingGameServer) this.table.getGameServer();
+        PositiveKingGameServer positiveKingGameServer = (PositiveKingGameServer) table.getGameServer();
         positiveKingGameServer.notifyChooseGameModeOrStrain(gameModeOrStrain, directionFromIdentifier);
       }
     }
@@ -175,23 +198,43 @@ public class SBKingServer {
     return this.kryonetSBKingServer.nobodyIsConnected();
   }
 
-  public void addSpectator(UUID identifier) {
-    Player player = this.identifierToPlayerMap.get(identifier);
-    this.table.addSpectator(player);
-    this.table.sendDealTo(player);
+  public void addSpectator(UUID playerIdentifier, UUID tableIdentifier) {
+    Player player = identifierToPlayerMap.get(playerIdentifier);
+    Table currentTable = playersTable.get(player);
+    Table table = this.tables.get(tableIdentifier);
+    if (player == null || table == null) {
+      return;
+    }
+    if (currentTable != null) {
+      currentTable.removePlayer(playerIdentifier);
+    }
+    table.addSpectator(player);
+    table.sendDealTo(player);
   }
 
   public void undo(UUID playerIdentifier) {
-    Direction direction = this.playerDirections.get(playerIdentifier);
-    this.table.undo(direction);
+    Player player = identifierToPlayerMap.get(playerIdentifier);
+    Table table = playersTable.get(player);
+    if (player == null || table == null) {
+      return;
+    }
+    table.undo(player);
   }
 
-  public void removePlayer(UUID identifier) {
-    this.table.removePlayer(identifier);
+  public void removePlayer(UUID playerIdentifier) {
+    Player player = identifierToPlayerMap.get(playerIdentifier);
+    Table table = playersTable.get(player);
+    if (player == null || table == null) {
+      return;
+    }
+
+    table.removePlayer(playerIdentifier);
+    identifierToPlayerMap.remove(playerIdentifier);
+    playersTable.remove(player);
   }
 
-  public Table getTable() {
-    return this.table;
+  public Table getTable(UUID tableIdentifier) {
+    return this.tables.get(tableIdentifier);
   }
 
   public void createTable(Class<? extends GameServer> gameServerClass) {
@@ -202,20 +245,11 @@ public class SBKingServer {
       LOGGER.fatal("Could not initialize GameServer with received gameServerClass.");
       return;
     }
-    this.table = new Table(gameServer);
+    Table table = new Table(gameServer);
     gameServer.setSBKingServer(this);
-
-    LOGGER.info("Created new table!");
-
-    LOGGER.info("Adding everyone as spectator to the new table");
-    String gameName = GameNameFromGameServerIdentifier.identify(gameServerClass);
-    for (Player player : this.identifierToPlayerMap.values()) {
-      this.kryonetSBKingServer.sendYourTableIsTo(gameName, player.getIdentifier());
-    }
-    for (Player player : this.identifierToPlayerMap.values()) {
-      this.table.addSpectator(player);
-    }
+    tables.put(table.getId(), table);
     pool.execute(gameServer);
+    LOGGER.info("Created new table and executed its gameServer!");
   }
 
 }

@@ -24,6 +24,7 @@ public class Table {
   private Collection<Player> spectatorPlayers;
   private Map<UUID, Player> allPlayers;
   private GameServer gameServer;
+  private UUID id;
 
   public Table(GameServer gameServer) {
     this.gameServer = gameServer;
@@ -31,6 +32,7 @@ public class Table {
     this.seatedPlayers = new HashMap<Direction, Player>();
     this.spectatorPlayers = new ArrayList<Player>();
     this.allPlayers = new HashMap<UUID, Player>();
+    this.id = UUID.randomUUID();
   }
 
   public void moveToSeat(UUID playerIdentifier, Direction to) {
@@ -193,6 +195,13 @@ public class Table {
     this.sendDealAll();
   }
 
+  public void undo(Player player) {
+    Direction directionFromPlayer = this.getDirectionFrom(player);
+    if (directionFromPlayer != null) {
+      this.undo(directionFromPlayer);
+    }
+  }
+
   public void removePlayer(UUID identifier) {
     Player player = this.allPlayers.get(identifier);
     if (player != null) {
@@ -200,7 +209,7 @@ public class Table {
     }
   }
 
-  private Direction getDirectionFrom(Player player) {
+  public Direction getDirectionFrom(Player player) {
     for (Direction direction : Direction.values()) {
       Player currentPlayer = seatedPlayers.get(direction);
       if (player.equals(currentPlayer)) {
@@ -208,6 +217,24 @@ public class Table {
       }
     }
     return null;
+  }
+
+  public UUID getId() {
+    return id;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (obj == null || !(obj instanceof Table)) {
+      return false;
+    }
+    Table otherTable = (Table) obj;
+    return this.getId().equals(otherTable.getId());
+  }
+
+  @Override
+  public int hashCode() {
+    return this.getId().hashCode();
   }
 
 }
