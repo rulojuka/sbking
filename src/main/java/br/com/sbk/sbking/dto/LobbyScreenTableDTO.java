@@ -4,17 +4,17 @@ import java.util.Map;
 
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.core.Player;
-import br.com.sbk.sbking.gui.screens.GameScreen;
+import br.com.sbk.sbking.core.TrickGame;
 
 public class LobbyScreenTableDTO {
 
     private final Map<Direction, Player> playersDirection;
-    private final GameScreen gameScreen;
+    private final TrickGame trickGame;
     private final int numberOfSpectators;
 
-    public LobbyScreenTableDTO(Map<Direction, Player> playersDirection, GameScreen gameScreen, int numberOfSpectators) {
+    public LobbyScreenTableDTO(Map<Direction, Player> playersDirection, TrickGame trickGame, int numberOfSpectators) {
         this.playersDirection = playersDirection;
-        this.gameScreen = gameScreen;
+        this.trickGame = trickGame;
         this.numberOfSpectators = numberOfSpectators;
     }
 
@@ -22,8 +22,8 @@ public class LobbyScreenTableDTO {
         return this.playersDirection;
     }
 
-    public GameScreen getGameScreen() {
-        return this.gameScreen;
+    public TrickGame getGameScreen() {
+        return this.trickGame;
     }
 
     public int getNumberOfSpectators() {
