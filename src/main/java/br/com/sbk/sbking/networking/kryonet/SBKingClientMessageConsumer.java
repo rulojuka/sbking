@@ -2,15 +2,18 @@ package br.com.sbk.sbking.networking.kryonet;
 
 import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 
+import java.util.List;
 import java.util.concurrent.BlockingQueue;
 
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
+import br.com.sbk.sbking.dto.LobbyScreenTableDTO;
 import br.com.sbk.sbking.networking.client.SBKingClient;
 import br.com.sbk.sbking.networking.kryonet.messages.SBKingMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ServerToClient.DealMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ServerToClient.FinishDealMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ServerToClient.GameModeOrStrainChooserMessage;
+import br.com.sbk.sbking.networking.kryonet.messages.ServerToClient.GetTablesResponseMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ServerToClient.InitializeDealMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ServerToClient.InvalidRulesetMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ServerToClient.IsNotSpectatorMessage;
@@ -75,6 +78,14 @@ public class SBKingClientMessageConsumer implements Runnable {
       this.sbkingClient.setSpectator(false);
     } else if (message instanceof YourTableIsMessage) {
       this.sbkingClient.setGameName((String) content);
+    } else if (message instanceof GetTablesResponseMessage) {
+      List<LobbyScreenTableDTO> tables = (List<LobbyScreenTableDTO>) content;
+      LOGGER.info("The tables are: \n\n\n\n");
+      for (LobbyScreenTableDTO table : tables) {
+        LOGGER.info("Id: " + table.getId());
+        LOGGER.info("Game Name: " + table.getGameName());
+        LOGGER.info("Number of specs: " + table.getNumberOfSpectators());
+      }
     } else {
       LOGGER.error("Could not understand message.");
       LOGGER.error(message);

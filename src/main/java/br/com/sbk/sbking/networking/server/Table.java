@@ -10,6 +10,7 @@ import java.util.UUID;
 
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.core.Player;
+import br.com.sbk.sbking.networking.kryonet.messages.GameNameFromGameServerIdentifier;
 import br.com.sbk.sbking.networking.server.gameServer.GameServer;
 
 /**
@@ -235,6 +236,23 @@ public class Table {
   @Override
   public int hashCode() {
     return this.getId().hashCode();
+  }
+
+  public Map<Direction, Player> getPlayersDirections() {
+    // FIXME This should be unmodifiable/immutable but we don't have kryo
+    // serializers for this at this time
+    // The code should be:
+    // return Collections.unmodifiableMap(new HashMap<Direction,
+    // Player>(this.seatedPlayers));
+    return this.seatedPlayers;
+  }
+
+  public String getGameName() {
+    return GameNameFromGameServerIdentifier.identify(this.gameServer.getClass());
+  }
+
+  public int getNumberOfSpectators() {
+    return this.spectatorPlayers.size();
   }
 
 }
