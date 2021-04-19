@@ -10,6 +10,7 @@ import br.com.sbk.sbking.networking.kryonet.messages.SBKingMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.ChooseGameModeOrStrainMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.ChooseNegativeMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.ChoosePositiveMessage;
+import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.ClaimMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.CreateTableMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.MoveToSeatMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.PlayCardMessage;
@@ -60,6 +61,10 @@ public class KryonetSBKingClient extends Client {
 
   public void sendCreateTableMessage(String gameName) {
     this.sendMessage(new CreateTableMessage(gameName));
+  }
+
+  public void claim() {
+    this.sendMessage(new ClaimMessage());
   }
 
 }

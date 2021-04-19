@@ -597,4 +597,22 @@ public class DealTest {
         assertEquals(lastPlayer, currentPlayerAfterUndo);
         assertEquals(anyNumberOfTricks - 1, completedTricksAfterUndo);
     }
+
+    @Test
+    public void claimShouldFinishDealWhenAllPlayersAcceptClaim() {
+        Hand handOfCurrentPlayer = mock(Hand.class);
+        Ruleset ruleset = mock(Ruleset.class);
+        Deal deal = this.initDeal(handOfCurrentPlayer, ruleset);
+        Direction claimer = deal.getCurrentPlayer();
+
+        deal.claim(claimer);
+        this.playNTimesCard(deal, 1, handOfCurrentPlayer);
+        deal.claim(claimer.next(1));
+        this.playNTimesCard(deal, 1, handOfCurrentPlayer);
+        deal.claim(claimer.next(2));
+        this.playNTimesCard(deal, 1, handOfCurrentPlayer);
+        deal.claim(claimer.next(3));
+
+        assertEquals(true, deal.isFinished());
+    }
 }
