@@ -31,6 +31,8 @@ public class SpecificDirectionWithDummyBoardElements {
 
     new UndoElement(container, new Point(150, container.getHeight() - 50), actionListener);
 
+    new ClaimElement(deal.getClaimer(), deal.getCurrentPlayer(), container,
+        new Point(container.getWidth() - 150, container.getHeight() - 50), actionListener);
   }
 
   private boolean shouldDrawVisible(Direction playerDirection, Direction currentDirection, Direction dummy,

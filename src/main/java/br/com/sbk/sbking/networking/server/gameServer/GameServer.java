@@ -114,4 +114,8 @@ public abstract class GameServer implements Runnable {
         }
     }
 
+    public void claim(Direction direction) {
+        this.getDeal().claim(direction);
+    }
+
 }
