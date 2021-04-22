@@ -14,15 +14,11 @@ public class SpecificDirectionBoardElements {
             ActionListener actionListener) {
 
         for (Direction currentDirection : Direction.values()) {
-            if (currentDirection.equals(direction)) {
-                new HandElement(deal.getHandOf(currentDirection), container, actionListener,
-                        FrameConstants.pointOfDirection.get(currentDirection), deal.getPlayerOf(currentDirection), true,
-                        currentDirection);
-            } else {
-                new HandElement(deal.getHandOf(currentDirection), container, actionListener,
-                        FrameConstants.pointOfDirection.get(currentDirection), deal.getPlayerOf(currentDirection),
-                        false, currentDirection);
-            }
+            boolean isClaimer = this.isClaimer(deal, currentDirection);
+            boolean isVisible = isClaimer || currentDirection.equals(direction);
+            new HandElement(deal.getHandOf(currentDirection), container, actionListener,
+                    FrameConstants.pointOfDirection.get(currentDirection), deal.getPlayerOf(currentDirection),
+                    isVisible, currentDirection);
         }
 
         boolean isMyTurn = deal.getCurrentPlayer().equals(direction);
@@ -37,8 +33,21 @@ public class SpecificDirectionBoardElements {
 
         new UndoElement(container, new Point(150, container.getHeight() - 50), actionListener);
 
-        new ClaimElement(deal.getClaimer(), deal.getCurrentPlayer(), container,
+        new ClaimElement(deal.getClaimer(), deal.getCurrentPlayer(), deal.getIsPartnershipGame(), container,
                 new Point(container.getWidth() - 150, container.getHeight() - 50), actionListener);
+    }
+
+    private boolean isClaimer(Deal deal, Direction handDirection) {
+        Direction claimer = deal.getClaimer();
+        Boolean isPartnershipGame = deal.getIsPartnershipGame();
+        if (claimer != null) {
+            if (isPartnershipGame) {
+                Direction claimerPartner = claimer.next(2);
+                return handDirection.equals(claimer) || handDirection.equals(claimerPartner);
+            }
+            return handDirection.equals(claimer);
+        }
+        return false;
     }
 
 }
