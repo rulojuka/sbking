@@ -37,7 +37,9 @@ public class Deal {
     private Map<Direction, Boolean> claimMap;
     private Direction claimer;
 
-    public Deal(Board board, Ruleset ruleset, Direction leader) {
+    private Boolean isPartnershipGame;
+
+    public Deal(Board board, Ruleset ruleset, Direction leader, Boolean isPartnershipGame) {
         this.board = board;
         this.ruleset = ruleset;
         this.currentPlayer = leader;
@@ -51,6 +53,7 @@ public class Deal {
         for (Direction direction : Direction.values()) {
             claimMap.put(direction, false);
         }
+        this.isPartnershipGame = isPartnershipGame;
     }
 
     public Player getPlayerOf(Direction direction) {
@@ -409,6 +412,10 @@ public class Deal {
     private void finishScore(Direction winner) {
         int totalPoints = this.ruleset.getTotalPoints();
         this.score.finishScore(winner, totalPoints);
+    }
+
+    public Boolean getIsPartnershipGame() {
+        return this.isPartnershipGame;
     }
 
 }
