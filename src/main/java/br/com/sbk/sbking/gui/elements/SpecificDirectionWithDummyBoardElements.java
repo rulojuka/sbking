@@ -14,7 +14,9 @@ public class SpecificDirectionWithDummyBoardElements {
       ActionListener actionListener, Direction dummy, boolean dummyVisible) {
 
     for (Direction currentHandDirection : Direction.values()) {
-      boolean shouldDrawVisible = this.shouldDrawVisible(playerDirection, currentHandDirection, dummy, dummyVisible);
+      boolean isClaimer = this.isClaimer(deal, currentHandDirection);
+      boolean shouldDrawVisible = this.shouldDrawVisible(playerDirection, currentHandDirection, dummy, dummyVisible)
+          || isClaimer;
       new HandElement(deal.getHandOf(currentHandDirection), container, actionListener,
           FrameConstants.pointOfDirection.get(currentHandDirection), deal.getPlayerOf(currentHandDirection),
           shouldDrawVisible, currentHandDirection);
@@ -31,7 +33,7 @@ public class SpecificDirectionWithDummyBoardElements {
 
     new UndoElement(container, new Point(150, container.getHeight() - 50), actionListener);
 
-    new ClaimElement(deal.getClaimer(), deal.getCurrentPlayer(), container,
+    new ClaimElement(deal.getClaimer(), deal.getCurrentPlayer(), deal.getIsPartnershipGame(), container,
         new Point(container.getWidth() - 150, container.getHeight() - 50), actionListener);
   }
 
@@ -51,6 +53,19 @@ public class SpecificDirectionWithDummyBoardElements {
     } else {
       return currentDirection == playerDirection;
     }
+  }
+
+  private boolean isClaimer(Deal deal, Direction handDirection) {
+    Direction claimer = deal.getClaimer();
+    Boolean isPartnershipGame = deal.getIsPartnershipGame();
+    if (claimer != null) {
+      if (isPartnershipGame) {
+        Direction claimerPartner = claimer.next(2);
+        return handDirection.equals(claimer) || handDirection.equals(claimerPartner);
+      }
+      return handDirection.equals(claimer);
+    }
+    return false;
   }
 
 }

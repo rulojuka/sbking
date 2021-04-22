@@ -26,7 +26,7 @@ public class DealPainter implements Painter {
     public DealPainter(ActionListener actionListener, Direction direction, Board board) {
         this.actionListener = actionListener;
         this.direction = direction;
-        this.deal = new Deal(board, new NoRuleset(), null);
+        this.deal = new Deal(board, new NoRuleset(), null, null);
     }
 
     @Override
