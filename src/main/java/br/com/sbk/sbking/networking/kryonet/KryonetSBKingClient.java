@@ -2,6 +2,8 @@ package br.com.sbk.sbking.networking.kryonet;
 
 import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 
+import java.util.UUID;
+
 import com.esotericsoftware.kryonet.Client;
 
 import br.com.sbk.sbking.core.Card;
@@ -12,6 +14,8 @@ import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.ChooseNegati
 import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.ChoosePositiveMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.CreateTableMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.GetTablesMessage;
+import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.JoinTableMessage;
+import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.LeaveTableMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.MoveToSeatMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.PlayCardMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.SetNicknameMessage;
@@ -65,6 +69,14 @@ public class KryonetSBKingClient extends Client {
 
   public void sendGetTablesMessage() {
     this.sendMessage(new GetTablesMessage());
+  }
+
+  public void sendJoinTable(UUID tableId) {
+    this.sendMessage(new JoinTableMessage(tableId));
+  }
+
+  public void sendLeaveTable() {
+    this.sendMessage(new LeaveTableMessage());
   }
 
 }

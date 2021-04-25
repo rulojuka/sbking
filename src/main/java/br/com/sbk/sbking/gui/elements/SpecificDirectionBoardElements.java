@@ -36,6 +36,8 @@ public class SpecificDirectionBoardElements {
         new RulesetElement(deal.getRuleset(), container, new Point(150, 10));
 
         new UndoElement(container, new Point(150, container.getHeight() - 50), actionListener);
+
+        new LeaveTableElement(container, new Point(150, 50), actionListener);
     }
 
 }

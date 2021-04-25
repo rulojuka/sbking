@@ -2,7 +2,9 @@ package br.com.sbk.sbking.networking.server;
 
 import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -19,6 +21,7 @@ import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
 import br.com.sbk.sbking.dto.LobbyScreenTableDTO;
 import br.com.sbk.sbking.gui.models.PositiveOrNegative;
 import br.com.sbk.sbking.networking.kryonet.KryonetSBKingServer;
+import br.com.sbk.sbking.networking.kryonet.messages.GameNameFromGameServerIdentifier;
 import br.com.sbk.sbking.networking.server.gameServer.GameServer;
 import br.com.sbk.sbking.networking.server.gameServer.KingGameServer;
 import br.com.sbk.sbking.networking.server.gameServer.MinibridgeGameServer;
@@ -134,8 +137,21 @@ public class SBKingServer {
     }
   }
 
-  public void sendFinishDealAll() {
-    this.kryonetSBKingServer.sendFinishDealAll();
+  public void sendFinishDealToTable(Table table) {
+    this.kryonetSBKingServer.sendFinishDealTo(this.getAllPlayersUUIDsOnTable(table));
+  }
+
+  private Iterable<UUID> getAllPlayersUUIDsOnTable(Table table) {
+    Collection<UUID> allPlayersOnTable = new LinkedList<UUID>();
+    if (table == null) {
+      return allPlayersOnTable;
+    }
+    for (Map.Entry<Player, Table> pair : playersTable.entrySet()) {
+      if (table.equals(pair.getValue())) {
+        allPlayersOnTable.add(pair.getKey().getIdentifier());
+      }
+    }
+    return allPlayersOnTable;
   }
 
   public void sendDirectionTo(Direction direction, UUID playerIdentifier) {
@@ -150,37 +166,37 @@ public class SBKingServer {
     this.kryonetSBKingServer.sendIsNotSpectatorTo(playerIdentifier);
   }
 
-  public void sendDealAll(Deal deal) {
-    this.kryonetSBKingServer.sendDealAll(deal);
+  public void sendDealToTable(Deal deal, Table table) {
+    this.kryonetSBKingServer.sendDealTo(deal, this.getAllPlayersUUIDsOnTable(table));
   }
 
   public void sendDealTo(Deal deal, UUID playerIdentifier) {
     this.kryonetSBKingServer.sendDealTo(deal, playerIdentifier);
   }
 
-  public void sendGameModeOrStrainChooserAll(Direction direction) {
-    this.kryonetSBKingServer.sendGameModeOrStrainChooserAll(direction);
+  public void sendGameModeOrStrainChooserToTable(Direction direction, Table table) {
+    this.kryonetSBKingServer.sendGameModeOrStrainChooserTo(direction, this.getAllPlayersUUIDsOnTable(table));
   }
 
-  public void sendPositiveOrNegativeChooserAll(Direction direction) {
-    this.kryonetSBKingServer.sendPositiveOrNegativeChooserAll(direction);
+  public void sendPositiveOrNegativeChooserToTable(Direction direction, Table table) {
+    this.kryonetSBKingServer.sendPositiveOrNegativeChooserTo(direction, this.getAllPlayersUUIDsOnTable(table));
   }
 
-  public void sendPositiveOrNegativeAll(PositiveOrNegative positiveOrNegative) {
+  public void sendPositiveOrNegativeToTable(PositiveOrNegative positiveOrNegative, Table table) {
     String positiveOrNegativeString = positiveOrNegative.toString().toUpperCase();
-    this.kryonetSBKingServer.sendPositiveOrNegativeAll(positiveOrNegativeString);
+    this.kryonetSBKingServer.sendPositiveOrNegativeTo(positiveOrNegativeString, this.getAllPlayersUUIDsOnTable(table));
   }
 
-  public void sendInitializeDealAll() {
-    this.kryonetSBKingServer.sendInitializeDealAll();
+  public void sendInitializeDealToTable(Table table) {
+    this.kryonetSBKingServer.sendInitializeDealTo(this.getAllPlayersUUIDsOnTable(table));
   }
 
-  public void sendInvalidRulesetAll() {
-    this.kryonetSBKingServer.sendInvalidRulesetAll();
+  public void sendInvalidRulesetToTable(Table table) {
+    this.kryonetSBKingServer.sendInvalidRulesetTo(this.getAllPlayersUUIDsOnTable(table));
   }
 
-  public void sendValidRulesetAll() {
-    this.kryonetSBKingServer.sendValidRulesetAll();
+  public void sendValidRulesetToTable(Table table) {
+    this.kryonetSBKingServer.sendValidRulesetTo(this.getAllPlayersUUIDsOnTable(table));
   }
 
   public void setNickname(UUID identifier, String nickname) {
@@ -201,18 +217,28 @@ public class SBKingServer {
     return this.kryonetSBKingServer.nobodyIsConnected();
   }
 
-  public void addSpectator(UUID playerIdentifier, UUID tableIdentifier) {
-    Player player = identifierToPlayerMap.get(playerIdentifier);
+  public void addSpectator(Player player, Table table) {
     Table currentTable = playersTable.get(player);
-    Table table = this.tables.get(tableIdentifier);
     if (player == null || table == null) {
       return;
     }
     if (currentTable != null) {
-      currentTable.removePlayer(playerIdentifier);
+      currentTable.removePlayer(player.getIdentifier());
     }
     table.addSpectator(player);
     table.sendDealTo(player);
+  }
+
+  public void joinTable(UUID playerIdentifier, UUID tableIdentifier) {
+    Table table = this.tables.get(tableIdentifier);
+    Player player = this.identifierToPlayerMap.get(playerIdentifier);
+    if (table != null && player != null) {
+      GameServer gameServer = table.getGameServer();
+      String gameName = GameNameFromGameServerIdentifier.identify(gameServer.getClass());
+      this.kryonetSBKingServer.sendYourTableIsTo(gameName, playerIdentifier);
+      this.addSpectator(player, table);
+      this.playersTable.put(player, table);
+    }
   }
 
   public void undo(UUID playerIdentifier) {
@@ -225,15 +251,8 @@ public class SBKingServer {
   }
 
   public void removePlayer(UUID playerIdentifier) {
-    Player player = identifierToPlayerMap.get(playerIdentifier);
-    Table table = playersTable.get(player);
-    if (player == null || table == null) {
-      return;
-    }
-
-    table.removePlayer(playerIdentifier);
+    this.leaveTable(playerIdentifier);
     identifierToPlayerMap.remove(playerIdentifier);
-    playersTable.remove(player);
   }
 
   public Table getTable(UUID tableIdentifier) {
@@ -259,6 +278,18 @@ public class SBKingServer {
     List<LobbyScreenTableDTO> tablesDTO = this.tables.values().stream().map(LobbyScreenTableDTO::new)
         .collect(Collectors.toList());
     this.kryonetSBKingServer.sendTablesTo(tablesDTO, playerIdentifier);
+  }
+
+  public void leaveTable(UUID playerIdentifier) {
+    Player player = identifierToPlayerMap.get(playerIdentifier);
+    Table table = playersTable.get(player);
+    if (player == null || table == null) {
+      return;
+    }
+
+    table.removePlayer(playerIdentifier);
+    playersTable.remove(player);
+    this.kryonetSBKingServer.sendYourTableIsTo(null, playerIdentifier);
   }
 
 }

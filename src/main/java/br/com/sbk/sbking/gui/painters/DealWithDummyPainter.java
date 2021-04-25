@@ -5,7 +5,6 @@ import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 import java.awt.Container;
 import java.awt.event.ActionListener;
 
-import br.com.sbk.sbking.core.Board;
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.gui.elements.SpecificDirectionWithDummyBoardElements;
@@ -18,13 +17,6 @@ public class DealWithDummyPainter extends DealPainter {
   public DealWithDummyPainter(ActionListener actionListener, Direction direction, Deal deal, Direction dummy,
       boolean dummyVisible) {
     super(actionListener, direction, deal);
-    this.dummy = dummy;
-    this.dummyVisible = dummyVisible;
-  }
-
-  public DealWithDummyPainter(ActionListener actionListener, Direction direction, Board board, Direction dummy,
-      boolean dummyVisible) {
-    super(actionListener, direction, board);
     this.dummy = dummy;
     this.dummyVisible = dummyVisible;
   }

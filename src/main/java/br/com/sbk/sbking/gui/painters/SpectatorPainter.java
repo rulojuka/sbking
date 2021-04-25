@@ -5,9 +5,7 @@ import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 import java.awt.Container;
 import java.awt.event.ActionListener;
 
-import br.com.sbk.sbking.core.Board;
 import br.com.sbk.sbking.core.Deal;
-import br.com.sbk.sbking.core.rulesets.concrete.NoRuleset;
 import br.com.sbk.sbking.gui.elements.AllDirectionBoardElements;
 import br.com.sbk.sbking.gui.elements.ScoreSummaryElement;
 
@@ -19,11 +17,6 @@ public class SpectatorPainter implements Painter {
     public SpectatorPainter(ActionListener actionListener, Deal deal) {
         this.actionListener = actionListener;
         this.deal = deal;
-    }
-
-    public SpectatorPainter(ActionListener actionListener, Board board) {
-        this.actionListener = actionListener;
-        this.deal = new Deal(board, new NoRuleset(), null);
     }
 
     @Override

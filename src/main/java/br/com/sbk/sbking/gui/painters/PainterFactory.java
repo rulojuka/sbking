@@ -16,16 +16,16 @@ public class PainterFactory {
     this.sbkingClient = sbkingClient;
   }
 
-  public Painter getDealPainter(Deal deal, Direction direction, ActionListener playCardActionListener) {
-    return new DealPainter(playCardActionListener, direction, deal);
+  public Painter getDealPainter(Deal deal, Direction direction, ActionListener actionListener) {
+    return new DealPainter(actionListener, direction, deal);
   }
 
-  public Painter getSpectatorPainter(Deal deal, ActionListener playCardActionListener) {
+  public Painter getSpectatorPainter(Deal deal, ActionListener actionListener) {
     if (deal == null) {
       LOGGER.error("Deal should not be null here.");
       return null;
     } else {
-      return new SpectatorPainter(playCardActionListener, deal);
+      return new SpectatorPainter(actionListener, deal);
     }
   }
 
@@ -40,10 +40,10 @@ public class PainterFactory {
         this.sbkingClient.getCurrentGameScoreboard());
   }
 
-  public Painter getDealWithDummyPainter(Deal deal, Direction direction, ActionListener playCardActionListener) {
+  public Painter getDealWithDummyPainter(Deal deal, Direction direction, ActionListener actionListener) {
     boolean dummyVisible = this.sbkingClient.getDeal().isDummyOpen();
     Direction dummy = this.sbkingClient.getDeal().getDummy();
-    return new DealWithDummyPainter(playCardActionListener, direction, deal, dummy, dummyVisible);
+    return new DealWithDummyPainter(actionListener, direction, deal, dummy, dummyVisible);
   }
 
 }

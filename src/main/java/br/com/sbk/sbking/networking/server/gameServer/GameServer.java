@@ -82,19 +82,19 @@ public abstract class GameServer implements Runnable {
     }
 
     protected void sendDealAll() {
-        this.getSBKingServer().sendDealAll(this.game.getCurrentDeal());
+        this.getSBKingServer().sendDealToTable(this.game.getCurrentDeal(), this.table);
     }
 
     protected void sendInitializeDealAll() {
-        this.getSBKingServer().sendInitializeDealAll();
+        this.getSBKingServer().sendInitializeDealToTable(this.table);
     }
 
     protected void sendInvalidRulesetAll() {
-        this.getSBKingServer().sendInvalidRulesetAll();
+        this.getSBKingServer().sendInvalidRulesetToTable(this.table);
     }
 
     protected void sendValidRulesetAll() {
-        this.getSBKingServer().sendValidRulesetAll();
+        this.getSBKingServer().sendValidRulesetToTable(this.table);
     }
 
     public void undo(Direction direction) {

@@ -21,40 +21,35 @@ public class MainNetworkGame {
         welcomeScreen.runAt(sbkingClientJFrame);
 
         SBKingClient sbkingClient = welcomeScreen.getSBKingClient();
-
         SBKingScreen currentScreen;
 
-        currentScreen = new LobbyScreen(sbkingClient);
-        currentScreen.runAt(sbkingClientJFrame);
+        while (true) {
 
-        while (sbkingClient.getGameName() == null) {
-            sleepFor(100);
-        }
+            String gameName = sbkingClient.getGameName();
+            if (gameName == null) {
+                sbkingClient.setTables(null);
+            }
 
-        Class<? extends GameScreen> gameScreenClass = GameScreenFromGameNameIdentifier
-                .identify(sbkingClient.getGameName());
-        GameScreen gameScreen;
-        try {
-            Class[] constructorArguments = new Class[1];
-            constructorArguments[0] = SBKingClient.class;
-            gameScreen = gameScreenClass.getDeclaredConstructor(constructorArguments).newInstance(sbkingClient);
-            LOGGER.info("Created GameScreen:" + gameScreen.getClass());
-            currentScreen = gameScreen;
+            currentScreen = new LobbyScreen(sbkingClient);
             currentScreen.runAt(sbkingClientJFrame);
-        } catch (Exception e) {
-            LOGGER.fatal("Could not initialize GameScreen with received gameScreenClass.");
-            LOGGER.fatal(e);
-            System.exit(ErrorCodes.COULD_NOT_INITIALIZE_GAMESCREEN);
-        }
 
-        LOGGER.info("Exiting main thread.");
-    }
+            LOGGER.info("Finished Lobby Screen, creating table screen");
 
-    private static void sleepFor(int miliseconds) {
-        try {
-            Thread.sleep(miliseconds);
-        } catch (InterruptedException e) {
-            LOGGER.debug(e);
+            Class<? extends GameScreen> gameScreenClass = GameScreenFromGameNameIdentifier
+                    .identify(sbkingClient.getGameName());
+            GameScreen gameScreen;
+            try {
+                Class[] constructorArguments = new Class[1];
+                constructorArguments[0] = SBKingClient.class;
+                gameScreen = gameScreenClass.getDeclaredConstructor(constructorArguments).newInstance(sbkingClient);
+                LOGGER.info("Created GameScreen:" + gameScreen.getClass());
+                currentScreen = gameScreen;
+                currentScreen.runAt(sbkingClientJFrame);
+            } catch (Exception e) {
+                LOGGER.fatal("Could not initialize GameScreen with received gameScreenClass.");
+                LOGGER.fatal(e);
+                System.exit(ErrorCodes.COULD_NOT_INITIALIZE_GAMESCREEN);
+            }
         }
     }
 

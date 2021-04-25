@@ -1,10 +1,14 @@
 package br.com.sbk.sbking.gui.listeners;
 
+import java.util.UUID;
+
 import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.gui.JElements.CardButton;
-import br.com.sbk.sbking.gui.JElements.UndoButton;
+import br.com.sbk.sbking.gui.JElements.JoinTableButton;
+import br.com.sbk.sbking.gui.JElements.LeaveTableButton;
 import br.com.sbk.sbking.gui.JElements.SitOrLeaveButton;
+import br.com.sbk.sbking.gui.JElements.UndoButton;
 import br.com.sbk.sbking.networking.kryonet.KryonetSBKingClientActionListener;
 
 public class ClientActionListener implements java.awt.event.ActionListener {
@@ -34,6 +38,12 @@ public class ClientActionListener implements java.awt.event.ActionListener {
             client.sitOrLeave(direction);
         } else if (source instanceof UndoButton) {
             client.undo();
+        } else if (source instanceof JoinTableButton) {
+            JoinTableButton button = (JoinTableButton) source;
+            UUID tableId = (UUID) button.getClientProperty("tableId");
+            client.joinTable(tableId);
+        } else if (source instanceof LeaveTableButton) {
+            client.leaveTable();
         }
     }
 
