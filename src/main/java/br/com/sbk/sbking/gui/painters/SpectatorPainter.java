@@ -23,7 +23,7 @@ public class SpectatorPainter implements Painter {
 
     public SpectatorPainter(ActionListener actionListener, Board board) {
         this.actionListener = actionListener;
-        this.deal = new Deal(board, new NoRuleset(), null, null);
+        this.deal = new Deal(board, new NoRuleset(), null);
     }
 
     @Override
