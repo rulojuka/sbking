@@ -1,7 +1,10 @@
 package br.com.sbk.sbking.networking.client;
 
+import java.util.List;
+
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
+import br.com.sbk.sbking.dto.LobbyScreenTableDTO;
 import br.com.sbk.sbking.gui.listeners.ClientActionListener;
 import br.com.sbk.sbking.gui.models.KingGameScoreboard;
 import br.com.sbk.sbking.gui.models.PositiveOrNegative;
@@ -22,7 +25,7 @@ public class SBKingClient {
 
     private KingGameScoreboard currentGameScoreboard = new KingGameScoreboard();
 
-    private ClientActionListener playCardActionListener;
+    private ClientActionListener actionListener;
 
     private boolean spectator;
 
@@ -30,8 +33,10 @@ public class SBKingClient {
 
     private String gameName;
 
-    public void setPlayCardActionListener(ClientActionListener playCardActionListener) {
-        this.playCardActionListener = playCardActionListener;
+    private List<LobbyScreenTableDTO> tables;
+
+    public void setActionListener(ClientActionListener actionListener) {
+        this.actionListener = actionListener;
     }
 
     public void setKryonetSBKingClient(KryonetSBKingClient kryonetSBKingClient) {
@@ -157,8 +162,8 @@ public class SBKingClient {
         return this.rulesetValid != null;
     }
 
-    public ClientActionListener getPlayCardActionListener() {
-        return this.playCardActionListener;
+    public ClientActionListener getActionListener() {
+        return this.actionListener;
     }
 
     public boolean isSpectator() {
@@ -189,6 +194,10 @@ public class SBKingClient {
         this.kryonetSBKingClient.setAndSendNickname(nickname);
     }
 
+    public void sendGetTables() {
+        this.kryonetSBKingClient.sendGetTablesMessage();
+    }
+
     public void setPositiveOrNegative(String content) {
         String positive = "POSITIVE";
         String negative = "NEGATIVE";
@@ -211,5 +220,13 @@ public class SBKingClient {
 
     public String getGameName() {
         return gameName;
+    }
+
+    public void setTables(List<LobbyScreenTableDTO> tables) {
+        this.tables = tables;
+    }
+
+    public List<LobbyScreenTableDTO> getTables() {
+        return tables;
     }
 }

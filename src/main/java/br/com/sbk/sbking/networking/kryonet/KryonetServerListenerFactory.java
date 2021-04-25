@@ -43,6 +43,8 @@ public class KryonetServerListenerFactory {
 
         TextMessage response = new TextMessage("You just connected! Welcome to SBKing!");
         connection.sendTCP(response);
+
+        kryonetSBKingServer.sendYourTableIsTo(null, connectionWithPlayer.getIdentifier());
       }
 
       public void received(Connection connection, Object object) {

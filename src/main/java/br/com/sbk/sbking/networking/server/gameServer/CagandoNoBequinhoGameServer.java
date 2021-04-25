@@ -16,6 +16,7 @@ public class CagandoNoBequinhoGameServer extends GameServer {
     public void run() {
 
         while (!game.isFinished()) {
+            this.game.dealNewBoard();
 
             this.copyPlayersFromTableToGame();
 
@@ -57,7 +58,7 @@ public class CagandoNoBequinhoGameServer extends GameServer {
 
             this.game.finishDeal();
 
-            this.sbkingServer.sendFinishDealAll();
+            this.sbkingServer.sendFinishDealToTable(this.table);
             LOGGER.info("Deal finished!");
 
         }
