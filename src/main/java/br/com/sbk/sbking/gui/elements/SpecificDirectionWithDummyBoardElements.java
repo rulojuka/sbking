@@ -14,7 +14,8 @@ public class SpecificDirectionWithDummyBoardElements {
       ActionListener actionListener, Direction dummy, boolean dummyVisible) {
 
     for (Direction currentHandDirection : Direction.values()) {
-      boolean shouldDrawVisible = this.shouldDrawVisible(playerDirection, currentHandDirection, dummy, dummyVisible);
+      boolean shouldDrawVisible = this.shouldDrawVisible(playerDirection, currentHandDirection, dummy, dummyVisible)
+          || deal.shouldDrawDeal();
       new HandElement(deal.getHandOf(currentHandDirection), container, actionListener,
           FrameConstants.pointOfDirection.get(currentHandDirection), deal.getPlayerOf(currentHandDirection),
           shouldDrawVisible, currentHandDirection);

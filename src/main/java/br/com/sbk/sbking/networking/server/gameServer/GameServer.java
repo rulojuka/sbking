@@ -114,4 +114,12 @@ public abstract class GameServer implements Runnable {
         }
     }
 
+    protected void sleepToShowHands() {
+        sleepFor(8000);
+    }
+
+    protected void giveBackAllCards() {
+        this.getDeal().giveBackAllCardsToHands();
+    }
+
 }

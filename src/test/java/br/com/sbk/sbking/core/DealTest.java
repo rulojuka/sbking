@@ -1,5 +1,6 @@
 package br.com.sbk.sbking.core;
 
+import static br.com.sbk.sbking.core.GameConstants.NUMBER_OF_TRICKS_IN_A_COMPLETE_HAND;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -9,6 +10,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.times;
 
 import java.util.Comparator;
 
@@ -596,5 +598,21 @@ public class DealTest {
         assertEquals(anyNumberOfTricks, deal.getTricks().size());
         assertEquals(lastPlayer, currentPlayerAfterUndo);
         assertEquals(anyNumberOfTricks - 1, completedTricksAfterUndo);
+    }
+
+    @Test
+    public void giveBackAllCardsToHandsShouldReturnCardsToHands() {
+        Ruleset ruleset = mock(Ruleset.class);
+        Hand hand = mock(Hand.class);
+        Deal deal = this.initDeal(hand, ruleset);
+        Direction firstPlayer = deal.getCurrentPlayer();
+        when(ruleset.getWinner(any())).thenReturn(firstPlayer);
+        int numberOfCardsGiveBackToHands = COMPLETE_TRICK_NUMBER_OF_CARDS * NUMBER_OF_TRICKS_IN_A_COMPLETE_HAND;
+        playNTimesCard(deal, numberOfCardsGiveBackToHands, hand);
+
+        deal.giveBackAllCardsToHands();
+
+        verify(hand, times(numberOfCardsGiveBackToHands)).addCard(any());
+        assertTrue(deal.getCurrentTrick().isEmpty());
     }
 }

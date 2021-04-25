@@ -103,6 +103,10 @@ public class MinibridgeGameServer extends GameServer {
       this.sendDealAll();
       this.sleepToShowLastCard();
 
+      this.giveBackAllCards();
+      this.sendDealAll();
+      this.sleepToShowHands();
+
       this.game.finishDeal();
 
       this.sbkingServer.sendFinishDealAll();
