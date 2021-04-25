@@ -3,8 +3,8 @@ package br.com.sbk.sbking.networking.server;
 import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -22,8 +22,7 @@ import br.com.sbk.sbking.networking.server.gameServer.GameServer;
 public class Table {
 
   private Map<Direction, Player> seatedPlayers;
-  private Collection<Player> spectatorPlayers;
-  private Map<UUID, Player> allPlayers;
+  private List<Player> spectatorPlayers;
   private GameServer gameServer;
   private UUID id;
 
@@ -32,7 +31,6 @@ public class Table {
     this.gameServer.setTable(this);
     this.seatedPlayers = new HashMap<Direction, Player>();
     this.spectatorPlayers = new ArrayList<Player>();
-    this.allPlayers = new HashMap<UUID, Player>();
     this.id = UUID.randomUUID();
   }
 
@@ -40,7 +38,7 @@ public class Table {
     if (to == null) {
       return;
     }
-    Player playerTryingToSeat = this.allPlayers.get(playerIdentifier);
+    Player playerTryingToSeat = this.getPlayerFromId(playerIdentifier);
     if (playerTryingToSeat == null) {
       return;
     }
@@ -133,6 +131,10 @@ public class Table {
     spectatorPlayers.remove(player);
   }
 
+  private void removeFromSpectators(UUID playerIdentifier) {
+    this.removeFromSpectators(new Player(playerIdentifier, ""));
+  }
+
   private void removeFromSeatedPlayers(Player player) {
     if (player == null) {
       return;
@@ -150,19 +152,14 @@ public class Table {
 
     UUID identifier = player.getIdentifier();
     this.getSBKingServer().sendIsSpectatorTo(identifier);
-    allPlayers.put(identifier, player);
-
     logAllPlayers();
   }
 
-  private void removePlayer(Player player) {
+  public void removePlayer(UUID identifier) {
+    Player player = getPlayerFromId(identifier);
     this.removeFromSeatedPlayers(player);
-    this.removeFromSpectators(player);
-    Direction direction = getDirectionFrom(player);
-    if (direction != null) {
-      this.gameServer.getDeal().unsetPlayerOf(direction);
-      this.sendDealAll();
-    }
+    this.removeFromSpectators(identifier);
+    this.sendDealAll();
   }
 
   public GameServer getGameServer() {
@@ -199,14 +196,6 @@ public class Table {
     Direction directionFromPlayer = this.getDirectionFrom(player);
     if (directionFromPlayer != null) {
       this.undo(directionFromPlayer);
-    }
-  }
-
-  public void removePlayer(UUID identifier) {
-    Player player = this.allPlayers.get(identifier);
-    if (player != null) {
-      this.removePlayer(player);
-      this.sendDealAll();
     }
   }
 
@@ -253,6 +242,23 @@ public class Table {
 
   public int getNumberOfSpectators() {
     return this.spectatorPlayers.size();
+  }
+
+  public boolean isEmpty() {
+    return this.seatedPlayers.isEmpty() && this.spectatorPlayers.isEmpty();
+  }
+
+  private Player getPlayerFromId(UUID playerIdentifier) {
+    int indexOfPlayer = this.spectatorPlayers.indexOf(new Player(playerIdentifier, ""));
+    if (indexOfPlayer != -1) {
+      return this.spectatorPlayers.get(indexOfPlayer);
+    }
+    for (Player player : this.seatedPlayers.values()) {
+      if (player.getIdentifier().equals(playerIdentifier)) {
+        return player;
+      }
+    }
+    return null;
   }
 
 }
