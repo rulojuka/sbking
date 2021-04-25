@@ -17,6 +17,8 @@ public class CagandoNoBequinhoGameServer extends GameServer {
 
         while (!game.isFinished()) {
 
+            this.game.dealNewBoard();
+
             this.copyPlayersFromTableToGame();
 
             LOGGER.info("Everything selected! Game commencing!");
@@ -54,6 +56,10 @@ public class CagandoNoBequinhoGameServer extends GameServer {
 
             this.sendDealAll();
             this.sleepToShowLastCard();
+
+            this.giveBackAllCards();
+            this.sendDealAll();
+            this.sleepToShowHands();
 
             this.game.finishDeal();
 

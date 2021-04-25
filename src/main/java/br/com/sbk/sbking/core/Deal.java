@@ -369,4 +369,20 @@ public class Deal {
         return this.tricks;
     }
 
+    public void giveBackAllCardsToHands() {
+        for (Trick trick : tricks) {
+            Direction currentDirection = trick.getLeader();
+            for (Card card : trick.getCards()) {
+                this.board.getHandOf(currentDirection).addCard(card);
+                currentDirection = currentDirection.next();
+            }
+        }
+        this.currentTrick = startNewTrick();
+        this.board.sortAllHands(ruleset.getComparator());
+    }
+
+    public boolean shouldDrawDeal() {
+        return this.isFinished();
+    }
+
 }

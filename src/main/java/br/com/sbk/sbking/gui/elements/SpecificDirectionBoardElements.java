@@ -14,15 +14,10 @@ public class SpecificDirectionBoardElements {
             ActionListener actionListener) {
 
         for (Direction currentDirection : Direction.values()) {
-            if (currentDirection.equals(direction)) {
-                new HandElement(deal.getHandOf(currentDirection), container, actionListener,
-                        FrameConstants.pointOfDirection.get(currentDirection), deal.getPlayerOf(currentDirection), true,
-                        currentDirection);
-            } else {
-                new HandElement(deal.getHandOf(currentDirection), container, actionListener,
-                        FrameConstants.pointOfDirection.get(currentDirection), deal.getPlayerOf(currentDirection),
-                        false, currentDirection);
-            }
+            boolean isVisible = currentDirection.equals(direction) || deal.shouldDrawDeal();
+            new HandElement(deal.getHandOf(currentDirection), container, actionListener,
+                    FrameConstants.pointOfDirection.get(currentDirection), deal.getPlayerOf(currentDirection),
+                    isVisible, currentDirection);
         }
 
         boolean isMyTurn = deal.getCurrentPlayer().equals(direction);

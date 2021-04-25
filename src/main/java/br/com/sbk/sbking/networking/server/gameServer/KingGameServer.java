@@ -146,6 +146,11 @@ public class KingGameServer extends GameServer {
             this.sendDealAll();
             LOGGER.info("Sleeping for 3000ms for everyone to see the last card.");
             sleepFor(3000);
+
+            this.giveBackAllCards();
+            this.sendDealAll();
+            this.sleepToShowHands();
+
             this.game.finishDeal();
 
             LOGGER.info("Sleeping for 300ms waiting for all clients to prepare themselves.");
