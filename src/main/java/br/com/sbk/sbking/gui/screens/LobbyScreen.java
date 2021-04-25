@@ -23,8 +23,8 @@ public class LobbyScreen implements SBKingScreen {
       sleepFor(100);
       LOGGER.info("Waiting to get tables from server.");
     }
-    sbkingClientJFrame
-        .paintPainter(new LobbyScreenPainter(this.sbkingClient.getTables(), this.sbkingClient.getActionListener()));
+    sbkingClientJFrame.paintPainter(new LobbyScreenPainter(this.sbkingClient.getTables(),
+        this.sbkingClient.getActionListener(), this.sbkingClient));
     LOGGER.info("Waiting to receive gameName from server.");
     while (this.sbkingClient.getGameName() == null) {
       sleepFor(100);
