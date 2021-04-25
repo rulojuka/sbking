@@ -277,9 +277,15 @@ public class SBKingServer {
   }
 
   public void sendTablesTo(UUID playerIdentifier) {
-    List<LobbyScreenTableDTO> tablesDTO = this.tables.values().stream().map(LobbyScreenTableDTO::new)
-        .collect(Collectors.toList());
-    this.kryonetSBKingServer.sendTablesTo(tablesDTO, playerIdentifier);
+    this.kryonetSBKingServer.sendTablesTo(createTablesDTO(), playerIdentifier);
+  }
+
+  public void sendTablesToAll() {
+    this.kryonetSBKingServer.sendTablesToAll(createTablesDTO());
+  }
+
+  private List<LobbyScreenTableDTO> createTablesDTO() {
+    return this.tables.values().stream().map(LobbyScreenTableDTO::new).collect(Collectors.toList());
   }
 
   public void leaveTable(UUID playerIdentifier) {
@@ -291,7 +297,11 @@ public class SBKingServer {
 
     table.removePlayer(playerIdentifier);
     playersTable.remove(player);
+    if (table.isEmpty()) {
+      this.tables.remove(table.getId());
+    }
     this.kryonetSBKingServer.sendYourTableIsTo(null, playerIdentifier);
+
   }
 
 }
