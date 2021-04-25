@@ -218,9 +218,4 @@ public class SBKingServer {
     pool.execute(gameServer);
   }
 
-  public void claim(UUID playerIdentifier) {
-    Direction direction = this.playerDirections.get(playerIdentifier);
-    this.table.claim(direction);
-  }
-
 }

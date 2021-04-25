@@ -13,7 +13,6 @@ import br.com.sbk.sbking.networking.kryonet.messages.SBKingMessageWithIdentifier
 import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.ChooseGameModeOrStrainMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.ChooseNegativeMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.ChoosePositiveMessage;
-import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.ClaimMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.CreateTableMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.MoveToSeatMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.PlayCardMessage;
@@ -68,8 +67,6 @@ public class SBKingServerMessageConsumer implements Runnable {
     } else if (message instanceof CreateTableMessage) {
       Class<? extends GameServer> gameServerClass = GameServerFromGameNameIdentifier.identify((String) content);
       this.sbkingServer.createTable(gameServerClass);
-    } else if (message instanceof ClaimMessage) {
-      this.sbkingServer.claim(playerIdentifier);
     } else {
       LOGGER.error("Could not understand message.");
       LOGGER.error(message);

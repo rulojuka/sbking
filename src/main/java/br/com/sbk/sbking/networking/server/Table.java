@@ -210,9 +210,4 @@ public class Table {
     return null;
   }
 
-  public void claim(Direction direction) {
-    this.gameServer.claim(direction);
-    this.sendDealAll();
-  }
-
 }

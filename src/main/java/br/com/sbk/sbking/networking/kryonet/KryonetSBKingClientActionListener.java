@@ -23,8 +23,4 @@ public class KryonetSBKingClientActionListener {
     client.sendUndo();
   }
 
-  public void claim() {
-    client.claim();
-  }
-
 }

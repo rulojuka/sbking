@@ -34,9 +34,6 @@ public class Deal {
     private Trick currentTrick;
     private Direction dummy;
 
-    private Map<Direction, Boolean> claimMap;
-    private Direction claimer;
-
     public Deal(Board board, Ruleset ruleset, Direction leader) {
         this.board = board;
         this.ruleset = ruleset;
@@ -47,10 +44,6 @@ public class Deal {
         this.startingNumberOfCardsInTheHand = NUMBER_OF_TRICKS_IN_A_COMPLETE_HAND;
         this.tricks = new ArrayList<Trick>();
         this.players = new HashMap<Direction, Player>();
-        this.claimMap = new HashMap<Direction, Boolean>();
-        for (Direction direction : Direction.values()) {
-            claimMap.put(direction, false);
-        }
     }
 
     public Player getPlayerOf(Direction direction) {
@@ -131,9 +124,6 @@ public class Deal {
         }
         if (currentTrickNotStartedYet()) {
             this.currentTrick = startNewTrick();
-        }
-        if (this.claimer != null && this.otherPlayersAcceptedClaim()) {
-            return;
         }
 
         moveCardFromHandToCurrentTrick(card, handOfCurrentPlayer);
@@ -377,38 +367,6 @@ public class Deal {
 
     public List<Trick> getTricks() {
         return this.tricks;
-    }
-
-    public void claim(Direction direction) {
-        if (this.claimer == null) {
-            this.claimer = direction;
-        } else {
-            this.claimMap.put(direction, true);
-            if (this.otherPlayersAcceptedClaim()) {
-                this.finishDeal(this.claimer);
-            }
-        }
-    }
-
-    private boolean otherPlayersAcceptedClaim() {
-        if (this.claimer.isNorthSouth()) {
-            return this.claimMap.get(Direction.EAST) && this.claimMap.get(Direction.WEST);
-        } else {
-            return this.claimMap.get(Direction.NORTH) && this.claimMap.get(Direction.SOUTH);
-        }
-    }
-
-    public Direction getClaimer() {
-        return this.claimer;
-    }
-
-    private void finishDeal(Direction winner) {
-        this.finishScore(winner);
-    }
-
-    private void finishScore(Direction winner) {
-        int totalPoints = this.ruleset.getTotalPoints();
-        this.score.finishScore(winner, totalPoints);
     }
 
 }
