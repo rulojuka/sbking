@@ -57,7 +57,7 @@ public class CagandoNoBequinhoGame extends TrickGame {
     }
 
     private void addRuleset(Ruleset positiveRuleset) {
-        this.currentDeal = new Deal(this.currentBoard, positiveRuleset, this.getLeader(), false);
+        this.currentDeal = new Deal(this.currentBoard, positiveRuleset, this.getLeader());
     }
 
     @Override
