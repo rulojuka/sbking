@@ -143,4 +143,8 @@ public class KryonetSBKingServer extends Server {
     this.sendOneTo(new GetTablesResponseMessage(tablesDTO), playerIdentifier);
   }
 
+  public void sendTablesToAll(List<LobbyScreenTableDTO> tablesDTO) {
+    this.sendToAllTCP(new GetTablesResponseMessage(tablesDTO));
+  }
+
 }
