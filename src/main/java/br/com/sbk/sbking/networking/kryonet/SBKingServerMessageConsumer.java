@@ -69,7 +69,7 @@ public class SBKingServerMessageConsumer implements Runnable {
       this.sbkingServer.undo(playerIdentifier);
     } else if (message instanceof CreateTableMessage) {
       Class<? extends GameServer> gameServerClass = GameServerFromGameNameIdentifier.identify((String) content);
-      this.sbkingServer.createTable(gameServerClass);
+      this.sbkingServer.createTable(gameServerClass, playerIdentifier);
     } else if (message instanceof GetTablesMessage) {
       this.sbkingServer.sendTablesTo(playerIdentifier);
     } else if (message instanceof JoinTableMessage) {
