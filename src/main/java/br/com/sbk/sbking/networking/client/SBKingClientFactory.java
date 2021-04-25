@@ -26,8 +26,8 @@ public class SBKingClientFactory {
     SBKingClientMessageConsumer sbKingClientMessageConsumer = new SBKingClientMessageConsumer(sbKingClient,
         clientMessageQueue); // Consumer
     new Thread(sbKingClientMessageConsumer, "msg-consumer").start();
-    sbKingClient.setPlayCardActionListener(
-        new ClientActionListener(new KryonetSBKingClientActionListener(kryonetSBKingClient)));
+    sbKingClient
+        .setActionListener(new ClientActionListener(new KryonetSBKingClientActionListener(kryonetSBKingClient)));
     LOGGER.info("Trying to connect.");
     try {
       kryonetSBKingClient.connect(5000, hostname, port);

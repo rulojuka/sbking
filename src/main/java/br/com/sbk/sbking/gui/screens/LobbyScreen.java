@@ -12,14 +12,30 @@ public class LobbyScreen implements SBKingScreen {
 
   public LobbyScreen(SBKingClient sbkingClient) {
     this.sbkingClient = sbkingClient;
+    this.sbkingClient.sendGetTables();
   }
 
   @Override
   public void runAt(SBKingClientJFrame sbkingClientJFrame) {
 
     LOGGER.info("Entered Lobby Screen");
-    sbkingClientJFrame.paintPainter(new LobbyScreenPainter(this.sbkingClient));
-    LOGGER.info("isDirectionOrSpectatorSet. Leaving Lobby Screen");
+    while (this.sbkingClient.getTables() == null) {
+      sleepFor(100);
+      LOGGER.info("Waiting to get tables from server.");
+    }
+    sbkingClientJFrame
+        .paintPainter(new LobbyScreenPainter(this.sbkingClient.getTables(), this.sbkingClient.getActionListener()));
+    LOGGER.info("Waiting to receive gameName from server.");
+    while (this.sbkingClient.getGameName() == null) {
+      sleepFor(100);
+    }
   }
 
+  private void sleepFor(int miliseconds) {
+    try {
+      Thread.sleep(miliseconds);
+    } catch (InterruptedException e) {
+      LOGGER.debug(e);
+    }
+  }
 }

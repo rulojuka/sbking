@@ -51,15 +51,15 @@ public class WelcomeScreen implements SBKingScreen {
 
   @Override
   public void runAt(SBKingClientJFrame sbkingClientJFrame) {
-    LOGGER.info("Starting to paint ConnectToServerScreen");
+    LOGGER.info("Starting to paint WelcomeScreen");
     sbkingClientJFrame.paintPainter(new ConnectToServerPainter(this));
-    LOGGER.info("Finished painting ConnectToServerScreen");
+    LOGGER.info("Finished painting WelcomeScreen");
 
     LOGGER.info("Waiting for connectedToServer to be true");
     while (!connectedToServer) {
       sleepFor(100);
     }
-    LOGGER.info("connectedToServer is true. Leaving ConnectToNetworkScreen");
+    LOGGER.info("connectedToServer is true. Leaving WelcomeScreen");
   }
 
   private void sleepFor(int miliseconds) {

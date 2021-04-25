@@ -40,7 +40,7 @@ public class KingGameServer extends GameServer {
                 this.sendInitializeDealAll();
                 LOGGER.info("Sleeping for 300ms waiting for clients to initialize its deals.");
                 sleepFor(300);
-                this.getSBKingServer().sendDealAll(this.game.getCurrentDeal());
+                this.getSBKingServer().sendDealToTable(this.game.getCurrentDeal(), this.table);
                 sleepFor(300);
                 this.sendPositiveOrNegativeChooserAll();
 
@@ -155,7 +155,7 @@ public class KingGameServer extends GameServer {
 
             LOGGER.info("Sleeping for 300ms waiting for all clients to prepare themselves.");
             sleepFor(300);
-            this.sbkingServer.sendFinishDealAll();
+            this.sbkingServer.sendFinishDealToTable(this.table);
             LOGGER.info("Deal finished!");
             LOGGER.info("Sleeping for 300ms waiting for all clients to prepare themselves.");
             sleepFor(300);
@@ -193,15 +193,15 @@ public class KingGameServer extends GameServer {
     }
 
     private void sendGameModeOrStrainChooserAll() {
-        this.sbkingServer.sendGameModeOrStrainChooserAll(this.getCurrentGameModeOrStrainChooser());
+        this.sbkingServer.sendGameModeOrStrainChooserToTable(this.getCurrentGameModeOrStrainChooser(), this.table);
     }
 
     private void sendPositiveOrNegativeChooserAll() {
-        this.sbkingServer.sendPositiveOrNegativeChooserAll(this.getCurrentPositiveOrNegativeChooser());
+        this.sbkingServer.sendPositiveOrNegativeChooserToTable(this.getCurrentPositiveOrNegativeChooser(), this.table);
     }
 
     private void sendPositiveOrNegativeAll() {
-        this.sbkingServer.sendPositiveOrNegativeAll(this.currentPositiveOrNegative);
+        this.sbkingServer.sendPositiveOrNegativeToTable(this.currentPositiveOrNegative, this.table);
     }
 
 }

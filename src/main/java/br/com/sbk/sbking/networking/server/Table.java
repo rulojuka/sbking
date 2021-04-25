@@ -71,7 +71,6 @@ public class Table {
     Player currentSeatedPlayer = this.seatedPlayers.get(direction);
     if (currentSeatedPlayer != null) {
       this.removeFromSeatedPlayers(currentSeatedPlayer);
-      this.gameServer.getDeal().unsetPlayerOf(direction);
       this.spectatorPlayers.add(currentSeatedPlayer);
       this.getSBKingServer().sendIsSpectatorTo(currentSeatedPlayer.getIdentifier());
     }
@@ -100,7 +99,6 @@ public class Table {
       LOGGER.debug("Trying to move from " + from.getCompleteName() + " to " + to.getCompleteName() + ".");
 
       this.removeFromSeatedPlayers(player);
-      this.gameServer.getDeal().unsetPlayerOf(from);
 
       seatedPlayers.put(to, player);
       this.getSBKingServer().sendDirectionTo(to, player.getIdentifier());
@@ -143,6 +141,7 @@ public class Table {
     if (playerDirection != null) {
       LOGGER.debug("Removing player from " + playerDirection.getCompleteName());
       seatedPlayers.remove(playerDirection);
+      this.gameServer.getDeal().unsetPlayerOf(playerDirection);
     }
   }
 
@@ -184,7 +183,7 @@ public class Table {
   }
 
   public void sendDealAll() {
-    this.getSBKingServer().sendDealAll(this.gameServer.getDeal());
+    this.getSBKingServer().sendDealToTable(this.gameServer.getDeal(), this);
   }
 
   public void sendDealTo(Player player) {
@@ -207,6 +206,7 @@ public class Table {
     Player player = this.allPlayers.get(identifier);
     if (player != null) {
       this.removePlayer(player);
+      this.sendDealAll();
     }
   }
 

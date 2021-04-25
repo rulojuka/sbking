@@ -123,7 +123,7 @@ public class PositiveKingGameServer extends GameServer {
 
             this.game.finishDeal();
 
-            this.sbkingServer.sendFinishDealAll();
+            this.sbkingServer.sendFinishDealToTable(this.table);
             LOGGER.info("Deal finished!");
 
         }
@@ -161,7 +161,7 @@ public class PositiveKingGameServer extends GameServer {
     }
 
     private void sendGameModeOrStrainChooserAll() {
-        this.sbkingServer.sendGameModeOrStrainChooserAll(this.getCurrentGameModeOrStrainChooser());
+        this.sbkingServer.sendGameModeOrStrainChooserToTable(this.getCurrentGameModeOrStrainChooser(), this.table);
     }
 
 }

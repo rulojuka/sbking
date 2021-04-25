@@ -24,6 +24,8 @@ public class AllDirectionBoardElements {
                 new Point(container.getWidth() / 2, container.getHeight() / 2));
 
         new RulesetElement(deal.getRuleset(), container, new Point(150, 10));
+
+        new LeaveTableElement(container, new Point(150, 50), actionListener);
     }
 
 }
