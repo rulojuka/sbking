@@ -259,7 +259,7 @@ public class SBKingServer {
     return this.tables.get(tableIdentifier);
   }
 
-  public void createTable(Class<? extends GameServer> gameServerClass) {
+  public void createTable(Class<? extends GameServer> gameServerClass, UUID playerIdentifier) {
     GameServer gameServer;
     try {
       gameServer = gameServerClass.getDeclaredConstructor().newInstance();
@@ -272,6 +272,8 @@ public class SBKingServer {
     tables.put(table.getId(), table);
     pool.execute(gameServer);
     LOGGER.info("Created new table and executed its gameServer!");
+
+    this.joinTable(playerIdentifier, table.getId());
   }
 
   public void sendTablesTo(UUID playerIdentifier) {
