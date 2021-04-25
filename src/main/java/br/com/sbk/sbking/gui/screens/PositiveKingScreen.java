@@ -23,6 +23,9 @@ public class PositiveKingScreen extends GameScreen {
 
         while (true) {
             sleepFor(300);
+            if (!this.checkIfStillIsOnGameScreen()) {
+                return; // Exits when server says it is not on the game anymore.
+            }
             if (sbkingClient.isSpectator()) {
                 if (sbkingClient.getDealHasChanged() || ClientApplicationState.getGUIHasChanged()) {
                     if (!ClientApplicationState.getGUIHasChanged()) {
@@ -32,7 +35,7 @@ public class PositiveKingScreen extends GameScreen {
                     Deal currentDeal = sbkingClient.getDeal();
                     if (currentDeal != null) {
                         Painter painter = this.painterFactory.getSpectatorPainter(currentDeal,
-                                sbkingClient.getPlayCardActionListener());
+                                sbkingClient.getActionListener());
                         sbkingClientJFrame.paintPainter(painter);
                     }
                 }
@@ -45,7 +48,7 @@ public class PositiveKingScreen extends GameScreen {
                     }
                     LOGGER.info("Starting to paint Deal");
                     Painter painter = this.painterFactory.getDealPainter(sbkingClient.getDeal(),
-                            sbkingClient.getDirection(), sbkingClient.getPlayCardActionListener());
+                            sbkingClient.getDirection(), sbkingClient.getActionListener());
                     sbkingClientJFrame.paintPainter(painter);
                     LOGGER.info("Finished painting Deal");
                 } else {

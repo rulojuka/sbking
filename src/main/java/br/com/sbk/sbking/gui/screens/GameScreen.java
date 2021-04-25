@@ -23,4 +23,8 @@ public abstract class GameScreen implements SBKingScreen {
     }
   }
 
+  protected boolean checkIfStillIsOnGameScreen() {
+    return sbkingClient.getGameName() != null;
+  }
+
 }

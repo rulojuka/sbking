@@ -5,6 +5,7 @@ import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.StreamSupport;
 
 import com.esotericsoftware.kryonet.Server;
 
@@ -74,13 +75,12 @@ public class KryonetSBKingServer extends Server {
     }
   }
 
-  private void sendAll(SBKingMessage message) {
-    LOGGER.debug("Sending everyone " + message.getClass().toString());
-    this.sendToAllTCP(message); // This will need to change when there are multiple tables.
+  private void sendMany(SBKingMessage message, Iterable<UUID> receivers) {
+    StreamSupport.stream(receivers.spliterator(), false).forEach(clientId -> this.sendOneTo(message, clientId));
   }
 
-  public void sendFinishDealAll() {
-    this.sendAll(new FinishDealMessage());
+  public void sendFinishDealTo(Iterable<UUID> receivers) {
+    this.sendMany(new FinishDealMessage(), receivers);
   }
 
   public void sendDirectionTo(Direction direction, UUID playerIdentifier) {
@@ -95,36 +95,36 @@ public class KryonetSBKingServer extends Server {
     this.sendOneTo(new IsNotSpectatorMessage(), playerIdentifier);
   }
 
-  public void sendDealAll(Deal deal) {
-    this.sendAll(new DealMessage(deal));
+  public void sendDealTo(Deal deal, Iterable<UUID> receivers) {
+    this.sendMany(new DealMessage(deal), receivers);
   }
 
   public void sendDealTo(Deal deal, UUID playerIdentifier) {
     this.sendOneTo(new DealMessage(deal), playerIdentifier);
   }
 
-  public void sendGameModeOrStrainChooserAll(Direction direction) {
-    this.sendAll(new GameModeOrStrainChooserMessage(direction));
+  public void sendGameModeOrStrainChooserTo(Direction direction, Iterable<UUID> receivers) {
+    this.sendMany(new GameModeOrStrainChooserMessage(direction), receivers);
   }
 
-  public void sendPositiveOrNegativeChooserAll(Direction direction) {
-    this.sendAll(new PositiveOrNegativeChooserMessage(direction));
+  public void sendPositiveOrNegativeChooserTo(Direction direction, Iterable<UUID> receivers) {
+    this.sendMany(new PositiveOrNegativeChooserMessage(direction), receivers);
   }
 
-  public void sendPositiveOrNegativeAll(String positiveOrNegative) {
-    this.sendAll(new PositiveOrNegativeMessage(positiveOrNegative));
+  public void sendPositiveOrNegativeTo(String positiveOrNegative, Iterable<UUID> receivers) {
+    this.sendMany(new PositiveOrNegativeMessage(positiveOrNegative), receivers);
   }
 
-  public void sendInitializeDealAll() {
-    this.sendAll(new InitializeDealMessage());
+  public void sendInitializeDealTo(Iterable<UUID> receivers) {
+    this.sendMany(new InitializeDealMessage(), receivers);
   }
 
-  public void sendInvalidRulesetAll() {
-    this.sendAll(new InvalidRulesetMessage());
+  public void sendInvalidRulesetTo(Iterable<UUID> receivers) {
+    this.sendMany(new InvalidRulesetMessage(), receivers);
   }
 
-  public void sendValidRulesetAll() {
-    this.sendAll(new ValidRulesetMessage());
+  public void sendValidRulesetTo(Iterable<UUID> receivers) {
+    this.sendMany(new ValidRulesetMessage(), receivers);
   }
 
   public String getNicknameFromIdentifier(UUID identifier) {
@@ -143,14 +143,4 @@ public class KryonetSBKingServer extends Server {
     this.sendOneTo(new GetTablesResponseMessage(tablesDTO), playerIdentifier);
   }
 
-  // public void enterTable(){
-  // Table table = this.sbkingServer.getTable();
-  // if (table != null) {
-  // GameServer gameServer = table.getGameServer();
-  // String gameName =
-  // GameNameFromGameServerIdentifier.identify(gameServer.getClass());
-  // this.sendYourTableIsTo(gameName, identifier);
-  // this.sbkingServer.addSpectator(identifier, table.getId());
-  // }
-  // }
 }

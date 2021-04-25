@@ -79,13 +79,7 @@ public class SBKingClientMessageConsumer implements Runnable {
     } else if (message instanceof YourTableIsMessage) {
       this.sbkingClient.setGameName((String) content);
     } else if (message instanceof GetTablesResponseMessage) {
-      List<LobbyScreenTableDTO> tables = (List<LobbyScreenTableDTO>) content;
-      LOGGER.info("The tables are: \n\n\n\n");
-      for (LobbyScreenTableDTO table : tables) {
-        LOGGER.info("Id: " + table.getId());
-        LOGGER.info("Game Name: " + table.getGameName());
-        LOGGER.info("Number of specs: " + table.getNumberOfSpectators());
-      }
+      this.sbkingClient.setTables((List<LobbyScreenTableDTO>) content);
     } else {
       LOGGER.error("Could not understand message.");
       LOGGER.error(message);

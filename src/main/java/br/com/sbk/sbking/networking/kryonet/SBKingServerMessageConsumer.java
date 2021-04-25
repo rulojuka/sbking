@@ -15,6 +15,8 @@ import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.ChooseNegati
 import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.ChoosePositiveMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.CreateTableMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.GetTablesMessage;
+import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.JoinTableMessage;
+import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.LeaveTableMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.MoveToSeatMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.PlayCardMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.SetNicknameMessage;
@@ -70,10 +72,16 @@ public class SBKingServerMessageConsumer implements Runnable {
       this.sbkingServer.createTable(gameServerClass);
     } else if (message instanceof GetTablesMessage) {
       this.sbkingServer.sendTablesTo(playerIdentifier);
+    } else if (message instanceof JoinTableMessage) {
+      JoinTableMessage joinTableMessage = (JoinTableMessage) message;
+      this.sbkingServer.joinTable(playerIdentifier, joinTableMessage.getContent());
+    } else if (message instanceof LeaveTableMessage) {
+      this.sbkingServer.leaveTable(playerIdentifier);
     } else {
       LOGGER.error("Could not understand message.");
       LOGGER.error(message);
     }
+
   }
 
 }

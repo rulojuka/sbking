@@ -13,7 +13,7 @@ public class UndoElement {
         JButton undoButton = new UndoButton();
         undoButton.addActionListener(actionListener);
         undoButton.setText("UNDO");
-        undoButton.setBounds(point.x, point.y, 100, 30);
+        undoButton.setBounds(point.x, point.y, 140, 30);
         container.add(undoButton);
     }
 
