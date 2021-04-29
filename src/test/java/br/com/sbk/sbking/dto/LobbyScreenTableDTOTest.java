@@ -10,6 +10,7 @@ import java.util.UUID;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.core.Player;
@@ -17,19 +18,20 @@ import br.com.sbk.sbking.networking.server.Table;
 
 public class LobbyScreenTableDTOTest {
 
-    @Mock
     private UUID tableId;
+    private String gameName;
+    private int numberOfSpectators;
     @Mock
     private Map<Direction, Player> playersDirections;
-    @Mock
-    private String gameName;
-    @Mock
-    private int numberOfSpectators;
 
     LobbyScreenTableDTO subject;
 
     @Before
     public void setupMocks() {
+        MockitoAnnotations.initMocks(this);
+        this.tableId = UUID.randomUUID();
+        this.gameName = "Minibridge";
+        this.numberOfSpectators = 4;
         Table table = mock(Table.class);
         when(table.getId()).thenReturn(tableId);
         when(table.getPlayersDirections()).thenReturn(playersDirections);
