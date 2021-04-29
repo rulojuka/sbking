@@ -1,6 +1,6 @@
 package br.com.sbk.sbking.core.rulesets;
 
-import br.com.sbk.sbking.core.rulesets.abstractClasses.NegativeRuleset;
+import br.com.sbk.sbking.core.rulesets.abstractrulesets.NegativeRuleset;
 import br.com.sbk.sbking.core.rulesets.concrete.NegativeHeartsRuleset;
 import br.com.sbk.sbking.core.rulesets.concrete.NegativeKingRuleset;
 import br.com.sbk.sbking.core.rulesets.concrete.NegativeLastTwoRuleset;

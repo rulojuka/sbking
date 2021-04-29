@@ -11,7 +11,7 @@ import java.util.UUID;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.core.Player;
 import br.com.sbk.sbking.networking.kryonet.messages.GameNameFromGameServerIdentifier;
-import br.com.sbk.sbking.networking.server.gameServer.GameServer;
+import br.com.sbk.sbking.networking.server.gameserver.GameServer;
 
 /**
  * This class has two responsibilities: 1: control the players and the

@@ -11,7 +11,7 @@ import org.junit.Test;
 
 import br.com.sbk.sbking.core.Suit;
 import br.com.sbk.sbking.core.Trick;
-import br.com.sbk.sbking.core.cardComparators.CardInsideHandWithSuitComparator;
+import br.com.sbk.sbking.core.comparators.CardInsideHandWithSuitComparator;
 
 public class PositiveWithTrumpsRulesetTest {
 

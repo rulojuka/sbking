@@ -5,8 +5,8 @@ import java.awt.Container;
 
 import javax.swing.JTextField;
 
-import br.com.sbk.sbking.gui.JElements.SBKingButton;
 import br.com.sbk.sbking.gui.elements.ConnectToServerElement;
+import br.com.sbk.sbking.gui.jelements.SBKingButton;
 import br.com.sbk.sbking.gui.screens.WelcomeScreen;
 
 public class ConnectToServerPainter implements Painter {

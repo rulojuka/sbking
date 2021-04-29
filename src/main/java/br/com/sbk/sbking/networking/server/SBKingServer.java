@@ -17,15 +17,15 @@ import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.core.Player;
 import br.com.sbk.sbking.core.rulesets.RulesetFromShortDescriptionIdentifier;
-import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
+import br.com.sbk.sbking.core.rulesets.abstractrulesets.Ruleset;
 import br.com.sbk.sbking.dto.LobbyScreenTableDTO;
 import br.com.sbk.sbking.gui.models.PositiveOrNegative;
 import br.com.sbk.sbking.networking.kryonet.KryonetSBKingServer;
 import br.com.sbk.sbking.networking.kryonet.messages.GameNameFromGameServerIdentifier;
-import br.com.sbk.sbking.networking.server.gameServer.GameServer;
-import br.com.sbk.sbking.networking.server.gameServer.KingGameServer;
-import br.com.sbk.sbking.networking.server.gameServer.MinibridgeGameServer;
-import br.com.sbk.sbking.networking.server.gameServer.PositiveKingGameServer;
+import br.com.sbk.sbking.networking.server.gameserver.GameServer;
+import br.com.sbk.sbking.networking.server.gameserver.KingGameServer;
+import br.com.sbk.sbking.networking.server.gameserver.MinibridgeGameServer;
+import br.com.sbk.sbking.networking.server.gameserver.PositiveKingGameServer;
 
 /**
  * This class has two responsibilities: 1: receiving method calls from the

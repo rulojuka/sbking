@@ -3,7 +3,7 @@ package br.com.sbk.sbking.core.rulesets.concrete;
 import static br.com.sbk.sbking.core.GameConstants.NUMBER_OF_HEART_KINGS;
 
 import br.com.sbk.sbking.core.Trick;
-import br.com.sbk.sbking.core.rulesets.abstractClasses.NegativeRuleset;
+import br.com.sbk.sbking.core.rulesets.abstractrulesets.NegativeRuleset;
 import br.com.sbk.sbking.core.rulesets.implementations.DefaultSuitFollowable;
 import br.com.sbk.sbking.core.rulesets.implementations.NoTrumpSuitWinnable;
 import br.com.sbk.sbking.core.rulesets.implementations.ProhibitsHearts;

@@ -6,7 +6,7 @@ import java.awt.Point;
 
 import javax.swing.JLabel;
 
-import br.com.sbk.sbking.gui.JElements.SBKingLabel;
+import br.com.sbk.sbking.gui.jelements.SBKingLabel;
 import br.com.sbk.sbking.gui.models.KingGameScoreboard;
 
 public class GameScoreboardElement {

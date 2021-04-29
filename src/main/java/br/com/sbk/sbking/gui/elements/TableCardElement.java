@@ -13,8 +13,8 @@ import javax.swing.JLabel;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.core.Player;
 import br.com.sbk.sbking.dto.LobbyScreenTableDTO;
-import br.com.sbk.sbking.gui.JElements.JoinTableButton;
-import br.com.sbk.sbking.gui.JElements.SBKingLabel;
+import br.com.sbk.sbking.gui.jelements.JoinTableButton;
+import br.com.sbk.sbking.gui.jelements.SBKingLabel;
 
 public class TableCardElement {
 

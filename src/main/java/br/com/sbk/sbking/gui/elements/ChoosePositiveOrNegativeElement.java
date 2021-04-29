@@ -15,7 +15,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 
-import br.com.sbk.sbking.gui.JElements.SBKingLabel;
+import br.com.sbk.sbking.gui.jelements.SBKingLabel;
 import br.com.sbk.sbking.networking.client.SBKingClient;
 
 public class ChoosePositiveOrNegativeElement {

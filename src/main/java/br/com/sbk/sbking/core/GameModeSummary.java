@@ -1,6 +1,6 @@
 package br.com.sbk.sbking.core;
 
-import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
+import br.com.sbk.sbking.core.rulesets.abstractrulesets.Ruleset;
 
 public class GameModeSummary {
 

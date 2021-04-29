@@ -8,8 +8,8 @@ import java.awt.Point;
 import javax.swing.JLabel;
 
 import br.com.sbk.sbking.core.Direction;
-import br.com.sbk.sbking.gui.JElements.SBKingLabel;
 import br.com.sbk.sbking.gui.constants.FrameConstants;
+import br.com.sbk.sbking.gui.jelements.SBKingLabel;
 
 public class CurrentPlayerElement {
 

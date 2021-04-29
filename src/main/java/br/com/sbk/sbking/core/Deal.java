@@ -7,11 +7,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import br.com.sbk.sbking.core.cardComparators.CardInsideHandWithSuitComparator;
+import br.com.sbk.sbking.core.comparators.CardInsideHandWithSuitComparator;
 import br.com.sbk.sbking.core.exceptions.DoesNotFollowSuitException;
 import br.com.sbk.sbking.core.exceptions.PlayedCardInAnotherPlayersTurnException;
 import br.com.sbk.sbking.core.exceptions.PlayedHeartsWhenProhibitedException;
-import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
+import br.com.sbk.sbking.core.rulesets.abstractrulesets.Ruleset;
 
 public class Deal {
 

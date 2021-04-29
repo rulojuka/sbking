@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
-import br.com.sbk.sbking.gui.JElements.LeaveTableButton;
+import br.com.sbk.sbking.gui.jelements.LeaveTableButton;
 
 public class LeaveTableElement {
 
