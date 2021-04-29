@@ -1,5 +1,6 @@
 package br.com.sbk.sbking.gui.models;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,6 +23,29 @@ public class KingGameScoreboard {
     private GameModeSummary[] games = new GameModeSummary[10];
     private int gamesPlayed = 0;
     int positivesPlayed = 0;
+
+    private static final Map<Integer, String> NEGATIVE_GAME_NAMES;
+    private static final Map<Ruleset, Integer> NEGATIVE_POSITIONS;
+
+    static {
+        Map<Integer, String> negativeGameNames = new HashMap<Integer, String>();
+        negativeGameNames.put(1, new NegativeTricksRuleset().getShortDescription());
+        negativeGameNames.put(2, new NegativeHeartsRuleset().getShortDescription());
+        negativeGameNames.put(3, new NegativeMenRuleset().getShortDescription());
+        negativeGameNames.put(4, new NegativeWomenRuleset().getShortDescription());
+        negativeGameNames.put(5, new NegativeLastTwoRuleset().getShortDescription());
+        negativeGameNames.put(6, new NegativeKingRuleset().getShortDescription());
+        NEGATIVE_GAME_NAMES = Collections.unmodifiableMap(negativeGameNames);
+
+        Map<Ruleset, Integer> negativePositions = new HashMap<Ruleset, Integer>();
+        negativePositions.put(new NegativeTricksRuleset(), 1);
+        negativePositions.put(new NegativeHeartsRuleset(), 2);
+        negativePositions.put(new NegativeMenRuleset(), 3);
+        negativePositions.put(new NegativeWomenRuleset(), 4);
+        negativePositions.put(new NegativeLastTwoRuleset(), 5);
+        negativePositions.put(new NegativeKingRuleset(), 6);
+        NEGATIVE_POSITIONS = Collections.unmodifiableMap(negativePositions);
+    }
 
     public void addFinishedDeal(Deal deal) {
         if (!deal.isFinished()) {
@@ -90,18 +114,6 @@ public class KingGameScoreboard {
         return response;
     }
 
-    @SuppressWarnings("serial")
-    private static final Map<Integer, String> NEGATIVE_GAME_NAMES = new HashMap<Integer, String>() {
-        {
-            put(1, new NegativeTricksRuleset().getShortDescription());
-            put(2, new NegativeHeartsRuleset().getShortDescription());
-            put(3, new NegativeMenRuleset().getShortDescription());
-            put(4, new NegativeWomenRuleset().getShortDescription());
-            put(5, new NegativeLastTwoRuleset().getShortDescription());
-            put(6, new NegativeKingRuleset().getShortDescription());
-        }
-    };
-
     private String getNameOfGameNumber(int number) {
         String name = NEGATIVE_GAME_NAMES.get(number);
         if (name == null) {
@@ -110,18 +122,6 @@ public class KingGameScoreboard {
             return name;
         }
     }
-
-    @SuppressWarnings("serial")
-    private static final Map<Ruleset, Integer> NEGATIVE_POSITIONS = new HashMap<Ruleset, Integer>() {
-        {
-            put(new NegativeTricksRuleset(), 1);
-            put(new NegativeHeartsRuleset(), 2);
-            put(new NegativeMenRuleset(), 3);
-            put(new NegativeWomenRuleset(), 4);
-            put(new NegativeLastTwoRuleset(), 5);
-            put(new NegativeKingRuleset(), 6);
-        }
-    };
 
     private int getPositionOfRuleset(Ruleset ruleset) {
         Integer position = NEGATIVE_POSITIONS.get(ruleset);
