@@ -10,19 +10,19 @@ import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.networking.kryonet.messages.GameServerFromGameNameIdentifier;
 import br.com.sbk.sbking.networking.kryonet.messages.SBKingMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.SBKingMessageWithIdentifier;
-import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.ChooseGameModeOrStrainMessage;
-import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.ChooseNegativeMessage;
-import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.ChoosePositiveMessage;
-import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.CreateTableMessage;
-import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.GetTablesMessage;
-import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.JoinTableMessage;
-import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.LeaveTableMessage;
-import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.MoveToSeatMessage;
-import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.PlayCardMessage;
-import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.SetNicknameMessage;
-import br.com.sbk.sbking.networking.kryonet.messages.ClientToServer.UndoMessage;
+import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.ChooseGameModeOrStrainMessage;
+import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.ChooseNegativeMessage;
+import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.ChoosePositiveMessage;
+import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.CreateTableMessage;
+import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.GetTablesMessage;
+import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.JoinTableMessage;
+import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.LeaveTableMessage;
+import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.MoveToSeatMessage;
+import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.PlayCardMessage;
+import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.SetNicknameMessage;
+import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.UndoMessage;
 import br.com.sbk.sbking.networking.server.SBKingServer;
-import br.com.sbk.sbking.networking.server.gameServer.GameServer;
+import br.com.sbk.sbking.networking.server.gameserver.GameServer;
 
 public class SBKingServerMessageConsumer implements Runnable {
 

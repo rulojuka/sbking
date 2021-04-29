@@ -1,8 +1,8 @@
 package br.com.sbk.sbking.core.rulesets.concrete;
 
 import br.com.sbk.sbking.core.Suit;
-import br.com.sbk.sbking.core.cardComparators.CardInsideHandWithSuitComparator;
-import br.com.sbk.sbking.core.rulesets.abstractClasses.PositiveRuleset;
+import br.com.sbk.sbking.core.comparators.CardInsideHandWithSuitComparator;
+import br.com.sbk.sbking.core.rulesets.abstractrulesets.PositiveRuleset;
 import br.com.sbk.sbking.core.rulesets.implementations.DefaultSuitFollowable;
 import br.com.sbk.sbking.core.rulesets.implementations.DontProhibitsHearts;
 import br.com.sbk.sbking.core.rulesets.implementations.TrumpSuitWinnable;

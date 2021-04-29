@@ -10,8 +10,8 @@ import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.core.Hand;
 import br.com.sbk.sbking.core.Player;
-import br.com.sbk.sbking.gui.JElements.CardButton;
-import br.com.sbk.sbking.gui.JElements.SitOrLeaveButton;
+import br.com.sbk.sbking.gui.jelements.CardButton;
+import br.com.sbk.sbking.gui.jelements.SitOrLeaveButton;
 import br.com.sbk.sbking.gui.models.DeckCardImageInformation;
 
 public class HandElement {

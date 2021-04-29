@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import br.com.sbk.sbking.core.cardComparators.CardInsideHandComparator;
+import br.com.sbk.sbking.core.comparators.CardInsideHandComparator;
 
 public class Board {
 

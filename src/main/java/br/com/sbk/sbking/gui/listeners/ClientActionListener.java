@@ -4,11 +4,11 @@ import java.util.UUID;
 
 import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Direction;
-import br.com.sbk.sbking.gui.JElements.CardButton;
-import br.com.sbk.sbking.gui.JElements.JoinTableButton;
-import br.com.sbk.sbking.gui.JElements.LeaveTableButton;
-import br.com.sbk.sbking.gui.JElements.SitOrLeaveButton;
-import br.com.sbk.sbking.gui.JElements.UndoButton;
+import br.com.sbk.sbking.gui.jelements.CardButton;
+import br.com.sbk.sbking.gui.jelements.JoinTableButton;
+import br.com.sbk.sbking.gui.jelements.LeaveTableButton;
+import br.com.sbk.sbking.gui.jelements.SitOrLeaveButton;
+import br.com.sbk.sbking.gui.jelements.UndoButton;
 import br.com.sbk.sbking.networking.kryonet.KryonetSBKingClientActionListener;
 
 public class ClientActionListener implements java.awt.event.ActionListener {

@@ -12,7 +12,7 @@ import com.esotericsoftware.kryonet.Server;
 
 import br.com.sbk.sbking.networking.kryonet.messages.SBKingMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.SBKingMessageWithIdentifier;
-import br.com.sbk.sbking.networking.kryonet.messages.ServerToClient.TextMessage;
+import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.TextMessage;
 
 public class KryonetServerListenerFactory {
 

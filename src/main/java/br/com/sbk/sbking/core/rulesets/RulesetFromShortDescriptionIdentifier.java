@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import br.com.sbk.sbking.core.Strain;
-import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
+import br.com.sbk.sbking.core.rulesets.abstractrulesets.Ruleset;
 
 public class RulesetFromShortDescriptionIdentifier {
 

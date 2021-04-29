@@ -8,7 +8,7 @@ import java.util.List;
 import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.core.Trick;
-import br.com.sbk.sbking.gui.JElements.CardButton;
+import br.com.sbk.sbking.gui.jelements.CardButton;
 import br.com.sbk.sbking.gui.models.DeckCardImageInformation;
 
 public class TrickElement {

@@ -5,9 +5,9 @@ import static br.com.sbk.sbking.core.GameConstants.TOTAL_GAMES;
 import java.util.HashSet;
 import java.util.Set;
 
-import br.com.sbk.sbking.core.rulesets.abstractClasses.NegativeRuleset;
-import br.com.sbk.sbking.core.rulesets.abstractClasses.PositiveRuleset;
-import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
+import br.com.sbk.sbking.core.rulesets.abstractrulesets.NegativeRuleset;
+import br.com.sbk.sbking.core.rulesets.abstractrulesets.PositiveRuleset;
+import br.com.sbk.sbking.core.rulesets.abstractrulesets.Ruleset;
 import br.com.sbk.sbking.core.rulesets.concrete.NoRuleset;
 import br.com.sbk.sbking.gui.models.KingGameScoreboard;
 

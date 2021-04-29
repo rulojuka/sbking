@@ -1,6 +1,6 @@
 package br.com.sbk.sbking.core.rulesets.concrete;
 
-import br.com.sbk.sbking.core.rulesets.abstractClasses.PositiveRuleset;
+import br.com.sbk.sbking.core.rulesets.abstractrulesets.PositiveRuleset;
 import br.com.sbk.sbking.core.rulesets.implementations.DefaultSuitFollowable;
 import br.com.sbk.sbking.core.rulesets.implementations.DontProhibitsHearts;
 import br.com.sbk.sbking.core.rulesets.implementations.NoTrumpSuitWinnable;

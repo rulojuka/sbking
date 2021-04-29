@@ -9,8 +9,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-import br.com.sbk.sbking.gui.JElements.ConnectToServerButton;
-import br.com.sbk.sbking.gui.JElements.SBKingLabel;
+import br.com.sbk.sbking.gui.jelements.ConnectToServerButton;
+import br.com.sbk.sbking.gui.jelements.SBKingLabel;
 
 public class ConnectToServerElement {
 

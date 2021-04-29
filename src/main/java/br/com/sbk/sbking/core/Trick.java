@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import br.com.sbk.sbking.core.cardComparators.RankComparator;
+import br.com.sbk.sbking.core.comparators.RankComparator;
 import br.com.sbk.sbking.core.exceptions.TrickAlreadyFullException;
 
 public class Trick {

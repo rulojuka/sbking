@@ -2,8 +2,8 @@ package br.com.sbk.sbking.core;
 
 import java.util.List;
 
-import br.com.sbk.sbking.core.cardComparators.CardInsideHandComparator;
-import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
+import br.com.sbk.sbking.core.comparators.CardInsideHandComparator;
+import br.com.sbk.sbking.core.rulesets.abstractrulesets.Ruleset;
 import br.com.sbk.sbking.core.rulesets.concrete.PositiveNoTrumpsRuleset;
 import br.com.sbk.sbking.core.rulesets.concrete.PositiveWithTrumpsRuleset;
 

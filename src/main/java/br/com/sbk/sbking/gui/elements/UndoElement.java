@@ -4,7 +4,8 @@ import java.awt.Container;
 import java.awt.Point;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
-import br.com.sbk.sbking.gui.JElements.UndoButton;
+
+import br.com.sbk.sbking.gui.jelements.UndoButton;
 
 public class UndoElement {
 

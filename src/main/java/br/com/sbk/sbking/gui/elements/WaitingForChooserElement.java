@@ -7,7 +7,7 @@ import java.awt.Container;
 import javax.swing.JLabel;
 
 import br.com.sbk.sbking.core.Direction;
-import br.com.sbk.sbking.gui.JElements.SBKingLabel;
+import br.com.sbk.sbking.gui.jelements.SBKingLabel;
 
 public class WaitingForChooserElement {
 

@@ -1,7 +1,7 @@
 package br.com.sbk.sbking.core;
 
-import br.com.sbk.sbking.core.rulesets.abstractClasses.PositiveRuleset;
-import br.com.sbk.sbking.core.rulesets.abstractClasses.Ruleset;
+import br.com.sbk.sbking.core.rulesets.abstractrulesets.PositiveRuleset;
+import br.com.sbk.sbking.core.rulesets.abstractrulesets.Ruleset;
 import br.com.sbk.sbking.core.rulesets.concrete.NoRuleset;
 
 public class MinibridgeGame extends TrickGame {
