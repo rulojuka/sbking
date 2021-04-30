@@ -50,12 +50,12 @@ public class Table {
     LOGGER.debug("Entered moveToSeat.");
     Player currentSeatedPlayer = this.seatedPlayers.get(direction);
     if (currentSeatedPlayer != null) {
-      LOGGER.debug("Trying to seat in an occupied seat. First unsitting player from " + direction.getCompleteName());
+      LOGGER.trace("Trying to seat in an occupied seat. First unsitting player from " + direction.getCompleteName());
       this.unsit(direction);
     }
 
     if (!playerTryingToSeat.equals(currentSeatedPlayer)) {
-      LOGGER.debug("Now trying to seat in an empty seat: " + direction.getCompleteName());
+      LOGGER.trace("Now trying to seat in an empty seat: " + direction.getCompleteName());
       this.sitOnEmptySeat(playerTryingToSeat, direction);
     }
 
@@ -110,10 +110,10 @@ public class Table {
   }
 
   private void logAllPlayers() {
-    LOGGER.info("\n\n\n--- Logging players ---");
+    LOGGER.info("\n\n--- Logging all players from table " + this.id + " ---");
     seatedPlayers.values().stream().forEach(this::printPlayerInfo);
     spectatorPlayers.stream().forEach(this::printPlayerInfo);
-    LOGGER.info("--- Finished Logging players ---\n\n\n");
+    LOGGER.info("--- Finished Logging players ---\n");
   }
 
   private void printPlayerInfo(Player player) {

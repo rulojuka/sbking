@@ -20,8 +20,6 @@ public class KryonetClientListenerFactory {
       }
 
       public void received(Connection connection, Object object) {
-        LOGGER.debug("Entered --received-- lifecycle method.");
-
         SBKingMessage message = null;
 
         if (object instanceof FrameworkMessage) {
@@ -55,8 +53,7 @@ public class KryonetClientListenerFactory {
 
       public void disconnected(Connection connection) {
         KryonetSBKingClient kryonetSBKingClient = null;
-        LOGGER.debug("Entered --disconnected-- lifecycle method.");
-        LOGGER.info("Lost connection to server. Trying to reconnect!");
+        LOGGER.warn("Lost connection to server. Trying to reconnect!");
 
         try {
           kryonetSBKingClient = (KryonetSBKingClient) client;

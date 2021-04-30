@@ -48,8 +48,6 @@ public class KryonetServerListenerFactory {
       }
 
       public void received(Connection connection, Object object) {
-        LOGGER.info("Entered --received-- lifecycle method.");
-
         KryonetSBKingServer kryonetSBKingServer = null;
         SBKingMessage message = null;
         ConnectionWithIdentifier connectionWithPlayer = null;
@@ -85,10 +83,9 @@ public class KryonetServerListenerFactory {
         }
 
         UUID identifier = connectionWithPlayer.getIdentifier();
-        LOGGER.debug("Received message from UUID: " + identifier);
-        LOGGER.debug("Its nickname is: " + kryonetSBKingServer.getNicknameFromIdentifier(identifier));
-        LOGGER.debug("Received " + message.getClass() + " message.");
-        LOGGER.debug("Content is " + message.getContent() + ".");
+        LOGGER.debug("Received " + message.getClass() + " message from UUID/Nickname: " + identifier + "/"
+            + kryonetSBKingServer.getNicknameFromIdentifier(identifier));
+        LOGGER.trace("Content is " + message.getContent() + ".");
         // This possibly needs to be in a Thread
         addToQueue(message, connectionWithPlayer);
       }

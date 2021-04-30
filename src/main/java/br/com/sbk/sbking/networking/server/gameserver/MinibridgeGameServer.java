@@ -58,7 +58,7 @@ public class MinibridgeGameServer extends GameServer {
             this.getCurrentGameModeOrStrainChooser());
 
         if (!isRulesetPermitted) {
-          LOGGER.info("This ruleset is not permitted. Restarting choose procedure");
+          LOGGER.warn("This ruleset is not permitted. Restarting choose procedure");
           this.sendInvalidRulesetAll();
         } else {
           this.sendValidRulesetAll();
@@ -128,7 +128,7 @@ public class MinibridgeGameServer extends GameServer {
         throw new PlayedCardInAnotherPlayersTurnException();
       }
     } catch (Exception e) {
-      LOGGER.debug(e);
+      LOGGER.info(e);
     }
   }
 

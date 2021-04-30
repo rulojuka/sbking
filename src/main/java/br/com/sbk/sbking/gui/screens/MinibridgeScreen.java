@@ -29,8 +29,8 @@ public class MinibridgeScreen extends GameScreen {
       if (sbkingClient.isSpectator()) {
         if (sbkingClient.getDealHasChanged() || ClientApplicationState.getGUIHasChanged()) {
           if (!ClientApplicationState.getGUIHasChanged()) {
-            LOGGER.info("Deal has changed. Painting deal.");
-            LOGGER.info("It is a spectator.");
+            LOGGER.trace("Deal has changed. Painting deal.");
+            LOGGER.trace("It is a spectator.");
           }
           Deal currentDeal = sbkingClient.getDeal();
           if (currentDeal != null) {
@@ -42,25 +42,25 @@ public class MinibridgeScreen extends GameScreen {
         sleepFor(100);
         if (sbkingClient.getDealHasChanged() || ClientApplicationState.getGUIHasChanged()) {
           if (!ClientApplicationState.getGUIHasChanged()) {
-            LOGGER.info("Deal has changed. Painting deal.");
-            LOGGER.info("It is a player.");
+            LOGGER.trace("Deal has changed. Painting deal.");
+            LOGGER.trace("It is a player.");
           }
-          LOGGER.info("Starting to paint Deal");
+          LOGGER.trace("Starting to paint Deal");
           Painter painter = this.painterFactory.getDealWithDummyPainter(sbkingClient.getDeal(),
               sbkingClient.getDirection(), sbkingClient.getActionListener());
           sbkingClientJFrame.paintPainter(painter);
-          LOGGER.info("Finished painting Deal");
+          LOGGER.trace("Finished painting Deal");
         } else {
           if (!sbkingClient.isRulesetValidSet()) {
-            LOGGER.info("Suit not selected yet!");
+            LOGGER.debug("Suit not selected yet!");
             if (sbkingClient.getDirection() == null || !sbkingClient.isGameModeOrStrainChooserSet()) {
-              LOGGER.info("Direction not set yet.");
-              LOGGER.info("or Chooser not set yet.");
+              LOGGER.trace("Direction not set yet.");
+              LOGGER.trace("or Chooser not set yet.");
               continue;
             } else {
-              LOGGER.info("paintWaitingForChoosingGameModeOrStrainScreen!");
-              LOGGER.info("My direction: " + sbkingClient.getDirection());
-              LOGGER.info("Chooser: " + sbkingClient.getGameModeOrStrainChooser());
+              LOGGER.trace("paintWaitingForChoosingGameModeOrStrainScreen!");
+              LOGGER.trace("My direction: " + sbkingClient.getDirection());
+              LOGGER.trace("Chooser: " + sbkingClient.getGameModeOrStrainChooser());
 
               Painter painter = this.painterFactory.getWaitingForChoosingGameModeOrStrainPainter(
                   sbkingClient.getDirection(), sbkingClient.getGameModeOrStrainChooser(), true);

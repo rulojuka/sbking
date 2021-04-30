@@ -50,7 +50,7 @@ public class SBKingClientMessageConsumer implements Runnable {
   }
 
   private void consume(SBKingMessage message) {
-    LOGGER.debug("Entered --onMessage--");
+    LOGGER.trace("Entered --onMessage--");
     Object content = message.getContent();
     if (message instanceof TextMessage) {
       LOGGER.info("Received message from server: " + content);
@@ -83,6 +83,7 @@ public class SBKingClientMessageConsumer implements Runnable {
     } else {
       LOGGER.error("Could not understand message.");
       LOGGER.error(message);
+      LOGGER.error(content);
     }
 
   }

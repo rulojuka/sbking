@@ -31,7 +31,7 @@ public class WelcomeScreen implements SBKingScreen {
       this.sbkingClient = SBKingClientFactory.createWithKryonetConnection(nickname, hostname, port);
       this.connectedToServer = true;
     } else {
-      LOGGER.error("Invalid IP");
+      LOGGER.error("Invalid IP"); // FIXME warn user about this.
     }
   }
 
@@ -51,9 +51,9 @@ public class WelcomeScreen implements SBKingScreen {
 
   @Override
   public void runAt(SBKingClientJFrame sbkingClientJFrame) {
-    LOGGER.info("Starting to paint WelcomeScreen");
+    LOGGER.debug("Starting to paint WelcomeScreen");
     sbkingClientJFrame.paintPainter(new ConnectToServerPainter(this));
-    LOGGER.info("Finished painting WelcomeScreen");
+    LOGGER.debug("Finished painting WelcomeScreen");
 
     LOGGER.info("Waiting for connectedToServer to be true");
     while (!connectedToServer) {
@@ -66,7 +66,7 @@ public class WelcomeScreen implements SBKingScreen {
     try {
       Thread.sleep(miliseconds);
     } catch (InterruptedException e) {
-      LOGGER.debug(e);
+      LOGGER.error(e);
     }
   }
 

@@ -44,16 +44,16 @@ public abstract class GameServer implements Runnable {
     }
 
     protected synchronized void syncPlayCard(Card card) {
-        LOGGER.info("Entering synchronized play card");
+        LOGGER.trace("Entering synchronized play card");
         this.game.getCurrentDeal().playCard(card);
-        LOGGER.info("Leaving synchronized play card");
+        LOGGER.trace("Leaving synchronized play card");
     }
 
     public void notifyPlayCard(Card card, Direction direction) {
         synchronized (cardPlayNotification) {
-            LOGGER.info("Started notifying main thread that I(" + direction + ") want to play the " + card);
+            LOGGER.trace("Started notifying main thread that I(" + direction + ") want to play the " + card);
             this.releaseAllWaiters(card, direction);
-            LOGGER.info("Finished notifying main thread that I(" + direction + ") want to play the " + card);
+            LOGGER.trace("Finished notifying main thread that I(" + direction + ") want to play the " + card);
         }
     }
 

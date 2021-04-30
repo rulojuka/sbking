@@ -27,7 +27,7 @@ public class LobbyServer {
             port = networkingProperties.getPort();
         } catch (Exception e) {
             LOGGER.fatal("Could not get port from properties.");
-            LOGGER.debug(e);
+            LOGGER.fatal(e);
             System.exit(ErrorCodes.COULD_NOT_GET_PORT_FROM_PROPERTIES_ERROR);
         }
 

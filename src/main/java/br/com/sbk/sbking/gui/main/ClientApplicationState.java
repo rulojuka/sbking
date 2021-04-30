@@ -30,7 +30,7 @@ public class ClientApplicationState {
     }
 
     public static void startAppState() {
-        LOGGER.info("Initializing Frame Constants");
+        LOGGER.debug("Initializing Frame Constants");
 
         FrameConstants.initFrameConstants();
 
@@ -39,7 +39,7 @@ public class ClientApplicationState {
     }
 
     public static void resizeWindow(int width, int height) {
-        LOGGER.info("Resizing Window");
+        LOGGER.debug("Resizing Window");
 
         FrameConstants.computeConstants(width, height);
 
