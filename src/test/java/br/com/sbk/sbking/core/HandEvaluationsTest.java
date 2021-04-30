@@ -130,7 +130,7 @@ public class HandEvaluationsTest {
   }
 
   @Test
-  public void shouldReturnIfItHashasFiveOrMoreCardsInAMajorSuit() {
+  public void shouldReturnIfItHasFiveOrMoreCardsInAMajorSuit() {
     Hand firstHand = this.createMockedHandWithDistribution(this.createSuitDistribution(0, 0, 0, 5));
     Hand secondHand = this.createMockedHandWithDistribution(this.createSuitDistribution(0, 5, 0, 5));
     Hand thirdHand = this.createMockedHandWithDistribution(this.createSuitDistribution(7, 0, 0, 5));
@@ -143,6 +143,22 @@ public class HandEvaluationsTest {
     assertFalse(fiveCardClubsHandEvaluations.hasFiveOrMoreCardsInAMajorSuit());
     assertTrue(fiveCardClubsAndHeartsHandEvaluations.hasFiveOrMoreCardsInAMajorSuit());
     assertTrue(fiveCardClubsAndSevenSpadesHandEvaluations.hasFiveOrMoreCardsInAMajorSuit());
+  }
+
+  @Test
+  public void shouldReturnIfItHasThreeOrMoreCardsInAMinorSuit() {
+    Hand firstHand = this.createMockedHandWithDistribution(this.createSuitDistribution(0, 0, 0, 3));
+    Hand secondHand = this.createMockedHandWithDistribution(this.createSuitDistribution(0, 5, 3, 5));
+    Hand thirdHand = this.createMockedHandWithDistribution(this.createSuitDistribution(7, 0, 0, 2));
+
+    HandEvaluations threeClubCardHandEvaluations = new HandEvaluations(firstHand);
+    HandEvaluations threeClubCardAndFiveHeartsHandEvaluations = new HandEvaluations(secondHand);
+    HandEvaluations twoClubCardHandEvaluations = new HandEvaluations(thirdHand);
+
+    assertFalse(emptyHandEvaluations.hasThreeOrMoreCardsInAMinorSuit());
+    assertTrue(threeClubCardHandEvaluations.hasThreeOrMoreCardsInAMinorSuit());
+    assertTrue(threeClubCardAndFiveHeartsHandEvaluations.hasThreeOrMoreCardsInAMinorSuit());
+    assertFalse(twoClubCardHandEvaluations.hasThreeOrMoreCardsInAMinorSuit());
   }
 
   @Test
