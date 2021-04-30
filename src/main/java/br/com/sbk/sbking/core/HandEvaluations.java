@@ -69,9 +69,20 @@ public final class HandEvaluations {
     return longestMajor >= 5;
   }
 
+  public boolean hasThreeOrMoreCardsInAMinorSuit() {
+    int longestMinor = this.getCardsPerSuit().entrySet().stream().filter(this::isMinorSuit).map(Entry::getValue)
+        .reduce(0, Math::max);
+    return longestMinor >= 3;
+  }
+
   private boolean isMajorSuit(Map.Entry<Suit, Integer> entry) {
     Suit suit = entry.getKey();
     return Suit.SPADES.equals(suit) || Suit.HEARTS.equals(suit);
+  }
+
+  private boolean isMinorSuit(Map.Entry<Suit, Integer> entry) {
+    Suit suit = entry.getKey();
+    return Suit.DIAMONDS.equals(suit) || Suit.CLUBS.equals(suit);
   }
 
   public boolean isBalanced() {
