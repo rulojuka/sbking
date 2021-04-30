@@ -28,8 +28,8 @@ public class CagandoNoBequinhoScreen extends GameScreen {
             if (sbkingClient.isSpectator()) {
                 if (sbkingClient.getDealHasChanged() || ClientApplicationState.getGUIHasChanged()) {
                     if (!ClientApplicationState.getGUIHasChanged()) {
-                        LOGGER.info("Deal has changed. Painting deal.");
-                        LOGGER.info("It is a spectator.");
+                        LOGGER.trace("Deal has changed. Painting deal.");
+                        LOGGER.trace("It is a spectator.");
                     }
                     Deal currentDeal = sbkingClient.getDeal();
                     if (currentDeal != null) {
@@ -41,16 +41,16 @@ public class CagandoNoBequinhoScreen extends GameScreen {
             } else {
                 if (sbkingClient.getDealHasChanged() || ClientApplicationState.getGUIHasChanged()) {
                     if (!ClientApplicationState.getGUIHasChanged()) {
-                        LOGGER.info("Deal has changed. Painting deal.");
-                        LOGGER.info("It is a player.");
+                        LOGGER.trace("Deal has changed. Painting deal.");
+                        LOGGER.trace("It is a player.");
                     }
                     Deal currentDeal = sbkingClient.getDeal();
 
-                    LOGGER.info("Starting to paint Deal");
+                    LOGGER.trace("Starting to paint Deal");
                     Painter painter = this.painterFactory.getDealPainter(currentDeal, sbkingClient.getDirection(),
                             sbkingClient.getActionListener());
                     sbkingClientJFrame.paintPainter(painter);
-                    LOGGER.info("Finished painting Deal");
+                    LOGGER.trace("Finished painting Deal");
                 }
 
             }

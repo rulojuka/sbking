@@ -57,6 +57,7 @@ public class KryonetSBKingServer extends Server {
     } else {
       String errorMessage = "Did not found connection with UUID:" + playerIdentifier;
       IllegalArgumentException illegalArgumentException = new IllegalArgumentException(errorMessage);
+      this.connections.remove(connectionToSend);
       LOGGER.error(errorMessage);
       LOGGER.error("Failed to send message:" + message);
       LOGGER.error(illegalArgumentException);

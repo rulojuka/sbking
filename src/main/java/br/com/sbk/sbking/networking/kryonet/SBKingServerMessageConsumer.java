@@ -51,7 +51,7 @@ public class SBKingServerMessageConsumer implements Runnable {
   }
 
   private void consume(SBKingMessage message, UUID playerIdentifier) {
-    LOGGER.debug("Entered server --consume--");
+    LOGGER.trace("Entered server --consume--");
     Object content = message.getContent();
     if (message instanceof SetNicknameMessage) {
       this.sbkingServer.setNickname(playerIdentifier, (String) content);
@@ -80,6 +80,7 @@ public class SBKingServerMessageConsumer implements Runnable {
     } else {
       LOGGER.error("Could not understand message.");
       LOGGER.error(message);
+      LOGGER.error(content);
     }
 
   }

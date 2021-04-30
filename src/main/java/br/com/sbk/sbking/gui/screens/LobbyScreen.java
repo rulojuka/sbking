@@ -35,7 +35,7 @@ public class LobbyScreen implements SBKingScreen {
     try {
       Thread.sleep(miliseconds);
     } catch (InterruptedException e) {
-      LOGGER.debug(e);
+      LOGGER.error(e);
     }
   }
 }

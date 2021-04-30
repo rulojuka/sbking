@@ -21,7 +21,7 @@ public class SpectatorPainter implements Painter {
 
     @Override
     public void paint(Container contentPane) {
-        LOGGER.info("Painting spectator that contains this trick: " + deal.getCurrentTrick());
+        LOGGER.trace("Painting spectator that contains this trick: " + deal.getCurrentTrick());
         contentPane.removeAll();
 
         if (deal.isFinished()) {

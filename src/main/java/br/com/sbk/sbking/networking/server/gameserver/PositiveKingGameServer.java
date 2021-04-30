@@ -50,7 +50,7 @@ public class PositiveKingGameServer extends GameServer {
                 synchronized (gameModeOrStrainNotification) {
                     // wait until object notifies - which relinquishes the lock on the object too
                     while (gameModeOrStrainNotification.getGameModeOrStrain() == null) {
-                        LOGGER.info("getGameModeOrStrain:" + gameModeOrStrainNotification.getGameModeOrStrain());
+                        LOGGER.debug("getGameModeOrStrain:" + gameModeOrStrainNotification.getGameModeOrStrain());
                         try {
                             LOGGER.info(
                                     "I am waiting for some thread to notify that it wants to choose game Mode Or Strain");
@@ -69,7 +69,7 @@ public class PositiveKingGameServer extends GameServer {
                         this.getCurrentGameModeOrStrainChooser());
 
                 if (!isRulesetPermitted) {
-                    LOGGER.info("This ruleset is not permitted. Restarting choose procedure");
+                    LOGGER.warn("This ruleset is not permitted. Restarting choose procedure");
                     this.sendInvalidRulesetAll();
                 } else {
                     this.sendValidRulesetAll();
