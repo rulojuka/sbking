@@ -13,7 +13,7 @@
     </Appenders>
     <Loggers>
         <Root level="DEBUG">
-            <AppenderRef ref="LogToConsole" />
+            <AppenderRef ref="LogToConsole" level="INFO" />
             <AppenderRef ref="allErrors" level="WARN" />
         </Root>
     </Loggers>
