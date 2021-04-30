@@ -18,16 +18,17 @@ public class FourteenHCPPlusDoubletonRuledBoardDealerTest {
         for (Direction direction : Direction.values()) {
             assertEquals(SIZE_OF_HAND, board.getHandOf(direction).size());
         }
-    
+
         assertEquals(dealer, board.getDealer());
 
         this.validateHand(board.getHandOf(dealer.getPositiveOrNegativeChooserWhenDealer()));
-        
+
     }
 
     private void validateHand(Hand hand) {
-        assertTrue(hand.getHCP() >= 14);
-        assertTrue(hand.getShortestSuitLength() >= 2);
+        HandEvaluations handEvaluations = hand.getHandEvaluations();
+        assertTrue(handEvaluations.getHCP() >= 14);
+        assertTrue(handEvaluations.getShortestSuitLength() >= 2);
     }
 
 }

@@ -150,8 +150,9 @@ public class Deal {
     }
 
     private void throwExceptionIfStartingATrickWithHeartsWhenRulesetProhibitsIt(Card card, Hand handOfCurrentPlayer) {
+        HandEvaluations handEvaluations = handOfCurrentPlayer.getHandEvaluations();
         if (this.currentTrickNotStartedYet() && this.ruleset.prohibitsHeartsUntilOnlySuitLeft() && card.isHeart()
-                && !handOfCurrentPlayer.onlyHasHearts()) {
+                && !handEvaluations.onlyHasHearts()) {
             throw new PlayedHeartsWhenProhibitedException();
         }
     }

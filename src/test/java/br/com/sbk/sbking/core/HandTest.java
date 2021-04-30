@@ -80,19 +80,6 @@ public class HandTest {
     }
 
     @Test
-    public void shouldReturnIfItOnlyHasHearts() {
-        Card aceOfSpades = mock(Card.class);
-        when(aceOfSpades.isHeart()).thenReturn(false);
-        Card kingOfHearts = mock(Card.class);
-        when(kingOfHearts.isHeart()).thenReturn(true);
-        Hand hand = new Hand();
-        hand.addCard(kingOfHearts);
-        assertTrue(hand.onlyHasHearts());
-        hand.addCard(aceOfSpades);
-        assertFalse(hand.onlyHasHearts());
-    }
-
-    @Test
     public void shouldTransformToStringByPipeSeparatingCards() {
         Card aceOfSpades = mock(Card.class);
         String aceOfSpadesString = "sA";
