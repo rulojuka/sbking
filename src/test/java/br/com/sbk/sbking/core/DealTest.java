@@ -153,7 +153,9 @@ public class DealTest {
 
         when(ruleset.prohibitsHeartsUntilOnlySuitLeft()).thenReturn(true);
         when(card.isHeart()).thenReturn(true);
-        when(handOfCurrentPlayer.onlyHasHearts()).thenReturn(false);
+        HandEvaluations handEvaluations = mock(HandEvaluations.class);
+        when(handOfCurrentPlayer.getHandEvaluations()).thenReturn(handEvaluations);
+        when(handEvaluations.onlyHasHearts()).thenReturn(false);
 
         Deal deal = new Deal(board, ruleset, currentPlayer);
         deal.playCard(card);

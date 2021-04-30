@@ -35,7 +35,7 @@ public class MinibridgeBoardDealerTest {
     int dealerPartnershipHCP = 0;
     int nonDealerPartnershipHCP = 0;
     for (Direction direction : Direction.values()) {
-      int currentDirectionHCP = minibridgeBoard.getHandOf(direction).getHCP();
+      int currentDirectionHCP = minibridgeBoard.getHandOf(direction).getHandEvaluations().getHCP();
       if (direction.isNorthSouth() == anyDirection.isNorthSouth()) {
         dealerPartnershipHCP += currentDirectionHCP;
       } else {
@@ -49,8 +49,8 @@ public class MinibridgeBoardDealerTest {
   public void dealBoardShouldDealABoardWithEqualOrMoreHCPForDealerThanTheirPartner() {
     Board minibridgeBoard = minibridgeBoardDealer.dealBoard(anyDirection);
 
-    int dealerHCP = minibridgeBoard.getHandOf(anyDirection).getHCP();
-    int dealerPartnerHCP = minibridgeBoard.getHandOf(anyDirection.next(2)).getHCP();
+    int dealerHCP = minibridgeBoard.getHandOf(anyDirection).getHandEvaluations().getHCP();
+    int dealerPartnerHCP = minibridgeBoard.getHandOf(anyDirection.next(2)).getHandEvaluations().getHCP();
     assertTrue(dealerHCP >= dealerPartnerHCP);
   }
 

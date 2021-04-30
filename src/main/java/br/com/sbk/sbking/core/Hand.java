@@ -1,15 +1,30 @@
 package br.com.sbk.sbking.core;
 
+import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Random;
 
 public class Hand {
 
-    private List<Card> cards = new ArrayList<Card>();
+    private List<Card> cards;
+    private Random random;
+
+    public Hand() {
+        this.cards = new ArrayList<Card>();
+        this.random = new SecureRandom();
+    }
+
+    public Collection<Card> getCards() {
+        return Collections.unmodifiableCollection(this.cards);
+    }
+
+    public HandEvaluations getHandEvaluations() {
+        return new HandEvaluations(this);
+    }
 
     public void addCard(Card card) {
         this.cards.add(card);
@@ -20,28 +35,26 @@ public class Hand {
     }
 
     public Card removeOneRandomCard() {
-        int size = cards.size();
-        int lastCardPosition = size - 1;
+        int numberOfCards = cards.size();
+        int lastCardIndex = numberOfCards - 1;
         Card removedCard = null;
-        if (size > 0) {
-            this.shuffle(); // FIXME make this more performatic
 
-            removedCard = cards.get(lastCardPosition);
-            cards.remove(lastCardPosition);
+        int removedCardIndex = this.random.nextInt(numberOfCards);
+        if (numberOfCards > 0) {
+            Card lastCard = this.cards.get(lastCardIndex);
+            removedCard = this.cards.get(removedCardIndex);
+            cards.set(removedCardIndex, lastCard);
+            cards.remove(lastCardIndex);
         }
         return removedCard;
     }
 
     public Card get(int position) {
-        return this.getCards().get(position);
+        return this.getCardsAsList().get(position);
     }
 
     public int size() {
-        return this.getCards().size();
-    }
-
-    private void shuffle() {
-        Collections.shuffle(this.cards);
+        return this.getCardsAsList().size();
     }
 
     public void sort(Comparator<Card> comparator) {
@@ -49,11 +62,11 @@ public class Hand {
     }
 
     public boolean containsCard(Card card) {
-        return this.getCards().contains(card);
+        return this.getCardsAsList().contains(card);
     }
 
     public boolean hasSuit(Suit suit) {
-        for (Card card : this.getCards()) {
+        for (Card card : this.getCardsAsList()) {
             if (card.getSuit() == suit) {
                 return true;
             }
@@ -61,16 +74,7 @@ public class Hand {
         return false;
     }
 
-    public boolean onlyHasHearts() {
-        for (Card card : this.getCards()) {
-            if (!card.isHeart()) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private List<Card> getCards() {
+    private List<Card> getCardsAsList() {
         return Collections.unmodifiableList(this.cards);
     }
 
@@ -113,28 +117,6 @@ public class Hand {
             return false;
         }
         return true;
-    }
-
-    public int getHCP() {
-        int sum = 0;
-        for (Card card : cards) {
-            sum += card.getPoints();
-        }
-        return sum;
-    }
-
-    public int getShortestSuitLength() {
-        Map<Suit, Integer> numberOfCards = new HashMap<Suit, Integer>();
-        for (Suit suit : Suit.values()) {
-            numberOfCards.put(suit, 0);
-        }
-        for (Card card : cards) {
-            Suit currentSuit = card.getSuit();
-            int currentValue = numberOfCards.get(currentSuit);
-            currentValue++;
-            numberOfCards.put(currentSuit, currentValue);
-        }
-        return numberOfCards.values().stream().reduce(Math::min).orElse(0);
     }
 
 }

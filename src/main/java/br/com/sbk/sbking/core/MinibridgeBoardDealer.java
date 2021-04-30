@@ -23,7 +23,8 @@ public class MinibridgeBoardDealer implements BoardDealer {
       nonDealerPartnershipHCP = 0;
       this.board = shuffledBoardDealer.dealBoard(dealer);
       for (Direction direction : Direction.values()) {
-        int hcp = this.board.getHandOf(direction).getHCP();
+        HandEvaluations handEvaluations = this.board.getHandOf(direction).getHandEvaluations();
+        int hcp = handEvaluations.getHCP();
         if (direction.isNorthSouth() == dealer.isNorthSouth()) {
           dealerPartnershipHCP += hcp;
         } else {
@@ -36,7 +37,9 @@ public class MinibridgeBoardDealer implements BoardDealer {
       this.board = this.rotateHands(this.board, 1);
     }
 
-    if (this.board.getHandOf(dealer).getHCP() < this.board.getHandOf(dealer.next(2)).getHCP()) {
+    HandEvaluations dealerHandEvaluations = this.board.getHandOf(dealer).getHandEvaluations();
+    HandEvaluations dealerPartnerHandEvaluations = this.board.getHandOf(dealer.next(2)).getHandEvaluations();
+    if (dealerHandEvaluations.getHCP() < dealerPartnerHandEvaluations.getHCP()) {
       this.board = this.rotateHands(this.board, 2);
     }
 
