@@ -162,6 +162,22 @@ public class HandEvaluationsTest {
   }
 
   @Test
+  public void shouldReturnIfItHashasEightOrMoreCardsInAnySuit() {
+    Hand firstHand = this.createMockedHandWithDistribution(this.createSuitDistribution(8, 0, 0, 5));
+    Hand secondHand = this.createMockedHandWithDistribution(this.createSuitDistribution(0, 5, 8, 0));
+    Hand thirdHand = this.createMockedHandWithDistribution(this.createSuitDistribution(7, 0, 0, 5));
+
+    HandEvaluations eightCardsMajorSuitHandEvaluations = new HandEvaluations(firstHand);
+    HandEvaluations eightCardsMinorSuitHandEvaluations = new HandEvaluations(secondHand);
+    HandEvaluations doNotHaveEightCardsInAnySuitHandEvaluations = new HandEvaluations(thirdHand);
+
+    assertFalse(emptyHandEvaluations.hasFiveOrMoreCardsInAMajorSuit());
+    assertTrue(eightCardsMajorSuitHandEvaluations.hasEightOrMoreCardsInAnySuit());
+    assertTrue(eightCardsMinorSuitHandEvaluations.hasEightOrMoreCardsInAnySuit());
+    assertFalse(doNotHaveEightCardsInAnySuitHandEvaluations.hasEightOrMoreCardsInAnySuit());
+  }
+
+  @Test
   public void shouldReturnIfItIsBalanced() {
     Hand firstHand = this.createMockedHandWithDistribution(this.createSuitDistribution(4, 4, 5, 0));
     Hand secondHand = this.createMockedHandWithDistribution(this.createSuitDistribution(4, 1, 4, 4));

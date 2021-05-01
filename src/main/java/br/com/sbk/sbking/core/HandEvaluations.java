@@ -90,4 +90,9 @@ public final class HandEvaluations {
         && this.getNumberOfDoubletonSuits() <= 1;
   }
 
+  public boolean hasEightOrMoreCardsInAnySuit() {
+    int longestSuit = this.getCardsPerSuit().values().stream().reduce(0, Math::max);
+    return longestSuit >= 8;
+  }
+
 }
