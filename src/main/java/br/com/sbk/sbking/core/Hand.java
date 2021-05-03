@@ -11,11 +11,9 @@ import java.util.Random;
 public class Hand {
 
     private List<Card> cards;
-    private Random random;
 
     public Hand() {
         this.cards = new ArrayList<Card>();
-        this.random = new SecureRandom();
     }
 
     public Collection<Card> getCards() {
@@ -39,7 +37,9 @@ public class Hand {
         int lastCardIndex = numberOfCards - 1;
         Card removedCard = null;
 
-        int removedCardIndex = this.random.nextInt(numberOfCards);
+        Random random = new SecureRandom();
+
+        int removedCardIndex = random.nextInt(numberOfCards);
         if (numberOfCards > 0) {
             Card lastCard = this.cards.get(lastCardIndex);
             removedCard = this.cards.get(removedCardIndex);
