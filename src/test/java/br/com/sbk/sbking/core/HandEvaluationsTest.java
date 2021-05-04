@@ -21,6 +21,12 @@ public class HandEvaluationsTest {
   @Mock
   private Card aceOfSpades;
   @Mock
+  private Card kingOfSpades;
+  @Mock
+  private Card queenOfSpades;
+  @Mock
+  private Card jackOfSpades;
+  @Mock
   private Card kingOfHearts;
   @Mock
   private Card threeOfClubs;
@@ -37,6 +43,15 @@ public class HandEvaluationsTest {
 
     when(aceOfSpades.getRank()).thenReturn(Rank.ACE);
     when(aceOfSpades.getSuit()).thenReturn(Suit.SPADES);
+
+    when(kingOfSpades.getRank()).thenReturn(Rank.KING);
+    when(kingOfSpades.getSuit()).thenReturn(Suit.SPADES);
+
+    when(queenOfSpades.getRank()).thenReturn(Rank.QUEEN);
+    when(queenOfSpades.getSuit()).thenReturn(Suit.SPADES);
+
+    when(jackOfSpades.getRank()).thenReturn(Rank.JACK);
+    when(jackOfSpades.getSuit()).thenReturn(Suit.SPADES);
 
     when(kingOfHearts.getRank()).thenReturn(Rank.KING);
     when(kingOfHearts.getSuit()).thenReturn(Suit.HEARTS);
@@ -177,6 +192,56 @@ public class HandEvaluationsTest {
     assertFalse(doNotHaveEightCardsInAnySuitHandEvaluations.hasEightOrMoreCardsInAnySuit());
   }
 
+  public void shouldReturnIfItHasSixCardsInAnySuit() {
+    Hand firstHand = this.createMockedHandWithDistribution(this.createSuitDistribution(0, 0, 0, 6));
+    Hand secondHand = this.createMockedHandWithDistribution(this.createSuitDistribution(0, 5, 3, 5));
+    Hand thirdHand = this.createMockedHandWithDistribution(this.createSuitDistribution(7, 0, 0, 2));
+
+    HandEvaluations hasSixCardsInSomeSuit = new HandEvaluations(firstHand);
+    HandEvaluations hasLessThanSixCardsInAllSuits = new HandEvaluations(secondHand);
+    HandEvaluations hasMoreThanSixCardsInSomeSuit = new HandEvaluations(thirdHand);
+
+    assertFalse(emptyHandEvaluations.hasSixCardsInLongestSuit());
+    assertTrue(hasSixCardsInSomeSuit.hasSixCardsInLongestSuit());
+    assertFalse(hasLessThanSixCardsInAllSuits.hasSixCardsInLongestSuit());
+    assertFalse(hasMoreThanSixCardsInSomeSuit.hasSixCardsInLongestSuit());
+  }
+
+  @Test
+  public void shouldReturnIfItHasEightOrMoreCardsInAnySuit() {
+    Hand firstHand = this.createMockedHandWithDistribution(this.createSuitDistribution(0, 0, 0, 8));
+    Hand secondHand = this.createMockedHandWithDistribution(this.createSuitDistribution(0, 9, 1, 4));
+    Hand thirdHand = this.createMockedHandWithDistribution(this.createSuitDistribution(7, 0, 0, 2));
+
+    HandEvaluations hasEightCardsInSomeSuitHandEvaluations = new HandEvaluations(firstHand);
+    HandEvaluations hasMoreThanEightCardsInSomeSuitHandEvaluations = new HandEvaluations(secondHand);
+    HandEvaluations hasLessThanEightCardsInEverySuitHandEvaluations = new HandEvaluations(thirdHand);
+
+    assertFalse(emptyHandEvaluations.hasEightOrMoreCardsInAnySuit());
+    assertTrue(hasEightCardsInSomeSuitHandEvaluations.hasEightOrMoreCardsInAnySuit());
+    assertTrue(hasMoreThanEightCardsInSomeSuitHandEvaluations.hasEightOrMoreCardsInAnySuit());
+    assertFalse(hasLessThanEightCardsInEverySuitHandEvaluations.hasEightOrMoreCardsInAnySuit());
+  }
+
+  @Test
+  public void shouldReturnIfItHasTwoOutOfThreeHigherCardsInSuit() {
+    Hand handWithAceAndKingInSpadesSuit = this.createMockedHandWithSpecificCards(aceOfSpades, kingOfSpades);
+    Hand handWithKingAndQueenInSpadesSuit = this.createMockedHandWithSpecificCards(kingOfSpades, queenOfSpades);
+    Hand handWithAceAndQueenInSpadesSuit = this.createMockedHandWithSpecificCards(aceOfSpades, queenOfSpades);
+    Hand handWithAceAndJackInSpadesSuit = this.createMockedHandWithSpecificCards(aceOfSpades, jackOfSpades);
+
+    HandEvaluations hasAceAndKingInSpadesHandEvaluations = new HandEvaluations(handWithAceAndKingInSpadesSuit);
+    HandEvaluations hasKingAndQueenInSpadesHandEvaluations = new HandEvaluations(handWithKingAndQueenInSpadesSuit);
+    HandEvaluations hasAceAndQueenInSpadesHandEvaluations = new HandEvaluations(handWithAceAndQueenInSpadesSuit);
+    HandEvaluations hasAceAndJackInSpadesHandEvaluations = new HandEvaluations(handWithAceAndJackInSpadesSuit);
+
+    assertFalse(emptyHandEvaluations.hasTwoOutOfThreeHigherCards(Suit.SPADES));
+    assertTrue(hasAceAndKingInSpadesHandEvaluations.hasTwoOutOfThreeHigherCards(Suit.SPADES));
+    assertTrue(hasKingAndQueenInSpadesHandEvaluations.hasTwoOutOfThreeHigherCards(Suit.SPADES));
+    assertTrue(hasAceAndQueenInSpadesHandEvaluations.hasTwoOutOfThreeHigherCards(Suit.SPADES));
+    assertFalse(hasAceAndJackInSpadesHandEvaluations.hasTwoOutOfThreeHigherCards(Suit.SPADES));
+  }
+
   @Test
   public void shouldReturnIfItIsBalanced() {
     Hand firstHand = this.createMockedHandWithDistribution(this.createSuitDistribution(4, 4, 5, 0));
@@ -197,6 +262,26 @@ public class HandEvaluationsTest {
     assertFalse(sixClubCardsHandEvaluations.isBalanced());
     assertTrue(fiveThreeTwoTwoHandEvaluations.isBalanced());
     assertFalse(twoDoubletonsHandEvaluations.isBalanced());
+  }
+
+  @Test
+  public void shouldReturnIfItHasFourOrMoreCardsInMajorSuitExcludingSuitWithMoreCards() {
+    Hand firstHand = this.createMockedHandWithDistribution(this.createSuitDistribution(8, 4, 1, 0));
+    Hand secondHand = this.createMockedHandWithDistribution(this.createSuitDistribution(5, 8, 0, 0));
+    Hand thirdHand = this.createMockedHandWithDistribution(this.createSuitDistribution(3, 3, 7, 0));
+
+    HandEvaluations hasSpadesAsLongestSuitAndFourHeartsCardHandEvaluations = new HandEvaluations(firstHand);
+    HandEvaluations hasHeartsAsLongestSuitAndFiveSpadesCardHandEvaluations = new HandEvaluations(secondHand);
+    HandEvaluations hasMinorSuitAsLongestAndDoesNotHaveFourOrMoreCardsInMajorSuitHandEvaluations = new HandEvaluations(
+        thirdHand);
+
+    assertFalse(emptyHandEvaluations.hasFourOrMoreCardsInMajorSuitExcludingLongestSuit());
+    assertTrue(
+        hasSpadesAsLongestSuitAndFourHeartsCardHandEvaluations.hasFourOrMoreCardsInMajorSuitExcludingLongestSuit());
+    assertTrue(
+        hasHeartsAsLongestSuitAndFiveSpadesCardHandEvaluations.hasFourOrMoreCardsInMajorSuitExcludingLongestSuit());
+    assertFalse(hasMinorSuitAsLongestAndDoesNotHaveFourOrMoreCardsInMajorSuitHandEvaluations
+        .hasFourOrMoreCardsInMajorSuitExcludingLongestSuit());
   }
 
   private Hand createMockedHandWithDistribution(Map<Suit, Integer> suitDistribution) {
@@ -229,5 +314,14 @@ public class HandEvaluationsTest {
     suitDistribution.put(Suit.DIAMONDS, diamonds);
     suitDistribution.put(Suit.CLUBS, clubs);
     return suitDistribution;
+  }
+
+  private Hand createMockedHandWithSpecificCards(Card card1, Card card2) {
+    Hand hand = mock(Hand.class);
+    List<Card> mockedCards = new ArrayList<Card>();
+    mockedCards.add(card1);
+    mockedCards.add(card2);
+    when(hand.getCards()).thenReturn(mockedCards);
+    return hand;
   }
 }

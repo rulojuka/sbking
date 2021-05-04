@@ -2,10 +2,12 @@ package br.com.sbk.sbking.core;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 public final class HandEvaluations {
 
@@ -23,16 +25,14 @@ public final class HandEvaluations {
     return this.cards;
   }
 
-  private Map<Suit, Integer> getCardsPerSuit() {
+  private List<Card> getCardsPerSuit(Suit suit) {
+    return this.cards.stream().filter(card -> card.getSuit().equals(suit)).collect(Collectors.toList());
+  }
+
+  private Map<Suit, Integer> getNumberOfCardsPerSuit() {
     Map<Suit, Integer> numberOfCards = new HashMap<Suit, Integer>();
     for (Suit suit : Suit.values()) {
-      numberOfCards.put(suit, 0);
-    }
-    for (Card card : this.getCards()) {
-      Suit currentSuit = card.getSuit();
-      int currentValue = numberOfCards.get(currentSuit);
-      currentValue++;
-      numberOfCards.put(currentSuit, currentValue);
+      numberOfCards.put(suit, this.getCardsPerSuit(suit).size());
     }
     return numberOfCards;
   }
@@ -42,21 +42,19 @@ public final class HandEvaluations {
   }
 
   public int getShortestSuitLength() {
-    return this.getCardsPerSuit().values().stream().reduce(Math::min).orElse(0);
+    return this.getNumberOfCardsPerSuit().values().stream().reduce(Math::min).orElse(0);
   }
 
   public int getLongestSuitLength() {
-    return this.getCardsPerSuit().values().stream().reduce(Math::max).orElse(0);
+    return this.getNumberOfCardsPerSuit().values().stream().reduce(Math::max).orElse(0);
   }
 
   public int getNumberOfDoubletonSuits() {
-    return this.getCardsPerSuit().values().stream().reduce(0, (subtotal, element) -> {
-      if (element == 2) {
-        return subtotal + 1;
-      } else {
-        return subtotal;
-      }
-    });
+    return (int) this.getNumberOfCardsPerSuit().values().stream().filter(this::isDoubleton).count();
+  }
+
+  private boolean isDoubleton(Integer numberOfCards) {
+    return numberOfCards == 2;
   }
 
   public boolean onlyHasHearts() {
@@ -64,13 +62,13 @@ public final class HandEvaluations {
   }
 
   public boolean hasFiveOrMoreCardsInAMajorSuit() {
-    int longestMajor = this.getCardsPerSuit().entrySet().stream().filter(this::isMajorSuit).map(Entry::getValue)
+    int longestMajor = this.getNumberOfCardsPerSuit().entrySet().stream().filter(this::isMajorSuit).map(Entry::getValue)
         .reduce(0, Math::max);
     return longestMajor >= 5;
   }
 
   public boolean hasThreeOrMoreCardsInAMinorSuit() {
-    int longestMinor = this.getCardsPerSuit().entrySet().stream().filter(this::isMinorSuit).map(Entry::getValue)
+    int longestMinor = this.getNumberOfCardsPerSuit().entrySet().stream().filter(this::isMinorSuit).map(Entry::getValue)
         .reduce(0, Math::max);
     return longestMinor >= 3;
   }
@@ -91,8 +89,48 @@ public final class HandEvaluations {
   }
 
   public boolean hasEightOrMoreCardsInAnySuit() {
-    int longestSuit = this.getCardsPerSuit().values().stream().reduce(0, Math::max);
-    return longestSuit >= 8;
+    return hasNOrMoreCardsInLongestSuit(8);
+  }
+
+  public boolean hasSixCardsInLongestSuit() {
+    return hasNCardsInLongestSuit(6);
+  }
+
+  private boolean hasNCardsInLongestSuit(int n) {
+    return this.getNumberOfCardsInLongestSuit() == n;
+  }
+
+  private boolean hasNOrMoreCardsInLongestSuit(int n) {
+    return this.getNumberOfCardsInLongestSuit() >= n;
+  }
+
+  public boolean hasTwoOutOfThreeHigherCards(Suit suit) {
+    return this.getCardsPerSuit(suit).stream().filter(this::isThreeHigherCards).count() >= 2;
+  }
+
+  private boolean isThreeHigherCards(Card card) {
+    Rank rank = card.getRank();
+    return Rank.ACE.equals(rank) || Rank.KING.equals(rank) || Rank.QUEEN.equals(rank);
+  }
+
+  public Suit getLongestSuit() {
+    return Collections.max(this.getNumberOfCardsPerSuit().entrySet(), Comparator.comparingInt(Map.Entry::getValue))
+        .getKey();
+  }
+
+  public Boolean hasFourOrMoreCardsInMajorSuitExcludingLongestSuit() {
+    Suit longestSuit = this.getLongestSuit();
+    long numberOfMajorSuitsWithFourCardsAndDifferentThanLongestSuit = this.getNumberOfCardsPerSuit().entrySet().stream()
+        .filter(entry -> {
+          Suit suit = entry.getKey();
+          Integer numberOfCards = entry.getValue();
+          return !suit.equals(longestSuit) && numberOfCards >= 4 && isMajorSuit(entry);
+        }).count();
+    return numberOfMajorSuitsWithFourCardsAndDifferentThanLongestSuit != 0;
+  }
+
+  private int getNumberOfCardsInLongestSuit() {
+    return this.getNumberOfCardsPerSuit().values().stream().reduce(0, Math::max);
   }
 
 }
