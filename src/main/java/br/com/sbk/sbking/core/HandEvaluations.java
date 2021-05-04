@@ -96,6 +96,10 @@ public final class HandEvaluations {
     return hasNCardsInLongestSuit(6);
   }
 
+  public boolean hasSevenCardsInLongestSuit() {
+    return hasNCardsInLongestSuit(7);
+  }
+
   private boolean hasNCardsInLongestSuit(int n) {
     return this.getNumberOfCardsInLongestSuit() == n;
   }
@@ -108,9 +112,19 @@ public final class HandEvaluations {
     return this.getCardsPerSuit(suit).stream().filter(this::isThreeHigherCards).count() >= 2;
   }
 
+  public boolean hasThreeOutOfFiveHigherCards(Suit suit) {
+    return this.getCardsPerSuit(suit).stream().filter(this::isFiveHigherCards).count() >= 3;
+  }
+
   private boolean isThreeHigherCards(Card card) {
     Rank rank = card.getRank();
     return Rank.ACE.equals(rank) || Rank.KING.equals(rank) || Rank.QUEEN.equals(rank);
+  }
+
+  private boolean isFiveHigherCards(Card card) {
+    Rank rank = card.getRank();
+    return Rank.ACE.equals(rank) || Rank.KING.equals(rank) || Rank.QUEEN.equals(rank) || Rank.JACK.equals(rank)
+        || Rank.TEN.equals(rank);
   }
 
   public Suit getLongestSuit() {

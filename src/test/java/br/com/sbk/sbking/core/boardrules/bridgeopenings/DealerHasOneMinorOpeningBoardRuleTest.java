@@ -50,6 +50,7 @@ public class DealerHasOneMinorOpeningBoardRuleTest {
         assertFalse(subject.isValid(board));
     }
 
+    @Test
     public void shouldNotOpenOneMinorWithMoreThanTwentyOneHCP() {
         int hcp = 22;
         this.configureParameterizedMocks(hcp, hasThreeCardMinorSuit);
