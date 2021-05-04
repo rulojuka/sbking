@@ -50,6 +50,7 @@ public class DealerHasFourWeakOpeningBoardRuleTest {
         assertFalse(subject.isValid(board));
     }
 
+    @Test
     public void shouldNotOpenFourWeakWithMoreThanTenHCP() {
         int hcp = 12;
         this.configureParameterizedMocks(hcp, hasEightCardInAnySuit);

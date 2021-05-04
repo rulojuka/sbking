@@ -50,6 +50,7 @@ public class DealerHasOneMajorOpeningBoardRuleTest {
         assertFalse(subject.isValid(board));
     }
 
+    @Test
     public void shouldNotOpenOneMajorWithMoreThanTwentyOneHCP() {
         int hcp = 22;
         this.configureParameterizedMocks(hcp, hasFiveCardMajorSuit);

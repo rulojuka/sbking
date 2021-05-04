@@ -15,7 +15,7 @@ import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.core.Hand;
 import br.com.sbk.sbking.core.HandEvaluations;
 
-public class DealerHasTwoWeakOpeningBoardRuleTest {
+public class DealerHasThreeWeakOpeningBoardRuleTest {
 
     @Mock
     private Board board;
@@ -24,12 +24,12 @@ public class DealerHasTwoWeakOpeningBoardRuleTest {
     @Mock
     private HandEvaluations handEvaluations;
     private Direction dealer;
-    private DealerHasTwoWeakOpeningBoardRule subject = new DealerHasTwoWeakOpeningBoardRule();
+    private DealerHasThreeWeakOpeningBoardRule subject = new DealerHasThreeWeakOpeningBoardRule();
 
-    private boolean hasSixCardInAnySuit = true;
-    private boolean doesNotHaveSixCardInAnySuit = false;
-    private boolean hasTwoOutOfThreeHigherCards = true;
-    private boolean doesNotHaveTwoOutOfThreeHigherCards = false;
+    private boolean hasSevenCardInAnySuit = true;
+    private boolean doesNotHaveSevenCardInAnySuit = false;
+    private boolean hasThreeOutOfFiveHigherCards = true;
+    private boolean doesNotHaveThreeOutOfFiveHigherCards = false;
     private boolean hasFourOrMoreCardsInMajorSuitExcludingSuitWithMoreCards = true;
     private boolean doesNotHaveFourOrMoreCardsInMajorSuitExcludingSuitWithMoreCards = false;
 
@@ -42,64 +42,64 @@ public class DealerHasTwoWeakOpeningBoardRuleTest {
         when(hand.getHandEvaluations()).thenReturn(handEvaluations);
     }
 
-    private void configureParameterizedMocks(int hcp, boolean hasSixCardsInLongestSuit,
-            boolean hasTwoOutOfThreeHigherCards, boolean hasFourOrMoreCardsInMajorSuitExcludingSuitWithMoreCards) {
+    private void configureParameterizedMocks(int hcp, boolean hasSevenCardsInLongestSuit,
+            boolean hasThreeOutOfFiveHigherCards, boolean hasFourOrMoreCardsInMajorSuitExcludingSuitWithMoreCards) {
         when(handEvaluations.getHCP()).thenReturn(hcp);
-        when(handEvaluations.hasSixCardsInLongestSuit()).thenReturn(hasSixCardsInLongestSuit);
-        when(handEvaluations.hasTwoOutOfThreeHigherCards(any())).thenReturn(hasTwoOutOfThreeHigherCards);
+        when(handEvaluations.hasSevenCardsInLongestSuit()).thenReturn(hasSevenCardsInLongestSuit);
+        when(handEvaluations.hasThreeOutOfFiveHigherCards(any())).thenReturn(hasThreeOutOfFiveHigherCards);
         when(handEvaluations.hasFourOrMoreCardsInMajorSuitExcludingLongestSuit())
                 .thenReturn(hasFourOrMoreCardsInMajorSuitExcludingSuitWithMoreCards);
     }
 
     @Test
-    public void shouldNotOpenTwoWeakWithLessThanSixHCP() {
+    public void shouldNotOpenThreeWeakWithLessThanSixHCP() {
         int hcp = 5;
-        this.configureParameterizedMocks(hcp, hasSixCardInAnySuit, hasTwoOutOfThreeHigherCards,
+        this.configureParameterizedMocks(hcp, hasSevenCardInAnySuit, hasThreeOutOfFiveHigherCards,
                 doesNotHaveFourOrMoreCardsInMajorSuitExcludingSuitWithMoreCards);
 
         assertFalse(subject.isValid(board));
     }
 
     @Test
-    public void shouldNotOpenTwoWeakWithMoreThanTenHCP() {
+    public void shouldNotOpenThreeWeakWithMoreThanTenHCP() {
         int hcp = 12;
-        this.configureParameterizedMocks(hcp, hasSixCardInAnySuit, hasTwoOutOfThreeHigherCards,
+        this.configureParameterizedMocks(hcp, hasSevenCardInAnySuit, hasThreeOutOfFiveHigherCards,
                 doesNotHaveFourOrMoreCardsInMajorSuitExcludingSuitWithMoreCards);
 
         assertFalse(subject.isValid(board));
     }
 
     @Test
-    public void shouldNotOpenTwoWeakWithFourCardsInTheMajorSuitExcludingLongestSuit() {
+    public void shouldNotOpenThreeWeakWithFourCardsInTheMajorSuitExcludingLongestSuit() {
         int hcp = 9;
-        this.configureParameterizedMocks(hcp, hasSixCardInAnySuit, hasTwoOutOfThreeHigherCards,
+        this.configureParameterizedMocks(hcp, hasSevenCardInAnySuit, hasThreeOutOfFiveHigherCards,
                 hasFourOrMoreCardsInMajorSuitExcludingSuitWithMoreCards);
 
         assertFalse(subject.isValid(board));
     }
 
     @Test
-    public void shouldNotOpenTwoWeakWithoutTwoHighCardsInLongestSuit() {
+    public void shouldNotOpenThreeWeakWithoutThreeHighCardsInLongestSuit() {
         int hcp = 9;
-        this.configureParameterizedMocks(hcp, hasSixCardInAnySuit, doesNotHaveTwoOutOfThreeHigherCards,
+        this.configureParameterizedMocks(hcp, hasSevenCardInAnySuit, doesNotHaveThreeOutOfFiveHigherCards,
                 doesNotHaveFourOrMoreCardsInMajorSuitExcludingSuitWithMoreCards);
 
         assertFalse(subject.isValid(board));
     }
 
     @Test
-    public void shouldNotOpenTwoWeakWithoutSixCardsInTheLongestSuit() {
+    public void shouldNotOpenThreeWeakWithoutSevenCardsInTheLongestSuit() {
         int hcp = 9;
-        this.configureParameterizedMocks(hcp, doesNotHaveSixCardInAnySuit, hasTwoOutOfThreeHigherCards,
+        this.configureParameterizedMocks(hcp, doesNotHaveSevenCardInAnySuit, hasThreeOutOfFiveHigherCards,
                 doesNotHaveFourOrMoreCardsInMajorSuitExcludingSuitWithMoreCards);
 
         assertFalse(subject.isValid(board));
     }
 
     @Test
-    public void shouldOpenTwoWeakWithCorrectHCPAndDistribution() {
+    public void shouldOpenThreeWeakWithCorrectHCPAndDistribution() {
         int hcp = 9;
-        this.configureParameterizedMocks(hcp, hasSixCardInAnySuit, hasTwoOutOfThreeHigherCards,
+        this.configureParameterizedMocks(hcp, hasSevenCardInAnySuit, hasThreeOutOfFiveHigherCards,
                 doesNotHaveFourOrMoreCardsInMajorSuitExcludingSuitWithMoreCards);
 
         assertTrue(subject.isValid(board));
