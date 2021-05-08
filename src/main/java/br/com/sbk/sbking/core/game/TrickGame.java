@@ -1,4 +1,9 @@
-package br.com.sbk.sbking.core;
+package br.com.sbk.sbking.core.game;
+
+import br.com.sbk.sbking.core.Board;
+import br.com.sbk.sbking.core.Deal;
+import br.com.sbk.sbking.core.Direction;
+import br.com.sbk.sbking.core.Player;
 
 public abstract class TrickGame {
 

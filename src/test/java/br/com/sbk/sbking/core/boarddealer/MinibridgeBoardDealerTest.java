@@ -1,10 +1,14 @@
-package br.com.sbk.sbking.core;
+package br.com.sbk.sbking.core.boarddealer;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import br.com.sbk.sbking.core.Board;
+import br.com.sbk.sbking.core.Direction;
+import br.com.sbk.sbking.core.boarddealer.MinibridgeBoardDealer;
 
 /**
  * This is not a unit test suite as it depends on ShuffledBoardDealer. It is

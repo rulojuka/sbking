@@ -1,7 +1,12 @@
-package br.com.sbk.sbking.core;
+package br.com.sbk.sbking.core.game;
 
 import java.util.List;
 
+import br.com.sbk.sbking.core.Card;
+import br.com.sbk.sbking.core.Deal;
+import br.com.sbk.sbking.core.Direction;
+import br.com.sbk.sbking.core.boarddealer.BoardDealer;
+import br.com.sbk.sbking.core.boarddealer.ShuffledBoardDealer;
 import br.com.sbk.sbking.core.comparators.CardInsideHandComparator;
 import br.com.sbk.sbking.core.rulesets.abstractrulesets.Ruleset;
 import br.com.sbk.sbking.core.rulesets.concrete.PositiveNoTrumpsRuleset;

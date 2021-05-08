@@ -8,7 +8,6 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import br.com.sbk.sbking.core.Board;
-import br.com.sbk.sbking.core.BoardRule;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.core.Hand;
 import br.com.sbk.sbking.core.HandEvaluations;

@@ -1,10 +1,17 @@
-package br.com.sbk.sbking.core;
+package br.com.sbk.sbking.core.boarddealer;
 
 import static br.com.sbk.sbking.core.GameConstants.SIZE_OF_HAND;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
+
+import br.com.sbk.sbking.core.Board;
+import br.com.sbk.sbking.core.Direction;
+import br.com.sbk.sbking.core.Hand;
+import br.com.sbk.sbking.core.HandEvaluations;
+import br.com.sbk.sbking.core.boarddealer.BoardDealer;
+import br.com.sbk.sbking.core.boarddealer.FourteenHCPPlusDoubletonRuledBoardDealer;
 
 public class FourteenHCPPlusDoubletonRuledBoardDealerTest {
 
