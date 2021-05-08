@@ -1,5 +1,9 @@
-package br.com.sbk.sbking.core;
+package br.com.sbk.sbking.core.game;
 
+import br.com.sbk.sbking.core.Deal;
+import br.com.sbk.sbking.core.Direction;
+import br.com.sbk.sbking.core.boarddealer.BoardDealer;
+import br.com.sbk.sbking.core.boarddealer.MinibridgeBoardDealer;
 import br.com.sbk.sbking.core.rulesets.abstractrulesets.PositiveRuleset;
 import br.com.sbk.sbking.core.rulesets.abstractrulesets.Ruleset;
 import br.com.sbk.sbking.core.rulesets.concrete.NoRuleset;

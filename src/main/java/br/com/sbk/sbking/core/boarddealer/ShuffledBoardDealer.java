@@ -1,7 +1,12 @@
-package br.com.sbk.sbking.core;
+package br.com.sbk.sbking.core.boarddealer;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import br.com.sbk.sbking.core.Board;
+import br.com.sbk.sbking.core.Direction;
+import br.com.sbk.sbking.core.Hand;
+import br.com.sbk.sbking.core.ShuffledDeck;
 
 public class ShuffledBoardDealer implements BoardDealer {
 

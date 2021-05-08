@@ -1,7 +1,6 @@
 package br.com.sbk.sbking.core.boardrules;
 
 import br.com.sbk.sbking.core.Board;
-import br.com.sbk.sbking.core.BoardRule;
 import br.com.sbk.sbking.core.Hand;
 import br.com.sbk.sbking.core.HandEvaluations;
 

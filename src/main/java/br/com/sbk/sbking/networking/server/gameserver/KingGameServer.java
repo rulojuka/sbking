@@ -4,8 +4,8 @@ import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 
 import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Direction;
-import br.com.sbk.sbking.core.KingGame;
 import br.com.sbk.sbking.core.exceptions.SelectedPositiveOrNegativeInAnotherPlayersTurnException;
+import br.com.sbk.sbking.core.game.KingGame;
 import br.com.sbk.sbking.core.rulesets.abstractrulesets.Ruleset;
 import br.com.sbk.sbking.gui.models.PositiveOrNegative;
 import br.com.sbk.sbking.networking.server.notifications.GameModeOrStrainNotification;

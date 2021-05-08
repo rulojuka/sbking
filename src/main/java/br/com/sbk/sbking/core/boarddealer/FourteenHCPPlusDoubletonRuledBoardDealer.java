@@ -1,5 +1,8 @@
-package br.com.sbk.sbking.core;
+package br.com.sbk.sbking.core.boarddealer;
 
+import br.com.sbk.sbking.core.Board;
+import br.com.sbk.sbking.core.Direction;
+import br.com.sbk.sbking.core.boardrules.BoardRule;
 import br.com.sbk.sbking.core.boardrules.PositiveOrNegativeChooserHasFourteenHCPPlusAndDoubletonAtLeastInAllSuits;
 
 public class FourteenHCPPlusDoubletonRuledBoardDealer implements BoardDealer {

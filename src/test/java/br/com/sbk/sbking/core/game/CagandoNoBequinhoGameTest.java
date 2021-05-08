@@ -1,8 +1,10 @@
-package br.com.sbk.sbking.core;
+package br.com.sbk.sbking.core.game;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
+
+import br.com.sbk.sbking.core.Direction;
 
 public class CagandoNoBequinhoGameTest {
 

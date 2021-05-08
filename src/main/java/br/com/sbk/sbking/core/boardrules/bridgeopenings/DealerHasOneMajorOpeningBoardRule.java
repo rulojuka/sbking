@@ -1,9 +1,9 @@
 package br.com.sbk.sbking.core.boardrules.bridgeopenings;
 
 import br.com.sbk.sbking.core.Board;
-import br.com.sbk.sbking.core.BoardRule;
 import br.com.sbk.sbking.core.Hand;
 import br.com.sbk.sbking.core.HandEvaluations;
+import br.com.sbk.sbking.core.boardrules.BoardRule;
 
 public class DealerHasOneMajorOpeningBoardRule implements BoardRule {
 
