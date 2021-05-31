@@ -81,10 +81,13 @@ public class Hand {
     @Override
     public String toString() {
         StringBuilder response = new StringBuilder();
-        response.append("|");
+        Card lastCard = null;
         for (Card card : cards) {
-            response.append(card.toString());
-            response.append("|");
+            if (lastCard != null && !lastCard.getSuit().equals(card.getSuit())) {
+                response.append(" ");
+            }
+            response.append(card.getRank().getSymbol());
+            lastCard = card;
         }
         return response.toString();
     }

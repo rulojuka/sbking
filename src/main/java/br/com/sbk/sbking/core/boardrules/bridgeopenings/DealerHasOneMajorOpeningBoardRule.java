@@ -11,15 +11,11 @@ public class DealerHasOneMajorOpeningBoardRule implements BoardRule {
     public boolean isValid(Board board) {
         Hand dealerHand = board.getHandOf(board.getDealer());
         HandEvaluations handEvaluations = dealerHand.getHandEvaluations();
-        return hasCorrectHCPRange(handEvaluations) && hasCorrectDistribution(handEvaluations);
-    }
-
-    private boolean hasCorrectHCPRange(HandEvaluations handEvaluations) {
-        return handEvaluations.getHCP() >= 12 && handEvaluations.getHCP() <= 21;
-    }
-
-    private boolean hasCorrectDistribution(HandEvaluations handEvaluations) {
-        return handEvaluations.hasFiveOrMoreCardsInAMajorSuit();
+        boolean hasElevenPointsOpening = handEvaluations.getHCP() == 11
+                && handEvaluations.hasSixOrMoreCardsInAMajorSuit();
+        boolean hasNormalOpening = handEvaluations.getHCP() >= 12 && handEvaluations.getHCP() <= 21
+                && handEvaluations.hasFiveOrMoreCardsInAMajorSuit();
+        return hasElevenPointsOpening || hasNormalOpening;
     }
 
 }

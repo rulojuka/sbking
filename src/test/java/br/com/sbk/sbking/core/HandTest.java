@@ -80,17 +80,17 @@ public class HandTest {
     }
 
     @Test
-    public void shouldTransformToStringByPipeSeparatingCards() {
+    public void shouldTransformToStringBySpaceSeparatingSuits() {
         Card aceOfSpades = mock(Card.class);
-        String aceOfSpadesString = "sA";
-        when(aceOfSpades.toString()).thenReturn(aceOfSpadesString);
+        when(aceOfSpades.getRank()).thenReturn(Rank.ACE);
+        when(aceOfSpades.getSuit()).thenReturn(Suit.SPADES);
         Card kingOfHearts = mock(Card.class);
-        String kingOfHeartsString = "hK";
-        when(kingOfHearts.toString()).thenReturn(kingOfHeartsString);
+        when(kingOfHearts.getRank()).thenReturn(Rank.KING);
+        when(kingOfHearts.getSuit()).thenReturn(Suit.HEARTS);
         Hand hand = new Hand();
         hand.addCard(aceOfSpades);
         hand.addCard(kingOfHearts);
-        String finalString = "|sA|hK|";
+        String finalString = "A K";
 
         assertEquals(finalString, hand.toString());
     }

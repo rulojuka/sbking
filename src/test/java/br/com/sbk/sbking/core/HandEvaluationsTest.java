@@ -336,6 +336,21 @@ public class HandEvaluationsTest {
         .hasFourOrMoreCardsInMajorSuitExcludingLongestSuit());
   }
 
+  @Test
+  public void getLongestSuitShouldReturnTheHighestSuitIfThereIsADraw() {
+    Hand firstHand = this.createMockedHandWithDistribution(this.createSuitDistribution(0, 1, 6, 6));
+    Hand secondHand = this.createMockedHandWithDistribution(this.createSuitDistribution(1, 5, 2, 5));
+    Hand thirdHand = this.createMockedHandWithDistribution(this.createSuitDistribution(4, 1, 4, 4));
+
+    HandEvaluations diamondsIsLongestSuit = new HandEvaluations(firstHand);
+    HandEvaluations heartsIsLongestSuit = new HandEvaluations(secondHand);
+    HandEvaluations spadesIsLongestSuit = new HandEvaluations(thirdHand);
+
+    assertEquals(Suit.DIAMONDS, diamondsIsLongestSuit.getLongestSuit());
+    assertEquals(Suit.HEARTS, heartsIsLongestSuit.getLongestSuit());
+    assertEquals(Suit.SPADES, spadesIsLongestSuit.getLongestSuit());
+  }
+
   private Hand createMockedHandWithDistribution(Map<Suit, Integer> suitDistribution) {
     Hand hand = mock(Hand.class);
     List<Card> mockedCards = new ArrayList<Card>();
@@ -386,4 +401,5 @@ public class HandEvaluationsTest {
     when(hand.getCards()).thenReturn(mockedCards);
     return hand;
   }
+
 }

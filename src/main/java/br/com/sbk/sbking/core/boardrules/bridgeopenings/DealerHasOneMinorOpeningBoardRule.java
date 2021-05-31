@@ -11,7 +11,10 @@ public class DealerHasOneMinorOpeningBoardRule implements BoardRule {
     public boolean isValid(Board board) {
         Hand dealerHand = board.getHandOf(board.getDealer());
         HandEvaluations handEvaluations = dealerHand.getHandEvaluations();
-        return hasCorrectHCPRange(handEvaluations) && hasCorrectDistribution(handEvaluations);
+        boolean hasElevenPointsOpening = handEvaluations.getHCP() == 11
+                && handEvaluations.hasSixOrMoreCardsInAMinorSuit();
+        boolean hasNormalOpening = hasCorrectHCPRange(handEvaluations) && hasCorrectDistribution(handEvaluations);
+        return hasElevenPointsOpening || hasNormalOpening;
     }
 
     private boolean hasCorrectHCPRange(HandEvaluations handEvaluations) {

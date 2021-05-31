@@ -5,7 +5,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import org.junit.Test;
-import org.mockito.Mockito;
 
 import br.com.sbk.sbking.core.Board;
 import br.com.sbk.sbking.core.Direction;
