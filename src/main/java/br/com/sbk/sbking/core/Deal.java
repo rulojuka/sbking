@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import br.com.sbk.sbking.core.comparators.CardInsideHandWithSuitComparator;
 import br.com.sbk.sbking.core.exceptions.DoesNotFollowSuitException;
@@ -34,7 +35,11 @@ public class Deal {
     private Trick currentTrick;
     private Direction dummy;
 
-    public Deal(Board board, Ruleset ruleset, Direction leader) {
+    private Direction claimer;
+    private Map<Direction, Boolean> acceptedClaimMap = new HashMap<Direction, Boolean>();
+    private Boolean isPartnershipGame;
+
+    public Deal(Board board, Ruleset ruleset, Direction leader, Boolean isPartnershipGame) {
         this.board = board;
         this.ruleset = ruleset;
         this.currentPlayer = leader;
@@ -44,6 +49,10 @@ public class Deal {
         this.startingNumberOfCardsInTheHand = NUMBER_OF_TRICKS_IN_A_COMPLETE_HAND;
         this.tricks = new ArrayList<Trick>();
         this.players = new HashMap<Direction, Player>();
+        for (Direction direction : Direction.values()) {
+            acceptedClaimMap.put(direction, false);
+        }
+        this.isPartnershipGame = isPartnershipGame;
     }
 
     public Player getPlayerOf(Direction direction) {
@@ -382,8 +391,59 @@ public class Deal {
         this.board.sortAllHands(ruleset.getComparator());
     }
 
-    public boolean shouldDrawDeal() {
-        return this.isFinished();
+    public void claim(Direction direction) {
+        if (this.claimer == null) {
+            this.claimer = direction;
+        }
     }
 
+    public void acceptClaim(Direction direction) {
+        this.acceptedClaimMap.put(direction, true);
+        if (this.otherPlayersAcceptedClaim()) {
+            this.finishDeal(this.claimer);
+        }
+    }
+
+    public void rejectClaim() {
+        this.claimer = null;
+        for (Direction direction : Direction.values()) {
+            acceptedClaimMap.put(direction, false);
+        }
+    }
+
+    private boolean otherPlayersAcceptedClaim() {
+        return this.acceptedClaimMap.entrySet().stream().filter(this::isNotClaimerPartner).map(Entry::getValue)
+                .reduce((a, b) -> a && b).orElse(true);
+    }
+
+    private boolean isNotClaimerPartner(Map.Entry<Direction, Boolean> entry) {
+        if (entry.getKey() == this.claimer) {
+            return false;
+        } else if (this.isPartnershipGame) {
+            return !entry.getKey().equals(this.claimer.next(2));
+        } else {
+            return true;
+        }
+    }
+
+    private void finishDeal(Direction winner) {
+        this.finishScore(winner);
+    }
+
+    private void finishScore(Direction winner) {
+        int totalPoints = this.ruleset.getTotalPoints();
+        this.score.finishScore(winner, totalPoints);
+    }
+
+    public Direction getClaimer() {
+        return this.claimer;
+    }
+
+    public Boolean getIsPartnershipGame() {
+        return this.isPartnershipGame;
+    }
+
+    public Map<Direction, Boolean> getAcceptedClaimMap() {
+        return this.acceptedClaimMap;
+    }
 }

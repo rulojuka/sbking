@@ -2,8 +2,6 @@ package br.com.sbk.sbking.networking.server.gameserver;
 
 import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 
-import br.com.sbk.sbking.core.Card;
-import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.core.game.CagandoNoBequinhoGame;
 
 public class CagandoNoBequinhoGameServer extends GameServer {
@@ -39,20 +37,12 @@ public class CagandoNoBequinhoGameServer extends GameServer {
                     // wait until object notifies - which relinquishes the lock on the object too
                     try {
                         LOGGER.info("I am waiting for some thread to notify that it wants to play a card.");
-                        cardPlayNotification.wait();
+                        cardPlayNotification.wait(this.timeoutCardPlayNotification);
                     } catch (InterruptedException e) {
                         LOGGER.error(e);
                     }
                 }
-                Direction directionToBePlayed = cardPlayNotification.getDirection();
-                Card cardToBePlayed = cardPlayNotification.getCard();
-                LOGGER.info(
-                        "Received notification that " + directionToBePlayed + " wants to play the " + cardToBePlayed);
-                try {
-                    this.playCard(cardToBePlayed, directionToBePlayed);
-                } catch (Exception e) {
-                    throw e;
-                }
+                this.executeCardPlayNotification(cardPlayNotification);
             }
 
             this.sendDealAll();

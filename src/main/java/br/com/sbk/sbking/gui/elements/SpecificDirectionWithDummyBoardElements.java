@@ -14,8 +14,7 @@ public class SpecificDirectionWithDummyBoardElements {
       ActionListener actionListener, Direction dummy, boolean dummyVisible) {
 
     for (Direction currentHandDirection : Direction.values()) {
-      boolean shouldDrawVisible = this.shouldDrawVisible(playerDirection, currentHandDirection, dummy, dummyVisible)
-          || deal.shouldDrawDeal();
+      boolean shouldDrawVisible = this.shouldDrawVisible(playerDirection, currentHandDirection, dummy, dummyVisible, deal);
       new HandElement(deal.getHandOf(currentHandDirection), container, actionListener,
           FrameConstants.pointOfDirection.get(currentHandDirection), deal.getPlayerOf(currentHandDirection),
           shouldDrawVisible, currentHandDirection);
@@ -34,10 +33,18 @@ public class SpecificDirectionWithDummyBoardElements {
 
     new LeaveTableElement(container, new Point(150, 50), actionListener);
 
+    new ClaimElement(deal.getClaimer(), container, new Point(container.getWidth() - 150, container.getHeight() - 50),
+        actionListener);
+
+    new AcceptClaimElement(deal.getClaimer(), playerDirection, deal.getIsPartnershipGame(), deal.getAcceptedClaimMap(),
+        container, new Point(container.getWidth() - 150, container.getHeight() - 50), actionListener);
+
+    new RejectClaimElement(deal.getClaimer(), playerDirection, deal.getIsPartnershipGame(), deal.getAcceptedClaimMap(),
+        container, new Point(container.getWidth() - 150, container.getHeight() - 50), actionListener);
   }
 
   private boolean shouldDrawVisible(Direction playerDirection, Direction currentDirection, Direction dummy,
-      boolean dummyVisible) {
+      boolean dummyVisible, Deal deal) {
     if (dummyVisible) {
       if (currentDirection == playerDirection) {
         return true;
@@ -48,9 +55,9 @@ public class SpecificDirectionWithDummyBoardElements {
       if (playerDirection == dummy && currentDirection == dummy.next(2)) {
         return true;
       }
-      return false;
+      return deal.isFinished() || currentDirection.equals(deal.getClaimer());
     } else {
-      return currentDirection == playerDirection;
+      return currentDirection == playerDirection || deal.isFinished() || currentDirection.equals(deal.getClaimer());
     }
   }
 

@@ -199,6 +199,18 @@ public class Table {
     }
   }
 
+  public void claim(Direction direction) {
+    this.gameServer.claim(direction);
+    this.sendDealAll();
+  }
+
+  public void claim(Player player) {
+    Direction directionFromPlayer = this.getDirectionFrom(player);
+    if (directionFromPlayer != null) {
+      this.claim(directionFromPlayer);
+    }
+  }
+
   public Direction getDirectionFrom(Player player) {
     for (Direction direction : Direction.values()) {
       Player currentPlayer = seatedPlayers.get(direction);
@@ -259,6 +271,23 @@ public class Table {
       }
     }
     return null;
+  }
+
+  public void acceptClaim(Direction direction) {
+    this.gameServer.acceptClaim(direction);
+    this.sendDealAll();
+  }
+
+  public void acceptClaim(Player player) {
+    Direction directionFromPlayer = this.getDirectionFrom(player);
+    if (directionFromPlayer != null) {
+      this.acceptClaim(directionFromPlayer);
+    }
+  }
+
+  public void rejectClaim(Player player) {
+    this.gameServer.rejectClaim();
+    this.sendDealAll();
   }
 
 }

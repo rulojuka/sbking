@@ -21,6 +21,8 @@ public abstract class GameServer implements Runnable {
 
     protected TrickGame game;
 
+    protected int timeoutCardPlayNotification = 1000;
+
     public void setTable(Table table) {
         this.table = table;
     }
@@ -101,6 +103,10 @@ public abstract class GameServer implements Runnable {
         this.getDeal().undo(direction);
     }
 
+    public void claim(Direction direction) {
+        this.getDeal().claim(direction);
+    }
+
     protected void copyPlayersFromTableToGame() {
         for (Direction direction : Direction.values()) {
             Player player = this.table.getPlayerOf(direction);
@@ -120,6 +126,28 @@ public abstract class GameServer implements Runnable {
 
     protected void giveBackAllCards() {
         this.getDeal().giveBackAllCardsToHands();
+    }
+
+    public void acceptClaim(Direction direction) {
+        this.getDeal().acceptClaim(direction);
+    }
+
+    public void rejectClaim() {
+        this.getDeal().rejectClaim();
+    }
+
+    protected void executeCardPlayNotification(CardPlayNotification cardPlayNotification) {
+        Direction directionToBePlayed = cardPlayNotification.getDirection();
+            if (directionToBePlayed != null) {
+                Card cardToBePlayed = cardPlayNotification.getCard();
+                LOGGER.info(
+                        "Received notification that " + directionToBePlayed + " wants to play the " + cardToBePlayed);
+                try {
+                    this.playCard(cardToBePlayed, directionToBePlayed);
+                } catch (Exception e) {
+                    throw e;
+                }
+            }
     }
 
 }

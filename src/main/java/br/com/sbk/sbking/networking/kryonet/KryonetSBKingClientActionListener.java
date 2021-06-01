@@ -25,12 +25,24 @@ public class KryonetSBKingClientActionListener {
     client.sendUndo();
   }
 
+  public void claim() {
+    client.sendClaim();
+  }
+
   public void joinTable(UUID tableId) {
     client.sendJoinTable(tableId);
   }
 
   public void leaveTable() {
     client.sendLeaveTable();
+  }
+
+  public void acceptClaim() {
+    client.sendAcceptClaim();
+  }
+
+  public void rejectClaim() {
+    client.sendRejectClaim();
   }
 
 }
