@@ -9,15 +9,18 @@ import com.esotericsoftware.kryonet.Client;
 import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.networking.kryonet.messages.SBKingMessage;
+import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.AcceptClaimMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.ChooseGameModeOrStrainMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.ChooseNegativeMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.ChoosePositiveMessage;
+import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.ClaimMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.CreateTableMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.GetTablesMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.JoinTableMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.LeaveTableMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.MoveToSeatMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.PlayCardMessage;
+import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.RejectClaimMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.SetNicknameMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.UndoMessage;
 
@@ -63,6 +66,10 @@ public class KryonetSBKingClient extends Client {
     this.sendMessage(new UndoMessage());
   }
 
+  public void sendClaim() {
+    this.sendMessage(new ClaimMessage());
+  }
+
   public void sendCreateTableMessage(String gameName) {
     this.sendMessage(new CreateTableMessage(gameName));
   }
@@ -77,6 +84,14 @@ public class KryonetSBKingClient extends Client {
 
   public void sendLeaveTable() {
     this.sendMessage(new LeaveTableMessage());
+  }
+
+  public void sendAcceptClaim() {
+    this.sendMessage(new AcceptClaimMessage());
+  }
+
+  public void sendRejectClaim() {
+    this.sendMessage(new RejectClaimMessage());
   }
 
 }

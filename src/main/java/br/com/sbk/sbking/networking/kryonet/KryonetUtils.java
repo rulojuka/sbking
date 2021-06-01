@@ -40,15 +40,18 @@ import br.com.sbk.sbking.core.rulesets.implementations.ProhibitsHearts;
 import br.com.sbk.sbking.core.rulesets.implementations.TrumpSuitWinnable;
 import br.com.sbk.sbking.dto.LobbyScreenTableDTO;
 import br.com.sbk.sbking.gui.models.KingGameScoreboard;
+import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.AcceptClaimMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.ChooseGameModeOrStrainMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.ChooseNegativeMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.ChoosePositiveMessage;
+import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.ClaimMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.CreateTableMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.GetTablesMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.JoinTableMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.LeaveTableMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.MoveToSeatMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.PlayCardMessage;
+import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.RejectClaimMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.SetNicknameMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.UndoMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.DealMessage;
@@ -118,6 +121,8 @@ public class KryonetUtils {
     kryo.register(LobbyScreenTableDTO.class);
 
     // Server to Client Message classes
+    kryo.register(AcceptClaimMessage.class);
+    kryo.register(ClaimMessage.class);
     kryo.register(DealMessage.class);
     kryo.register(FinishDealMessage.class);
     kryo.register(GameModeOrStrainChooserMessage.class);
@@ -128,6 +133,7 @@ public class KryonetUtils {
     kryo.register(IsSpectatorMessage.class);
     kryo.register(PositiveOrNegativeChooserMessage.class);
     kryo.register(PositiveOrNegativeMessage.class);
+    kryo.register(RejectClaimMessage.class);
     kryo.register(TextMessage.class);
     kryo.register(UndoMessage.class);
     kryo.register(ValidRulesetMessage.class);

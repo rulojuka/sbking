@@ -4,9 +4,12 @@ import java.util.UUID;
 
 import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Direction;
+import br.com.sbk.sbking.gui.jelements.AcceptClaimButton;
 import br.com.sbk.sbking.gui.jelements.CardButton;
+import br.com.sbk.sbking.gui.jelements.ClaimButton;
 import br.com.sbk.sbking.gui.jelements.JoinTableButton;
 import br.com.sbk.sbking.gui.jelements.LeaveTableButton;
+import br.com.sbk.sbking.gui.jelements.RejectClaimButton;
 import br.com.sbk.sbking.gui.jelements.SitOrLeaveButton;
 import br.com.sbk.sbking.gui.jelements.UndoButton;
 import br.com.sbk.sbking.networking.kryonet.KryonetSBKingClientActionListener;
@@ -38,6 +41,12 @@ public class ClientActionListener implements java.awt.event.ActionListener {
             client.sitOrLeave(direction);
         } else if (source instanceof UndoButton) {
             client.undo();
+        } else if (source instanceof ClaimButton) {
+            client.claim();
+        } else if (source instanceof AcceptClaimButton) {
+            client.acceptClaim();
+        } else if (source instanceof RejectClaimButton) {
+            client.rejectClaim();
         } else if (source instanceof JoinTableButton) {
             JoinTableButton button = (JoinTableButton) source;
             UUID tableId = (UUID) button.getClientProperty("tableId");

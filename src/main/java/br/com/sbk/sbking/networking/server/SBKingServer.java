@@ -304,4 +304,31 @@ public class SBKingServer {
 
   }
 
+  public void claim(UUID playerIdentifier) {
+    Player player = identifierToPlayerMap.get(playerIdentifier);
+    Table table = playersTable.get(player);
+    if (player == null || table == null) {
+      return;
+    }
+    table.claim(player);
+  }
+
+  public void acceptClaim(UUID playerIdentifier) {
+    Player player = identifierToPlayerMap.get(playerIdentifier);
+    Table table = playersTable.get(player);
+    if (player == null || table == null) {
+      return;
+    }
+    table.acceptClaim(player);
+  }
+
+  public void rejectClaim(UUID playerIdentifier) {
+    Player player = identifierToPlayerMap.get(playerIdentifier);
+    Table table = playersTable.get(player);
+    if (player == null || table == null) {
+      return;
+    }
+    table.rejectClaim(player);
+  }
+
 }

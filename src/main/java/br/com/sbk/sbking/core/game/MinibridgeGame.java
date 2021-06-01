@@ -19,7 +19,7 @@ public class MinibridgeGame extends TrickGame {
   public void dealNewBoard() {
     BoardDealer boardDealer = new MinibridgeBoardDealer();
     this.currentBoard = boardDealer.dealBoard(this.dealer);
-    this.currentDeal = new Deal(currentBoard, new NoRuleset(), this.getLeader());
+    this.currentDeal = new Deal(currentBoard, new NoRuleset(), this.getLeader(), true);
     this.currentDeal.setCurrentPlayer(this.dealer.next());
     this.currentDeal.setDummy(this.dealer.next(2));
   }
@@ -47,7 +47,7 @@ public class MinibridgeGame extends TrickGame {
   }
 
   public void addRuleset(Ruleset currentGameModeOrStrain) {
-    this.currentDeal = new Deal(this.currentBoard, currentGameModeOrStrain, this.getLeader());
+    this.currentDeal = new Deal(this.currentBoard, currentGameModeOrStrain, this.getLeader(), true);
     this.currentDeal.setCurrentPlayer(this.dealer.next());
     this.currentDeal.setDummy(this.dealer.next(2));
   }

@@ -62,6 +62,15 @@ public class Score {
         return points;
     }
 
+    public void finishScore(Direction winner, int totalPoints) {
+        int remainingPoints = totalPoints - this.getAlreadyPlayedPoints();
+        if (winner.isNorthSouth()) {
+            this.northSouthPoints += remainingPoints;
+        } else {
+            this.eastWestPoints += remainingPoints;
+        }
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
