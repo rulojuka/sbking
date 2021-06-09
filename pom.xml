@@ -39,7 +39,7 @@
 		<repository>
 			<id>clojars</id>
 			<name>Used to resolve kryonet</name>
-			<url>http://clojars.org/repo/</url>
+			<url>https://repo.clojars.org</url>
 		</repository>
 	</repositories>
 
