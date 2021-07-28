@@ -16,7 +16,7 @@ public class PositiveNoTrumpsRuleset extends PositiveRuleset {
 
     @Override
     public String getShortDescription() {
-        return "Positive no trumps";
+        return "NT";
     }
 
     @Override

@@ -44,7 +44,7 @@ public class ChooseGameModeOrStrainElement {
         } else {
             this.numberOfElements = NegativeRulesetsEnum.values().length;
         }
-        this.elementWidth = 160;
+        this.elementWidth = 50;
     }
 
     public void add() {
@@ -84,7 +84,7 @@ public class ChooseGameModeOrStrainElement {
         }
 
         SBKingRadioButtonGroupCreator sbKingRadioButtonGroupCreator = new SBKingRadioButtonGroupCreator();
-        ButtonGroup buttonGroup = sbKingRadioButtonGroupCreator.create(texts, x, y, 160);
+        ButtonGroup buttonGroup = sbKingRadioButtonGroupCreator.create(texts, x, y, this.elementWidth);
         for (Enumeration<AbstractButton> elements = buttonGroup.getElements(); elements.hasMoreElements();) {
             AbstractButton element = elements.nextElement();
             container.add(element);

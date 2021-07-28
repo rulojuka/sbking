@@ -28,7 +28,7 @@ public class PositiveWithTrumpsRuleset extends PositiveRuleset {
 
     @Override
     public String getShortDescription() {
-        return "Positive " + trumpSuit.getName().toLowerCase();
+        return "" + trumpSuit.getUnicodeSymbol();
     }
 
     @Override
