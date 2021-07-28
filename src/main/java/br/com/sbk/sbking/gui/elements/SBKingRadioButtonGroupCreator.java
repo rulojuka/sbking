@@ -5,21 +5,22 @@ import java.util.List;
 import javax.swing.ButtonGroup;
 import javax.swing.JRadioButton;
 
-import br.com.sbk.sbking.gui.models.TextWithColor;
+import br.com.sbk.sbking.gui.models.TextWithColorAndFont;
 
 public class SBKingRadioButtonGroupCreator {
 
   private static int elementHeight = 20;
 
-  public ButtonGroup create(List<TextWithColor> texts, int x, int y, int elementWidth) {
+  public ButtonGroup create(List<TextWithColorAndFont> texts, int x, int y, int elementWidth) {
     ButtonGroup buttonGroup = new ButtonGroup();
 
-    for (TextWithColor textWithColor : texts) {
-      String text = textWithColor.getText();
+    for (TextWithColorAndFont textWithColorAndFont : texts) {
+      String text = textWithColorAndFont.getText();
       JRadioButton currentButton = new JRadioButton(text);
       currentButton.setName(text);
       currentButton.setBounds(x, y, elementWidth, elementHeight);
-      currentButton.setForeground(textWithColor.getColor());
+      currentButton.setForeground(textWithColorAndFont.getColor());
+      currentButton.setFont(textWithColorAndFont.getFont());
       y += elementHeight;
 
       buttonGroup.add(currentButton);

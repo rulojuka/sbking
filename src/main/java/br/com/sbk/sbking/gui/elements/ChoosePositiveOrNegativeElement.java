@@ -16,7 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 
 import br.com.sbk.sbking.gui.jelements.SBKingLabel;
-import br.com.sbk.sbking.gui.models.TextWithColor;
+import br.com.sbk.sbking.gui.models.TextWithColorAndFont;
 import br.com.sbk.sbking.networking.client.SBKingClient;
 
 public class ChoosePositiveOrNegativeElement {
@@ -29,7 +29,7 @@ public class ChoosePositiveOrNegativeElement {
     private int elementHeight;
     private int xSpacing;
     private int yLabelOffset;
-    List<TextWithColor> texts;
+    List<TextWithColorAndFont> texts;
 
     private static final int BUTTON_WIDTH = 80;
 
@@ -38,9 +38,9 @@ public class ChoosePositiveOrNegativeElement {
         this.sbKingClient = sbKingClient;
         this.numberOfElements = 2;
         this.elementWidth = 160;
-        this.texts = new ArrayList<TextWithColor>();
-        texts.add(new TextWithColor("Positive"));
-        texts.add(new TextWithColor("Negative"));
+        this.texts = new ArrayList<TextWithColorAndFont>();
+        texts.add(new TextWithColorAndFont("Positive"));
+        texts.add(new TextWithColorAndFont("Negative"));
     }
 
     public void add() {
@@ -97,9 +97,9 @@ public class ChoosePositiveOrNegativeElement {
                 }
             }
             if (selectedOnRadio != null) {
-                if (selectedOnRadio.getText().equals(texts.get(0))) {
+                if (selectedOnRadio.getText().equals(texts.get(0).getText())) {
                     sbKingClient.sendPositive();
-                } else if (selectedOnRadio.getText().equals(texts.get(1))) {
+                } else if (selectedOnRadio.getText().equals(texts.get(1).getText())) {
                     sbKingClient.sendNegative();
                 }
             }
