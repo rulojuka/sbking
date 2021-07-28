@@ -14,7 +14,8 @@ public class SpecificDirectionWithDummyBoardElements {
       ActionListener actionListener, Direction dummy, boolean dummyVisible) {
 
     for (Direction currentHandDirection : Direction.values()) {
-      boolean shouldDrawVisible = this.shouldDrawVisible(playerDirection, currentHandDirection, dummy, dummyVisible, deal);
+      boolean shouldDrawVisible = this.shouldDrawVisible(playerDirection, currentHandDirection, dummy, dummyVisible,
+          deal);
       new HandElement(deal.getHandOf(currentHandDirection), container, actionListener,
           FrameConstants.pointOfDirection.get(currentHandDirection), deal.getPlayerOf(currentHandDirection),
           shouldDrawVisible, currentHandDirection);
@@ -27,7 +28,7 @@ public class SpecificDirectionWithDummyBoardElements {
 
     new TrickElement(deal.getCurrentTrick(), container, new Point(container.getWidth() / 2, container.getHeight() / 2));
 
-    new RulesetElement(deal.getRuleset(), container, new Point(150, 10));
+    new RulesetElement(deal.getRuleset(), container, new Point(150, 150));
 
     new UndoElement(container, new Point(150, container.getHeight() - 50), actionListener);
 
