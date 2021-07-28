@@ -12,11 +12,9 @@ public class AllDirectionBoardElements {
 
     public AllDirectionBoardElements(Deal deal, Container container, ActionListener actionListener) {
         for (Direction direction : Direction.values()) {
-            new HandElement(deal.getHandOf(direction), container, actionListener,
-                    FrameConstants.pointOfDirection.get(direction), deal.getPlayerOf(direction), true, direction);
+            new HandElement(deal, container, actionListener, FrameConstants.pointOfDirection.get(direction),
+                    deal.getPlayerOf(direction), true, direction);
         }
-
-        new CurrentPlayerElement(deal.getCurrentPlayer(), container, false);
 
         new ScoreboardElement(deal, container, new Point(container.getWidth() - 150, 10));
 

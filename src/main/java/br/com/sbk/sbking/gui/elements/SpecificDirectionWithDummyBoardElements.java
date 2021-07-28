@@ -16,13 +16,9 @@ public class SpecificDirectionWithDummyBoardElements {
     for (Direction currentHandDirection : Direction.values()) {
       boolean shouldDrawVisible = this.shouldDrawVisible(playerDirection, currentHandDirection, dummy, dummyVisible,
           deal);
-      new HandElement(deal.getHandOf(currentHandDirection), container, actionListener,
-          FrameConstants.pointOfDirection.get(currentHandDirection), deal.getPlayerOf(currentHandDirection),
-          shouldDrawVisible, currentHandDirection);
+      new HandElement(deal, container, actionListener, FrameConstants.pointOfDirection.get(currentHandDirection),
+          deal.getPlayerOf(currentHandDirection), shouldDrawVisible, currentHandDirection);
     }
-
-    boolean isMyTurn = deal.getCurrentPlayer().equals(playerDirection);
-    new CurrentPlayerElement(deal.getCurrentPlayer(), container, isMyTurn);
 
     new ScoreboardElement(deal, container, new Point(container.getWidth() - 150, 10));
 
