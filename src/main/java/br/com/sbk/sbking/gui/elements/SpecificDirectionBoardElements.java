@@ -16,13 +16,10 @@ public class SpecificDirectionBoardElements {
                 for (Direction currentDirection : Direction.values()) {
                         boolean isVisible = currentDirection.equals(direction) || deal.isFinished()
                                         || currentDirection.equals(deal.getClaimer());
-                        new HandElement(deal.getHandOf(currentDirection), container, actionListener,
+                        new HandElement(deal, container, actionListener,
                                         FrameConstants.pointOfDirection.get(currentDirection),
                                         deal.getPlayerOf(currentDirection), isVisible, currentDirection);
                 }
-
-                boolean isMyTurn = deal.getCurrentPlayer().equals(direction);
-                new CurrentPlayerElement(deal.getCurrentPlayer(), container, isMyTurn);
 
                 new ScoreboardElement(deal, container, new Point(container.getWidth() - 150, 10));
 

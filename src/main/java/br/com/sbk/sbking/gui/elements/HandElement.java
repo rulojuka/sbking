@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 
 import br.com.sbk.sbking.core.Card;
+import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.core.Hand;
 import br.com.sbk.sbking.core.Player;
@@ -17,9 +18,13 @@ import br.com.sbk.sbking.gui.models.DeckCardImageInformation;
 public class HandElement {
 
     private DeckCardImageInformation deckCardImageInformation;
+    private static final java.awt.Color TURN_LIGHT_COLOR = new java.awt.Color(255, 0, 0);
 
-    public HandElement(Hand hand, Container container, ActionListener actionListener, Point handCenter, Player player,
+    public HandElement(Deal deal, Container container, ActionListener actionListener, Point handCenter, Player player,
             boolean isVisible, Direction direction) {
+        Hand hand = deal.getHandOf(direction);
+        boolean isTurnToPlay = direction.equals(deal.getCurrentPlayer());
+
         this.deckCardImageInformation = new DeckCardImageInformation();
 
         int xOffset = (((hand.size() - 1) * deckCardImageInformation.getWidthBetweenCards())
@@ -51,6 +56,11 @@ public class HandElement {
             sitOrLeaveButton.setText("Click to seat.");
         } else {
             sitOrLeaveButton.setText(player.getNickname());
+        }
+
+        if (isTurnToPlay) {
+            sitOrLeaveButton.setBackground(TURN_LIGHT_COLOR);
+            sitOrLeaveButton.setOpaque(true);
         }
 
         Point startingPoint = handTopLeftCorner;
