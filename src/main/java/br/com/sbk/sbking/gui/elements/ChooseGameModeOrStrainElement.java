@@ -17,8 +17,9 @@ import javax.swing.JRadioButton;
 
 import br.com.sbk.sbking.core.Strain;
 import br.com.sbk.sbking.core.rulesets.NegativeRulesetsEnum;
+import br.com.sbk.sbking.core.rulesets.concrete.PositiveWithTrumpsRuleset;
 import br.com.sbk.sbking.gui.jelements.SBKingLabel;
-import br.com.sbk.sbking.gui.models.TextWithColor;
+import br.com.sbk.sbking.gui.models.TextWithColorAndFont;
 import br.com.sbk.sbking.networking.client.SBKingClient;
 
 public class ChooseGameModeOrStrainElement {
@@ -45,7 +46,7 @@ public class ChooseGameModeOrStrainElement {
         } else {
             this.numberOfElements = NegativeRulesetsEnum.values().length;
         }
-        this.elementWidth = 50;
+        this.elementWidth = 60;
     }
 
     public void add() {
@@ -73,16 +74,23 @@ public class ChooseGameModeOrStrainElement {
         int y = buttonsPosition.y;
         int x = buttonsPosition.x;
 
-        List<TextWithColor> texts = new ArrayList<TextWithColor>();
+        List<TextWithColorAndFont> texts = new ArrayList<TextWithColorAndFont>();
         if (this.isPositive) {
             for (Strain strain : Strain.values()) {
                 String newText = strain.getPositiveRuleset().getShortDescription();
-                texts.add(new TextWithColor(newText));
+                if (strain.getPositiveRuleset() instanceof PositiveWithTrumpsRuleset) {
+                    PositiveWithTrumpsRuleset positiveWithTrumpsRuleset = (PositiveWithTrumpsRuleset) strain
+                            .getPositiveRuleset();
+                    java.awt.Color textColor = positiveWithTrumpsRuleset.getTrumpSuit().getColor();
+                    texts.add(new TextWithColorAndFont(newText, textColor, 22));
+                } else {
+                    texts.add(new TextWithColorAndFont(newText));
+                }
             }
         } else {
             for (NegativeRulesetsEnum negativeRulesetEnumElement : NegativeRulesetsEnum.values()) {
                 String newText = negativeRulesetEnumElement.getNegativeRuleset().getShortDescription();
-                texts.add(new TextWithColor(newText));
+                texts.add(new TextWithColorAndFont(newText));
             }
         }
 
