@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 
 import br.com.sbk.sbking.gui.jelements.SBKingLabel;
+import br.com.sbk.sbking.gui.models.TextWithColor;
 import br.com.sbk.sbking.networking.client.SBKingClient;
 
 public class ChoosePositiveOrNegativeElement {
@@ -28,7 +29,7 @@ public class ChoosePositiveOrNegativeElement {
     private int elementHeight;
     private int xSpacing;
     private int yLabelOffset;
-    List<String> texts;
+    List<TextWithColor> texts;
 
     private static final int BUTTON_WIDTH = 80;
 
@@ -37,9 +38,9 @@ public class ChoosePositiveOrNegativeElement {
         this.sbKingClient = sbKingClient;
         this.numberOfElements = 2;
         this.elementWidth = 160;
-        this.texts = new ArrayList<String>();
-        texts.add("Positive");
-        texts.add("Negative");
+        this.texts = new ArrayList<TextWithColor>();
+        texts.add(new TextWithColor("Positive"));
+        texts.add(new TextWithColor("Negative"));
     }
 
     public void add() {

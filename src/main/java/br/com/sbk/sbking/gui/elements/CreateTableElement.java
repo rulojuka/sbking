@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 
 import br.com.sbk.sbking.gui.jelements.SBKingLabel;
+import br.com.sbk.sbking.gui.models.TextWithColor;
 import br.com.sbk.sbking.networking.client.SBKingClient;
 
 public class CreateTableElement {
@@ -28,7 +29,7 @@ public class CreateTableElement {
   private int elementHeight;
   private int xSpacing;
   private int yLabelOffset;
-  List<String> texts;
+  List<TextWithColor> texts;
 
   private static final int BUTTON_WIDTH = 100;
 
@@ -38,11 +39,12 @@ public class CreateTableElement {
     this.numberOfElements = 4;
     this.elementWidth = 200;
 
-    this.texts = new ArrayList<String>();
-    texts.add("Cagando no Bequinho");
-    texts.add("King");
-    texts.add("Minibridge");
-    texts.add("Positive King");
+    this.texts = new ArrayList<TextWithColor>();
+    texts.add(new TextWithColor("Cagando no Bequinho"));
+    texts.add(new TextWithColor("King"));
+    texts.add(new TextWithColor("Minibridge"));
+    texts.add(new TextWithColor("Positive King"));
+
     int initialX = halfWidth;
     int initialY = halfHeight;
 

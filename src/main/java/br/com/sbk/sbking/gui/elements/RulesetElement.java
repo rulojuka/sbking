@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 
 import br.com.sbk.sbking.core.rulesets.abstractrulesets.Ruleset;
 import br.com.sbk.sbking.core.rulesets.concrete.NoRuleset;
+import br.com.sbk.sbking.core.rulesets.concrete.PositiveWithTrumpsRuleset;
 import br.com.sbk.sbking.gui.jelements.SBKingLabel;
 
 import java.awt.Font;
@@ -32,6 +33,10 @@ public class RulesetElement {
         } else {
             label = new SBKingLabel(ruleset.getShortDescription());
             label.setFont(new Font("Verdana", Font.PLAIN, 64));
+            if (ruleset instanceof PositiveWithTrumpsRuleset) {
+                PositiveWithTrumpsRuleset positiveWithTrumpsRuleset = (PositiveWithTrumpsRuleset) ruleset;
+                label.setForeground(positiveWithTrumpsRuleset.getTrumpSuit().getColor());
+            }
             label.setHorizontalAlignment(CENTER);
             label.setSize(300, 100);
         }

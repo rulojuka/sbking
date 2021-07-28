@@ -18,6 +18,7 @@ import javax.swing.JRadioButton;
 import br.com.sbk.sbking.core.Strain;
 import br.com.sbk.sbking.core.rulesets.NegativeRulesetsEnum;
 import br.com.sbk.sbking.gui.jelements.SBKingLabel;
+import br.com.sbk.sbking.gui.models.TextWithColor;
 import br.com.sbk.sbking.networking.client.SBKingClient;
 
 public class ChooseGameModeOrStrainElement {
@@ -72,14 +73,16 @@ public class ChooseGameModeOrStrainElement {
         int y = buttonsPosition.y;
         int x = buttonsPosition.x;
 
-        List<String> texts = new ArrayList<String>();
+        List<TextWithColor> texts = new ArrayList<TextWithColor>();
         if (this.isPositive) {
             for (Strain strain : Strain.values()) {
-                texts.add(strain.getPositiveRuleset().getShortDescription());
+                String newText = strain.getPositiveRuleset().getShortDescription();
+                texts.add(new TextWithColor(newText));
             }
         } else {
             for (NegativeRulesetsEnum negativeRulesetEnumElement : NegativeRulesetsEnum.values()) {
-                texts.add(negativeRulesetEnumElement.getNegativeRuleset().getShortDescription());
+                String newText = negativeRulesetEnumElement.getNegativeRuleset().getShortDescription();
+                texts.add(new TextWithColor(newText));
             }
         }
 
