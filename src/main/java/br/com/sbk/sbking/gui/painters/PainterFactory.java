@@ -31,8 +31,7 @@ public class PainterFactory {
 
   public Painter getWaitingForChoosingGameModeOrStrainPainter(Direction direction, Direction chooser,
       boolean isPositive) {
-    return new WaitingForChoosingGameModeOrStrainPainter(direction, chooser, isPositive, this.sbkingClient,
-        this.sbkingClient.getCurrentGameScoreboard());
+    return new WaitingForChoosingGameModeOrStrainPainter(direction, chooser, isPositive, this.sbkingClient);
   }
 
   public Painter getWaitingForChoosingPositiveOrNegativePainter(Direction direction, Direction chooser) {
