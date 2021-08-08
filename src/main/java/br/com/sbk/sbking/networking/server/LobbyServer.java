@@ -19,12 +19,17 @@ public class LobbyServer {
     }
 
     private int getPortFromNetworkingProperties() {
-        FileProperties fileProperties = new FileProperties();
         int port = 0;
+        FileProperties fileProperties = new FileProperties();
+        LOGGER.info("Created fileProperties.");
+        LOGGER.info("Host: " + fileProperties.getHost() + " Port: " + fileProperties.getPort());
         try {
             NetworkingProperties networkingProperties = new NetworkingProperties(fileProperties,
                     new SystemProperties());
+            LOGGER.info("Created networkingProperties.");
+            String finalHost = networkingProperties.getHost();
             port = networkingProperties.getPort();
+            LOGGER.info("Host: " + finalHost + "\nPort: " + port);
         } catch (Exception e) {
             LOGGER.fatal("Could not get port from properties.");
             LOGGER.fatal(e);
