@@ -12,21 +12,30 @@ import br.com.sbk.sbking.core.constants.ErrorCodes;
 
 public class FileProperties {
 
+    private static final String BASE_PATH = "src/main/resources/";
+    private static final String DEV_FILE_NAME = "config.dev.xml";
+    private static final String PRODUCTION_FILE_NAME = "config.xml";
+
     private XMLConfiguration configuration;
 
     public FileProperties() {
         Configurations configurations = new Configurations();
-        File devFile = new File("src/main/resources/config.dev.xml");
-        File productionFile = new File("src/main/resources/config.xml");
+        String completeDevFileName = BASE_PATH + DEV_FILE_NAME;
+        String completeProductionFileName = BASE_PATH + PRODUCTION_FILE_NAME;
+        File devFile = new File(completeDevFileName);
+        File productionFile = new File(completeProductionFileName);
         if (devFile.exists() && !devFile.isDirectory()) {
             try {
-                this.configuration = configurations.xml("src/main/resources/config.dev.xml");
+                this.configuration = configurations.xml(completeDevFileName);
+                LOGGER.info("Using properties from development file.");
             } catch (ConfigurationException e) {
-
+                LOGGER.fatal(e);
+                System.exit(ErrorCodes.COULD_NOT_READ_PROPERTIES_FILE);
             }
         } else if (productionFile.exists() && !productionFile.isDirectory()) {
             try {
-                this.configuration = configurations.xml("src/main/resources/config.xml");
+                this.configuration = configurations.xml(completeProductionFileName);
+                LOGGER.info("Using properties from production file.");
             } catch (ConfigurationException e) {
                 LOGGER.fatal(e);
                 System.exit(ErrorCodes.COULD_NOT_READ_PROPERTIES_FILE);
@@ -35,10 +44,16 @@ public class FileProperties {
     }
 
     public String getHost() {
+        if (this.configuration == null) {
+            return null;
+        }
         return this.configuration.getString(PropertiesConstants.HOST);
     }
 
     public Integer getPort() {
+        if (this.configuration == null) {
+            return null;
+        }
         return this.configuration.getInt(PropertiesConstants.PORT);
     }
 }
