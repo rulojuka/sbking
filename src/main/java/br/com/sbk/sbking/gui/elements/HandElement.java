@@ -1,6 +1,7 @@
 package br.com.sbk.sbking.gui.elements;
 
 import java.awt.Container;
+import java.awt.Font;
 import java.awt.Point;
 import java.awt.event.ActionListener;
 
@@ -11,6 +12,7 @@ import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.core.Hand;
 import br.com.sbk.sbking.core.Player;
+import br.com.sbk.sbking.gui.constants.FrameConstants;
 import br.com.sbk.sbking.gui.jelements.CardButton;
 import br.com.sbk.sbking.gui.jelements.SitOrLeaveButton;
 import br.com.sbk.sbking.gui.models.DeckCardImageInformation;
@@ -19,6 +21,7 @@ public class HandElement {
 
     private DeckCardImageInformation deckCardImageInformation;
     private static final java.awt.Color TURN_LIGHT_COLOR = new java.awt.Color(255, 0, 0);
+    private static double scaleFactor;
 
     public HandElement(Deal deal, Container container, ActionListener actionListener, Point handCenter, Player player,
             boolean isVisible, Direction direction) {
@@ -52,6 +55,9 @@ public class HandElement {
 
         JButton sitOrLeaveButton = new SitOrLeaveButton(direction);
         sitOrLeaveButton.addActionListener(actionListener);
+        scaleFactor = FrameConstants.getScreenScale();
+        int fontSize = (int) (23 * scaleFactor);
+        sitOrLeaveButton.setFont(new Font("Verdana", Font.BOLD, fontSize));
         if (player == null) {
             sitOrLeaveButton.setText("Click to seat.");
         } else {
