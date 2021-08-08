@@ -9,6 +9,7 @@ import br.com.sbk.sbking.core.exceptions.SelectedPositiveOrNegativeInAnotherPlay
 import br.com.sbk.sbking.core.game.MinibridgeGame;
 import br.com.sbk.sbking.core.rulesets.abstractrulesets.Ruleset;
 import br.com.sbk.sbking.core.rulesets.concrete.PositiveWithTrumpsRuleset;
+import br.com.sbk.sbking.networking.server.notifications.CardPlayNotification;
 import br.com.sbk.sbking.networking.server.notifications.GameModeOrStrainNotification;
 
 public class MinibridgeGameServer extends GameServer {
@@ -91,6 +92,7 @@ public class MinibridgeGameServer extends GameServer {
           }
         }
         this.executeCardPlayNotification(cardPlayNotification);
+        cardPlayNotification = new CardPlayNotification();
       }
 
       this.sendDealAll();

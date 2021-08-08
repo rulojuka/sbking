@@ -138,16 +138,15 @@ public abstract class GameServer implements Runnable {
 
     protected void executeCardPlayNotification(CardPlayNotification cardPlayNotification) {
         Direction directionToBePlayed = cardPlayNotification.getDirection();
-            if (directionToBePlayed != null) {
-                Card cardToBePlayed = cardPlayNotification.getCard();
-                LOGGER.info(
-                        "Received notification that " + directionToBePlayed + " wants to play the " + cardToBePlayed);
-                try {
-                    this.playCard(cardToBePlayed, directionToBePlayed);
-                } catch (Exception e) {
-                    throw e;
-                }
+        if (directionToBePlayed != null) {
+            Card cardToBePlayed = cardPlayNotification.getCard();
+            LOGGER.info("Received notification that " + directionToBePlayed + " wants to play the " + cardToBePlayed);
+            try {
+                this.playCard(cardToBePlayed, directionToBePlayed);
+            } catch (Exception e) {
+                throw e;
             }
+        }
     }
 
 }
