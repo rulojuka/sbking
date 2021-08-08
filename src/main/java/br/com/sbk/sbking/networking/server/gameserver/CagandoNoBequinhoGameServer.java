@@ -3,6 +3,7 @@ package br.com.sbk.sbking.networking.server.gameserver;
 import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 
 import br.com.sbk.sbking.core.game.CagandoNoBequinhoGame;
+import br.com.sbk.sbking.networking.server.notifications.CardPlayNotification;
 
 public class CagandoNoBequinhoGameServer extends GameServer {
 
@@ -43,6 +44,7 @@ public class CagandoNoBequinhoGameServer extends GameServer {
                     }
                 }
                 this.executeCardPlayNotification(cardPlayNotification);
+                cardPlayNotification = new CardPlayNotification();
             }
 
             this.sendDealAll();

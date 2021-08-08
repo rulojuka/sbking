@@ -7,6 +7,7 @@ import br.com.sbk.sbking.core.exceptions.SelectedPositiveOrNegativeInAnotherPlay
 import br.com.sbk.sbking.core.game.KingGame;
 import br.com.sbk.sbking.core.rulesets.abstractrulesets.Ruleset;
 import br.com.sbk.sbking.gui.models.PositiveOrNegative;
+import br.com.sbk.sbking.networking.server.notifications.CardPlayNotification;
 import br.com.sbk.sbking.networking.server.notifications.GameModeOrStrainNotification;
 import br.com.sbk.sbking.networking.server.notifications.PositiveOrNegativeNotification;
 
@@ -131,6 +132,7 @@ public class KingGameServer extends GameServer {
                     }
                 }
                 this.executeCardPlayNotification(cardPlayNotification);
+                cardPlayNotification = new CardPlayNotification();
             }
 
             LOGGER.info("Sending last 'round' of deals");
