@@ -43,4 +43,18 @@ public class LobbyScreenTableDTO {
         return this.numberOfSpectators;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof LobbyScreenTableDTO) {
+            LobbyScreenTableDTO other = (LobbyScreenTableDTO) obj;
+            return this.getId().equals(other.getId());
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return this.getId().hashCode();
+    }
+
 }
