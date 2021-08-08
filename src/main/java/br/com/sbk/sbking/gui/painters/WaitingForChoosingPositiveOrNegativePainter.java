@@ -7,8 +7,8 @@ import java.awt.Point;
 
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.gui.elements.ChoosePositiveOrNegativeElement;
+import br.com.sbk.sbking.gui.elements.EssentialDirectionBoardElements;
 import br.com.sbk.sbking.gui.elements.GameScoreboardElement;
-import br.com.sbk.sbking.gui.elements.SpecificDirectionBoardElements;
 import br.com.sbk.sbking.gui.elements.WaitingForChooserElement;
 import br.com.sbk.sbking.gui.elements.YouArePlayerElement;
 import br.com.sbk.sbking.gui.models.KingGameScoreboard;
@@ -44,7 +44,7 @@ public class WaitingForChoosingPositiveOrNegativePainter implements Painter {
             choosePositiveOrNegativeElement.add();
         }
 
-        new SpecificDirectionBoardElements(this.myDirection, this.sbKingClient.getDeal(), contentPane,
+        new EssentialDirectionBoardElements(this.sbKingClient.getDeal(), contentPane,
                 this.sbKingClient.getActionListener());
 
         contentPane.validate();
