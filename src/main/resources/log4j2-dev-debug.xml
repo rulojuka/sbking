@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO">
+  <Properties>
+    <Property name="filename">target/errors.log</Property>
+  </Properties>
+  <Appenders>
+    <Console name="LogToConsole" target="SYSTEM_OUT">
+      <PatternLayout pattern="%d{ABSOLUTE}|%-5p|%-15t|%-20C{1}:%3L| %m%n" />
+    </Console>
+    <File name="allErrors" fileName="${filename}">
+      <PatternLayout pattern="%d{ABSOLUTE}|%-5p|%-15t|%-20C{1}:%3L| %m%n" />
+    </File>
+  </Appenders>
+  <Loggers>
+    <Root level="DEBUG">
+      <AppenderRef ref="LogToConsole" level="INFO" />
+      <AppenderRef ref="allErrors" level="WARN" />
+    </Root>
+  </Loggers>
+</Configuration>
