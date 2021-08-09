@@ -12,6 +12,7 @@ import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.core.Hand;
 import br.com.sbk.sbking.core.Player;
+import br.com.sbk.sbking.gui.constants.FontConstants;
 import br.com.sbk.sbking.gui.constants.FrameConstants;
 import br.com.sbk.sbking.gui.jelements.CardButton;
 import br.com.sbk.sbking.gui.jelements.SitOrLeaveButton;
@@ -57,7 +58,7 @@ public class HandElement {
         sitOrLeaveButton.addActionListener(actionListener);
         scaleFactor = FrameConstants.getScreenScale();
         int fontSize = (int) (23 * scaleFactor);
-        sitOrLeaveButton.setFont(new Font("Verdana", Font.BOLD, fontSize));
+        sitOrLeaveButton.setFont(new Font(FontConstants.FONT_NAME, Font.BOLD, fontSize));
         if (player == null) {
             sitOrLeaveButton.setText("Click to seat.");
         } else {

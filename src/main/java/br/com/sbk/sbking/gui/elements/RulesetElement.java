@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import br.com.sbk.sbking.core.rulesets.abstractrulesets.Ruleset;
 import br.com.sbk.sbking.core.rulesets.concrete.NoRuleset;
 import br.com.sbk.sbking.core.rulesets.concrete.PositiveWithTrumpsRuleset;
+import br.com.sbk.sbking.gui.constants.FontConstants;
 import br.com.sbk.sbking.gui.constants.FrameConstants;
 import br.com.sbk.sbking.gui.jelements.SBKingLabel;
 
@@ -32,12 +33,12 @@ public class RulesetElement {
         int fontSize = (int) (scaleFactor * DEFAULT_FONT_SIZE);
         if (ruleset instanceof NoRuleset) {
             label = new SBKingLabel("Choosing ruleset.");
-            label.setFont(new Font("Verdana", Font.PLAIN, fontSize));
+            label.setFont(new Font(FontConstants.FONT_NAME, Font.PLAIN, fontSize));
             label.setHorizontalAlignment(LEFT);
             label.setSize(300, 100);
         } else {
             label = new SBKingLabel(ruleset.getShortDescription());
-            label.setFont(new Font("Verdana", Font.PLAIN, 2 * fontSize));
+            label.setFont(new Font(FontConstants.FONT_NAME, Font.PLAIN, 2 * fontSize));
             if (ruleset instanceof PositiveWithTrumpsRuleset) {
                 PositiveWithTrumpsRuleset positiveWithTrumpsRuleset = (PositiveWithTrumpsRuleset) ruleset;
                 label.setForeground(positiveWithTrumpsRuleset.getTrumpSuit().getColor());
