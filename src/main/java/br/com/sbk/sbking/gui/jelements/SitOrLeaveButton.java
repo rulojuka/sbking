@@ -6,7 +6,7 @@ import br.com.sbk.sbking.gui.constants.FrameConstants;
 @SuppressWarnings("serial")
 public class SitOrLeaveButton extends SBKingButton {
 
-  private static final int DEFAULT_WIDTH = 250;
+  private static final int DEFAULT_WIDTH = 400;
   private static final int DEFAULT_HEIGHT = 30;
   private static double scaleFactor;
   private static int width;
