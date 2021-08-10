@@ -34,6 +34,9 @@ public class CagandoNoBequinhoGameServer extends GameServer {
                     this.sendDealAll();
                     this.dealHasChanged = false;
                 }
+                if (shouldStop) {
+                    return;
+                }
                 synchronized (cardPlayNotification) {
                     // wait until object notifies - which relinquishes the lock on the object too
                     try {
