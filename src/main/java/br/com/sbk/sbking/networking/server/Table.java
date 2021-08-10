@@ -169,7 +169,7 @@ public class Table {
   public Player getPlayerOf(Direction direction) {
     Player player = this.seatedPlayers.get(direction);
     if (player == null) {
-      return new Player(UUID.randomUUID(), "Empty seat.");
+      return new Player(UUID.randomUUID(), "Click to seat.");
     } else {
       return player;
     }

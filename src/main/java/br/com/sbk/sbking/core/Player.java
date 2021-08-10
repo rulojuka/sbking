@@ -27,7 +27,11 @@ public class Player {
   }
 
   public void setNickname(String name) {
-    this.nickname = name;
+    if (name == null || name.isEmpty()) {
+      this.nickname = RandomNameGenerator.getRandomName();
+    } else {
+      this.nickname = name;
+    }
   }
 
   @Override
