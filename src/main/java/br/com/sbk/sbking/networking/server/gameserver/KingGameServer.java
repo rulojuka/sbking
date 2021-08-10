@@ -26,22 +26,28 @@ public class KingGameServer extends GameServer {
         this.kingGame = (KingGame) this.game;
     }
 
+    @SuppressWarnings("checkstyle:methodlength")
     @Override
     public void run() {
 
-        while (!game.isFinished()) {
+        while (!shouldStop && !game.isFinished()) {
             this.game.dealNewBoard();
 
             do {
                 this.copyPlayersFromTableToGame();
 
-                this.gameModeOrStrainNotification = new GameModeOrStrainNotification();
-                this.positiveOrNegativeNotification = new PositiveOrNegativeNotification();
+                initializeNotifications();
                 this.sendInitializeDealAll();
                 LOGGER.info("Sleeping for 300ms waiting for clients to initialize its deals.");
                 sleepFor(300);
+                if (this.shouldStop) {
+                    return;
+                }
                 this.getSBKingServer().sendDealToTable(this.game.getCurrentDeal(), this.table);
                 sleepFor(300);
+                if (this.shouldStop) {
+                    return;
+                }
                 this.sendPositiveOrNegativeChooserAll();
 
                 synchronized (positiveOrNegativeNotification) {
@@ -52,6 +58,9 @@ public class KingGameServer extends GameServer {
                         positiveOrNegativeNotification.wait(3000);
                     } catch (InterruptedException e) {
                         LOGGER.error(e);
+                    }
+                    if (this.shouldStop) {
+                        return;
                     }
 
                     while (positiveOrNegativeNotification.getPositiveOrNegative() == null) {
@@ -64,6 +73,9 @@ public class KingGameServer extends GameServer {
                             LOGGER.error(e);
                         }
                     }
+                    if (this.shouldStop) {
+                        return;
+                    }
                 }
 
                 LOGGER.info("I received that is going to be "
@@ -71,6 +83,9 @@ public class KingGameServer extends GameServer {
                 this.currentPositiveOrNegative = positiveOrNegativeNotification.getPositiveOrNegative();
                 this.sendPositiveOrNegativeAll();
                 sleepFor(300);
+                if (this.shouldStop) {
+                    return;
+                }
                 this.sendGameModeOrStrainChooserAll();
 
                 synchronized (gameModeOrStrainNotification) {
@@ -90,6 +105,9 @@ public class KingGameServer extends GameServer {
                         }
                     }
                 }
+                if (this.shouldStop) {
+                    return;
+                }
                 LOGGER.info("I received that is going to be "
                         + gameModeOrStrainNotification.getGameModeOrStrain().getShortDescription());
                 this.currentGameModeOrStrain = gameModeOrStrainNotification.getGameModeOrStrain();
@@ -104,10 +122,13 @@ public class KingGameServer extends GameServer {
                     this.sendValidRulesetAll();
                 }
 
-            } while (!isRulesetPermitted);
+            } while (!shouldStop && !isRulesetPermitted);
 
             LOGGER.info("Sleeping for 300ms waiting for everything come out right.");
             sleepFor(300);
+            if (this.shouldStop) {
+                return;
+            }
             LOGGER.info("Everything selected! Game commencing!");
             this.kingGame.addRuleset(currentGameModeOrStrain);
 
@@ -116,7 +137,7 @@ public class KingGameServer extends GameServer {
             this.dealHasChanged = true;
             LOGGER.info("Sleeping for 300ms waiting for all clients to prepare themselves.");
             sleepFor(300);
-            while (!this.game.getCurrentDeal().isFinished()) {
+            while (!shouldStop && !this.game.getCurrentDeal().isFinished()) {
                 if (this.dealHasChanged) {
                     LOGGER.info("Sending new 'round' of deals");
                     this.sendDealAll();
@@ -131,14 +152,23 @@ public class KingGameServer extends GameServer {
                         LOGGER.error(e);
                     }
                 }
+                if (this.shouldStop) {
+                    return;
+                }
                 this.executeCardPlayNotification(cardPlayNotification);
                 cardPlayNotification = new CardPlayNotification();
+            }
+            if (this.shouldStop) {
+                return;
             }
 
             LOGGER.info("Sending last 'round' of deals");
             this.sendDealAll();
             LOGGER.info("Sleeping for 3000ms for everyone to see the last card.");
             sleepFor(3000);
+            if (this.shouldStop) {
+                return;
+            }
 
             this.giveBackAllCards();
             this.sendDealAll();
@@ -148,13 +178,24 @@ public class KingGameServer extends GameServer {
 
             LOGGER.info("Sleeping for 300ms waiting for all clients to prepare themselves.");
             sleepFor(300);
+            if (this.shouldStop) {
+                return;
+            }
             this.sbkingServer.sendFinishDealToTable(this.table);
             LOGGER.info("Deal finished!");
             LOGGER.info("Sleeping for 300ms waiting for all clients to prepare themselves.");
             sleepFor(300);
+            if (this.shouldStop) {
+                return;
+            }
         }
 
         LOGGER.info("Game has ended.");
+    }
+
+    private void initializeNotifications() {
+        this.gameModeOrStrainNotification = new GameModeOrStrainNotification();
+        this.positiveOrNegativeNotification = new PositiveOrNegativeNotification();
     }
 
     public void notifyChoosePositiveOrNegative(PositiveOrNegative positiveOrNegative, Direction direction) {

@@ -14,7 +14,7 @@ public class CagandoNoBequinhoGameServer extends GameServer {
     @Override
     public void run() {
 
-        while (!game.isFinished()) {
+        while (!shouldStop && !game.isFinished()) {
             this.game.dealNewBoard();
 
             this.game.dealNewBoard();
@@ -26,7 +26,7 @@ public class CagandoNoBequinhoGameServer extends GameServer {
             this.copyPlayersFromTableToDeal();
 
             this.dealHasChanged = true;
-            while (!this.game.getCurrentDeal().isFinished()) {
+            while (!shouldStop && !this.game.getCurrentDeal().isFinished()) {
                 LOGGER.info("Sleeping for 300ms waiting for all clients to prepare themselves.");
                 sleepFor(300);
                 if (this.dealHasChanged) {
@@ -43,8 +43,15 @@ public class CagandoNoBequinhoGameServer extends GameServer {
                         LOGGER.error(e);
                     }
                 }
+                if (shouldStop) {
+                    return;
+                }
                 this.executeCardPlayNotification(cardPlayNotification);
                 cardPlayNotification = new CardPlayNotification();
+            }
+
+            if (shouldStop) {
+                return;
             }
 
             this.sendDealAll();

@@ -28,7 +28,7 @@ public class PositiveKingGameServer extends GameServer {
     @Override
     public void run() {
 
-        while (!game.isFinished()) {
+        while (!shouldStop && !game.isFinished()) {
             this.game.dealNewBoard();
 
             this.copyPlayersFromTableToGame();
@@ -38,6 +38,9 @@ public class PositiveKingGameServer extends GameServer {
                 this.positiveOrNegativeNotification = new PositiveOrNegativeNotification();
                 LOGGER.info("Sleeping for 300ms waiting for clients to initialize its deals.");
                 sleepFor(300);
+                if (this.shouldStop) {
+                    return;
+                }
 
                 LOGGER.info("Everything selected! Game commencing!");
 
@@ -45,11 +48,14 @@ public class PositiveKingGameServer extends GameServer {
 
                 this.sendInitializeDealAll();
                 sleepFor(200);
+                if (this.shouldStop) {
+                    return;
+                }
                 this.sendDealAll();
 
                 synchronized (gameModeOrStrainNotification) {
                     // wait until object notifies - which relinquishes the lock on the object too
-                    while (gameModeOrStrainNotification.getGameModeOrStrain() == null) {
+                    while (!shouldStop && gameModeOrStrainNotification.getGameModeOrStrain() == null) {
                         LOGGER.debug("getGameModeOrStrain:" + gameModeOrStrainNotification.getGameModeOrStrain());
                         try {
                             LOGGER.info(
@@ -60,6 +66,9 @@ public class PositiveKingGameServer extends GameServer {
                             LOGGER.error(e);
                         }
                     }
+                }
+                if (this.shouldStop) {
+                    return;
                 }
                 LOGGER.info("I received that is going to be "
                         + gameModeOrStrainNotification.getGameModeOrStrain().getShortDescription());
@@ -75,10 +84,13 @@ public class PositiveKingGameServer extends GameServer {
                     this.sendValidRulesetAll();
                 }
 
-            } while (!isRulesetPermitted);
+            } while (!shouldStop && !isRulesetPermitted);
 
             LOGGER.info("Sleeping for 300ms waiting for everything come out right.");
             sleepFor(300);
+            if (this.shouldStop) {
+                return;
+            }
 
             LOGGER.info("Everything selected! Game commencing!");
             this.positiveKingGame.addRuleset(currentGameModeOrStrain);
@@ -86,9 +98,12 @@ public class PositiveKingGameServer extends GameServer {
             this.copyPlayersFromTableToDeal();
 
             this.dealHasChanged = true;
-            while (!this.game.getCurrentDeal().isFinished()) {
+            while (!shouldStop && !this.game.getCurrentDeal().isFinished()) {
                 LOGGER.info("Sleeping for 300ms waiting for all clients to prepare themselves.");
                 sleepFor(300);
+                if (this.shouldStop) {
+                    return;
+                }
                 if (this.dealHasChanged) {
                     LOGGER.info("Sending new 'round' of deals");
                     this.sendDealAll();
@@ -103,22 +118,34 @@ public class PositiveKingGameServer extends GameServer {
                         LOGGER.error(e);
                     }
                 }
+                if (this.shouldStop) {
+                    return;
+                }
                 this.executeCardPlayNotification(cardPlayNotification);
                 cardPlayNotification = new CardPlayNotification();
             }
 
             this.sendDealAll();
             this.sleepToShowLastCard();
+            if (this.shouldStop) {
+                return;
+            }
 
             this.giveBackAllCards();
             this.sendDealAll();
             this.sleepToShowHands();
+            if (this.shouldStop) {
+                return;
+            }
 
             this.game.finishDeal();
 
             this.sbkingServer.sendFinishDealToTable(this.table);
             LOGGER.info("Deal finished!");
 
+        }
+        if (this.shouldStop) {
+            return;
         }
 
         LOGGER.info("Game has ended.");

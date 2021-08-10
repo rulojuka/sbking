@@ -28,7 +28,7 @@ public class MinibridgeGameServer extends GameServer {
   @Override
   public void run() {
 
-    while (!game.isFinished()) {
+    while (!shouldStop && !game.isFinished()) {
       this.game.dealNewBoard();
 
       do {
@@ -40,7 +40,7 @@ public class MinibridgeGameServer extends GameServer {
         this.gameModeOrStrainNotification = new GameModeOrStrainNotification();
         synchronized (gameModeOrStrainNotification) {
           // wait until object notifies - which relinquishes the lock on the object too
-          while (gameModeOrStrainNotification.getGameModeOrStrain() == null) {
+          while (!shouldStop && gameModeOrStrainNotification.getGameModeOrStrain() == null) {
             LOGGER.debug("getGameModeOrStrain:" + gameModeOrStrainNotification.getGameModeOrStrain());
             try {
               LOGGER.debug("I am waiting for some thread to notify that it wants to choose game Mode Or Strain");
@@ -50,6 +50,9 @@ public class MinibridgeGameServer extends GameServer {
               LOGGER.error(e);
             }
           }
+        }
+        if (this.shouldStop) {
+          return;
         }
         LOGGER.info("I received that is going to be "
             + gameModeOrStrainNotification.getGameModeOrStrain().getShortDescription());
@@ -65,7 +68,10 @@ public class MinibridgeGameServer extends GameServer {
           this.sendValidRulesetAll();
         }
 
-      } while (!isRulesetPermitted);
+      } while (!shouldStop && !isRulesetPermitted);
+      if (this.shouldStop) {
+        return;
+      }
 
       LOGGER.info("Everything selected! Game commencing!");
       this.minibridgeGame.addRuleset(currentGameModeOrStrain);
@@ -76,7 +82,7 @@ public class MinibridgeGameServer extends GameServer {
       }
 
       this.dealHasChanged = true;
-      while (!this.game.getCurrentDeal().isFinished()) {
+      while (!shouldStop && !this.game.getCurrentDeal().isFinished()) {
         if (this.dealHasChanged) {
           LOGGER.info("Sending new 'round' of deals");
           this.sendDealAll();
@@ -91,16 +97,28 @@ public class MinibridgeGameServer extends GameServer {
             LOGGER.error(e);
           }
         }
+        if (this.shouldStop) {
+          return;
+        }
         this.executeCardPlayNotification(cardPlayNotification);
         cardPlayNotification = new CardPlayNotification();
+      }
+      if (this.shouldStop) {
+        return;
       }
 
       this.sendDealAll();
       this.sleepToShowLastCard();
+      if (this.shouldStop) {
+        return;
+      }
 
       this.giveBackAllCards();
       this.sendDealAll();
       this.sleepToShowHands();
+      if (this.shouldStop) {
+        return;
+      }
 
       this.game.finishDeal();
 
