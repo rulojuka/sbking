@@ -94,7 +94,12 @@
   <!--   <property name="fileExtensions" value="java"/> -->
   <!-- </module> -->
 
+  <!-- Permit suppression via annotations -->
+  <module name="SuppressWarningsFilter"/>
+
   <module name="TreeWalker">
+    <!-- Permit suppression via annotations -->
+    <module name="SuppressWarningsHolder"/>
     <!-- Checks for Naming Conventions.                  -->
     <!-- See https://checkstyle.org/config_naming.html -->
     <module name="ConstantName"/>
