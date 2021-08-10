@@ -299,6 +299,7 @@ public class SBKingServer {
     playersTable.remove(player);
     if (table.isEmpty()) {
       this.tables.remove(table.getId());
+      table.dismantle();
     }
     this.kryonetSBKingServer.sendYourTableIsTo(null, playerIdentifier);
 

@@ -22,6 +22,7 @@ public abstract class GameServer implements Runnable {
     protected TrickGame game;
 
     protected int timeoutCardPlayNotification = 1000;
+    protected boolean shouldStop = false;
 
     public void setTable(Table table) {
         this.table = table;
@@ -147,6 +148,14 @@ public abstract class GameServer implements Runnable {
                 throw e;
             }
         }
+    }
+
+    public void dismantle() {
+        this.shouldStop = true;
+        this.cardPlayNotification = null;
+        this.table = null;
+        this.sbkingServer = null;
+        this.game = null;
     }
 
 }

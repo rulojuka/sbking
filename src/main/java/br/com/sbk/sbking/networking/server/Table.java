@@ -290,4 +290,10 @@ public class Table {
     this.sendDealAll();
   }
 
+  public void dismantle() {
+    this.seatedPlayers = null;
+    this.spectatorPlayers = null;
+    this.gameServer.dismantle();
+  }
+
 }
