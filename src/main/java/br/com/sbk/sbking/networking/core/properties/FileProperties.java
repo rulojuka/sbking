@@ -12,7 +12,7 @@ import br.com.sbk.sbking.core.constants.ErrorCodes;
 
 public class FileProperties {
 
-    private static final String BASE_PATH = "src/main/resources/";
+    private static final String BASE_PATH = "/";
     private static final String DEV_FILE_NAME = "config.dev.xml";
     private static final String PRODUCTION_FILE_NAME = "config.xml";
 
