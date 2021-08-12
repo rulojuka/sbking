@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.core.Player;
@@ -294,6 +295,10 @@ public class Table {
     this.seatedPlayers = null;
     this.spectatorPlayers = null;
     this.gameServer.dismantle();
+  }
+
+  public List<String> getSpectatorNames() {
+    return spectatorPlayers.stream().map(Player::getNickname).collect(Collectors.toList());
   }
 
 }

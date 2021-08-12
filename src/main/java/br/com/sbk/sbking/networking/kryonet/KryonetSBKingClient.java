@@ -15,6 +15,7 @@ import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.ChooseNegati
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.ChoosePositiveMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.ClaimMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.CreateTableMessage;
+import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.GetTableSpectatorsMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.GetTablesMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.JoinTableMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.LeaveTableMessage;
@@ -92,6 +93,10 @@ public class KryonetSBKingClient extends Client {
 
   public void sendRejectClaim() {
     this.sendMessage(new RejectClaimMessage());
+  }
+
+  public void sendGetTableSpectators() {
+    this.sendMessage(new GetTableSpectatorsMessage());
   }
 
 }

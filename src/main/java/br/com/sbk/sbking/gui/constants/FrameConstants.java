@@ -3,11 +3,15 @@ package br.com.sbk.sbking.gui.constants;
 import java.util.HashMap;
 import java.util.Map;
 import java.awt.Point;
+import java.awt.Color;
 
 import br.com.sbk.sbking.core.Direction;
 
 public final class FrameConstants {
-    public static final java.awt.Color TABLE_COLOR = new java.awt.Color(0, 100, 0); // Tablecloth green
+    public static final Color TABLE_COLOR = new Color(0, 100, 0); // Tablecloth green
+    public static final Color TEXT_COLOR = new Color(255, 255, 255); // White
+    public static final Color RED_SUIT_COLOR = new Color(255, 0, 0); // Red
+    public static final Color BLACK_SUIT_COLOR = new Color(0, 0, 0); // Black
 
     public static final int ORIGINAL_TABLE_WIDTH = 2200;
     public static final int ORIGINAL_TABLE_HEIGHT = 1400;
@@ -21,6 +25,7 @@ public final class FrameConstants {
     private static double scaleY;
 
     public static Map<Direction, Point> pointOfDirection = new HashMap<Direction, Point>();
+    public static Point spectatorNamesPosition = new Point();
 
     public static void initFrameConstants() {
         computeConstants(1400, 820);
@@ -63,5 +68,8 @@ public final class FrameConstants {
         pointOfDirection.put(Direction.EAST, new Point(eastX, eastY));
         pointOfDirection.put(Direction.SOUTH, new Point(southX, southY));
         pointOfDirection.put(Direction.WEST, new Point(westX, westY));
+
+        spectatorNamesPosition = new Point((int) FrameConstants.pointOfDirection.get(Direction.EAST).getX(),
+                (int) FrameConstants.pointOfDirection.get(Direction.SOUTH).getY());
     }
 }

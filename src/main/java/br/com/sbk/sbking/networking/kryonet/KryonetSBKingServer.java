@@ -16,6 +16,7 @@ import br.com.sbk.sbking.networking.kryonet.messages.SBKingMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.DealMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.FinishDealMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.GameModeOrStrainChooserMessage;
+import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.GetTableSpectatorsResponseMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.GetTablesResponseMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.InitializeDealMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.InvalidRulesetMessage;
@@ -146,6 +147,10 @@ public class KryonetSBKingServer extends Server {
 
   public void sendTablesToAll(List<LobbyScreenTableDTO> tablesDTO) {
     this.sendToAllTCP(new GetTablesResponseMessage(tablesDTO));
+  }
+
+  public void sendSpectatorsTo(List<String> spectatorNames, UUID playerIdentifier) {
+    this.sendOneTo(new GetTableSpectatorsResponseMessage(spectatorNames), playerIdentifier);
   }
 
 }

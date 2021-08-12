@@ -332,4 +332,13 @@ public class SBKingServer {
     table.rejectClaim(player);
   }
 
+  public void sendSpectatorsTo(UUID playerIdentifier) {
+    Player player = identifierToPlayerMap.get(playerIdentifier);
+    Table table = playersTable.get(player);
+    if (table != null) {
+      List<String> spectatorNames = table.getSpectatorNames();
+      this.kryonetSBKingServer.sendSpectatorsTo(spectatorNames, playerIdentifier);
+    }
+  }
+
 }
