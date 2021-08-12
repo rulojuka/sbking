@@ -4,6 +4,7 @@ import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 
 import java.awt.Container;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
@@ -14,11 +15,13 @@ public class DealPainter implements Painter {
     protected Direction direction;
     protected ActionListener actionListener;
     protected Deal deal;
+    protected List<String> spectators;
 
-    public DealPainter(ActionListener actionListener, Direction direction, Deal deal) {
+    public DealPainter(ActionListener actionListener, Direction direction, Deal deal, List<String> spectators) {
         this.actionListener = actionListener;
         this.direction = direction;
         this.deal = deal;
+        this.spectators = spectators;
     }
 
     @Override
@@ -31,7 +34,7 @@ public class DealPainter implements Painter {
         // if (deal.isFinished()) {
         // new ScoreSummaryElement(deal, contentPane);
         // } else {
-        new SpecificDirectionBoardElements(this.direction, deal, contentPane, actionListener);
+        new SpecificDirectionBoardElements(this.direction, deal, contentPane, actionListener, this.spectators);
         // }
 
         contentPane.validate();

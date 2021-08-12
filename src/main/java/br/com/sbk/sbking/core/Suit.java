@@ -2,9 +2,13 @@ package br.com.sbk.sbking.core;
 
 import java.awt.Color;
 
+import br.com.sbk.sbking.gui.constants.FrameConstants;
+
 public enum Suit {
-    DIAMONDS("Diamonds", "d", '\u2666', new Color(255, 0, 0)), CLUBS("Clubs", "c", '\u2663', new Color(0, 0, 0)),
-    HEARTS("Hearts", "h", '\u2665', new Color(255, 0, 0)), SPADES("Spades", "s", '\u2660', new Color(0, 0, 0));
+    DIAMONDS("Diamonds", "d", '\u2666', FrameConstants.RED_SUIT_COLOR),
+    CLUBS("Clubs", "c", '\u2663', FrameConstants.BLACK_SUIT_COLOR),
+    HEARTS("Hearts", "h", '\u2665', FrameConstants.RED_SUIT_COLOR),
+    SPADES("Spades", "s", '\u2660', FrameConstants.BLACK_SUIT_COLOR);
 
     private final String name;
     private final String symbol;

@@ -23,6 +23,10 @@ public class MainNetworkGame {
         SBKingClient sbkingClient = welcomeScreen.getSBKingClient();
         SBKingScreen currentScreen;
 
+        SpectatorNamesUpdater tableUpdater = new SpectatorNamesUpdater(sbkingClient);
+        Thread tableUpdaterThread = new Thread(tableUpdater, "spectator-names-updater");
+        tableUpdaterThread.start();
+
         while (true) {
 
             String gameName = sbkingClient.getGameName();

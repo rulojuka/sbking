@@ -16,6 +16,7 @@ import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.ChooseNegati
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.ChoosePositiveMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.ClaimMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.CreateTableMessage;
+import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.GetTableSpectatorsMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.GetTablesMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.JoinTableMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.LeaveTableMessage;
@@ -86,6 +87,8 @@ public class SBKingServerMessageConsumer implements Runnable {
       this.sbkingServer.acceptClaim(playerIdentifier);
     } else if (message instanceof RejectClaimMessage) {
       this.sbkingServer.rejectClaim(playerIdentifier);
+    } else if (message instanceof GetTableSpectatorsMessage) {
+      this.sbkingServer.sendSpectatorsTo(playerIdentifier);
     } else {
       LOGGER.error("Could not understand message.");
       LOGGER.error(message);

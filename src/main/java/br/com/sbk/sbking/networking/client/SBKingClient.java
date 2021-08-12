@@ -35,6 +35,8 @@ public class SBKingClient {
 
     private List<LobbyScreenTableDTO> tables;
 
+    private List<String> spectatorNames;
+
     public void setActionListener(ClientActionListener actionListener) {
         this.actionListener = actionListener;
     }
@@ -228,5 +230,17 @@ public class SBKingClient {
 
     public List<LobbyScreenTableDTO> getTables() {
         return tables;
+    }
+
+    public void setSpectatorNames(List<String> spectatorNames) {
+        this.spectatorNames = spectatorNames;
+    }
+
+    public List<String> getSpectatorNames() {
+        return this.spectatorNames;
+    }
+
+    public void sendGetSpectatorNames() {
+        this.kryonetSBKingClient.sendGetTableSpectators();
     }
 }

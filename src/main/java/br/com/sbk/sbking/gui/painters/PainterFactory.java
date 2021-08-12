@@ -17,7 +17,7 @@ public class PainterFactory {
   }
 
   public Painter getDealPainter(Deal deal, Direction direction, ActionListener actionListener) {
-    return new DealPainter(actionListener, direction, deal);
+    return new DealPainter(actionListener, direction, deal, this.sbkingClient.getSpectatorNames());
   }
 
   public Painter getSpectatorPainter(Deal deal, ActionListener actionListener) {
@@ -25,7 +25,7 @@ public class PainterFactory {
       LOGGER.error("Deal should not be null here.");
       return null;
     } else {
-      return new SpectatorPainter(actionListener, deal);
+      return new SpectatorPainter(actionListener, deal, this.sbkingClient.getSpectatorNames());
     }
   }
 

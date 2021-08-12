@@ -16,7 +16,7 @@ public class DealWithDummyPainter extends DealPainter {
 
   public DealWithDummyPainter(ActionListener actionListener, Direction direction, Deal deal, Direction dummy,
       boolean dummyVisible) {
-    super(actionListener, direction, deal);
+    super(actionListener, direction, deal, null);
     this.dummy = dummy;
     this.dummyVisible = dummyVisible;
   }

@@ -25,6 +25,7 @@ public class CagandoNoBequinhoScreen extends GameScreen {
             if (!this.checkIfStillIsOnGameScreen()) {
                 return; // Exits when server says it is not on the game anymore.
             }
+
             if (sbkingClient.isSpectator()) {
                 if (sbkingClient.getDealHasChanged() || ClientApplicationState.getGUIHasChanged()) {
                     if (!ClientApplicationState.getGUIHasChanged()) {
