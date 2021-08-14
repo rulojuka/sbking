@@ -61,8 +61,6 @@ public class CagandoNoBequinhoGame extends TrickGame {
             this.addRuleset(new PositiveWithTrumpsRuleset(this.trumpCard.getSuit()));
         }
 
-        this.currentDeal.setStartingNumberOfCardsInTheHand(this.currentNumberOfCardsInAHand);
-
     }
 
     private void addRuleset(Ruleset positiveRuleset) {

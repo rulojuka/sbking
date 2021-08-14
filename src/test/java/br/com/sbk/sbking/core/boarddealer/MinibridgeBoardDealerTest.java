@@ -26,8 +26,8 @@ public class MinibridgeBoardDealerTest {
   public static void setup() {
     minibridgeBoardDealer = new MinibridgeBoardDealer();
     anyDirection = Direction.SOUTH;
-    Complete52CardDeck complete52CardDeck = new Complete52CardDeck();
-    gameDeck = complete52CardDeck.getDeck();
+    CardDeck anyCardDeck = new Complete52CardDeck();
+    gameDeck = anyCardDeck.getDeck();
   }
 
   @Test

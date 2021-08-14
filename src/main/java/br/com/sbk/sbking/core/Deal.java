@@ -46,7 +46,7 @@ public class Deal {
         this.board.sortAllHands(ruleset.getComparator());
         this.score = new Score(ruleset);
         this.completedTricks = 0;
-        this.startingNumberOfCardsInTheHand = NUMBER_OF_TRICKS_IN_A_COMPLETE_HAND;
+        this.startingNumberOfCardsInTheHand = board.getHandOf(leader).size();
         this.tricks = new ArrayList<Trick>();
         this.players = new HashMap<Direction, Player>();
         for (Direction direction : Direction.values()) {
@@ -280,10 +280,6 @@ public class Deal {
 
     public Score getScore() {
         return this.score;
-    }
-
-    public void setStartingNumberOfCardsInTheHand(int startingNumberOfCardsInTheHand) {
-        this.startingNumberOfCardsInTheHand = startingNumberOfCardsInTheHand;
     }
 
     public void setDummy(Direction direction) {

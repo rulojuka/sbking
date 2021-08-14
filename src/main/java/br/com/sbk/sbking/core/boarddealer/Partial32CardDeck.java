@@ -7,16 +7,18 @@ import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Rank;
 import br.com.sbk.sbking.core.Suit;
 
-public class Complete52CardDeck implements CardDeck {
+public class Partial32CardDeck implements CardDeck {
 
   private Deque<Card> deck;
 
-  public Complete52CardDeck() {
+  public Partial32CardDeck() {
     this.deck = new ArrayDeque<Card>();
     for (Suit suit : Suit.values()) {
       for (Rank rank : Rank.values()) {
-        Card card = new Card(suit, rank);
-        this.deck.add(card);
+        if (rank.compareTo(Rank.SEVEN) >= 0) { // Rank is greater or equal than seven
+          Card card = new Card(suit, rank);
+          this.deck.add(card);
+        }
       }
     }
   }

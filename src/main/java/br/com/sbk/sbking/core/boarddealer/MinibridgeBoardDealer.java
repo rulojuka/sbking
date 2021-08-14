@@ -9,9 +9,11 @@ import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.core.Hand;
 import br.com.sbk.sbking.core.HandEvaluations;
+import br.com.sbk.sbking.core.exceptions.ImpossibleBoardException;
 
 public class MinibridgeBoardDealer implements BoardDealer {
 
+  private static final int MAXIMUM_NUMBER_OF_TRIES = 1000000;
   private Board board;
   private ShuffledBoardDealer shuffledBoardDealer;
 
@@ -28,6 +30,7 @@ public class MinibridgeBoardDealer implements BoardDealer {
   public Board dealBoard(Direction dealer, Deque<Card> deck) {
     int dealerPartnershipHCP;
     int nonDealerPartnershipHCP;
+    int numberOfTries = 0;
 
     do {
       dealerPartnershipHCP = 0;
@@ -41,6 +44,11 @@ public class MinibridgeBoardDealer implements BoardDealer {
         } else {
           nonDealerPartnershipHCP += hcp;
         }
+      }
+      if (numberOfTries > MAXIMUM_NUMBER_OF_TRIES) {
+        throw new ImpossibleBoardException();
+      } else {
+        numberOfTries++;
       }
     } while (dealerPartnershipHCP == nonDealerPartnershipHCP);
 
