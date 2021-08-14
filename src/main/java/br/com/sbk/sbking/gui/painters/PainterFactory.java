@@ -42,7 +42,8 @@ public class PainterFactory {
   public Painter getDealWithDummyPainter(Deal deal, Direction direction, ActionListener actionListener) {
     boolean dummyVisible = this.sbkingClient.getDeal().isDummyOpen();
     Direction dummy = this.sbkingClient.getDeal().getDummy();
-    return new DealWithDummyPainter(actionListener, direction, deal, dummy, dummyVisible);
+    return new DealWithDummyPainter(actionListener, direction, deal, dummy, dummyVisible,
+        this.sbkingClient.getSpectatorNames());
   }
 
 }

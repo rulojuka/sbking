@@ -515,4 +515,14 @@ public class TrickTest {
         assertEquals(leader.next(), cardsUpToLeader.get(secondCard));
     }
 
+    @Test
+    public void getLastPlayer() {
+        Direction leader = Direction.WEST;
+        Direction expectedLastPlayer = Direction.SOUTH;
+        Trick trick = new Trick(leader);
+        Direction lastPlayer = trick.getLastPlayer();
+
+        assertEquals(expectedLastPlayer, lastPlayer);
+    }
+
 }
