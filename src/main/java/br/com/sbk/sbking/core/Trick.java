@@ -237,4 +237,8 @@ public class Trick {
         }
     }
 
+    public Direction getLastPlayer() {
+        return this.leader.next(3);
+    }
+
 }

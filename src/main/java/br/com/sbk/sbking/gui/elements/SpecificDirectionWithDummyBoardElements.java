@@ -3,6 +3,7 @@ package br.com.sbk.sbking.gui.elements;
 import java.awt.Container;
 import java.awt.Point;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
@@ -11,7 +12,7 @@ import br.com.sbk.sbking.gui.constants.FrameConstants;
 public class SpecificDirectionWithDummyBoardElements {
 
   public SpecificDirectionWithDummyBoardElements(Direction playerDirection, Deal deal, Container container,
-      ActionListener actionListener, Direction dummy, boolean dummyVisible) {
+      ActionListener actionListener, Direction dummy, boolean dummyVisible, List<String> spectators) {
 
     for (Direction currentHandDirection : Direction.values()) {
       boolean shouldDrawVisible = this.shouldDrawVisible(playerDirection, currentHandDirection, dummy, dummyVisible,
@@ -26,18 +27,21 @@ public class SpecificDirectionWithDummyBoardElements {
 
     new RulesetElement(deal.getRuleset(), container, new Point(150, 150));
 
-    new UndoElement(container, new Point(150, container.getHeight() - 50), actionListener);
+    if (!playerDirection.equals(dummy)) {
+      new UndoElement(container, new Point(150, container.getHeight() - 50), actionListener);
+    }
 
     new LeaveTableElement(container, new Point(150, 50), actionListener);
 
-    new ClaimElement(deal.getClaimer(), container, new Point(container.getWidth() - 150, container.getHeight() - 50),
-        actionListener);
+    new ClaimElement(deal.getClaimer(), container, new Point(320, container.getHeight() - 50), actionListener);
 
     new AcceptClaimElement(deal.getClaimer(), playerDirection, deal.getIsPartnershipGame(), deal.getAcceptedClaimMap(),
         container, new Point(container.getWidth() - 150, container.getHeight() - 50), actionListener);
 
     new RejectClaimElement(deal.getClaimer(), playerDirection, deal.getIsPartnershipGame(), deal.getAcceptedClaimMap(),
         container, new Point(container.getWidth() - 150, container.getHeight() - 50), actionListener);
+
+    new SpectatorsElement(container, FrameConstants.spectatorNamesPosition, spectators);
   }
 
   private boolean shouldDrawVisible(Direction playerDirection, Direction currentDirection, Direction dummy,

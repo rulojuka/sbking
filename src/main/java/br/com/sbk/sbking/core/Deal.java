@@ -128,7 +128,7 @@ public class Deal {
 
         throwExceptionIfCardIsNotFromCurrentPlayer(handOfCurrentPlayer, card);
         throwExceptionIfStartingATrickWithHeartsWhenRulesetProhibitsIt(card, handOfCurrentPlayer);
-        if (currentTrickAlreadyHasCards()) {
+        if (currentTrickHasCards()) {
             throwExceptionIfCardDoesNotFollowSuit(card, handOfCurrentPlayer);
         }
         if (currentTrickNotStartedYet()) {
@@ -170,7 +170,7 @@ public class Deal {
         return this.currentTrick == null || this.currentTrick.isEmpty() || this.currentTrick.isComplete();
     }
 
-    private boolean currentTrickAlreadyHasCards() {
+    private boolean currentTrickHasCards() {
         return !currentTrickNotStartedYet();
     }
 
@@ -300,20 +300,32 @@ public class Deal {
         this.board.sortAllHands(cardInsideHandWithSuitComparator);
     }
 
-    private Direction updateUndoDirectionIfMinibridge(Direction direction) {
-        Direction lastPlayer = this.currentPlayer.next(3);
-        if (this.dummy != null) {
-            if (direction.next(2) == this.dummy) {
-                if (lastPlayer == this.dummy.next(1) || lastPlayer == this.dummy) {
-                    return this.dummy;
-                }
+    private Direction getCorrectUndoDirectionConsideringDummy(Direction direction) {
+        Direction lastPlayer;
+        if (this.currentTrickHasCards()) {
+            lastPlayer = this.currentPlayer.next(3);
+        } else if (this.completedTricks > 0) {
+            lastPlayer = this.getPreviousTrick().getLastPlayer();
+        } else {
+            return direction;
+        }
+        if (this.dummy != null && direction.next(2) == this.dummy) {
+            if (lastPlayer == this.dummy.next(1) || lastPlayer == this.dummy) {
+                return this.dummy;
             }
         }
         return direction;
     }
 
+    private Trick getPreviousTrick() {
+        if (this.completedTricks == 0) {
+            throw new RuntimeException("There is no previous trick.");
+        }
+        return this.tricks.get(this.completedTricks - 1);
+    }
+
     public void undo(Direction direction) {
-        direction = updateUndoDirectionIfMinibridge(direction);
+        direction = getCorrectUndoDirectionConsideringDummy(direction);
         Map<Card, Direction> removedCardsUpToDirection = this.removeCardsUpTo(direction);
         if (!removedCardsUpToDirection.isEmpty()) {
             this.giveBackCardsToHands(removedCardsUpToDirection);
