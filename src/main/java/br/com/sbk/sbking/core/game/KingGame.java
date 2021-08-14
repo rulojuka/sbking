@@ -10,6 +10,7 @@ import java.util.Set;
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.core.boarddealer.BoardDealer;
+import br.com.sbk.sbking.core.boarddealer.Complete52CardDeck;
 import br.com.sbk.sbking.core.boarddealer.ShuffledBoardDealer;
 import br.com.sbk.sbking.core.rulesets.abstractrulesets.NegativeRuleset;
 import br.com.sbk.sbking.core.rulesets.abstractrulesets.PositiveRuleset;
@@ -31,12 +32,13 @@ public class KingGame extends TrickGame {
     public KingGame() {
         this.gameScoreboard = new KingGameScoreboard();
         this.boardDealer = new ShuffledBoardDealer();
+        this.gameDeck = new Complete52CardDeck().getDeck();
         this.dealNewBoard();
     }
 
     @Override
     public void dealNewBoard() {
-        this.currentBoard = this.boardDealer.dealBoard(this.dealer);
+        this.currentBoard = this.boardDealer.dealBoard(this.dealer, this.gameDeck);
         this.currentDeal = new Deal(currentBoard, new NoRuleset(), this.getLeader(), true);
     }
 

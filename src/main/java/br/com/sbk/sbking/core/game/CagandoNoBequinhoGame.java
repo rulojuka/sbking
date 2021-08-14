@@ -6,6 +6,7 @@ import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.core.boarddealer.BoardDealer;
+import br.com.sbk.sbking.core.boarddealer.Complete52CardDeck;
 import br.com.sbk.sbking.core.boarddealer.ShuffledBoardDealer;
 import br.com.sbk.sbking.core.comparators.CardInsideHandComparator;
 import br.com.sbk.sbking.core.rulesets.abstractrulesets.Ruleset;
@@ -16,10 +17,13 @@ public class CagandoNoBequinhoGame extends TrickGame {
 
     private int currentNumberOfCardsInAHand;
     private Card trumpCard;
+    private BoardDealer boardDealer;
 
     public CagandoNoBequinhoGame() {
         super();
         this.currentNumberOfCardsInAHand = 2;
+        this.gameDeck = new Complete52CardDeck().getDeck();
+        this.boardDealer = new ShuffledBoardDealer();
         this.dealNewBoard();
     }
 
@@ -40,8 +44,8 @@ public class CagandoNoBequinhoGame extends TrickGame {
 
     @Override
     public void dealNewBoard() {
-        BoardDealer boardDealer = new ShuffledBoardDealer();
-        this.currentBoard = boardDealer.dealBoard(this.dealer);
+
+        this.currentBoard = this.boardDealer.dealBoard(this.dealer, gameDeck);
         int numberOfRemovedCards = 13 - this.currentNumberOfCardsInAHand;
         List<Card> removedCards = null;
         for (int i = 0; i < numberOfRemovedCards; i++) {

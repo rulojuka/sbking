@@ -1,9 +1,11 @@
 package br.com.sbk.sbking.core.boarddealer;
 
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.Map;
 
 import br.com.sbk.sbking.core.Board;
+import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.core.Hand;
 import br.com.sbk.sbking.core.ShuffledDeck;
@@ -18,20 +20,20 @@ public class RuledBoardDealer implements BoardDealer {
   }
 
   @Override
-  public Board dealBoard(Direction dealer) {
+  public Board dealBoard(Direction dealer, Deque<Card> deck) {
     Board currentBoard;
     do {
-      currentBoard = this.createShuffledBoard(dealer);
+      currentBoard = this.createShuffledBoard(dealer, deck);
     } while (!this.boardRule.isValid(currentBoard));
     return currentBoard;
   }
 
-  private Board createShuffledBoard(Direction dealer) {
+  private Board createShuffledBoard(Direction dealer, Deque<Card> deck) {
     Map<Direction, Hand> hands = new HashMap<Direction, Hand>();
     Direction currentDirection;
     ShuffledDeck currentDeck;
 
-    currentDeck = new ShuffledDeck();
+    currentDeck = new ShuffledDeck(deck);
     for (Direction direction : Direction.values()) {
       hands.put(direction, new Hand());
     }
