@@ -14,6 +14,7 @@ import static org.mockito.Mockito.times;
 
 import java.util.Comparator;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import br.com.sbk.sbking.core.comparators.CardInsideHandWithSuitComparator;
@@ -27,11 +28,25 @@ public class DealTest {
     private static final int COMPLETE_TRICK_NUMBER_OF_CARDS = 4;
     private static final Direction leader = Direction.NORTH;
 
+    private Board board;
+    private Ruleset ruleset;
+    private Direction dealer;
+    private Hand hand;
+
+    @Before
+    public void setup() {
+        int anyNumberOfCards = 13;
+        this.board = mock(Board.class);
+        this.ruleset = mock(Ruleset.class);
+        this.hand = mock(Hand.class);
+        this.dealer = Direction.NORTH;
+        when(this.board.getHandOf(any(Direction.class))).thenReturn(this.hand);
+        when(this.hand.size()).thenReturn(anyNumberOfCards);
+    }
+
     @Test
     public void shouldConstructADealWithTheDealerFromTheBoard() {
-        Board board = mock(Board.class);
-        Ruleset ruleset = mock(Ruleset.class);
-        Direction dealer = Direction.NORTH;
+
         when(board.getDealer()).thenReturn(dealer);
         Deal deal = new Deal(board, ruleset, leader, null);
 
@@ -40,9 +55,6 @@ public class DealTest {
 
     @Test
     public void shouldConstructADealWithTheGivenRuleset() {
-        Board board = mock(Board.class);
-        Ruleset ruleset = mock(Ruleset.class);
-        Direction dealer = Direction.NORTH;
         when(board.getDealer()).thenReturn(dealer);
         Deal deal = new Deal(board, ruleset, leader, null);
 
@@ -52,9 +64,7 @@ public class DealTest {
     @Test
     public void shouldConstructADealWithNoPoints() {
         int noPoints = 0;
-        Board board = mock(Board.class);
         when(board.getDealer()).thenReturn(Direction.NORTH);
-        Ruleset ruleset = mock(Ruleset.class);
         Deal deal = new Deal(board, ruleset, leader, null);
         assertEquals(noPoints, deal.getNorthSouthPoints());
         assertEquals(noPoints, deal.getEastWestPoints());
@@ -62,9 +72,6 @@ public class DealTest {
 
     @Test
     public void shouldConstructADealWithACurrentTrickWithTheCorrectDealer() {
-        Board board = mock(Board.class);
-        Ruleset ruleset = mock(Ruleset.class);
-        Direction dealer = Direction.NORTH;
         Direction trickLeader = leader;
         when(board.getDealer()).thenReturn(dealer);
         Deal deal = new Deal(board, ruleset, trickLeader, null);
@@ -75,9 +82,7 @@ public class DealTest {
 
     @Test
     public void shouldConstructADealWithNoCompletedTricks() {
-        Board board = mock(Board.class);
         when(board.getDealer()).thenReturn(Direction.NORTH);
-        Ruleset ruleset = mock(Ruleset.class);
 
         Deal deal = new Deal(board, ruleset, leader, null);
 
@@ -86,9 +91,7 @@ public class DealTest {
 
     @Test
     public void shouldConstructADealWithASortedBoard() {
-        Board board = mock(Board.class);
         when(board.getDealer()).thenReturn(Direction.NORTH);
-        Ruleset ruleset = mock(Ruleset.class);
         Comparator<Card> comparator = mock(Comparator.class);
         when(ruleset.getComparator()).thenReturn(comparator);
 
@@ -99,22 +102,17 @@ public class DealTest {
 
     @Test
     public void shouldGetHandOfACertainDirection() {
-        Board board = mock(Board.class);
-        Ruleset ruleset = mock(Ruleset.class);
-        Direction dealer = Direction.WEST;
+        dealer = Direction.WEST;
         Direction currentPlayer = dealer.getLeaderWhenDealer();
-        Hand currentPlayerHand = mock(Hand.class);
-        when(board.getHandOf(currentPlayer)).thenReturn(currentPlayerHand);
+        when(board.getHandOf(currentPlayer)).thenReturn(hand);
         when(board.getDealer()).thenReturn(dealer);
         Deal deal = new Deal(board, ruleset, leader, null);
 
-        assertEquals(currentPlayerHand, deal.getHandOf(currentPlayer));
+        assertEquals(hand, deal.getHandOf(currentPlayer));
     }
 
     @Test
     public void shouldAlwaysGetCurrentTrickEvenWhenEmpty() {
-        Board board = mock(Board.class);
-        Ruleset ruleset = mock(Ruleset.class);
         when(board.getDealer()).thenReturn(Direction.NORTH);
         Deal deal = new Deal(board, ruleset, leader, null);
 
@@ -123,11 +121,8 @@ public class DealTest {
 
     @Test(expected = PlayedCardInAnotherPlayersTurnException.class)
     public void playCardShouldThrowExceptionWhenCardIsNotFromCurrentPlayer() {
-        Direction dealer = Direction.NORTH;
         Direction currentPlayer = leader;
         Hand handOfCurrentPlayer = mock(Hand.class);
-        Board board = mock(Board.class);
-        Ruleset ruleset = mock(Ruleset.class);
         Card card = mock(Card.class);
 
         when(board.getDealer()).thenReturn(dealer);
@@ -140,21 +135,17 @@ public class DealTest {
 
     @Test(expected = PlayedHeartsWhenProhibitedException.class)
     public void playCardShouldThrowExceptionIfStartingATrickWithHeartsWhenRulesetProhibitsIt() {
-        Direction dealer = Direction.NORTH;
         Direction currentPlayer = leader;
-        Hand handOfCurrentPlayer = mock(Hand.class);
-        Board board = mock(Board.class);
-        Ruleset ruleset = mock(Ruleset.class);
         Card card = mock(Card.class);
 
         when(board.getDealer()).thenReturn(dealer);
-        when(board.getHandOf(currentPlayer)).thenReturn(handOfCurrentPlayer);
-        when(handOfCurrentPlayer.containsCard(card)).thenReturn(true);
+        when(board.getHandOf(currentPlayer)).thenReturn(hand);
+        when(hand.containsCard(card)).thenReturn(true);
 
         when(ruleset.prohibitsHeartsUntilOnlySuitLeft()).thenReturn(true);
         when(card.isHeart()).thenReturn(true);
         HandEvaluations handEvaluations = mock(HandEvaluations.class);
-        when(handOfCurrentPlayer.getHandEvaluations()).thenReturn(handEvaluations);
+        when(hand.getHandEvaluations()).thenReturn(handEvaluations);
         when(handEvaluations.onlyHasHearts()).thenReturn(false);
 
         Deal deal = new Deal(board, ruleset, currentPlayer, null);
@@ -163,15 +154,11 @@ public class DealTest {
 
     @Test
     public void firstPlayedCardInATrickShouldAlwaysFollowSuit() {
-        Direction currentPlayer = Direction.NORTH;
-        Hand handOfCurrentPlayer = mock(Hand.class);
-        Board board = mock(Board.class);
-        Ruleset ruleset = mock(Ruleset.class);
         Card card = mock(Card.class);
 
-        when(board.getDealer()).thenReturn(currentPlayer);
-        when(board.getHandOf(any(Direction.class))).thenReturn(handOfCurrentPlayer);
-        when(handOfCurrentPlayer.containsCard(card)).thenReturn(true);
+        when(board.getDealer()).thenReturn(dealer);
+        when(board.getHandOf(any(Direction.class))).thenReturn(hand);
+        when(hand.containsCard(card)).thenReturn(true);
 
         when(ruleset.followsSuit(any(), any(), any())).thenReturn(false);
 
@@ -183,15 +170,11 @@ public class DealTest {
 
     @Test(expected = DoesNotFollowSuitException.class)
     public void playCardShouldThrowExceptionIfCardDoesNotFollowSuit() {
-        Direction currentPlayer = Direction.NORTH;
-        Hand handOfCurrentPlayer = mock(Hand.class);
-        Board board = mock(Board.class);
-        Ruleset ruleset = mock(Ruleset.class);
         Card card = mock(Card.class);
 
-        when(board.getDealer()).thenReturn(currentPlayer);
-        when(board.getHandOf(any(Direction.class))).thenReturn(handOfCurrentPlayer);
-        when(handOfCurrentPlayer.containsCard(card)).thenReturn(true);
+        when(board.getDealer()).thenReturn(dealer);
+        when(board.getHandOf(any(Direction.class))).thenReturn(hand);
+        when(hand.containsCard(card)).thenReturn(true);
 
         when(ruleset.followsSuit(any(), any(), any())).thenReturn(false);
 
@@ -204,15 +187,11 @@ public class DealTest {
 
     @Test
     public void playCardShouldStartNewTrickIfCurrentTrickIsNotStartedYet() {
-        Direction currentPlayer = Direction.NORTH;
-        Hand handOfCurrentPlayer = mock(Hand.class);
-        Board board = mock(Board.class);
-        Ruleset ruleset = mock(Ruleset.class);
         Card card = mock(Card.class);
 
-        when(board.getDealer()).thenReturn(currentPlayer);
-        when(board.getHandOf(any(Direction.class))).thenReturn(handOfCurrentPlayer);
-        when(handOfCurrentPlayer.containsCard(card)).thenReturn(true);
+        when(board.getDealer()).thenReturn(dealer);
+        when(board.getHandOf(any(Direction.class))).thenReturn(hand);
+        when(hand.containsCard(card)).thenReturn(true);
 
         Deal deal = new Deal(board, ruleset, leader, null);
 
@@ -224,38 +203,30 @@ public class DealTest {
 
     @Test
     public void playCardShouldMoveCardFromHandToCurrentTrick() {
-        Direction currentPlayer = Direction.NORTH;
-        Hand handOfCurrentPlayer = mock(Hand.class);
-        Board board = mock(Board.class);
-        Ruleset ruleset = mock(Ruleset.class);
         Card card = mock(Card.class);
         int numberOfCardsInTheTrick;
 
-        when(board.getDealer()).thenReturn(currentPlayer);
-        when(board.getHandOf(any(Direction.class))).thenReturn(handOfCurrentPlayer);
-        when(handOfCurrentPlayer.containsCard(card)).thenReturn(true);
+        when(board.getDealer()).thenReturn(dealer);
+        when(board.getHandOf(any(Direction.class))).thenReturn(hand);
+        when(hand.containsCard(card)).thenReturn(true);
 
         Deal deal = new Deal(board, ruleset, leader, null);
         numberOfCardsInTheTrick = deal.getCurrentTrick().getCards().size();
         deal.playCard(card);
 
-        verify(handOfCurrentPlayer).removeCard(card);
+        verify(hand).removeCard(card);
         assertEquals(numberOfCardsInTheTrick + 1, deal.getCurrentTrick().getCards().size());
     }
 
     @Test
     public void playCardShouldMoveTurnToNextPlayerIfTrickHasNotEnded() {
-        Direction dealer = Direction.NORTH;
         Direction currentPlayer = leader;
         Direction nextPlayer = currentPlayer.next();
-        Hand handOfCurrentPlayer = mock(Hand.class);
-        Board board = mock(Board.class);
-        Ruleset ruleset = mock(Ruleset.class);
         Card card = mock(Card.class);
 
         when(board.getDealer()).thenReturn(dealer);
-        when(board.getHandOf(any(Direction.class))).thenReturn(handOfCurrentPlayer);
-        when(handOfCurrentPlayer.containsCard(card)).thenReturn(true);
+        when(board.getHandOf(any(Direction.class))).thenReturn(hand);
+        when(hand.containsCard(card)).thenReturn(true);
 
         Deal deal = new Deal(board, ruleset, currentPlayer, null);
         deal.playCard(card);
@@ -265,16 +236,12 @@ public class DealTest {
 
     @Test
     public void playCardShouldMoveTurnToWinnerIfTrickHasEnded() {
-        Direction currentPlayer = Direction.NORTH;
         Direction winner = Direction.SOUTH;
-        Hand handOfCurrentPlayer = mock(Hand.class);
-        Board board = mock(Board.class);
-        Ruleset ruleset = mock(Ruleset.class);
         Card card = mock(Card.class);
 
-        when(board.getDealer()).thenReturn(currentPlayer);
-        when(board.getHandOf(any(Direction.class))).thenReturn(handOfCurrentPlayer);
-        when(handOfCurrentPlayer.containsCard(card)).thenReturn(true);
+        when(board.getDealer()).thenReturn(dealer);
+        when(board.getHandOf(any(Direction.class))).thenReturn(hand);
+        when(hand.containsCard(card)).thenReturn(true);
 
         when(ruleset.followsSuit(any(), any(), any())).thenReturn(true);
 
@@ -294,15 +261,12 @@ public class DealTest {
     public void playCardShouldUpdateTheScoreboardIfTrickHasEnded() {
         Direction currentPlayer = Direction.NORTH;
         Direction winner = Direction.SOUTH;
-        Hand handOfCurrentPlayer = mock(Hand.class);
-        Board board = mock(Board.class);
-        Ruleset ruleset = mock(Ruleset.class);
         Card card = mock(Card.class);
         int trickPoints = 1;
 
         when(board.getDealer()).thenReturn(currentPlayer);
-        when(board.getHandOf(any(Direction.class))).thenReturn(handOfCurrentPlayer);
-        when(handOfCurrentPlayer.containsCard(card)).thenReturn(true);
+        when(board.getHandOf(any(Direction.class))).thenReturn(hand);
+        when(hand.containsCard(card)).thenReturn(true);
 
         when(ruleset.followsSuit(any(), any(), any())).thenReturn(true);
 
@@ -323,16 +287,13 @@ public class DealTest {
     public void playCardShouldIncrementCompleteTricksIfTrickHasEnded() {
         Direction currentPlayer = Direction.NORTH;
         Direction winner = Direction.SOUTH;
-        Hand handOfCurrentPlayer = mock(Hand.class);
-        Board board = mock(Board.class);
-        Ruleset ruleset = mock(Ruleset.class);
         Card card = mock(Card.class);
         int noCompletedTricks = 0;
         int oneCompletedTricks = noCompletedTricks + 1;
 
         when(board.getDealer()).thenReturn(currentPlayer);
-        when(board.getHandOf(any(Direction.class))).thenReturn(handOfCurrentPlayer);
-        when(handOfCurrentPlayer.containsCard(card)).thenReturn(true);
+        when(board.getHandOf(any(Direction.class))).thenReturn(hand);
+        when(hand.containsCard(card)).thenReturn(true);
 
         when(ruleset.followsSuit(any(), any(), any())).thenReturn(true);
 
@@ -351,9 +312,6 @@ public class DealTest {
 
     @Test
     public void shouldSortAllHandsByTrumpSuit() {
-        Board board = mock(Board.class);
-        Ruleset ruleset = mock(Ruleset.class);
-        Direction dealer = Direction.NORTH;
         when(board.getDealer()).thenReturn(dealer);
         Deal deal = new Deal(board, ruleset, leader, null);
         Suit anySuit = Suit.CLUBS;
@@ -365,9 +323,6 @@ public class DealTest {
     }
 
     private Deal initDeal(Hand handOfCurrentPlayer) {
-        Direction dealer = Direction.NORTH;
-        Board board = mock(Board.class);
-        Ruleset ruleset = mock(Ruleset.class);
         Card card = mock(Card.class);
 
         when(board.getHandOf(any(Direction.class))).thenReturn(handOfCurrentPlayer);
@@ -378,8 +333,6 @@ public class DealTest {
     }
 
     private Deal initDeal(Hand handOfCurrentPlayer, Board board) {
-        Direction dealer = Direction.NORTH;
-        Ruleset ruleset = mock(Ruleset.class);
         Card card = mock(Card.class);
 
         when(board.getHandOf(any(Direction.class))).thenReturn(handOfCurrentPlayer);
@@ -390,8 +343,6 @@ public class DealTest {
     }
 
     private Deal initDeal(Hand handOfCurrentPlayer, Ruleset ruleset) {
-        Direction dealer = Direction.NORTH;
-        Board board = mock(Board.class);
         Card card = mock(Card.class);
 
         when(board.getHandOf(any(Direction.class))).thenReturn(handOfCurrentPlayer);
@@ -403,8 +354,6 @@ public class DealTest {
     }
 
     private Deal initDeal(Hand handOfCurrentPlayer, Ruleset ruleset, Boolean isPartnershipGame) {
-        Direction dealer = Direction.NORTH;
-        Board board = mock(Board.class);
         Card card = mock(Card.class);
 
         when(board.getHandOf(any(Direction.class))).thenReturn(handOfCurrentPlayer);
@@ -425,16 +374,14 @@ public class DealTest {
 
     @Test
     public void getTricksShouldReturnEmptyListIfDealHasNoTricks() {
-        Hand handOfCurrentPlayer = mock(Hand.class);
-        Deal deal = this.initDeal(handOfCurrentPlayer);
+        Deal deal = this.initDeal(hand);
 
         assertTrue(deal.getTricks().isEmpty());
     }
 
     @Test
     public void undoShouldDoNothingWhenDealHasNoTricks() {
-        Hand handOfCurrentPlayer = mock(Hand.class);
-        Deal deal = this.initDeal(handOfCurrentPlayer);
+        Deal deal = this.initDeal(hand);
         Direction directionThatCallsUndo = Direction.NORTH;
 
         deal.undo(directionThatCallsUndo);
@@ -444,11 +391,9 @@ public class DealTest {
 
     @Test
     public void undoShouldDoNothingWhenFirstTrickAndCallerHasNotPlayed() {
-        Hand handOfCurrentPlayer = mock(Hand.class);
-        Board board = mock(Board.class);
-        Deal deal = this.initDeal(handOfCurrentPlayer, board);
+        Deal deal = this.initDeal(hand, board);
         Direction directionThatCallsUndo = Direction.EAST;
-        playNTimesCard(deal, 1, handOfCurrentPlayer);
+        playNTimesCard(deal, 1, hand);
         Direction currentPlayerBeforeUndo = deal.getCurrentPlayer();
 
         deal.undo(directionThatCallsUndo);
@@ -460,11 +405,10 @@ public class DealTest {
 
     @Test
     public void undoShouldRemoveTrickAndSetCurrentPlayerWhenFirstPlayerAskedForUndo() {
-        Hand handOfCurrentPlayer = mock(Hand.class);
-        Deal deal = this.initDeal(handOfCurrentPlayer);
+        Deal deal = this.initDeal(hand);
         Direction currentPlayer = deal.getCurrentPlayer();
         Direction directionThatCallsUndo = currentPlayer;
-        playNTimesCard(deal, 1, handOfCurrentPlayer);
+        playNTimesCard(deal, 1, hand);
 
         deal.undo(directionThatCallsUndo);
 
@@ -476,13 +420,11 @@ public class DealTest {
 
     @Test
     public void undoShouldRemoveCardAndSetCurrentPlayerWhenLastPlayerAskedForUndo() {
-        Hand handOfCurrentPlayer = mock(Hand.class);
-        Ruleset ruleset = mock(Ruleset.class);
-        Deal deal = this.initDeal(handOfCurrentPlayer, ruleset);
+        Deal deal = this.initDeal(hand, ruleset);
         when(ruleset.getWinner(any())).thenReturn(Direction.NORTH);
-        playNTimesCard(deal, 3, handOfCurrentPlayer);
+        playNTimesCard(deal, 3, hand);
         Direction currentPlayer = deal.getCurrentPlayer();
-        playNTimesCard(deal, 1, handOfCurrentPlayer);
+        playNTimesCard(deal, 1, hand);
         Direction directionThatCallsUndo = currentPlayer;
 
         deal.undo(directionThatCallsUndo);
@@ -495,10 +437,8 @@ public class DealTest {
 
     @Test
     public void undoShouldDoNothingWhenFirstTrickHasMoreThanOneCardAndCallerHasNotPlayedYet() {
-        Hand handOfCurrentPlayer = mock(Hand.class);
-        Ruleset ruleset = mock(Ruleset.class);
-        Deal deal = this.initDeal(handOfCurrentPlayer, ruleset);
-        playNTimesCard(deal, 2, handOfCurrentPlayer);
+        Deal deal = this.initDeal(hand, ruleset);
+        playNTimesCard(deal, 2, hand);
         Direction currentPlayer = deal.getCurrentPlayer();
         Direction directionThatCallsUndo = currentPlayer.next();
 
@@ -512,16 +452,14 @@ public class DealTest {
 
     @Test
     public void undoShouldRemoveTwoTricksWhenLeaderOfThePreviousTrickAsksForUndoOnCurrentTrickBeforePlayCard() {
-        Hand handOfCurrentPlayer = mock(Hand.class);
-        Ruleset ruleset = mock(Ruleset.class);
-        Deal deal = this.initDeal(handOfCurrentPlayer, ruleset);
+        Deal deal = this.initDeal(hand, ruleset);
         Direction firstPlayer = deal.getCurrentPlayer();
         Direction anyOtherPlayer = firstPlayer.next(3);
         when(ruleset.getWinner(any())).thenReturn(firstPlayer);
         int numberOfTricks = 10;
-        playNTimesCard(deal, numberOfTricks * 4 - 1, handOfCurrentPlayer);
+        playNTimesCard(deal, numberOfTricks * 4 - 1, hand);
         when(ruleset.getWinner(any())).thenReturn(anyOtherPlayer);
-        playNTimesCard(deal, 2, handOfCurrentPlayer);
+        playNTimesCard(deal, 2, hand);
 
         deal.undo(firstPlayer);
 
@@ -533,15 +471,13 @@ public class DealTest {
 
     @Test
     public void undoShouldUpdateScoreWhenCallHappensImmediatelyAfterCurrentTrickIsComplete() {
-        Hand handOfCurrentPlayer = mock(Hand.class);
-        Ruleset ruleset = mock(Ruleset.class);
-        Deal deal = this.initDeal(handOfCurrentPlayer, ruleset);
+        Deal deal = this.initDeal(hand, ruleset);
         Direction firstPlayer = deal.getCurrentPlayer();
         when(ruleset.getWinner(any())).thenReturn(firstPlayer);
         int anyNumberOfTricks = 10;
-        playNTimesCard(deal, anyNumberOfTricks * 4 - 1, handOfCurrentPlayer);
+        playNTimesCard(deal, anyNumberOfTricks * 4 - 1, hand);
         Score previousScore = deal.getScore();
-        playNTimesCard(deal, 1, handOfCurrentPlayer);
+        playNTimesCard(deal, 1, hand);
 
         deal.undo(firstPlayer);
 
@@ -555,13 +491,11 @@ public class DealTest {
 
     @Test
     public void undoShouldUpdateCompletedTricksWhenFirstTrickIsCompleteAndAnyPlayerCallsUndo() {
-        Hand handOfCurrentPlayer = mock(Hand.class);
-        Ruleset ruleset = mock(Ruleset.class);
-        Deal deal = this.initDeal(handOfCurrentPlayer, ruleset);
+        Deal deal = this.initDeal(hand, ruleset);
         Direction firstPlayer = deal.getCurrentPlayer();
         Direction anyPlayer = firstPlayer;
         when(ruleset.getWinner(any())).thenReturn(firstPlayer);
-        playNTimesCard(deal, 1, handOfCurrentPlayer);
+        playNTimesCard(deal, 1, hand);
 
         deal.undo(anyPlayer);
 
@@ -575,14 +509,12 @@ public class DealTest {
 
     @Test
     public void undoShouldUpdateCompletedTricksWhenNotFirstTrickAndTrickIsCompleteAndAnyPlayerCallsUndo() {
-        Hand handOfCurrentPlayer = mock(Hand.class);
-        Ruleset ruleset = mock(Ruleset.class);
-        Deal deal = this.initDeal(handOfCurrentPlayer, ruleset);
+        Deal deal = this.initDeal(hand, ruleset);
         Direction firstPlayer = deal.getCurrentPlayer();
         Direction anyPlayer = firstPlayer;
         when(ruleset.getWinner(any())).thenReturn(firstPlayer);
         int anyNumberOfTricksDifferentThanOne = 13;
-        playNTimesCard(deal, anyNumberOfTricksDifferentThanOne * 4, handOfCurrentPlayer);
+        playNTimesCard(deal, anyNumberOfTricksDifferentThanOne * 4, hand);
 
         deal.undo(anyPlayer);
 
@@ -596,14 +528,12 @@ public class DealTest {
 
     @Test
     public void undoShouldNotChangeTrickWhenUndoWasNotCalledByTheLeader() {
-        Hand handOfCurrentPlayer = mock(Hand.class);
-        Ruleset ruleset = mock(Ruleset.class);
-        Deal deal = this.initDeal(handOfCurrentPlayer, ruleset);
+        Deal deal = this.initDeal(hand, ruleset);
         Direction firstPlayer = deal.getCurrentPlayer();
         Direction lastPlayer = firstPlayer.next();
         int anyNumberOfTricks = 2;
         when(ruleset.getWinner(any())).thenReturn(firstPlayer);
-        playNTimesCard(deal, anyNumberOfTricks * 4, handOfCurrentPlayer);
+        playNTimesCard(deal, anyNumberOfTricks * 4, hand);
 
         deal.undo(lastPlayer);
 
@@ -617,8 +547,6 @@ public class DealTest {
 
     @Test
     public void giveBackAllCardsToHandsShouldReturnCardsToHands() {
-        Ruleset ruleset = mock(Ruleset.class);
-        Hand hand = mock(Hand.class);
         Deal deal = this.initDeal(hand, ruleset);
         Direction firstPlayer = deal.getCurrentPlayer();
         when(ruleset.getWinner(any())).thenReturn(firstPlayer);
@@ -633,9 +561,7 @@ public class DealTest {
 
     @Test
     public void claimShouldSetClaimer() {
-        Hand handOfCurrentPlayer = mock(Hand.class);
-        Ruleset ruleset = mock(Ruleset.class);
-        Deal deal = this.initDeal(handOfCurrentPlayer, ruleset);
+        Deal deal = this.initDeal(hand, ruleset);
         Direction claimer = deal.getCurrentPlayer();
 
         deal.claim(claimer);
@@ -645,9 +571,7 @@ public class DealTest {
 
     @Test
     public void acceptClaimShouldAddPlayerToAcceptedClaimMap() {
-        Hand handOfCurrentPlayer = mock(Hand.class);
-        Ruleset ruleset = mock(Ruleset.class);
-        Deal deal = this.initDeal(handOfCurrentPlayer, ruleset, true);
+        Deal deal = this.initDeal(hand, ruleset, true);
         Direction claimer = deal.getCurrentPlayer();
 
         deal.claim(claimer);
@@ -658,9 +582,7 @@ public class DealTest {
 
     @Test
     public void acceptClaimShouldFinishDealIfAllPlayersAcceptedClaimAndItIsPartnershipGame() {
-        Hand handOfCurrentPlayer = mock(Hand.class);
-        Ruleset ruleset = mock(Ruleset.class);
-        Deal deal = this.initDeal(handOfCurrentPlayer, ruleset, true);
+        Deal deal = this.initDeal(hand, ruleset, true);
         Direction claimer = deal.getCurrentPlayer();
         int totalPoints = 20;
         when(ruleset.getTotalPoints()).thenReturn(totalPoints);
@@ -674,9 +596,7 @@ public class DealTest {
 
     @Test
     public void acceptClaimShouldFinishDealIfAllPlayersAcceptedClaimAndItIsNotPartnershipGame() {
-        Hand handOfCurrentPlayer = mock(Hand.class);
-        Ruleset ruleset = mock(Ruleset.class);
-        Deal deal = this.initDeal(handOfCurrentPlayer, ruleset, false);
+        Deal deal = this.initDeal(hand, ruleset, false);
         Direction claimer = deal.getCurrentPlayer();
         int totalPoints = 20;
         when(ruleset.getTotalPoints()).thenReturn(totalPoints);
@@ -691,13 +611,11 @@ public class DealTest {
 
     @Test
     public void rejectClaimShouldRemoveClaimerAndResetAcceptedClaims() {
-        Hand handOfCurrentPlayer = mock(Hand.class);
-        Ruleset ruleset = mock(Ruleset.class);
-        Deal deal = this.initDeal(handOfCurrentPlayer, ruleset, true);
+        Deal deal = this.initDeal(hand, ruleset, true);
         Direction claimer = deal.getCurrentPlayer();
 
         deal.claim(claimer);
-        this.playNTimesCard(deal, 1, handOfCurrentPlayer);
+        this.playNTimesCard(deal, 1, hand);
         deal.acceptClaim(claimer.next());
         deal.rejectClaim();
 

@@ -15,8 +15,8 @@ public class ShuffledBoardDealerTest {
     public void shouldReceiveABoardWithTheCorrectDealerAndACompleteSetOfCards() {
         Direction dealer = Direction.NORTH;
         BoardDealer boardDealer = new ShuffledBoardDealer();
-        Complete52CardDeck complete52CardDeck = new Complete52CardDeck();
-        Board board = boardDealer.dealBoard(dealer, complete52CardDeck.getDeck());
+        CardDeck anyCardDeck = new Complete52CardDeck();
+        Board board = boardDealer.dealBoard(dealer, anyCardDeck.getDeck());
 
         // The correct test should verify if new Board(hands, dealer)
         // was called but Mockito can't do that.

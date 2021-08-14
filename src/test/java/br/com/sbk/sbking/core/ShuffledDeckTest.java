@@ -10,6 +10,7 @@ import java.util.Set;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import br.com.sbk.sbking.core.boarddealer.CardDeck;
 import br.com.sbk.sbking.core.boarddealer.Complete52CardDeck;
 import br.com.sbk.sbking.core.exceptions.DealingCardFromAnEmptyDeckException;
 
@@ -20,8 +21,8 @@ public class ShuffledDeckTest {
 
     @BeforeClass
     public static void setup() {
-        Complete52CardDeck complete52CardDeck = new Complete52CardDeck();
-        gameDeck = complete52CardDeck.getDeck();
+        CardDeck cardDeck = new Complete52CardDeck();
+        gameDeck = cardDeck.getDeck();
     }
 
     @Test

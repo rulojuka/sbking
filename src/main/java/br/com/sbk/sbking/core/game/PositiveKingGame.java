@@ -28,6 +28,7 @@ public class PositiveKingGame extends TrickGame {
     private BoardDealer boardDealer;
 
     public PositiveKingGame() {
+        super();
         this.gameScoreboard = new KingGameScoreboard();
         this.gameDeck = new Complete52CardDeck().getDeck();
         this.boardDealer = new FourteenHCPPlusDoubletonRuledBoardDealer();

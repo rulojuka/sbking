@@ -18,7 +18,7 @@ public class FourteenHCPPlusDoubletonRuledBoardDealerTest {
     public void shouldReceiveABoardWithTheCorrectDealerAndACompleteSetOfCardsAnd14HCPPlusCardsAndShortestSuit2Plus() {
         Direction dealer = Direction.NORTH;
         BoardDealer boardDealer = new FourteenHCPPlusDoubletonRuledBoardDealer();
-        Complete52CardDeck complete52CardDeck = new Complete52CardDeck();
+        CardDeck complete52CardDeck = new Complete52CardDeck();
         Board board = boardDealer.dealBoard(dealer, complete52CardDeck.getDeck());
 
         for (Direction direction : Direction.values()) {

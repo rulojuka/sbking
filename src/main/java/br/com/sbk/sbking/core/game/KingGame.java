@@ -30,6 +30,7 @@ public class KingGame extends TrickGame {
     private int playedHands = 0;
 
     public KingGame() {
+        super();
         this.gameScoreboard = new KingGameScoreboard();
         this.boardDealer = new ShuffledBoardDealer();
         this.gameDeck = new Complete52CardDeck().getDeck();

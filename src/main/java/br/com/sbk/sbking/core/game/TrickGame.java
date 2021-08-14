@@ -16,7 +16,7 @@ public abstract class TrickGame {
     protected Direction dealer = Direction.NORTH;
     protected Deque<Card> gameDeck;
 
-    public TrickGame() {
+    protected TrickGame() {
         super();
         this.gameDeck = new Complete52CardDeck().getDeck(); // This is the default deck used in trick games
     }
