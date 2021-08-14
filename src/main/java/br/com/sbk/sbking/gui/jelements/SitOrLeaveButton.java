@@ -8,17 +8,14 @@ public class SitOrLeaveButton extends SBKingButton {
 
   private static final int DEFAULT_WIDTH = 400;
   private static final int DEFAULT_HEIGHT = 30;
-  private static double scaleFactor;
-  private static int width;
-  private static int height;
 
   public SitOrLeaveButton(Direction direction) {
     super();
     this.putClientProperty("type", "SITORLEAVE");
     this.putClientProperty("direction", direction);
-    width = (int) (DEFAULT_WIDTH * scaleFactor);
-    height = (int) (DEFAULT_HEIGHT * scaleFactor);
-    scaleFactor = FrameConstants.getScreenScale();
+    double scaleFactor = FrameConstants.getScreenScale();
+    int width = (int) (DEFAULT_WIDTH * scaleFactor);
+    int height = (int) (DEFAULT_HEIGHT * scaleFactor);
     this.setSize(width, height);
   }
 
