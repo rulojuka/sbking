@@ -300,7 +300,20 @@ public class Deal {
         this.board.sortAllHands(cardInsideHandWithSuitComparator);
     }
 
+    private Direction updateUndoDirectionIfMinibridge(Direction direction) {
+        Direction lastPlayer = this.currentPlayer.next(3);
+        if (this.dummy != null) {
+            if (direction.next(2) == this.dummy) {
+                if (lastPlayer == this.dummy.next(1) || lastPlayer == this.dummy) {
+                    return this.dummy;
+                }
+            }
+        }
+        return direction;
+    }
+
     public void undo(Direction direction) {
+        direction = updateUndoDirectionIfMinibridge(direction);
         Map<Card, Direction> removedCardsUpToDirection = this.removeCardsUpTo(direction);
         if (!removedCardsUpToDirection.isEmpty()) {
             this.giveBackCardsToHands(removedCardsUpToDirection);
