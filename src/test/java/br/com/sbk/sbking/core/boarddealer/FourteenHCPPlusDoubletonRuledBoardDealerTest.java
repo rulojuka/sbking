@@ -10,8 +10,6 @@ import br.com.sbk.sbking.core.Board;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.core.Hand;
 import br.com.sbk.sbking.core.HandEvaluations;
-import br.com.sbk.sbking.core.boarddealer.BoardDealer;
-import br.com.sbk.sbking.core.boarddealer.FourteenHCPPlusDoubletonRuledBoardDealer;
 
 public class FourteenHCPPlusDoubletonRuledBoardDealerTest {
 
@@ -20,7 +18,8 @@ public class FourteenHCPPlusDoubletonRuledBoardDealerTest {
     public void shouldReceiveABoardWithTheCorrectDealerAndACompleteSetOfCardsAnd14HCPPlusCardsAndShortestSuit2Plus() {
         Direction dealer = Direction.NORTH;
         BoardDealer boardDealer = new FourteenHCPPlusDoubletonRuledBoardDealer();
-        Board board = boardDealer.dealBoard(dealer);
+        Complete52CardDeck complete52CardDeck = new Complete52CardDeck();
+        Board board = boardDealer.dealBoard(dealer, complete52CardDeck.getDeck());
 
         for (Direction direction : Direction.values()) {
             assertEquals(SIZE_OF_HAND, board.getHandOf(direction).size());

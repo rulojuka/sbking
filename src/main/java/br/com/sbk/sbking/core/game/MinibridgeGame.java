@@ -3,6 +3,7 @@ package br.com.sbk.sbking.core.game;
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.core.boarddealer.BoardDealer;
+import br.com.sbk.sbking.core.boarddealer.Complete52CardDeck;
 import br.com.sbk.sbking.core.boarddealer.MinibridgeBoardDealer;
 import br.com.sbk.sbking.core.rulesets.abstractrulesets.PositiveRuleset;
 import br.com.sbk.sbking.core.rulesets.abstractrulesets.Ruleset;
@@ -10,15 +11,18 @@ import br.com.sbk.sbking.core.rulesets.concrete.NoRuleset;
 
 public class MinibridgeGame extends TrickGame {
 
+  private BoardDealer boardDealer;
+
   public MinibridgeGame() {
     super();
+    this.gameDeck = new Complete52CardDeck().getDeck(); // TODO This will change to a different deck soon.
+    this.boardDealer = new MinibridgeBoardDealer();
     this.dealNewBoard();
   }
 
   @Override
   public void dealNewBoard() {
-    BoardDealer boardDealer = new MinibridgeBoardDealer();
-    this.currentBoard = boardDealer.dealBoard(this.dealer);
+    this.currentBoard = boardDealer.dealBoard(this.dealer, this.gameDeck);
     this.currentDeal = new Deal(currentBoard, new NoRuleset(), this.getLeader(), true);
     this.currentDeal.setCurrentPlayer(this.dealer.next());
     this.currentDeal.setDummy(this.dealer.next(2));

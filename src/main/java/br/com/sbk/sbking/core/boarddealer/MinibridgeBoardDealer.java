@@ -1,9 +1,11 @@
 package br.com.sbk.sbking.core.boarddealer;
 
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.Map;
 
 import br.com.sbk.sbking.core.Board;
+import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.core.Hand;
 import br.com.sbk.sbking.core.HandEvaluations;
@@ -11,6 +13,11 @@ import br.com.sbk.sbking.core.HandEvaluations;
 public class MinibridgeBoardDealer implements BoardDealer {
 
   private Board board;
+  private ShuffledBoardDealer shuffledBoardDealer;
+
+  public MinibridgeBoardDealer() {
+    this.shuffledBoardDealer = new ShuffledBoardDealer();
+  }
 
   /**
    * Deals a Board where the partnership of the dealer has strictly more points
@@ -18,15 +25,14 @@ public class MinibridgeBoardDealer implements BoardDealer {
    * partner.
    */
   @Override
-  public Board dealBoard(Direction dealer) {
-    ShuffledBoardDealer shuffledBoardDealer = new ShuffledBoardDealer();
+  public Board dealBoard(Direction dealer, Deque<Card> deck) {
     int dealerPartnershipHCP;
     int nonDealerPartnershipHCP;
 
     do {
       dealerPartnershipHCP = 0;
       nonDealerPartnershipHCP = 0;
-      this.board = shuffledBoardDealer.dealBoard(dealer);
+      this.board = shuffledBoardDealer.dealBoard(dealer, deck);
       for (Direction direction : Direction.values()) {
         HandEvaluations handEvaluations = this.board.getHandOf(direction).getHandEvaluations();
         int hcp = handEvaluations.getHCP();

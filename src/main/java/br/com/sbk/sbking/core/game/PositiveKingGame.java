@@ -8,6 +8,7 @@ import java.util.Set;
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.core.boarddealer.BoardDealer;
+import br.com.sbk.sbking.core.boarddealer.Complete52CardDeck;
 import br.com.sbk.sbking.core.boarddealer.FourteenHCPPlusDoubletonRuledBoardDealer;
 import br.com.sbk.sbking.core.rulesets.abstractrulesets.NegativeRuleset;
 import br.com.sbk.sbking.core.rulesets.abstractrulesets.PositiveRuleset;
@@ -24,17 +25,18 @@ public class PositiveKingGame extends TrickGame {
     private int northSouthPositives = 0;
     private int eastWestPositives = 0;
     private int playedHands = 0;
+    private BoardDealer boardDealer;
 
     public PositiveKingGame() {
         this.gameScoreboard = new KingGameScoreboard();
+        this.gameDeck = new Complete52CardDeck().getDeck();
+        this.boardDealer = new FourteenHCPPlusDoubletonRuledBoardDealer();
         this.dealNewBoard();
-
     }
 
     @Override
     public void dealNewBoard() {
-        BoardDealer boardDealer = new FourteenHCPPlusDoubletonRuledBoardDealer();
-        this.currentBoard = boardDealer.dealBoard(this.dealer);
+        this.currentBoard = boardDealer.dealBoard(this.dealer, this.gameDeck);
         this.currentDeal = new Deal(currentBoard, new NoRuleset(), this.getLeader(), true);
     }
 
