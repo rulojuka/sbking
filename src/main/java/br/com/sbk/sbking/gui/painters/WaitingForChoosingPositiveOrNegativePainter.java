@@ -10,7 +10,6 @@ import br.com.sbk.sbking.gui.elements.ChoosePositiveOrNegativeElement;
 import br.com.sbk.sbking.gui.elements.EssentialDirectionBoardElements;
 import br.com.sbk.sbking.gui.elements.GameScoreboardElement;
 import br.com.sbk.sbking.gui.elements.WaitingForChooserElement;
-import br.com.sbk.sbking.gui.elements.YouArePlayerElement;
 import br.com.sbk.sbking.gui.models.KingGameScoreboard;
 import br.com.sbk.sbking.networking.client.SBKingClient;
 
@@ -36,7 +35,6 @@ public class WaitingForChoosingPositiveOrNegativePainter implements Painter {
         Point centerOfScoreboardPosition = new Point(xCenterLocation, yCenterLocation);
         new GameScoreboardElement(gameScoreboard, contentPane, centerOfScoreboardPosition);
         if (myDirection != chooserDirection) {
-            YouArePlayerElement.add(this.myDirection, contentPane);
             WaitingForChooserElement.add(contentPane, chooserDirection, "Positive or Negative.");
         } else {
             ChoosePositiveOrNegativeElement choosePositiveOrNegativeElement = new ChoosePositiveOrNegativeElement(

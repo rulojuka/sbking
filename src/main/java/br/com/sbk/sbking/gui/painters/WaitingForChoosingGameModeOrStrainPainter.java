@@ -6,7 +6,6 @@ import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.gui.elements.ChooseGameModeOrStrainElement;
 import br.com.sbk.sbking.gui.elements.EssentialDirectionBoardElements;
 import br.com.sbk.sbking.gui.elements.WaitingForChooserElement;
-import br.com.sbk.sbking.gui.elements.YouArePlayerElement;
 import br.com.sbk.sbking.networking.client.SBKingClient;
 
 public class WaitingForChoosingGameModeOrStrainPainter implements Painter {
@@ -27,7 +26,6 @@ public class WaitingForChoosingGameModeOrStrainPainter implements Painter {
     @Override
     public void paint(Container contentPane) {
         if (myDirection != chooserDirection) {
-            YouArePlayerElement.add(this.myDirection, contentPane);
             WaitingForChooserElement.add(contentPane, chooserDirection, "Game Mode or Strain.");
         } else {
             ChooseGameModeOrStrainElement chooseGameModeOrStrainElement = new ChooseGameModeOrStrainElement(contentPane,
