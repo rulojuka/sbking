@@ -20,7 +20,7 @@ public class EssentialDirectionBoardElements {
                     deal.getPlayerOf(direction), isVisible, direction);
         }
 
-        new RulesetElement(deal.getRuleset(), container, new Point(150, 150));
+        new RulesetElement(deal.getRuleset(), container, FrameConstants.rulesetPosition);
 
         new LeaveTableElement(container, new Point(150, 50), actionListener);
 
