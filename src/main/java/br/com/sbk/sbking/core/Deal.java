@@ -420,7 +420,7 @@ public class Deal {
 
     public void acceptClaim(Direction direction) {
         this.acceptedClaimMap.put(direction, true);
-        if (this.otherPlayersAcceptedClaim()) {
+        if (this.hasOtherPlayersAcceptedClaim()) {
             this.finishDeal(this.claimer);
         }
     }
@@ -432,19 +432,20 @@ public class Deal {
         }
     }
 
-    private boolean otherPlayersAcceptedClaim() {
-        return this.acceptedClaimMap.entrySet().stream().filter(this::isNotClaimerPartner).map(Entry::getValue)
-                .reduce((a, b) -> a && b).orElse(true);
+    private boolean hasOtherPlayersAcceptedClaim() {
+        return this.acceptedClaimMap.entrySet().stream().filter(entry -> !isClaimerOrPartner(entry) && !isDummy(entry))
+                .map(Entry::getValue).reduce(Boolean::logicalAnd).get();
     }
 
-    private boolean isNotClaimerPartner(Map.Entry<Direction, Boolean> entry) {
-        if (entry.getKey() == this.claimer) {
-            return false;
-        } else if (this.isPartnershipGame) {
-            return !entry.getKey().equals(this.claimer.next(2));
-        } else {
-            return true;
-        }
+    private boolean isClaimerOrPartner(Map.Entry<Direction, Boolean> entry) {
+        Direction direction = entry.getKey();
+        boolean isClaimer = direction == this.claimer;
+        boolean isClaimerPartner = this.isPartnershipGame && direction.next(2) == this.claimer;
+        return isClaimer || isClaimerPartner;
+    }
+
+    private boolean isDummy(Map.Entry<Direction, Boolean> entry) {
+        return entry.getKey() == this.dummy;
     }
 
     private void finishDeal(Direction winner) {

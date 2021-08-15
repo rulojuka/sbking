@@ -27,21 +27,23 @@ public class SpecificDirectionWithDummyBoardElements {
 
     new RulesetElement(deal.getRuleset(), container, new Point(150, 150));
 
-    if (!playerDirection.equals(dummy)) {
-      new UndoElement(container, new Point(150, container.getHeight() - 50), actionListener);
-    }
-
     new LeaveTableElement(container, new Point(150, 50), actionListener);
 
-    new ClaimElement(deal.getClaimer(), container, new Point(320, container.getHeight() - 50), actionListener);
-
-    new AcceptClaimElement(deal.getClaimer(), playerDirection, deal.getIsPartnershipGame(), deal.getAcceptedClaimMap(),
-        container, new Point(container.getWidth() - 150, container.getHeight() - 50), actionListener);
-
-    new RejectClaimElement(deal.getClaimer(), playerDirection, deal.getIsPartnershipGame(), deal.getAcceptedClaimMap(),
-        container, new Point(container.getWidth() - 150, container.getHeight() - 50), actionListener);
-
     new SpectatorsElement(container, FrameConstants.spectatorNamesPosition, spectators);
+
+    if (!playerDirection.equals(dummy)) {
+
+      new UndoElement(container, new Point(150, container.getHeight() - 50), actionListener);
+
+      new ClaimElement(deal.getClaimer(), container, new Point(320, container.getHeight() - 50), actionListener);
+
+      new AcceptClaimElement(deal.getClaimer(), playerDirection, deal.getIsPartnershipGame(),
+          deal.getAcceptedClaimMap(), container, new Point(420, container.getHeight() - 50), actionListener);
+
+      new RejectClaimElement(deal.getClaimer(), playerDirection, deal.getIsPartnershipGame(),
+          deal.getAcceptedClaimMap(), container, new Point(420, container.getHeight() - 50), actionListener);
+    }
+
   }
 
   private boolean shouldDrawVisible(Direction playerDirection, Direction currentDirection, Direction dummy,
