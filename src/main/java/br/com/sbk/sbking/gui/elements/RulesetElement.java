@@ -42,9 +42,13 @@ public class RulesetElement {
             if (ruleset instanceof PositiveWithTrumpsRuleset) {
                 PositiveWithTrumpsRuleset positiveWithTrumpsRuleset = (PositiveWithTrumpsRuleset) ruleset;
                 label.setForeground(positiveWithTrumpsRuleset.getTrumpSuit().getColor());
+            } else {
+                label.setForeground(new java.awt.Color(0, 0, 0));
             }
             label.setHorizontalAlignment(CENTER);
-            label.setSize(300, 100);
+            label.setSize(70, 70);
+            label.setBackground(new java.awt.Color(255, 255, 255));
+            label.setOpaque(true);
         }
 
         return label;

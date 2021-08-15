@@ -26,6 +26,7 @@ public final class FrameConstants {
 
     public static Map<Direction, Point> pointOfDirection = new HashMap<Direction, Point>();
     public static Point spectatorNamesPosition = new Point();
+    public static Point rulesetPosition = new Point();
 
     public static void initFrameConstants() {
         computeConstants(1400, 820);
@@ -71,5 +72,7 @@ public final class FrameConstants {
 
         spectatorNamesPosition = new Point((int) FrameConstants.pointOfDirection.get(Direction.EAST).getX(),
                 (int) FrameConstants.pointOfDirection.get(Direction.SOUTH).getY());
+        rulesetPosition = new Point((int) FrameConstants.pointOfDirection.get(Direction.WEST).getX(),
+                (int) FrameConstants.pointOfDirection.get(Direction.NORTH).getY());
     }
 }

@@ -23,7 +23,7 @@ public class AllDirectionBoardElements {
         new TrickElement(deal.getCurrentTrick(), container,
                 new Point(container.getWidth() / 2, container.getHeight() / 2));
 
-        new RulesetElement(deal.getRuleset(), container, new Point(150, 150));
+        new RulesetElement(deal.getRuleset(), container, FrameConstants.rulesetPosition);
 
         new LeaveTableElement(container, new Point(150, 50), actionListener);
 
