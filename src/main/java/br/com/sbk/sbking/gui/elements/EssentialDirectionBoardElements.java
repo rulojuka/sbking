@@ -12,10 +12,12 @@ import br.com.sbk.sbking.gui.constants.FrameConstants;
 public class EssentialDirectionBoardElements {
 
     public EssentialDirectionBoardElements(Deal deal, Container container, ActionListener actionListener,
-            List<String> spectators) {
+            List<String> spectators, Direction myDirection) {
         for (Direction direction : Direction.values()) {
+            boolean isVisible = direction.equals(myDirection) || deal.isFinished()
+                    || direction.equals(deal.getClaimer());
             new HandElement(deal, container, actionListener, FrameConstants.pointOfDirection.get(direction),
-                    deal.getPlayerOf(direction), true, direction);
+                    deal.getPlayerOf(direction), isVisible, direction);
         }
 
         new RulesetElement(deal.getRuleset(), container, new Point(150, 150));

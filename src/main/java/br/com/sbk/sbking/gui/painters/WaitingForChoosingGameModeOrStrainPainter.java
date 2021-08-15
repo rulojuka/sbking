@@ -34,7 +34,7 @@ public class WaitingForChoosingGameModeOrStrainPainter implements Painter {
         }
 
         new EssentialDirectionBoardElements(this.sbKingClient.getDeal(), contentPane,
-                this.sbKingClient.getActionListener(), this.sbKingClient.getSpectatorNames());
+                this.sbKingClient.getActionListener(), this.sbKingClient.getSpectatorNames(), myDirection);
 
         contentPane.validate();
         contentPane.repaint();
