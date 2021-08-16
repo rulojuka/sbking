@@ -32,17 +32,12 @@ public class PositiveKingGame extends TrickGame {
         this.gameScoreboard = new KingGameScoreboard();
         this.gameDeck = new Complete52CardDeck().getDeck();
         this.boardDealer = new FourteenHCPPlusDoubletonRuledBoardDealer();
-        this.dealNewBoard();
     }
 
     @Override
     public void dealNewBoard() {
         this.currentBoard = boardDealer.dealBoard(this.dealer, this.gameDeck);
         this.currentDeal = new Deal(currentBoard, new NoRuleset(), this.getLeader(), true);
-    }
-
-    public void addRuleset(Ruleset currentGameModeOrStrain) {
-        this.currentDeal = new Deal(this.currentBoard, currentGameModeOrStrain, this.getLeader(), true);
     }
 
     @Override

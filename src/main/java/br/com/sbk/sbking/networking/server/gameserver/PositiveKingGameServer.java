@@ -93,7 +93,7 @@ public class PositiveKingGameServer extends GameServer {
             }
 
             LOGGER.info("Everything selected! Game commencing!");
-            this.positiveKingGame.addRuleset(currentGameModeOrStrain);
+            this.positiveKingGame.setRuleset(currentGameModeOrStrain);
 
             this.copyPlayersFromTableToDeal();
 

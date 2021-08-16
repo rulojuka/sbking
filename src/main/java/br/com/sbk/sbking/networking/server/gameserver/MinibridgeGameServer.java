@@ -74,7 +74,7 @@ public class MinibridgeGameServer extends GameServer {
       }
 
       LOGGER.info("Everything selected! Game commencing!");
-      this.minibridgeGame.addRuleset(currentGameModeOrStrain);
+      this.minibridgeGame.setRuleset(currentGameModeOrStrain);
 
       if (currentGameModeOrStrain instanceof PositiveWithTrumpsRuleset) {
         PositiveWithTrumpsRuleset positiveWithTrumpsRuleset = (PositiveWithTrumpsRuleset) currentGameModeOrStrain;

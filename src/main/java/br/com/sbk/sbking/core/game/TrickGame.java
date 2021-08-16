@@ -8,6 +8,7 @@ import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.core.Player;
 import br.com.sbk.sbking.core.boarddealer.Complete52CardDeck;
+import br.com.sbk.sbking.core.rulesets.abstractrulesets.Ruleset;
 
 public abstract class TrickGame {
 
@@ -43,6 +44,10 @@ public abstract class TrickGame {
 
     public void setPlayerOf(Direction direction, Player player) {
         this.currentDeal.setPlayerOf(direction, player);
+    }
+
+    public void setRuleset(Ruleset ruleset) {
+        this.currentDeal.setRuleset(ruleset);
     }
 
 }
