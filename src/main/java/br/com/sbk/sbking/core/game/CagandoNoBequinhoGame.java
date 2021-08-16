@@ -24,7 +24,6 @@ public class CagandoNoBequinhoGame extends TrickGame {
         this.currentNumberOfCardsInAHand = 2;
         this.gameDeck = new Complete52CardDeck().getDeck();
         this.boardDealer = new ShuffledBoardDealer();
-        this.dealNewBoard();
     }
 
     @Override
@@ -55,15 +54,15 @@ public class CagandoNoBequinhoGame extends TrickGame {
 
         if (removedCards == null || removedCards.isEmpty()) {
             this.trumpCard = null;
-            this.addRuleset(new PositiveNoTrumpsRuleset());
+            this.createDeal(new PositiveNoTrumpsRuleset());
         } else {
             this.trumpCard = removedCards.get(0);
-            this.addRuleset(new PositiveWithTrumpsRuleset(this.trumpCard.getSuit()));
+            this.createDeal(new PositiveWithTrumpsRuleset(this.trumpCard.getSuit()));
         }
 
     }
 
-    private void addRuleset(Ruleset positiveRuleset) {
+    private void createDeal(Ruleset positiveRuleset) {
         this.currentDeal = new Deal(this.currentBoard, positiveRuleset, this.getLeader(), false);
     }
 

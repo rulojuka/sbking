@@ -41,10 +41,8 @@ public class Deal {
 
     public Deal(Board board, Ruleset ruleset, Direction leader, Boolean isPartnershipGame) {
         this.board = board;
-        this.ruleset = ruleset;
         this.currentPlayer = leader;
-        this.board.sortAllHands(ruleset.getComparator());
-        this.score = new Score(ruleset);
+        this.setRuleset(ruleset);
         this.completedTricks = 0;
         this.startingNumberOfCardsInTheHand = board.getHandOf(leader).size();
         this.tricks = new ArrayList<Trick>();
@@ -53,6 +51,12 @@ public class Deal {
             acceptedClaimMap.put(direction, false);
         }
         this.isPartnershipGame = isPartnershipGame;
+    }
+
+    public void setRuleset(Ruleset ruleset) {
+        this.ruleset = ruleset;
+        this.board.sortAllHands(ruleset.getComparator());
+        this.score = new Score(ruleset);
     }
 
     public Player getPlayerOf(Direction direction) {

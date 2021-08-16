@@ -130,7 +130,7 @@ public class KingGameServer extends GameServer {
                 return;
             }
             LOGGER.info("Everything selected! Game commencing!");
-            this.kingGame.addRuleset(currentGameModeOrStrain);
+            this.kingGame.setRuleset(currentGameModeOrStrain);
 
             this.copyPlayersFromTableToDeal();
 

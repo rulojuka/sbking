@@ -17,7 +17,6 @@ public class MinibridgeGame extends TrickGame {
     super();
     this.gameDeck = new Partial32CardDeck().getDeck();
     this.boardDealer = new MinibridgeBoardDealer();
-    this.dealNewBoard();
   }
 
   @Override
@@ -48,12 +47,6 @@ public class MinibridgeGame extends TrickGame {
 
   public boolean isGameModePermitted(Ruleset ruleset, Direction chooser) {
     return (ruleset instanceof PositiveRuleset);
-  }
-
-  public void addRuleset(Ruleset currentGameModeOrStrain) {
-    this.currentDeal = new Deal(this.currentBoard, currentGameModeOrStrain, this.getLeader(), true);
-    this.currentDeal.setCurrentPlayer(this.dealer.next());
-    this.currentDeal.setDummy(this.dealer.next(2));
   }
 
   @Override
