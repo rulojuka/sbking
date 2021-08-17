@@ -69,6 +69,13 @@ public class SBKingClient {
         this.unsetRulesetValid();
     }
 
+    public void resetBeforeEnteringTable() {
+        this.unsetPositiveOrNegativeChooser();
+        this.unsetPositiveOrNegative();
+        this.unsetGameModeOrStrainChooser();
+        this.unsetRulesetValid();
+    }
+
     public Direction getDirection() {
         return this.direction;
     }
@@ -243,4 +250,5 @@ public class SBKingClient {
     public void sendGetSpectatorNames() {
         this.kryonetSBKingClient.sendGetTableSpectators();
     }
+
 }
