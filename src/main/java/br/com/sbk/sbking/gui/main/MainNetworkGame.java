@@ -38,6 +38,7 @@ public class MainNetworkGame {
             currentScreen.runAt(sbkingClientJFrame);
 
             LOGGER.info("Finished Lobby Screen, creating table screen");
+            sbkingClient.resetBeforeEnteringTable();
 
             Class<? extends GameScreen> gameScreenClass = GameScreenFromGameNameIdentifier
                     .identify(sbkingClient.getGameName());
