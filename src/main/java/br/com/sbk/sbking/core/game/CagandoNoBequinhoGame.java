@@ -1,12 +1,12 @@
 package br.com.sbk.sbking.core.game;
 
+import java.util.Deque;
 import java.util.List;
 
 import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.core.boarddealer.BoardDealer;
-import br.com.sbk.sbking.core.boarddealer.Complete52CardDeck;
 import br.com.sbk.sbking.core.boarddealer.ShuffledBoardDealer;
 import br.com.sbk.sbking.core.comparators.CardInsideHandComparator;
 import br.com.sbk.sbking.core.rulesets.abstractrulesets.Ruleset;
@@ -19,10 +19,9 @@ public class CagandoNoBequinhoGame extends TrickGame {
     private Card trumpCard;
     private BoardDealer boardDealer;
 
-    public CagandoNoBequinhoGame() {
-        super();
+    public CagandoNoBequinhoGame(Deque<Card> gameDeck) {
+        super(gameDeck);
         this.currentNumberOfCardsInAHand = 2;
-        this.gameDeck = new Complete52CardDeck().getDeck();
         this.boardDealer = new ShuffledBoardDealer();
     }
 

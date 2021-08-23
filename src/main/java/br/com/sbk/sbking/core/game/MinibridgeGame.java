@@ -1,10 +1,12 @@
 package br.com.sbk.sbking.core.game;
 
+import java.util.Deque;
+
+import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.core.boarddealer.BoardDealer;
 import br.com.sbk.sbking.core.boarddealer.MinibridgeBoardDealer;
-import br.com.sbk.sbking.core.boarddealer.Partial32CardDeck;
 import br.com.sbk.sbking.core.rulesets.abstractrulesets.PositiveRuleset;
 import br.com.sbk.sbking.core.rulesets.abstractrulesets.Ruleset;
 import br.com.sbk.sbking.core.rulesets.concrete.NoRuleset;
@@ -13,9 +15,8 @@ public class MinibridgeGame extends TrickGame {
 
   private BoardDealer boardDealer;
 
-  public MinibridgeGame() {
-    super();
-    this.gameDeck = new Partial32CardDeck().getDeck();
+  public MinibridgeGame(Deque<Card> gameDeck) {
+    super(gameDeck);
     this.boardDealer = new MinibridgeBoardDealer();
   }
 
