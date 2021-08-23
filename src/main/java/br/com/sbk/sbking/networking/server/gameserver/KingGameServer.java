@@ -2,7 +2,11 @@ package br.com.sbk.sbking.networking.server.gameserver;
 
 import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 
+import java.util.Deque;
+
+import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Direction;
+import br.com.sbk.sbking.core.boarddealer.Complete52CardDeck;
 import br.com.sbk.sbking.core.exceptions.SelectedPositiveOrNegativeInAnotherPlayersTurnException;
 import br.com.sbk.sbking.core.game.KingGame;
 import br.com.sbk.sbking.core.rulesets.abstractrulesets.Ruleset;
@@ -22,7 +26,9 @@ public class KingGameServer extends GameServer {
     private KingGame kingGame;
 
     public KingGameServer() {
-        this.game = new KingGame();
+        super();
+        Deque<Card> deck = new Complete52CardDeck().getDeck();
+        this.game = new KingGame(deck);
         this.kingGame = (KingGame) this.game;
     }
 

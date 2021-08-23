@@ -7,7 +7,6 @@ import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.core.Player;
-import br.com.sbk.sbking.core.boarddealer.Complete52CardDeck;
 import br.com.sbk.sbking.core.rulesets.abstractrulesets.Ruleset;
 
 public abstract class TrickGame {
@@ -17,9 +16,9 @@ public abstract class TrickGame {
     protected Direction dealer = Direction.NORTH;
     protected Deque<Card> gameDeck;
 
-    protected TrickGame() {
+    protected TrickGame(Deque<Card> gameDeck) {
         super();
-        this.gameDeck = new Complete52CardDeck().getDeck(); // This is the default deck used in trick games
+        this.gameDeck = gameDeck;
     }
 
     public abstract void dealNewBoard();

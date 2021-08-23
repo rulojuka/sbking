@@ -23,6 +23,7 @@ public final class GameScreenFromGameNameIdentifier {
     gameScreenClassesOfGameNames.put("Cagando no Bequinho", CagandoNoBequinhoScreen.class);
     gameScreenClassesOfGameNames.put("King", KingScreen.class);
     gameScreenClassesOfGameNames.put("Minibridge", MinibridgeScreen.class);
+    gameScreenClassesOfGameNames.put("Mini-Minibridge", MinibridgeScreen.class);
     gameScreenClassesOfGameNames.put("Positive King", PositiveKingScreen.class);
   }
 

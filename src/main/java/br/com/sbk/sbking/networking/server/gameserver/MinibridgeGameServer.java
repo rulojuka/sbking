@@ -2,8 +2,11 @@ package br.com.sbk.sbking.networking.server.gameserver;
 
 import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 
+import java.util.Deque;
+
 import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Direction;
+import br.com.sbk.sbking.core.boarddealer.Complete52CardDeck;
 import br.com.sbk.sbking.core.exceptions.PlayedCardInAnotherPlayersTurnException;
 import br.com.sbk.sbking.core.exceptions.SelectedPositiveOrNegativeInAnotherPlayersTurnException;
 import br.com.sbk.sbking.core.game.MinibridgeGame;
@@ -21,8 +24,7 @@ public class MinibridgeGameServer extends GameServer {
   private MinibridgeGame minibridgeGame;
 
   public MinibridgeGameServer() {
-    this.game = new MinibridgeGame();
-    this.minibridgeGame = (MinibridgeGame) this.game;
+    this.setGameWithCardDeck(new Complete52CardDeck().getDeck());
   }
 
   @Override
@@ -171,6 +173,11 @@ public class MinibridgeGameServer extends GameServer {
 
   private void sendGameModeOrStrainChooserAll() {
     this.sbkingServer.sendGameModeOrStrainChooserToTable(this.getCurrentGameModeOrStrainChooser(), this.table);
+  }
+
+  protected void setGameWithCardDeck(Deque<Card> deck) {
+    this.game = new MinibridgeGame(deck);
+    this.minibridgeGame = (MinibridgeGame) this.game;
   }
 
 }

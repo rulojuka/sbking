@@ -2,13 +2,14 @@ package br.com.sbk.sbking.core.game;
 
 import static br.com.sbk.sbking.core.GameConstants.TOTAL_GAMES;
 
+import java.util.Deque;
 import java.util.HashSet;
 import java.util.Set;
 
+import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.core.boarddealer.BoardDealer;
-import br.com.sbk.sbking.core.boarddealer.Complete52CardDeck;
 import br.com.sbk.sbking.core.boarddealer.FourteenHCPPlusDoubletonRuledBoardDealer;
 import br.com.sbk.sbking.core.rulesets.abstractrulesets.NegativeRuleset;
 import br.com.sbk.sbking.core.rulesets.abstractrulesets.PositiveRuleset;
@@ -27,10 +28,9 @@ public class PositiveKingGame extends TrickGame {
     private int playedHands = 0;
     private BoardDealer boardDealer;
 
-    public PositiveKingGame() {
-        super();
+    public PositiveKingGame(Deque<Card> gameDeck) {
+        super(gameDeck);
         this.gameScoreboard = new KingGameScoreboard();
-        this.gameDeck = new Complete52CardDeck().getDeck();
         this.boardDealer = new FourteenHCPPlusDoubletonRuledBoardDealer();
     }
 
