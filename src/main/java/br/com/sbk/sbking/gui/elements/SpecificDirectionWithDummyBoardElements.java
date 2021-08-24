@@ -12,7 +12,9 @@ import br.com.sbk.sbking.gui.constants.FrameConstants;
 public class SpecificDirectionWithDummyBoardElements {
 
   public SpecificDirectionWithDummyBoardElements(Direction playerDirection, Deal deal, Container container,
-      ActionListener actionListener, Direction dummy, boolean dummyVisible, List<String> spectators) {
+      ActionListener actionListener, boolean dummyVisible, List<String> spectators, String gameName) {
+
+    Direction dummy = deal.getDummy();
 
     for (Direction currentHandDirection : Direction.values()) {
       boolean shouldDrawVisible = this.shouldDrawVisible(playerDirection, currentHandDirection, dummy, dummyVisible,
@@ -30,6 +32,8 @@ public class SpecificDirectionWithDummyBoardElements {
     new LeaveTableElement(container, new Point(150, 50), actionListener);
 
     new SpectatorsElement(container, FrameConstants.spectatorNamesPosition, spectators);
+
+    new GameNameElement(gameName, container, new Point(FrameConstants.halfWidth, 10));
 
     if (!playerDirection.equals(dummy)) {
 
