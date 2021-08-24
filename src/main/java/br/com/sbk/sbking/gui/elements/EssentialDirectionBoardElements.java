@@ -12,7 +12,7 @@ import br.com.sbk.sbking.gui.constants.FrameConstants;
 public class EssentialDirectionBoardElements {
 
     public EssentialDirectionBoardElements(Deal deal, Container container, ActionListener actionListener,
-            List<String> spectators, Direction myDirection) {
+            List<String> spectators, Direction myDirection, String gameName) {
         for (Direction direction : Direction.values()) {
             boolean isVisible = direction.equals(myDirection) || deal.isFinished()
                     || direction.equals(deal.getClaimer());
@@ -25,6 +25,8 @@ public class EssentialDirectionBoardElements {
         new LeaveTableElement(container, new Point(150, 50), actionListener);
 
         new SpectatorsElement(container, FrameConstants.spectatorNamesPosition, spectators);
+
+        new GameNameElement(gameName, container, new Point(FrameConstants.halfWidth, 10));
     }
 
 }

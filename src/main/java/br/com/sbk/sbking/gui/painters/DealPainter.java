@@ -16,12 +16,15 @@ public class DealPainter implements Painter {
     protected ActionListener actionListener;
     protected Deal deal;
     protected List<String> spectators;
+    protected String gameName;
 
-    public DealPainter(ActionListener actionListener, Direction direction, Deal deal, List<String> spectators) {
+    public DealPainter(ActionListener actionListener, Direction direction, Deal deal, List<String> spectators,
+            String gameName) {
         this.actionListener = actionListener;
         this.direction = direction;
         this.deal = deal;
         this.spectators = spectators;
+        this.gameName = gameName;
     }
 
     @Override
@@ -34,7 +37,8 @@ public class DealPainter implements Painter {
         // if (deal.isFinished()) {
         // new ScoreSummaryElement(deal, contentPane);
         // } else {
-        new SpecificDirectionBoardElements(this.direction, deal, contentPane, actionListener, this.spectators);
+        new SpecificDirectionBoardElements(this.direction, deal, contentPane, actionListener, this.spectators,
+                this.gameName);
         // }
 
         contentPane.validate();

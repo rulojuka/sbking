@@ -43,7 +43,8 @@ public class WaitingForChoosingPositiveOrNegativePainter implements Painter {
         }
 
         new EssentialDirectionBoardElements(this.sbKingClient.getDeal(), contentPane,
-                this.sbKingClient.getActionListener(), this.sbKingClient.getSpectatorNames(), myDirection);
+                this.sbKingClient.getActionListener(), this.sbKingClient.getSpectatorNames(), myDirection,
+                this.sbKingClient.getGameName());
 
         contentPane.validate();
         contentPane.repaint();

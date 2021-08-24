@@ -17,7 +17,8 @@ public class PainterFactory {
   }
 
   public Painter getDealPainter(Deal deal, Direction direction, ActionListener actionListener) {
-    return new DealPainter(actionListener, direction, deal, this.sbkingClient.getSpectatorNames());
+    return new DealPainter(actionListener, direction, deal, this.sbkingClient.getSpectatorNames(),
+        this.sbkingClient.getGameName());
   }
 
   public Painter getSpectatorPainter(Deal deal, ActionListener actionListener) {
@@ -25,7 +26,8 @@ public class PainterFactory {
       LOGGER.error("Deal should not be null here.");
       return null;
     } else {
-      return new SpectatorPainter(actionListener, deal, this.sbkingClient.getSpectatorNames());
+      return new SpectatorPainter(actionListener, deal, this.sbkingClient.getSpectatorNames(),
+          this.sbkingClient.getGameName());
     }
   }
 
@@ -43,7 +45,7 @@ public class PainterFactory {
     boolean dummyVisible = this.sbkingClient.getDeal().isDummyOpen();
     Direction dummy = this.sbkingClient.getDeal().getDummy();
     return new DealWithDummyPainter(actionListener, direction, deal, dummy, dummyVisible,
-        this.sbkingClient.getSpectatorNames());
+        this.sbkingClient.getSpectatorNames(), this.sbkingClient.getGameName());
   }
 
 }
