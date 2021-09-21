@@ -11,7 +11,8 @@ public class DealerHasOneMajorOpeningBoardRule implements BoardRule {
     public boolean isValid(Board board) {
         Hand dealerHand = board.getHandOf(board.getDealer());
         HandEvaluations handEvaluations = dealerHand.getHandEvaluations();
-        return hasCorrectHCPRange(handEvaluations) && hasCorrectDistribution(handEvaluations);
+        return hasCorrectDistribution(handEvaluations)
+                && (hasCorrectHCPRange(handEvaluations) || handEvaluations.twentyRulePoints());
     }
 
     private boolean hasCorrectHCPRange(HandEvaluations handEvaluations) {

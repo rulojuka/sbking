@@ -101,11 +101,11 @@ public final class HandEvaluations {
   }
 
   private boolean hasNCardsInLongestSuit(int n) {
-    return this.getNumberOfCardsInLongestSuit() == n;
+    return this.getLongestSuitLength() == n;
   }
 
   private boolean hasNOrMoreCardsInLongestSuit(int n) {
-    return this.getNumberOfCardsInLongestSuit() >= n;
+    return this.getLongestSuitLength() >= n;
   }
 
   public boolean hasTwoOutOfThreeHigherCards(Suit suit) {
@@ -143,8 +143,16 @@ public final class HandEvaluations {
     return numberOfMajorSuitsWithFourCardsAndDifferentThanLongestSuit != 0;
   }
 
-  private int getNumberOfCardsInLongestSuit() {
-    return this.getNumberOfCardsPerSuit().values().stream().reduce(0, Math::max);
+  public boolean twentyRulePoints() {
+    int longestSuitLength = this.getLongestSuitLength();
+    int secondLongestSuitLength = this.getNumberOfCardsPerSuit().entrySet().stream().filter(entry -> {
+      return entry.getKey() != this.getLongestSuit();
+    }).map(Entry::getValue).reduce(Math::max).orElse(0);
+    int hcp = this.getHCP();
+
+    int twentyRule = longestSuitLength + secondLongestSuitLength + hcp;
+
+    return twentyRule >= 20;
   }
 
 }
