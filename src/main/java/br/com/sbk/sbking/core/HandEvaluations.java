@@ -29,7 +29,7 @@ public final class HandEvaluations {
     return this.cards.stream().filter(card -> card.getSuit().equals(suit)).collect(Collectors.toList());
   }
 
-  private Map<Suit, Integer> getNumberOfCardsPerSuit() {
+  public Map<Suit, Integer> getNumberOfCardsPerSuit() {
     Map<Suit, Integer> numberOfCards = new HashMap<Suit, Integer>();
     for (Suit suit : Suit.values()) {
       numberOfCards.put(suit, this.getCardsPerSuit(suit).size());

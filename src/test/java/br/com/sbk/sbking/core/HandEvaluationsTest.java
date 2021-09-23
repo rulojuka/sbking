@@ -336,6 +336,42 @@ public class HandEvaluationsTest {
         .hasFourOrMoreCardsInMajorSuitExcludingLongestSuit());
   }
 
+  @Test
+  public void shouldEvaluateHandBasedOnTwentyRule() {
+    Hand firstHand = this.createMockedHandWithDistribution(this.createSuitDistribution(1, 1, 2, 7));
+    HandEvaluations firstHandEvaluations = new HandEvaluations(firstHand);
+    Hand secondHand = this.createMockedHandWithDistribution(this.createSuitDistribution(0, 3, 2, 17));
+    HandEvaluations secondHandEvaluations = new HandEvaluations(secondHand);
+
+    boolean firstHandHasTwentyRulePoints = firstHandEvaluations.twentyRulePoints();
+    boolean secondHandHasTwentyRulePoints = secondHandEvaluations.twentyRulePoints();
+
+    assertEquals(false, firstHandHasTwentyRulePoints);
+    assertEquals(true, secondHandHasTwentyRulePoints);
+  }
+
+  @Test
+  public void shouldGetNumberOfCardsPerSuit() {
+    int expectedNSpadesCards = 0;
+    int expectedNHeartsCards = 3;
+    int expectedNDiamondsCards = 2;
+    int expectedNClubsCards = 8;
+    Hand hand = this.createMockedHandWithDistribution(this.createSuitDistribution(expectedNSpadesCards,
+        expectedNHeartsCards, expectedNDiamondsCards, expectedNClubsCards));
+    HandEvaluations handEvaluations = new HandEvaluations(hand);
+
+    Map<Suit, Integer> numberOfCardsPerSuit = handEvaluations.getNumberOfCardsPerSuit();
+    int actualNSpadesCards = numberOfCardsPerSuit.get(Suit.SPADES);
+    int actualNHeartsCards = numberOfCardsPerSuit.get(Suit.HEARTS);
+    int actualNDiamondsCards = numberOfCardsPerSuit.get(Suit.DIAMONDS);
+    int actualNClubsCards = numberOfCardsPerSuit.get(Suit.CLUBS);
+
+    assertEquals(expectedNSpadesCards, actualNSpadesCards);
+    assertEquals(expectedNHeartsCards, actualNHeartsCards);
+    assertEquals(expectedNDiamondsCards, actualNDiamondsCards);
+    assertEquals(expectedNClubsCards, actualNClubsCards);
+  }
+
   private Hand createMockedHandWithDistribution(Map<Suit, Integer> suitDistribution) {
     Hand hand = mock(Hand.class);
     List<Card> mockedCards = new ArrayList<Card>();
