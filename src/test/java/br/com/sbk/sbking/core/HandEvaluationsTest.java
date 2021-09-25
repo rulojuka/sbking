@@ -47,6 +47,7 @@ public class HandEvaluationsTest {
 
     when(aceOfSpades.getRank()).thenReturn(Rank.ACE);
     when(aceOfSpades.getSuit()).thenReturn(Suit.SPADES);
+    when(aceOfSpades.getPoints()).thenReturn(4);
 
     when(kingOfSpades.getRank()).thenReturn(Rank.KING);
     when(kingOfSpades.getSuit()).thenReturn(Suit.SPADES);
@@ -65,12 +66,15 @@ public class HandEvaluationsTest {
 
     when(kingOfHearts.getRank()).thenReturn(Rank.KING);
     when(kingOfHearts.getSuit()).thenReturn(Suit.HEARTS);
+    when(kingOfHearts.getPoints()).thenReturn(3);
 
     when(threeOfClubs.getRank()).thenReturn(Rank.THREE);
     when(threeOfClubs.getSuit()).thenReturn(Suit.CLUBS);
+    when(threeOfClubs.getPoints()).thenReturn(0);
 
     when(sevenOfDiamonds.getRank()).thenReturn(Rank.SEVEN);
     when(sevenOfDiamonds.getSuit()).thenReturn(Suit.DIAMONDS);
+    when(sevenOfDiamonds.getPoints()).thenReturn(0);
 
     when(emptyHand.getCards()).thenReturn(new ArrayList<Card>());
     emptyHandEvaluations = new HandEvaluations(emptyHand);
@@ -340,7 +344,7 @@ public class HandEvaluationsTest {
   public void shouldEvaluateHandBasedOnTwentyRule() {
     Hand firstHand = this.createMockedHandWithDistribution(this.createSuitDistribution(1, 1, 2, 7));
     HandEvaluations firstHandEvaluations = new HandEvaluations(firstHand);
-    Hand secondHand = this.createMockedHandWithDistribution(this.createSuitDistribution(0, 3, 2, 17));
+    Hand secondHand = this.createMockedHandWithDistribution(this.createSuitDistribution(0, 3, 2, 8));
     HandEvaluations secondHandEvaluations = new HandEvaluations(secondHand);
 
     boolean firstHandHasTwentyRulePoints = firstHandEvaluations.twentyRulePoints();
