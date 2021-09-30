@@ -3,7 +3,9 @@ package br.com.sbk.sbking.core.game;
 import java.util.Map;
 
 import br.com.sbk.sbking.core.Board;
+import br.com.sbk.sbking.core.BridgeContract;
 import br.com.sbk.sbking.core.HandEvaluations;
+import br.com.sbk.sbking.core.Strain;
 import br.com.sbk.sbking.core.Suit;
 import br.com.sbk.sbking.core.boardrules.bridgeopenings.DealerHasFourWeakOpeningBoardRule;
 import br.com.sbk.sbking.core.boardrules.bridgeopenings.DealerHasOneMajorOpeningBoardRule;
@@ -15,12 +17,6 @@ import br.com.sbk.sbking.core.boardrules.bridgeopenings.DealerHasTwoNoTrumpOpeni
 import br.com.sbk.sbking.core.boardrules.bridgeopenings.DealerHasTwoWeakOpeningBoardRule;
 
 public class OpeningTrainerGame {
-
-    private final String twoClubs = "2c";
-    private final String twoNoTrump = "2nt";
-    private final String oneNoTrump = "1nt";
-    private final String one = "1";
-    private final String pass = "PASS";
 
     private Board board;
     private HandEvaluations handEvaluations;
@@ -51,52 +47,58 @@ public class OpeningTrainerGame {
         this.dealerHas2W = new DealerHasTwoWeakOpeningBoardRule();
     }
 
-    public String getOpening() {
+    public BridgeContract getOpening() {
         if (this.dealerHas2C.isValid(this.board)) {
-            return twoClubs;
+            return new BridgeContract(2, Strain.CLUBS, false, false, false, board.getDealer());
         }
         if (this.dealerHas2NT.isValid(this.board)) {
-            return twoNoTrump;
+            return new BridgeContract(2, Strain.NOTRUMPS, false, false, false, board.getDealer());
         }
         if (this.dealerHas1NT.isValid(this.board)) {
-            return oneNoTrump;
+            return new BridgeContract(1, Strain.NOTRUMPS, false, false, false, board.getDealer());
         }
         if (this.dealerHas1M.isValid(this.board)) {
-            return "1".concat(this.handEvaluations.getLongestSuit().getSymbol());
+            Suit longestSuit = this.handEvaluations.getLongestSuit();
+            return new BridgeContract(1, Strain.fromSuit(longestSuit), false, false, false, board.getDealer());
         }
         if (this.dealerHas1m.isValid(this.board)) {
             return this.oneMinorCriteria();
         }
         if (this.dealerHas4W.isValid(this.board)) {
-            return "4".concat(this.handEvaluations.getLongestSuit().getSymbol());
+            Suit longestSuit = this.handEvaluations.getLongestSuit();
+            return new BridgeContract(4, Strain.fromSuit(longestSuit), false, false, false, board.getDealer());
         }
         if (this.dealerHas3W.isValid(this.board)) {
-            return "3".concat(this.handEvaluations.getLongestSuit().getSymbol());
+            Suit longestSuit = this.handEvaluations.getLongestSuit();
+            return new BridgeContract(3, Strain.fromSuit(longestSuit), false, false, false, board.getDealer());
         }
         if (this.dealerHas2W.isValid(this.board)) {
-            return "2".concat(this.handEvaluations.getLongestSuit().getSymbol());
+            Suit longestSuit = this.handEvaluations.getLongestSuit();
+            return new BridgeContract(2, Strain.fromSuit(longestSuit), false, false, false, board.getDealer());
         }
-        return pass;
+        return new BridgeContract(1, null, false, false, true, board.getDealer());
     }
 
-    private String oneMinorCriteria() {
+    private BridgeContract oneMinorCriteria() {
         Map<Suit, Integer> numberOfCardsPerSuit = handEvaluations.getNumberOfCardsPerSuit();
+        Integer numberOfDiamondCards = numberOfCardsPerSuit.get(Suit.DIAMONDS);
+        Integer numberOfClubCards = numberOfCardsPerSuit.get(Suit.CLUBS);
+        BridgeContract oneClubs = new BridgeContract(1, Strain.CLUBS, false, false, false, board.getDealer());
+        BridgeContract oneDiamonds = new BridgeContract(1, Strain.DIAMONDS, false, false, false, board.getDealer());
 
-        if (numberOfCardsPerSuit.get(Suit.DIAMONDS) == numberOfCardsPerSuit.get(Suit.CLUBS)) {
-            if (numberOfCardsPerSuit.get(Suit.DIAMONDS) == 3) {
-                return one.concat(Suit.CLUBS.getSymbol());
-            } else if (numberOfCardsPerSuit.get(Suit.DIAMONDS) == 4) {
-                if ((numberOfCardsPerSuit.get(Suit.DIAMONDS) == 1 && numberOfCardsPerSuit.get(Suit.CLUBS) == 4)
-                        || (numberOfCardsPerSuit.get(Suit.DIAMONDS) == 4
-                                && numberOfCardsPerSuit.get(Suit.CLUBS) == 1)) {
-                    return one.concat(Suit.DIAMONDS.getSymbol());
-                }
-                return one.concat(Suit.CLUBS.getSymbol());
-            } else if (numberOfCardsPerSuit.get(Suit.DIAMONDS) == 5 || numberOfCardsPerSuit.get(Suit.DIAMONDS) == 6) {
-                return one.concat(Suit.DIAMONDS.getSymbol());
-            }
+        if (numberOfDiamondCards > numberOfClubCards) {
+            return oneDiamonds;
         }
-        return "1".concat(handEvaluations.getLongestSuit().getSymbol());
+
+        if (numberOfDiamondCards < numberOfClubCards) {
+            return oneClubs;
+        }
+
+        if (handEvaluations.isBalanced()) {
+            return oneClubs;
+        } else {
+            return oneDiamonds;
+        }
     }
 
 }

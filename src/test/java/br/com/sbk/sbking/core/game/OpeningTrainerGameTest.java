@@ -7,10 +7,12 @@ import java.util.HashMap;
 import org.junit.Test;
 
 import br.com.sbk.sbking.core.Board;
+import br.com.sbk.sbking.core.BridgeContract;
 import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.core.Hand;
 import br.com.sbk.sbking.core.Rank;
+import br.com.sbk.sbking.core.Strain;
 import br.com.sbk.sbking.core.Suit;
 
 public class OpeningTrainerGameTest {
@@ -18,16 +20,16 @@ public class OpeningTrainerGameTest {
     @Test
     public void getOpeningShouldReturnCorrectOpening() {
 
-        Board boardWithTwoClubs = this.boardWithTwoClubs();
+        Board boardWithTwoClubs = this.boardWithTwoClubsOpening();
 
         OpeningTrainerGame openingTrainerTwoClubs = new OpeningTrainerGame(boardWithTwoClubs);
-        String twoClubs = openingTrainerTwoClubs.getOpening();
+        BridgeContract twoClubs = new BridgeContract(2, Strain.CLUBS, false, false, false,
+                boardWithTwoClubs.getDealer());
 
-        assertEquals("2c", twoClubs);
+        assertEquals(twoClubs, openingTrainerTwoClubs.getOpening());
     }
 
-    private Board boardWithTwoClubs() {
-
+    private Board boardWithTwoClubsOpening() {
         Hand hand = new Hand();
 
         hand.addCard(new Card(Suit.SPADES, Rank.ACE));
