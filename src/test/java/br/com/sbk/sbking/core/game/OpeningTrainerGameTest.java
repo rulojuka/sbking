@@ -1,18 +1,17 @@
 package br.com.sbk.sbking.core.game;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.HashMap;
 
 import org.junit.Test;
 
 import br.com.sbk.sbking.core.Board;
 import br.com.sbk.sbking.core.Card;
+import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.core.Hand;
+import br.com.sbk.sbking.core.Rank;
+import br.com.sbk.sbking.core.Suit;
 
 public class OpeningTrainerGameTest {
 
@@ -28,11 +27,31 @@ public class OpeningTrainerGameTest {
     }
 
     private Board boardWithTwoClubs() {
-        List<Card> cards = new Arrays.asList();
-        Hand hand = mock(Hand.class);
-        when(hand.getCards()).thenReturn(cards);
-        Board board = mock(Board.class);
-        when(board.getHandOf(any())).thenReturn(hand);
+
+        Hand hand = new Hand();
+
+        hand.addCard(new Card(Suit.SPADES, Rank.ACE));
+        hand.addCard(new Card(Suit.SPADES, Rank.KING));
+        hand.addCard(new Card(Suit.SPADES, Rank.QUEEN));
+        hand.addCard(new Card(Suit.SPADES, Rank.JACK));
+
+        hand.addCard(new Card(Suit.HEARTS, Rank.ACE));
+        hand.addCard(new Card(Suit.HEARTS, Rank.KING));
+        hand.addCard(new Card(Suit.HEARTS, Rank.QUEEN));
+        hand.addCard(new Card(Suit.HEARTS, Rank.JACK));
+
+        hand.addCard(new Card(Suit.DIAMONDS, Rank.ACE));
+        hand.addCard(new Card(Suit.DIAMONDS, Rank.KING));
+        hand.addCard(new Card(Suit.DIAMONDS, Rank.QUEEN));
+        hand.addCard(new Card(Suit.DIAMONDS, Rank.JACK));
+        hand.addCard(new Card(Suit.DIAMONDS, Rank.TEN));
+
+        HashMap<Direction, Hand> hands = new HashMap<>();
+        hands.put(Direction.NORTH, hand);
+        hands.put(Direction.EAST, new Hand());
+        hands.put(Direction.SOUTH, new Hand());
+        hands.put(Direction.WEST, new Hand());
+        Board board = new Board(hands, Direction.NORTH);
         return board;
     }
 

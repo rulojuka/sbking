@@ -54,19 +54,26 @@ public class OpeningTrainerGame {
     public String getOpening() {
         if (this.dealerHas2C.isValid(this.board)) {
             return twoClubs;
-        } else if (this.dealerHas2NT.isValid(this.board)) {
+        }
+        if (this.dealerHas2NT.isValid(this.board)) {
             return twoNoTrump;
-        } else if (this.dealerHas1NT.isValid(this.board)) {
+        }
+        if (this.dealerHas1NT.isValid(this.board)) {
             return oneNoTrump;
-        } else if (this.dealerHas1M.isValid(this.board)) {
+        }
+        if (this.dealerHas1M.isValid(this.board)) {
             return "1".concat(this.handEvaluations.getLongestSuit().getSymbol());
-        } else if (this.dealerHas1m.isValid(this.board)) {
+        }
+        if (this.dealerHas1m.isValid(this.board)) {
             return this.oneMinorCriteria();
-        } else if (this.dealerHas4W.isValid(this.board)) {
+        }
+        if (this.dealerHas4W.isValid(this.board)) {
             return "4".concat(this.handEvaluations.getLongestSuit().getSymbol());
-        } else if (this.dealerHas3W.isValid(this.board)) {
+        }
+        if (this.dealerHas3W.isValid(this.board)) {
             return "3".concat(this.handEvaluations.getLongestSuit().getSymbol());
-        } else if (this.dealerHas2W.isValid(this.board)) {
+        }
+        if (this.dealerHas2W.isValid(this.board)) {
             return "2".concat(this.handEvaluations.getLongestSuit().getSymbol());
         }
         return pass;
