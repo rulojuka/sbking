@@ -5,6 +5,10 @@
 
 SBKing is a King card game software aimed to provide a rich and intuitive interface and an online experience to King players. It is still in early development and is licensed as GPL.
 
+## Java version
+
+SBKing uses some libraries that does not go very well with recent (16+) Java versions. The intended version for development is Java 11.
+
 ## Compiling
 
 SBKing uses Makefile and [Maven](https://maven.apache.org/) to build. The following line should be enough:
