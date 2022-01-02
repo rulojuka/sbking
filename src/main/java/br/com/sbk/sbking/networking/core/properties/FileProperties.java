@@ -17,10 +17,12 @@ public class FileProperties {
     private static final String DEV_FILE_NAME = "config.dev.xml";
     private static final String PRODUCTION_FILE_NAME = "config.xml";
 
-    private XMLConfiguration configuration;
+    private String host = null;
+    private Integer port = null;
 
     public FileProperties() {
         Configurations configurations = new Configurations();
+        XMLConfiguration configuration = null;
 
         String completeDevFileName = BASE_PATH + DEV_FILE_NAME;
         String completeAlternateDevFileName = ALTERNATE_BASE_PATH + DEV_FILE_NAME;
@@ -40,35 +42,37 @@ public class FileProperties {
 
         try {
             if (devFileOk) {
-                this.configuration = configurations.xml(completeDevFileName);
+                configuration = configurations.xml(completeDevFileName);
                 LOGGER.info("Using properties from development file.");
             } else if (devAlternateFileOk) {
-                this.configuration = configurations.xml(completeAlternateDevFileName);
+                configuration = configurations.xml(completeAlternateDevFileName);
                 LOGGER.info("Using properties from alternate development file.");
             } else if (productionFileOk) {
-                this.configuration = configurations.xml(completeProductionFileName);
+                configuration = configurations.xml(completeProductionFileName);
                 LOGGER.info("Using properties from production file.");
             } else if (productionAlternateFileOk) {
-                this.configuration = configurations.xml(completeAlternateProductionFileName);
+                configuration = configurations.xml(completeAlternateProductionFileName);
                 LOGGER.info("Using properties from alternate production file.");
             }
         } catch (ConfigurationException e) {
             LOGGER.fatal(e);
             System.exit(ErrorCodes.COULD_NOT_READ_PROPERTIES_FILE);
         }
+
+        if (configuration == null) {
+            this.host = null;
+            this.port = null;
+        } else {
+            this.host = configuration.getString(PropertiesConstants.HOST);
+            this.port = configuration.getInt(PropertiesConstants.PORT);
+        }
     }
 
     public String getHost() {
-        if (this.configuration == null) {
-            return null;
-        }
-        return this.configuration.getString(PropertiesConstants.HOST);
+        return this.host;
     }
 
     public Integer getPort() {
-        if (this.configuration == null) {
-            return null;
-        }
-        return this.configuration.getInt(PropertiesConstants.PORT);
+        return this.port;
     }
 }
