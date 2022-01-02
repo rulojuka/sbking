@@ -12,7 +12,8 @@ import br.com.sbk.sbking.core.constants.ErrorCodes;
 
 public class FileProperties {
 
-    private static final String BASE_PATH = "/";
+    private static final String BASE_PATH = "";
+    private static final String ALTERNATE_BASE_PATH = "src/main/resources/";
     private static final String DEV_FILE_NAME = "config.dev.xml";
     private static final String PRODUCTION_FILE_NAME = "config.xml";
 
@@ -20,26 +21,40 @@ public class FileProperties {
 
     public FileProperties() {
         Configurations configurations = new Configurations();
+
         String completeDevFileName = BASE_PATH + DEV_FILE_NAME;
+        String completeAlternateDevFileName = ALTERNATE_BASE_PATH + DEV_FILE_NAME;
+
         String completeProductionFileName = BASE_PATH + PRODUCTION_FILE_NAME;
+        String completeAlternateProductionFileName = ALTERNATE_BASE_PATH + PRODUCTION_FILE_NAME;
+
         File devFile = new File(completeDevFileName);
+        File devAlternateFile = new File(completeAlternateDevFileName);
+        boolean devFileOk = devFile.exists() && !devFile.isDirectory();
+        boolean devAlternateFileOk = devAlternateFile.exists() && !devAlternateFile.isDirectory();
+
         File productionFile = new File(completeProductionFileName);
-        if (devFile.exists() && !devFile.isDirectory()) {
-            try {
+        File productionAlternateFile = new File(completeAlternateProductionFileName);
+        boolean productionFileOk = devFile.exists() && !productionFile.isDirectory();
+        boolean productionAlternateFileOk = productionAlternateFile.exists() && !productionAlternateFile.isDirectory();
+
+        try {
+            if (devFileOk) {
                 this.configuration = configurations.xml(completeDevFileName);
                 LOGGER.info("Using properties from development file.");
-            } catch (ConfigurationException e) {
-                LOGGER.fatal(e);
-                System.exit(ErrorCodes.COULD_NOT_READ_PROPERTIES_FILE);
-            }
-        } else if (productionFile.exists() && !productionFile.isDirectory()) {
-            try {
+            } else if (devAlternateFileOk) {
+                this.configuration = configurations.xml(completeAlternateDevFileName);
+                LOGGER.info("Using properties from alternate development file.");
+            } else if (productionFileOk) {
                 this.configuration = configurations.xml(completeProductionFileName);
                 LOGGER.info("Using properties from production file.");
-            } catch (ConfigurationException e) {
-                LOGGER.fatal(e);
-                System.exit(ErrorCodes.COULD_NOT_READ_PROPERTIES_FILE);
+            } else if (productionAlternateFileOk) {
+                this.configuration = configurations.xml(completeAlternateProductionFileName);
+                LOGGER.info("Using properties from alternate production file.");
             }
+        } catch (ConfigurationException e) {
+            LOGGER.fatal(e);
+            System.exit(ErrorCodes.COULD_NOT_READ_PROPERTIES_FILE);
         }
     }
 
