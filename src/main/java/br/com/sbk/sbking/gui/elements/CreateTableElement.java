@@ -44,6 +44,7 @@ public class CreateTableElement {
     texts.add(new TextWithColorAndFont("King"));
     texts.add(new TextWithColorAndFont("Minibridge"));
     texts.add(new TextWithColorAndFont("Mini-Minibridge"));
+    texts.add(new TextWithColorAndFont("TenCards-Minibridge"));
     texts.add(new TextWithColorAndFont("Positive King"));
 
     int initialX = halfWidth;
