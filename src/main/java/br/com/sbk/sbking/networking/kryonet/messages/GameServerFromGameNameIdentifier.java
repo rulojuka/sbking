@@ -9,6 +9,7 @@ import br.com.sbk.sbking.networking.server.gameserver.KingGameServer;
 import br.com.sbk.sbking.networking.server.gameserver.MiniMinibridgeGameServer;
 import br.com.sbk.sbking.networking.server.gameserver.MinibridgeGameServer;
 import br.com.sbk.sbking.networking.server.gameserver.PositiveKingGameServer;
+import br.com.sbk.sbking.networking.server.gameserver.TenCardsMinibridgeGameServer;
 
 public final class GameServerFromGameNameIdentifier {
 
@@ -25,6 +26,7 @@ public final class GameServerFromGameNameIdentifier {
     gameServerClassesOfGameNames.put("King", KingGameServer.class);
     gameServerClassesOfGameNames.put("Minibridge", MinibridgeGameServer.class);
     gameServerClassesOfGameNames.put("Mini-Minibridge", MiniMinibridgeGameServer.class);
+    gameServerClassesOfGameNames.put("TenCards-Minibridge", TenCardsMinibridgeGameServer.class);
     gameServerClassesOfGameNames.put("Positive King", PositiveKingGameServer.class);
   }
 
