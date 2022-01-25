@@ -102,14 +102,14 @@ public class ChooseGameModeOrStrainElement {
             radioButtons.add((JRadioButton) element);
         }
 
-        JButton selectGameModeOrStrandButton = new JButton();
+        JButton selectGameModeOrStrainButton = new JButton();
         Point selectButtonPosition = new Point(buttonsPosition);
         selectButtonPosition.translate(elementWidth + xSpacing, 0);
-        selectGameModeOrStrandButton.addActionListener(new GameModeOrStrainSelectActionListener());
-        selectGameModeOrStrandButton.setLocation(selectButtonPosition);
-        selectGameModeOrStrandButton.setSize(BUTTON_WIDTH, elementHeight * numberOfElements);
-        selectGameModeOrStrandButton.setText("Select");
-        container.add(selectGameModeOrStrandButton);
+        selectGameModeOrStrainButton.addActionListener(new GameModeOrStrainSelectActionListener());
+        selectGameModeOrStrainButton.setLocation(selectButtonPosition);
+        selectGameModeOrStrainButton.setSize(BUTTON_WIDTH, elementHeight * numberOfElements);
+        selectGameModeOrStrainButton.setText("Select");
+        container.add(selectGameModeOrStrainButton);
     }
 
     class GameModeOrStrainSelectActionListener implements java.awt.event.ActionListener {
