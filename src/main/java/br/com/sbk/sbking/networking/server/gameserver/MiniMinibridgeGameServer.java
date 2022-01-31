@@ -15,7 +15,7 @@ import br.com.sbk.sbking.core.rulesets.concrete.PositiveWithTrumpsRuleset;
 import br.com.sbk.sbking.networking.server.notifications.CardPlayNotification;
 import br.com.sbk.sbking.networking.server.notifications.GameModeOrStrainNotification;
 
-public class TenCardsMinibridgeGameServer extends MinibridgeGameServer {
+public class MiniMinibridgeGameServer extends MinibridgeGameServer {
 
   private GameModeOrStrainNotification gameModeOrStrainNotification;
   private Ruleset currentGameModeOrStrain;
@@ -23,7 +23,7 @@ public class TenCardsMinibridgeGameServer extends MinibridgeGameServer {
 
   private MinibridgeGame minibridgeGame;
 
-  public TenCardsMinibridgeGameServer() {
+  public MiniMinibridgeGameServer() {
     this.setGameWithCardDeck(new Partial40CardDeck().getDeck());
   }
 
