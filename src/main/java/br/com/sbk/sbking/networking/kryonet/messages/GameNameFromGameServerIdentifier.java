@@ -7,7 +7,6 @@ import java.util.Map;
 import br.com.sbk.sbking.networking.server.gameserver.CagandoNoBequinhoGameServer;
 import br.com.sbk.sbking.networking.server.gameserver.GameServer;
 import br.com.sbk.sbking.networking.server.gameserver.KingGameServer;
-import br.com.sbk.sbking.networking.server.gameserver.MiniMinibridgeGameServer;
 import br.com.sbk.sbking.networking.server.gameserver.MinibridgeGameServer;
 import br.com.sbk.sbking.networking.server.gameserver.PositiveKingGameServer;
 import br.com.sbk.sbking.networking.server.gameserver.TenCardsMinibridgeGameServer;
@@ -26,7 +25,6 @@ public final class GameNameFromGameServerIdentifier {
     gameServerClassesOfGameNames.put(CagandoNoBequinhoGameServer.class, "Cagando no Bequinho");
     gameServerClassesOfGameNames.put(KingGameServer.class, "King");
     gameServerClassesOfGameNames.put(MinibridgeGameServer.class, "Minibridge");
-    gameServerClassesOfGameNames.put(MiniMinibridgeGameServer.class, "Mini-Minibridge");
     gameServerClassesOfGameNames.put(TenCardsMinibridgeGameServer.class, "TenCards-Minibridge");
     gameServerClassesOfGameNames.put(PositiveKingGameServer.class, "Positive King");
   }
