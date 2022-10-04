@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -81,11 +82,36 @@ public class Hand {
     @Override
     public String toString() {
         StringBuilder response = new StringBuilder();
-        response.append("|");
-        for (Card card : cards) {
-            response.append(card.toString());
-            response.append("|");
+        List<Suit> suitOrder = new ArrayList<Suit>();
+        suitOrder.add(Suit.SPADES);
+        suitOrder.add(Suit.HEARTS);
+        suitOrder.add(Suit.CLUBS);
+        suitOrder.add(Suit.DIAMONDS);
+        Iterator<Suit> suitIterator = suitOrder.iterator();
+        Suit currentSuit = suitIterator.next();
+
+        while(!this.hasSuit(currentSuit)){
+            response.append("- ");
+            currentSuit = suitIterator.next();
         }
+
+        for (Card card : cards) {
+            if(!card.getSuit().equals(currentSuit)){
+                response.append(" ");
+                currentSuit = suitIterator.next();
+                while(!this.hasSuit(currentSuit)){
+                    response.append("- ");
+                    currentSuit = suitIterator.next();
+                }
+            }
+            response.append(card.getRank().getSymbol());
+        }
+        response.append(" ");
+        while(suitIterator.hasNext()){
+            currentSuit = suitIterator.next();
+            response.append("- ");
+        }
+
         return response.toString();
     }
 

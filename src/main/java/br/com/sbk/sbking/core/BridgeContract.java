@@ -8,15 +8,25 @@ public class BridgeContract {
   private final Strain strain;
   private final boolean doubled;
   private final boolean redoubled;
+  private final boolean pass;
   private static Map<Strain, Integer> gameLevel = Map.ofEntries(entry(Strain.CLUBS, 5), entry(Strain.DIAMONDS, 5),
       entry(Strain.HEARTS, 4), entry(Strain.SPADES, 4), entry(Strain.NOTRUMPS, 3));
 
   public BridgeContract(int level, Strain strain, boolean doubled, boolean redoubled) {
-    this.validateArguments(level, strain, doubled, redoubled);
-    this.strain = strain;
-    this.level = level;
-    this.doubled = doubled;
-    this.redoubled = redoubled;
+    if(level==0){
+      this.pass = true;
+      this.strain = null;
+      this.level = 0;
+      this.doubled = false;
+      this.redoubled = false;
+    } else {
+      this.validateArguments(level, strain, doubled, redoubled);
+      this.pass=false;
+      this.strain = strain;
+      this.level = level;
+      this.doubled = doubled;
+      this.redoubled = redoubled;
+    }
   }
 
   private void validateArguments(int level, Strain strain, boolean doubled, boolean redoubled) {
@@ -67,5 +77,53 @@ public class BridgeContract {
   public boolean isGrandSlam() {
     return this.level == 7;
   }
+
+  public boolean isPass() {
+    return this.pass == true;
+  }
+
+  @Override
+  public String toString() {
+    if(this.isPass()){
+      return "PASS";
+    }
+    StringBuilder response = new StringBuilder();
+    response.append(this.getLevel());
+    response.append(this.getStrain().getSymbol());
+    if(this.getDoubled()){
+      response.append("X");
+    }
+    if(this.getRedoubled()){
+      response.append("XX");
+    }
+    return response.toString();
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) {
+        return true;
+    }
+    if (obj == null) {
+        return false;
+    }
+    if (this.getClass() != obj.getClass()) {
+        return false;
+    }
+    BridgeContract other = (BridgeContract) obj;
+    if (this.isPass()==true && other.isPass()==true){
+      return true;
+    }
+
+    if (this.getLevel() == other.getLevel() &&
+        this.getStrain().equals(other.getStrain()) &&
+        this.getDoubled() == other.getDoubled() &&
+        this.getRedoubled() == other.getRedoubled() &&
+        this.isPass() == other.isPass()
+    ) {
+        return true;
+    }
+    return false;
+}
 
 }

@@ -26,4 +26,29 @@ public enum Strain {
         return positiveRuleset;
     }
 
+    public String getSymbol() {
+        if(NOTRUMPS.equals(this)){
+            return "NT";
+        } else {
+            PositiveWithTrumpsRuleset ruleset = (PositiveWithTrumpsRuleset) this.getPositiveRuleset();
+            char unicodeSymbol = ruleset.getTrumpSuit().getUnicodeSymbol();
+            return Character.toString(unicodeSymbol);
+        }
+    }
+
+    public static Strain getFromSuit(Suit suit){
+        switch(suit){
+            case CLUBS:
+                return Strain.CLUBS;
+            case DIAMONDS:
+                return Strain.DIAMONDS;
+            case HEARTS:
+                return Strain.HEARTS;
+            case SPADES:
+                return Strain.SPADES;
+            default:
+                return Strain.NOTRUMPS;
+        }
+    }
+
 }
