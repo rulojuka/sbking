@@ -54,6 +54,9 @@ public abstract class Ruleset
 
     @Override
     public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
         Class<? extends Ruleset> myClass = this.getClass();
         return myClass.equals(obj.getClass());
     }
