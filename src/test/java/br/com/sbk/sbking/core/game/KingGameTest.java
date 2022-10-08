@@ -14,6 +14,7 @@ public class KingGameTest {
 
   @Test
   public void getLeaderShouldReturnTheOppositeDirectionFromDealer() {
+    @SuppressWarnings("unchecked")
     Deque<Card> deck = mock(Deque.class);
     KingGame kingGame = new KingGame(deck);
     Direction dealer = kingGame.getDealer();

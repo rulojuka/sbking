@@ -14,6 +14,7 @@ public class CagandoNoBequinhoGameTest {
 
   @Test
   public void getLeaderShouldReturnTheDealer() {
+    @SuppressWarnings("unchecked")
     Deque<Card> deck = mock(Deque.class);
     CagandoNoBequinhoGame cagandoNoBequinhoGame = new CagandoNoBequinhoGame(deck);
     Direction dealer = cagandoNoBequinhoGame.getDealer();

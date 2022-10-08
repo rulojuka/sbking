@@ -92,6 +92,7 @@ public class DealTest {
     @Test
     public void shouldConstructADealWithASortedBoard() {
         when(board.getDealer()).thenReturn(Direction.NORTH);
+        @SuppressWarnings("unchecked")
         Comparator<Card> comparator = mock(Comparator.class);
         when(ruleset.getComparator()).thenReturn(comparator);
 

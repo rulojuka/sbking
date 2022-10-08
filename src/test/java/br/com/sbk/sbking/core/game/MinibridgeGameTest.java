@@ -14,6 +14,7 @@ public class MinibridgeGameTest {
 
     @Test
     public void getLeaderShouldReturnTheNextDirectionFromDealer() {
+        @SuppressWarnings("unchecked")
         Deque<Card> deck = mock(Deque.class);
         MinibridgeGame minibridgeGame = new MinibridgeGame(deck);
         Direction dealer = minibridgeGame.getDealer();

@@ -50,6 +50,7 @@ public class SBKingClientMessageConsumer implements Runnable {
     }
   }
 
+  @SuppressWarnings("unchecked")
   private void consume(SBKingMessage message) {
     LOGGER.trace("Entered --onMessage--");
     Object content = message.getContent();
