@@ -1,12 +1,10 @@
 package br.com.sbk.sbking.core;
 
-import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Random;
 
 public class Hand {
 
@@ -33,20 +31,9 @@ public class Hand {
     }
 
     public Card removeOneRandomCard() {
-        int numberOfCards = cards.size();
-        int lastCardIndex = numberOfCards - 1;
-        Card removedCard = null;
-
-        Random random = new SecureRandom();
-
-        int removedCardIndex = random.nextInt(numberOfCards);
-        if (numberOfCards > 0) {
-            Card lastCard = this.cards.get(lastCardIndex);
-            removedCard = this.cards.get(removedCardIndex);
-            cards.set(removedCardIndex, lastCard);
-            cards.remove(lastCardIndex);
-        }
-        return removedCard;
+        Card randomCardFromHand = new RandomUtils().pickOneRandomCard(this);
+        this.removeCard(randomCardFromHand);
+        return randomCardFromHand;
     }
 
     public Card get(int position) {

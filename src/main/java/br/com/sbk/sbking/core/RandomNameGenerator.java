@@ -6,14 +6,13 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
-import java.security.SecureRandom;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import com.google.gson.Gson;
-
 import org.apache.commons.lang3.StringUtils;
+
+import com.google.gson.Gson;
 
 public final class RandomNameGenerator {
 
@@ -22,7 +21,7 @@ public final class RandomNameGenerator {
   private static final String ADJECTIVES_FILE_NAME = "adjetivos.json";
   private static List<String> animals;
   private static List<String> adjectives;
-  private static SecureRandom rand;
+  private static RandomUtils randomUtils;
 
   private RandomNameGenerator() {
   }
@@ -34,7 +33,7 @@ public final class RandomNameGenerator {
     URL completeAdjectivesURL = RandomNameGenerator.class.getResource(completeAdjectivesFileName);
     Gson gson = new Gson();
     Reader reader;
-    rand = new SecureRandom();
+    randomUtils = new RandomUtils();
 
     try {
       reader = new BufferedReader(new InputStreamReader(completeAnimalsURL.openStream()));
@@ -53,7 +52,7 @@ public final class RandomNameGenerator {
   }
 
   public static String getRandomName() {
-    return animals.get(rand.nextInt(animals.size())) + " " + adjectives.get(rand.nextInt(adjectives.size()));
+    return animals.get(randomUtils.nextInt(animals.size())) + " " + adjectives.get(randomUtils.nextInt(adjectives.size()));
   }
 
   private static boolean smallEnough(String name) {

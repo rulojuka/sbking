@@ -1,7 +1,6 @@
 package br.com.sbk.sbking.core;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Deque;
 import java.util.Iterator;
 import java.util.List;
@@ -14,7 +13,7 @@ public class ShuffledDeck {
 
     public ShuffledDeck(Deque<Card> deck) {
         this.deck = new ArrayList<Card>(deck);
-        Collections.shuffle(this.deck);
+        new RandomUtils().shuffle(this.deck);
         this.iterator = this.deck.iterator();
     }
 
