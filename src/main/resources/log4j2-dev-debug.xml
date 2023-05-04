@@ -5,10 +5,10 @@
   </Properties>
   <Appenders>
     <Console name="LogToConsole" target="SYSTEM_OUT">
-      <PatternLayout pattern="%d{ABSOLUTE}|%-5p|%-15t|%-20C{1}:%3L| %m%n" />
+      <PatternLayout pattern="%d{DEFAULT}|%-5p|%-15t|%-20C{1}:%3L| %m%n" />
     </Console>
     <File name="allErrors" fileName="${filename}">
-      <PatternLayout pattern="%d{ABSOLUTE}|%-5p|%-15t|%-20C{1}:%3L| %m%n" />
+      <PatternLayout pattern="%d{DEFAULT}|%-5p|%-15t|%-20C{1}:%3L| %m%n" />
     </File>
   </Appenders>
   <Loggers>
