@@ -11,6 +11,7 @@ public class JoinTableMessage implements SBKingMessage {
   /**
    * @deprecated Kryo needs a no-arg constructor
    */
+  @Deprecated
   private JoinTableMessage() {
   }
 

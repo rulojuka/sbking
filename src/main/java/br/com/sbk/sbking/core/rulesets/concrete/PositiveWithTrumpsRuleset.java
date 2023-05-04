@@ -12,6 +12,7 @@ public class PositiveWithTrumpsRuleset extends PositiveRuleset {
     /**
      * @deprecated Kryo needs a no-arg constructor
      */
+    @Deprecated
     private PositiveWithTrumpsRuleset() {
     }
 

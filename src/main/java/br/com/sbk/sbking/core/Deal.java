@@ -19,6 +19,7 @@ public class Deal {
     /**
      * @deprecated Kryo needs a no-arg constructor
      */
+    @Deprecated
     private Deal() {
     }
 

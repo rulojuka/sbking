@@ -18,6 +18,7 @@ public class Trick {
     /**
      * @deprecated Kryo needs a no-arg constructor
      */
+    @Deprecated
     private Trick() {
     }
 

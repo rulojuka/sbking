@@ -11,6 +11,7 @@ public class Card {
     /**
      * @deprecated Kryo needs a no-arg constructor
      */
+    @Deprecated
     private Card() {
     }
 

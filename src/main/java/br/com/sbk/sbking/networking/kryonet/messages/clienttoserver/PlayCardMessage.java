@@ -10,6 +10,7 @@ public class PlayCardMessage implements SBKingMessage {
   /**
    * @deprecated Kryo needs a no-arg constructor
    */
+  @Deprecated
   private PlayCardMessage() {
   }
 

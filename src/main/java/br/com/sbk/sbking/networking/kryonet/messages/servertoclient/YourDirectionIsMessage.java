@@ -10,6 +10,7 @@ public class YourDirectionIsMessage implements SBKingMessage {
   /**
    * @deprecated Kryo needs a no-arg constructor
    */
+  @Deprecated
   private YourDirectionIsMessage() {
   }
 

@@ -9,6 +9,7 @@ public class YourTableIsMessage implements SBKingMessage {
   /**
    * @deprecated Kryo needs a no-arg constructor
    */
+  @Deprecated
   private YourTableIsMessage() {
   }
 

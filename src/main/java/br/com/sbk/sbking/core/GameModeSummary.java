@@ -7,6 +7,7 @@ public class GameModeSummary {
     /**
      * @deprecated Kryo needs a no-arg constructor
      */
+    @Deprecated
     private GameModeSummary() {
     }
 

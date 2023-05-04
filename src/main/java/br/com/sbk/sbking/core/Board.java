@@ -13,6 +13,7 @@ public class Board {
     /**
      * @deprecated Kryo needs a no-arg constructor
      */
+    @Deprecated
     private Board() {
     }
 

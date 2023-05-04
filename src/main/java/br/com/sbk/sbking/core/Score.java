@@ -7,6 +7,7 @@ public class Score {
     /**
      * @deprecated Kryo needs a no-arg constructor
      */
+    @Deprecated
     private Score() {
     }
 
