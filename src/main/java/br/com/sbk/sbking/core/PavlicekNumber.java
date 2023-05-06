@@ -14,6 +14,9 @@ import br.com.sbk.sbking.core.boarddealer.ShuffledBoardDealer;
  * It is a mapping between boards and numbers from 0 to N-1
  * where N = the number of different bridge deals or Boards, as modelled here.
  * N is also equal to 52! / (13! ^ 4) or 53644737765488792839237440000
+ *
+ * One important difference is the suit order,
+ * in which clubs and diamonds are swapped.
  */
 
 public class PavlicekNumber {
@@ -46,8 +49,9 @@ public class PavlicekNumber {
         printBoard(board);
         BigInteger derivedNumber = pavlicekNumber.getNumberFromBoard(board);
         System.out.println(derivedNumber);
-
-        Board derivedBoard = pavlicekNumber.getBoardFromNumber(new BigInteger("84478098072866399"));
+        Board derivedBoard = pavlicekNumber.getBoardFromNumber(new BigInteger("0"));
+        printBoard(derivedBoard);
+        derivedBoard = pavlicekNumber.getBoardFromNumber(new BigInteger("53644737765488792839237439999"));
         printBoard(derivedBoard);
     }
 
