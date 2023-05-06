@@ -16,6 +16,9 @@ import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.TextMessage;
 
 public class KryonetServerListenerFactory {
 
+  private static final String CLIENT_FATAL_ERROR_MESSAGE = "Client should be a KryonetSBKingServer";
+  private static final String CONNECTION_FATAL_ERROR_MESSAGE = "connection should be a ConnectionWithPlayer";
+
   public static Listener getServerListener(Server server,
       BlockingQueue<SBKingMessageWithIdentifier> serverMessageQueue) {
     return new Listener() {
@@ -27,14 +30,14 @@ public class KryonetServerListenerFactory {
         try {
           kryonetSBKingServer = (KryonetSBKingServer) server;
         } catch (Exception e) {
-          LOGGER.fatal("Client should be a KryonetSBKingServer");
+          LOGGER.fatal(CLIENT_FATAL_ERROR_MESSAGE);
           LOGGER.fatal(server);
           return;
         }
         try {
           connectionWithPlayer = (ConnectionWithIdentifier) connection;
         } catch (Exception e) {
-          LOGGER.fatal("connection should be a ConnectionWithPlayer");
+          LOGGER.fatal(CONNECTION_FATAL_ERROR_MESSAGE);
           LOGGER.fatal(connection);
           return;
         }
@@ -60,7 +63,7 @@ public class KryonetServerListenerFactory {
         try {
           kryonetSBKingServer = (KryonetSBKingServer) server;
         } catch (Exception e) {
-          LOGGER.fatal("Client should be a KryonetSBKingServer");
+          LOGGER.fatal(CLIENT_FATAL_ERROR_MESSAGE);
           LOGGER.fatal(server);
           return;
         }
@@ -77,7 +80,7 @@ public class KryonetServerListenerFactory {
         try {
           connectionWithPlayer = (ConnectionWithIdentifier) connection;
         } catch (Exception e) {
-          LOGGER.fatal("connection should be a ConnectionWithPlayer");
+          LOGGER.fatal(CONNECTION_FATAL_ERROR_MESSAGE);
           LOGGER.fatal(connection);
           return;
         }
@@ -110,14 +113,14 @@ public class KryonetServerListenerFactory {
         try {
           kryonetSBKingServer = (KryonetSBKingServer) server;
         } catch (Exception e) {
-          LOGGER.fatal("Client should be a KryonetSBKingServer");
+          LOGGER.fatal(CLIENT_FATAL_ERROR_MESSAGE);
           LOGGER.fatal(server);
           return;
         }
         try {
           connectionWithPlayer = (ConnectionWithIdentifier) connection;
         } catch (Exception e) {
-          LOGGER.fatal("connection should be a ConnectionWithPlayer");
+          LOGGER.fatal(CONNECTION_FATAL_ERROR_MESSAGE);
           LOGGER.fatal(connection);
           return;
         }
