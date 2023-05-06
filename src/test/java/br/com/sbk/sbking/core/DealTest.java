@@ -3,6 +3,8 @@ package br.com.sbk.sbking.core;
 import static br.com.sbk.sbking.core.GameConstants.NUMBER_OF_TRICKS_IN_A_COMPLETE_HAND;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.atLeastOnce;
@@ -117,7 +119,7 @@ public class DealTest {
         when(board.getDealer()).thenReturn(Direction.NORTH);
         Deal deal = new Deal(board, ruleset, leader, null);
 
-        deal.getCurrentTrick();
+        assertNotNull(deal.getCurrentTrick());
     }
 
     @Test(expected = PlayedCardInAnotherPlayersTurnException.class)
@@ -165,8 +167,9 @@ public class DealTest {
 
         Deal deal = new Deal(board, ruleset, leader, null);
 
+        assertEquals(leader, deal.getCurrentPlayer());
         deal.playCard(card);
-
+        assertNotEquals(leader, deal.getCurrentPlayer());
     }
 
     @Test(expected = DoesNotFollowSuitException.class)
