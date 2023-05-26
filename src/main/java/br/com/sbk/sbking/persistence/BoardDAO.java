@@ -19,25 +19,22 @@ public class BoardDAO {
     }
 
     public void saveBoard(BoardEntity board) {
-        Session session = factory.openSession();
-        session.beginTransaction();
+        try (Session session = factory.openSession()) {
+            session.beginTransaction();
 
-        String pavlicekNumber = board.getPavlicekNumber();
-        System.out.println("Checking number:" + pavlicekNumber);
-        if (findByPavlicekNumber(pavlicekNumber) == null) {
-            session.persist(board);
-            System.out.println("Does not exist on DB. Persisting it.");
+            String pavlicekNumber = board.getPavlicekNumber();
+            System.out.println("Checking number:" + pavlicekNumber);
+            if (findByPavlicekNumber(pavlicekNumber) == null) {
+                session.persist(board);
+                System.out.println("Does not exist on DB. Persisting it.");
+            }
+
+            session.getTransaction().commit();
         }
-
-        session.getTransaction().commit();
-        session.close();
-
     }
 
     public BoardEntity findByPavlicekNumber(String pavlicekNumber) {
-        Session session = factory.openSession();
-
-        try {
+        try (Session session = factory.openSession()) {
             BoardEntity returnEntity = session
                     .createQuery("from Board b where b.pavlicekNumber = :pav",
                             BoardEntity.class)
