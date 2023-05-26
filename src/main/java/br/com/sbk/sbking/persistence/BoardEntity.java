@@ -54,11 +54,8 @@ public class BoardEntity {
         PavlicekNumber pavlicekNumberGenerator = new PavlicekNumber();
         if (this.bigIntegerPavlicekNumber != null) {
             this.board = pavlicekNumberGenerator.getBoardFromNumber(this.bigIntegerPavlicekNumber);
-            return;
-        }
-        if (this.board != null) {
+        } else if (this.board != null) {
             this.bigIntegerPavlicekNumber = pavlicekNumberGenerator.getNumberFromBoard(this.board);
-            return;
         }
     }
 
