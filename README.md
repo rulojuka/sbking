@@ -26,15 +26,15 @@ make client
 
 ## Code quality
 
-After a sucessful package, you can see [JaCoCo](https://www.jacoco.org/jacoco/)'s code coverage report at `target/site/jacoco/index.html`
-
-You can also discover potential bugs with [SpotBugs](https://spotbugs.github.io/) with:
+You can also run checks to verify the package is valid and meets quality criteria.
 
 ```
-mvn spotbugs:spotbugs
+mvn verify
 ```
 
-and see them with
+This will include [JaCoCo](https://www.jacoco.org/jacoco/)'s code coverage report at `target/site/jacoco/index.html`
+
+And you can also see potential bugs with [SpotBugs](https://spotbugs.github.io/) running:
 
 ```
 mvn spotbugs:gui
