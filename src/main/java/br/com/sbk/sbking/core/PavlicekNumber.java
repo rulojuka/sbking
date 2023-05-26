@@ -49,7 +49,7 @@ public class PavlicekNumber {
         printBoard(board);
         BigInteger derivedNumber = pavlicekNumber.getNumberFromBoard(board);
         System.out.println(derivedNumber);
-        Board derivedBoard = pavlicekNumber.getBoardFromNumber(new BigInteger("0"));
+        Board derivedBoard = pavlicekNumber.getBoardFromNumber(BigInteger.ZERO);
         printBoard(derivedBoard);
         derivedBoard = pavlicekNumber.getBoardFromNumber(new BigInteger("53644737765488792839237439999"));
         printBoard(derivedBoard);

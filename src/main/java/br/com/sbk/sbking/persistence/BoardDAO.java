@@ -23,10 +23,10 @@ public class BoardDAO {
             session.beginTransaction();
 
             String pavlicekNumber = board.getPavlicekNumber();
-            System.out.println("Checking number:" + pavlicekNumber);
+            // System.out.println("Checking number:" + pavlicekNumber);
             if (findByPavlicekNumber(pavlicekNumber) == null) {
                 session.persist(board);
-                System.out.println("Does not exist on DB. Persisting it.");
+                // System.out.println("Does not exist on DB. Persisting it.");
             }
 
             session.getTransaction().commit();
@@ -35,12 +35,9 @@ public class BoardDAO {
 
     public BoardEntity findByPavlicekNumber(String pavlicekNumber) {
         try (Session session = factory.openSession()) {
-            BoardEntity returnEntity = session
-                    .createQuery("from Board b where b.pavlicekNumber = :pav",
-                            BoardEntity.class)
+            return session.createQuery("from Board b where b.pavlicekNumber = :pav", BoardEntity.class)
                     .setParameter("pav", pavlicekNumber)
                     .getSingleResult();
-            return returnEntity;
         } catch (NoResultException e) {
             return null;
         }
