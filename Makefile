@@ -15,7 +15,7 @@ kill_server:
 	@./kill_sbking_server.sh
 
 package_server:
-	mvn package
+	mvn clean package
 
 copy_server:
 	cp target/sbking-server-1.0.0-alpha-jar-with-dependencies.jar ./sbking-server.jar
@@ -23,7 +23,7 @@ copy_server:
 client: kill_server package_client copy_client
 
 package_client:
-	mvn -f pom-client.xml package
+	mvn -f pom-client.xml clean package
 
 copy_client:
 	cp target/sbking-client-1.0.0-alpha-jar-with-dependencies.jar ./sbking-client.jar && chmod +x ./sbking-client.jar

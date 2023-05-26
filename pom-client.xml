@@ -78,7 +78,67 @@
 
 	<build>
 		<plugins>
+			<!-- validate: check if all information necessary for the build is available -->
 			<plugin>
+				<!-- We only use one goal: checkstyle:check -->
+				<!-- Bound by default to lifecycle phase: verify -->
+				<!-- We bind it to: validate -->
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>3.2.2</version>
+				<configuration>
+					<configLocation>checkstyle/sbking_checkstyle.xml</configLocation>
+					<encoding>UTF-8</encoding>
+					<failOnViolation>true</failOnViolation>
+					<enableFilesSummary>false</enableFilesSummary>
+					<logViolationsToConsole>true</logViolationsToConsole>
+				</configuration>
+				<executions>
+					<execution>
+						<id>checkstyle</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- compile: compile the source code -->
+			<!-- test-compile: compile the test source code -->
+			<plugin>
+				<!-- There are two goals: compiler:compile and compiler:testCompile -->
+				<!-- Bound by default to: compile and test-compile -->
+				<!-- Here, we exclude the server-only related files -->
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.11.0</version>
+				<configuration>
+					<release>11</release>
+					<excludes>
+						<exclude>br/com/sbk/sbking/networking/server/*.java</exclude>
+						<exclude>br/com/sbk/sbking/persistence/*.java</exclude>
+					</excludes>
+					<testExcludes>
+						<exclude>br/com/sbk/sbking/learning/**/*.java</exclude>
+						<exclude>br/com/sbk/sbking/persistence/**/*.java</exclude>
+					</testExcludes>
+				</configuration>
+			</plugin>
+
+			<!-- test: run unit tests -->
+			<plugin>
+				<!-- Only goal: surefire:test -->
+				<!-- Bound by default to lifecycle phase: test -->
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>3.1.0</version>
+			</plugin>
+
+			<!-- package: package compiled source code into the distributable format (jar, war, …) -->
+			<plugin>
+				<!-- Only goal: assembly:single -->
+				<!-- Bound to lifecycle phase: test -->
 				<artifactId>maven-assembly-plugin</artifactId>
 				<version>3.5.0</version>
 				<executions>
@@ -102,75 +162,45 @@
 				</executions>
 			</plugin>
 
+			<!-- verify: run any checks to verify the package is valid and meets quality criteria. -->
 			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.11.0</version>
-				<configuration>
-					<release>11</release>
-				</configuration>
-			</plugin>
-
-			<!-- Test Coverage with JaCoCo -->
-			<plugin>
+				<!-- There are many different goals -->
+				<!-- According to documentation, prepare-agent and report should bind themselves automatically -->
+				<!-- Yet, this does not happen, so we declare them explicitly -->
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
 				<version>0.8.10</version>
 				<executions>
 					<execution>
-						<id>jacoco-initialize</id>
+						<id>jacoco-prepare-agent</id>
 						<goals>
 							<goal>prepare-agent</goal>
 						</goals>
 					</execution>
 					<execution>
-						<id>jacoco-site</id>
-						<phase>package</phase>
+						<id>jacoco-report</id>
 						<goals>
 							<goal>report</goal>
 						</goals>
 					</execution>
 				</executions>
 			</plugin>
-
 			<plugin>
+				<!-- There are many different goals -->
+				<!-- Here, we bind spotbugs:spotbugs to: verify -->
 				<groupId>com.github.spotbugs</groupId>
 				<artifactId>spotbugs-maven-plugin</artifactId>
 				<version>4.7.3.4</version>
-			</plugin>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-checkstyle-plugin</artifactId>
-				<version>3.2.2</version>
-				<configuration>
-					<configLocation>checkstyle/sbking_checkstyle.xml</configLocation>
-					<encoding>UTF-8</encoding>
-					<failOnViolation>true</failOnViolation>
-					<enableFilesSummary>false</enableFilesSummary>
-					<logViolationsToConsole>true</logViolationsToConsole>
-				</configuration>
 				<executions>
 					<execution>
-						<id>checkstyle</id>
-						<phase>validate</phase>
+						<id>spotbugs-spotbugs</id>
+						<phase>verify</phase>
 						<goals>
-							<goal>check</goal>
+							<goal>spotbugs</goal>
 						</goals>
 					</execution>
 				</executions>
 			</plugin>
 		</plugins>
 	</build>
-
-	<reporting>
-		<plugins>
-			<!-- Bug Finding with SpotBugs -->
-			<plugin>
-				<groupId>com.github.spotbugs</groupId>
-				<artifactId>spotbugs-maven-plugin</artifactId>
-				<version>4.7.3.4</version>
-			</plugin>
-		</plugins>
-	</reporting>
-
 </project>
