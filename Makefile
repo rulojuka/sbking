@@ -31,5 +31,9 @@ copy_client:
 build:
 	docker build -t $(APP_NAME) .
 
+deploy: build
+	docker login
+	docker push rulojuka/sbking
+
 run:
 	docker run -p 60000:60000 -p 8080:8080 --rm $(APP_NAME)

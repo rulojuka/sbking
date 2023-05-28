@@ -67,15 +67,7 @@ docker run -p 60000:60000 -p 8080:8080 rulojuka/sbking
 
 ### Pushing to DockerHub
 ```
-# docker ps -a # To discover unused containers
-# docker rm CONTAINER-ID # To remove them
-# docker images # To see images
-# docker rmi IMAGE-ID # To remove them
-make build
-docker login
-docker images # To discover the image id
-docker tag IMAGE-ID rulojuka/sbking
-docker push rulojuka/sbking
+make deploy
 ```
 
 ## Authors and copyright
