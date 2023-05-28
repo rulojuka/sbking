@@ -9,11 +9,17 @@ import br.com.sbk.sbking.networking.core.properties.SystemProperties;
 
 public class LobbyServer {
 
+    private SBKingServer sbKingServer;
+
+    public SBKingServer getSbKingServer() {
+        return sbKingServer;
+    }
+
     public void run() {
         int port = this.getPortFromNetworkingProperties();
         LOGGER.info("LobbyServer is Running...");
 
-        SBKingServerFactory.createWithKryonetConnection(port);
+        this.sbKingServer = SBKingServerFactory.createWithKryonetConnection(port);
         LOGGER.info("SBKingServer created.");
         LOGGER.info("Listening for connections on port: " + port);
     }

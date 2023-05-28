@@ -18,7 +18,7 @@ package_server:
 	mvn clean package
 
 copy_server:
-	cp target/sbking-server-1.0.0-alpha-jar-with-dependencies.jar ./sbking-server.jar
+	cp target/sbking-server-1.0.0-alpha.jar ./sbking-server.jar
 
 client: kill_server package_client copy_client
 
@@ -32,4 +32,4 @@ build:
 	docker build -t $(APP_NAME) .
 
 run:
-	docker run --rm $(APP_NAME)
+	docker run -p 60000:60000 -p 8080:8080 --rm $(APP_NAME)

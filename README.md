@@ -52,18 +52,18 @@ make run
 ```
 to run the server on the default port.
 
-You can also pull the image directly from the [Docker Hub](https://hub.docker.com/r/rulojuka/sbking) if you want to just start the server on the default port
+You can also pull the image directly from the [Docker Hub](https://hub.docker.com/r/rulojuka/sbking).
+
+If you want to just start the server on the default port:
 ```
-docker run rulojuka/sbking
+docker run -p 60000:60000 -p 8080:8080 rulojuka/sbking
 ```
 
 ### On DigitalOcean
 Create a [docker based droplet](https://marketplace.digitalocean.com/apps/docker) and
 ```
-docker run -p 60000:60000 rulojuka/sbking
+docker run -p 60000:60000 -p 8080:8080 rulojuka/sbking
 ```
-or follow the `digital-ocean-ubuntu-18-04.sh` script if the docker version is not enough.
-
 
 ### Pushing to DockerHub
 ```

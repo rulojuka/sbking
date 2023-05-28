@@ -7,8 +7,14 @@
 	<version>1.0.0-alpha</version>
 	<name>SBKing</name>
 	<description>More information at https://github.com/rulojuka/sbking</description>
-	<packaging>jar</packaging>
 
+	<!-- Adds the base pom from spring boot -->
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.7.12</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -24,6 +30,7 @@
 		<sonar.issue.ignore.multicriteria.e2.resourceKey>**/*</sonar.issue.ignore.multicriteria.e2.resourceKey>
 		<sonar.issue.ignore.multicriteria.e3.ruleKey>java:S2142</sonar.issue.ignore.multicriteria.e3.ruleKey> <!--ignoredInterruptedException-->
 		<sonar.issue.ignore.multicriteria.e3.resourceKey>**/*</sonar.issue.ignore.multicriteria.e3.resourceKey>
+		<java.version>11</java.version> <!-- For spring-boot-maven-plugin -->
 	</properties>
 
 	<repositories>
@@ -97,13 +104,37 @@
 			<artifactId>mysql-connector-j</artifactId>
 			<version>8.0.33</version>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+		<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency> <!-- Needed for surefire to run junit4 tests-->
+			<groupId>org.junit.vintage</groupId>
+			<artifactId>junit-vintage-engine</artifactId>
+			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.hamcrest</groupId>
+					<artifactId>hamcrest-core</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 	</dependencies>
 
-	<build>
+	<build> <!-- Run mvn fr.jcgay.maven.plugins:buildplan-maven-plugin:list-phase to see the phase and goals-->
 		<plugins>
-			<!-- validate: check if all information necessary for the build is available -->
+			<!-- Phase: validate - check if all information necessary for the build is available -->
 			<plugin>
-				<!-- We only use one goal: checkstyle:check -->
+				<!-- Goal: checkstyle:check -->
 				<!-- Bound by default to lifecycle phase: verify -->
 				<!-- We bind it to: validate -->
 				<groupId>org.apache.maven.plugins</groupId>
@@ -127,10 +158,19 @@
 				</executions>
 			</plugin>
 
-			<!-- compile: compile the source code -->
-			<!-- test-compile: compile the test source code -->
+			<!-- Phase: initialize - initialize build state, e.g. set properties or create directories. -->
+				<!-- Goal: jacoco-maven-plugin:prepare-agent -->
+
+			<!-- Phase: process-resources - copy and process the resources into the destination directory, ready for packaging. -->
+				<!-- Goal: maven-resources-plugin:resources -->
+			<!-- Phase: compile - compile the source code -->
+				<!-- Goal: maven-compiler-plugin:compile -->
+			<!-- Phase: process-test-resources - copy and process the resources into the test destination directory. -->
+				<!-- Goal: maven-resources-plugin:testResources -->
+			<!-- Phase: test-compile: compile the test source code -->
+				<!-- Goal: maven-compiler-plugin:testCompile -->
 			<plugin>
-				<!-- There are two goals: compiler:compile and compiler:testCompile -->
+				<!-- There are two goals done by maven-compiler-plugin: compiler:compile and compiler:testCompile -->
 				<!-- Bound by default to: compile and test-compile -->
 				<!-- Here, we exclude the client-only related files -->
 				<groupId>org.apache.maven.plugins</groupId>
@@ -138,20 +178,28 @@
 				<version>3.11.0</version>
 				<configuration>
 					<release>11</release>
+					<includes> <!-- Just being explicit -->
+						<include>br/com/sbk/sbking/**/*.java</include>
+					</includes>
 					<excludes>
-						<exclude>br/com/sbk/sbking/gui/**/*.java</exclude>
-						<exclude>br/com/sbk/sbking/networking/client/*.java</exclude>
+						<exclude>br/com/sbk/sbking/gui/**/*.java</exclude> <!-- Client only -->
+						<exclude>br/com/sbk/sbking/networking/client/*.java</exclude> <!-- Client only -->
+						<exclude>br/com/sbk/sbking/persistence/**/*.java</exclude> <!-- Not using it yet -->
 					</excludes>
+					<testIncludes> <!-- Just being explicit -->
+						<include>br/com/sbk/sbking/**/*.java</include>
+					</testIncludes>
 					<testExcludes>
-						<exclude>br/com/sbk/sbking/learning/**/*.java</exclude>
-						<exclude>br/com/sbk/sbking/gui/**/*.java</exclude>
+						<exclude>br/com/sbk/sbking/gui/**/*.java</exclude> <!-- Client only -->
+						<exclude>br/com/sbk/sbking/learning/**/*.java</exclude>  <!-- Will only run if needed -->
+						<exclude>br/com/sbk/sbking/persistence/**/*.java</exclude> <!-- Not using it yet -->
 					</testExcludes>
 				</configuration>
 			</plugin>
 
-			<!-- test: run unit tests -->
+			<!-- Phase: test - run unit tests -->
 			<plugin>
-				<!-- Only goal: surefire:test -->
+				<!-- Goal: surefire:test -->
 				<!-- Bound by default to lifecycle phase: test -->
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
@@ -163,38 +211,23 @@
 				</configuration>
 			</plugin>
 
-			<!-- package: package compiled source code into the distributable format (jar, war, …) -->
+			<!-- Phase: package - package compiled source code into the distributable format (jar, war, …) -->
+			<!-- Spring boot automatically uses maven-jar-plugin and maven-assembly-plugin here -->
+				<!-- Goal: maven-jar-plugin:jar -->
+				<!-- Goal: spring-boot-maven-plugin:repackage -->
 			<plugin>
-				<!-- Only goal: assembly:single -->
-				<!-- Bound to lifecycle phase: test -->
-				<artifactId>maven-assembly-plugin</artifactId>
-				<version>3.5.0</version>
-				<executions>
-					<execution>
-						<id>jar-with-dependencies</id>
-						<phase>package</phase>
-						<goals>
-							<goal>single</goal>
-						</goals>
-						<configuration>
-							<archive>
-								<manifest>
-									<mainClass>br.com.sbk.sbking.networking.server.main.LobbyServerStarter</mainClass>
-								</manifest>
-							</archive>
-							<descriptorRefs>
-								<descriptorRef>jar-with-dependencies</descriptorRef>
-							</descriptorRefs>
-						</configuration>
-					</execution>
-				</executions>
+				<!-- Anyway, the explicit addition of the plugin is needed -->
+				<!-- for spring boot to bind spring-boot-maven-plugin:repackage to package phase -->
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 
-			<!-- verify: run any checks to verify the package is valid and meets quality criteria. -->
+			<!-- Phase: verify - run any checks to verify the package is valid and meets quality criteria. -->
 			<plugin>
-				<!-- There are many different goals -->
+				<!-- There are many different goals in jacoco-->
 				<!-- According to documentation, prepare-agent and report should bind themselves automatically -->
 				<!-- Yet, this does not happen, so we declare them explicitly -->
+				<!-- Goal: jacoco-maven-plugin:report -->
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
 				<version>0.8.10</version>
@@ -214,8 +247,9 @@
 				</executions>
 			</plugin>
 			<plugin>
-				<!-- There are many different goals -->
+				<!-- There are many different goals for spotbugs-->
 				<!-- Here, we bind spotbugs:spotbugs to: verify -->
+				<!-- Goal: spotbugs:spotbugs -->
 				<groupId>com.github.spotbugs</groupId>
 				<artifactId>spotbugs-maven-plugin</artifactId>
 				<version>4.7.3.4</version>
