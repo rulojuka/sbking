@@ -118,6 +118,7 @@
 					<excludes>
 						<exclude>br/com/sbk/sbking/networking/server/*.java</exclude>
 						<exclude>br/com/sbk/sbking/persistence/*.java</exclude>
+						<exclude>br/com/sbk/sbking/app/*.java</exclude>
 					</excludes>
 					<testExcludes>
 						<exclude>br/com/sbk/sbking/learning/**/*.java</exclude>

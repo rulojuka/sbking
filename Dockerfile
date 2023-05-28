@@ -10,6 +10,7 @@ RUN mvn package -B
 
 FROM adoptopenjdk:11-jre-openj9
 RUN mkdir /opt/app
-COPY --from=MAVEN_TOOL_CHAIN /tmp/target/sbking*with-dependencies.jar /opt/app/server.jar
+COPY --from=MAVEN_TOOL_CHAIN /tmp/target/sbking*.jar /opt/app/server.jar
 EXPOSE 60000
+EXPOSE 8080
 CMD ["java", "-jar", "/opt/app/server.jar"]
