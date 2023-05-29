@@ -1,7 +1,7 @@
 FROM maven:3.6.3-adoptopenjdk-11 AS MAVEN_TOOL_CHAIN
 WORKDIR /tmp/
 
-COPY pom.xml /tmp/pom.xml
+COPY pom-server.xml /tmp/pom.xml
 COPY checkstyle /tmp/checkstyle/
 RUN mvn dependency:resolve-plugins dependency:go-offline -B
 

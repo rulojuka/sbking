@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>br.com.sbk</groupId>
-	<artifactId>sbking-vscode</artifactId>
+	<artifactId>sbking-server</artifactId>
 	<version>1.0.0-alpha</version>
 	<name>SBKing</name>
 	<description>More information at https://github.com/rulojuka/sbking</description>
@@ -187,12 +187,16 @@
 						<include>br/com/sbk/sbking/**/*.java</include>
 					</includes>
 					<excludes> <!-- sadly, this does not work sometimes. https://issues.apache.org/jira/browse/MCOMPILER-174 -->
+						<exclude>br/com/sbk/sbking/gui/**/*.java</exclude> <!-- Client only -->
+						<exclude>br/com/sbk/sbking/networking/client/*.java</exclude> <!-- Client only -->
 						<exclude>br/com/sbk/sbking/persistence/**/*.java</exclude> <!-- Not using it yet -->
 					</excludes>
 					<testIncludes> <!-- Just being explicit -->
 						<include>br/com/sbk/sbking/**/*.java</include>
 					</testIncludes>
 					<testExcludes>
+						<exclude>br/com/sbk/sbking/gui/**/*.java</exclude> <!-- Client only -->
+						<exclude>br/com/sbk/sbking/learning/**/*.java</exclude>  <!-- Will only run if needed -->
 						<exclude>br/com/sbk/sbking/persistence/**/*.java</exclude> <!-- Not using it yet -->
 					</testExcludes>
 				</configuration>
