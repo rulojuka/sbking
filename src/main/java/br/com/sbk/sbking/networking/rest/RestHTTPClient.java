@@ -30,7 +30,7 @@ public class RestHTTPClient {
         this.identifier = UUID.fromString(identifier);
     }
 
-    public void sendHttpPlayCardMessage(Card card) {
+    public void play(Card card) {
         String url = this.baseUrl + "playcard/";
 
         String body = String
@@ -45,6 +45,13 @@ public class RestHTTPClient {
         String body = String
                 .format("{\"content\":\"%s\",\"identifier\":\"%s\"}",
                         gameName, identifier.toString());
+        createAndSendPostRequest(url, body);
+    }
+
+    public void sendJoinTableMessage(UUID tableId) {
+        String url = this.baseUrl + "table/join/" + tableId.toString();
+        String body = String
+                .format("{\"identifier\":\"%s\"}", identifier.toString());
         createAndSendPostRequest(url, body);
     }
 

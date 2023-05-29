@@ -15,7 +15,6 @@ import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.ChoosePositi
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.ClaimMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.GetTableSpectatorsMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.GetTablesMessage;
-import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.JoinTableMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.LeaveTableMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.MoveToSeatMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.RejectClaimMessage;
@@ -66,9 +65,6 @@ public class SBKingServerMessageConsumer implements Runnable {
       this.sbkingServer.undo(playerIdentifier);
     } else if (message instanceof GetTablesMessage) {
       this.sbkingServer.sendTablesTo(playerIdentifier);
-    } else if (message instanceof JoinTableMessage) {
-      JoinTableMessage joinTableMessage = (JoinTableMessage) message;
-      this.sbkingServer.joinTable(playerIdentifier, joinTableMessage.getContent());
     } else if (message instanceof LeaveTableMessage) {
       this.sbkingServer.leaveTable(playerIdentifier);
     } else if (message instanceof ClaimMessage) {

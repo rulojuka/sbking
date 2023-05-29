@@ -20,7 +20,8 @@ public class SBKingClientFactory {
 
   public static SBKingClient createWithKryonetConnection(String nickname, String hostname, int port) {
     SBKingClient sbKingClient = new SBKingClient();
-    sbKingClient.setRestHTTPClient(new RestHTTPClient(hostname));
+    RestHTTPClient restHTTPClient = new RestHTTPClient(hostname);
+    sbKingClient.setRestHTTPClient(restHTTPClient);
     BlockingQueue<SBKingMessage> clientMessageQueue = new LinkedBlockingQueue<SBKingMessage>();
     KryonetSBKingClient kryonetSBKingClient = KryonetClientFactory.getRegisteredClient();
     kryonetSBKingClient
@@ -29,7 +30,8 @@ public class SBKingClientFactory {
         clientMessageQueue); // Consumer
     new Thread(sbKingClientMessageConsumer, "msg-consumer").start();
     sbKingClient
-        .setActionListener(new ClientActionListener(new KryonetSBKingClientActionListener(kryonetSBKingClient)));
+        .setActionListener(
+            new ClientActionListener(new KryonetSBKingClientActionListener(kryonetSBKingClient), restHTTPClient));
     LOGGER.info("Trying to connect.");
     try {
       kryonetSBKingClient.connect(5000, hostname, port);

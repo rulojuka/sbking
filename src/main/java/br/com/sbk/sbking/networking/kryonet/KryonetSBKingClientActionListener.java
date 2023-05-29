@@ -1,8 +1,5 @@
 package br.com.sbk.sbking.networking.kryonet;
 
-import java.util.UUID;
-
-import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Direction;
 
 public class KryonetSBKingClientActionListener {
@@ -11,10 +8,6 @@ public class KryonetSBKingClientActionListener {
 
   public KryonetSBKingClientActionListener(KryonetSBKingClient client) {
     this.client = client;
-  }
-
-  public void playHttp(Card card) {
-    client.sendHttpPlayCardMessage(card);
   }
 
   public void sitOrLeave(Direction direction) {
@@ -27,10 +20,6 @@ public class KryonetSBKingClientActionListener {
 
   public void claim() {
     client.sendClaim();
-  }
-
-  public void joinTable(UUID tableId) {
-    client.sendJoinTable(tableId);
   }
 
   public void leaveTable() {

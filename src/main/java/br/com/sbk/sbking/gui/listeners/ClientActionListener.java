@@ -13,14 +13,17 @@ import br.com.sbk.sbking.gui.jelements.RejectClaimButton;
 import br.com.sbk.sbking.gui.jelements.SitOrLeaveButton;
 import br.com.sbk.sbking.gui.jelements.UndoButton;
 import br.com.sbk.sbking.networking.kryonet.KryonetSBKingClientActionListener;
+import br.com.sbk.sbking.networking.rest.RestHTTPClient;
 
 public class ClientActionListener implements java.awt.event.ActionListener {
 
     private KryonetSBKingClientActionListener client;
+    private RestHTTPClient restClient;
 
-    public ClientActionListener(KryonetSBKingClientActionListener client) {
+    public ClientActionListener(KryonetSBKingClientActionListener client, RestHTTPClient restClient) {
         super();
         this.client = client;
+        this.restClient = restClient;
     }
 
     @Override
@@ -31,7 +34,7 @@ public class ClientActionListener implements java.awt.event.ActionListener {
             CardButton clickedCardButton = (CardButton) source;
             Card card = clickedCardButton.getCard();
             try {
-                client.playHttp(card);
+                restClient.play(card);
             } catch (RuntimeException e) {
                 throw e;
             }
@@ -50,7 +53,7 @@ public class ClientActionListener implements java.awt.event.ActionListener {
         } else if (source instanceof JoinTableButton) {
             JoinTableButton button = (JoinTableButton) source;
             UUID tableId = (UUID) button.getClientProperty("tableId");
-            client.joinTable(tableId);
+            restClient.sendJoinTableMessage(tableId);
         } else if (source instanceof LeaveTableButton) {
             client.leaveTable();
         }

@@ -6,7 +6,6 @@ import java.util.UUID;
 
 import com.esotericsoftware.kryonet.Client;
 
-import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.networking.kryonet.messages.SBKingMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.AcceptClaimMessage;
@@ -16,13 +15,11 @@ import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.ChoosePositi
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.ClaimMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.GetTableSpectatorsMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.GetTablesMessage;
-import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.JoinTableMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.LeaveTableMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.MoveToSeatMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.RejectClaimMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.SetNicknameMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.UndoMessage;
-import br.com.sbk.sbking.networking.rest.RestHTTPClient;
 
 public class KryonetSBKingClient extends Client {
 
@@ -32,10 +29,6 @@ public class KryonetSBKingClient extends Client {
   private void sendMessage(SBKingMessage message) {
     LOGGER.debug("Sending " + message.getClass().toString() + " to server.");
     this.sendTCP(message);
-  }
-
-  public void sendHttpPlayCardMessage(Card card) {
-    new RestHTTPClient(this.getRemoteAddressTCP().getHostString(), identifier).sendHttpPlayCardMessage(card);
   }
 
   public void sitOrLeave(Direction direction) {
@@ -73,10 +66,6 @@ public class KryonetSBKingClient extends Client {
 
   public void sendGetTablesMessage() {
     this.sendMessage(new GetTablesMessage());
-  }
-
-  public void sendJoinTable(UUID tableId) {
-    this.sendMessage(new JoinTableMessage(tableId));
   }
 
   public void sendLeaveTable() {
