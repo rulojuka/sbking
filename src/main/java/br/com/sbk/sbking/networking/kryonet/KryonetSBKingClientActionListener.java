@@ -22,10 +22,6 @@ public class KryonetSBKingClientActionListener {
     client.sendClaim();
   }
 
-  public void leaveTable() {
-    client.sendLeaveTable();
-  }
-
   public void acceptClaim() {
     client.sendAcceptClaim();
   }

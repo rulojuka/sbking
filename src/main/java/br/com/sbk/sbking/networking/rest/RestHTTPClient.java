@@ -55,6 +55,13 @@ public class RestHTTPClient {
         createAndSendPostRequest(url, body);
     }
 
+    public void leaveTable() {
+        String url = this.baseUrl + "table/leave";
+        String body = String
+                .format("{\"identifier\":\"%s\"}", identifier.toString());
+        createAndSendPostRequest(url, body);
+    }
+
     private void createAndSendPostRequest(String url, String body) {
         LOGGER.info("URL: " + url);
         LOGGER.info("Body: " + body);

@@ -55,7 +55,7 @@ public class ClientActionListener implements java.awt.event.ActionListener {
             UUID tableId = (UUID) button.getClientProperty("tableId");
             restClient.sendJoinTableMessage(tableId);
         } else if (source instanceof LeaveTableButton) {
-            client.leaveTable();
+            restClient.leaveTable();
         }
     }
 

@@ -39,4 +39,10 @@ class AppController {
         serverComponent.getSbKingServer().joinTable(requestOnlyIdentifier.getUUID(), UUID.fromString(tableId));
     }
 
+    @PostMapping("/table/leave") // Each player can only be in one table for now
+    void leaveTable(@RequestBody RequestOnlyIdentifier requestOnlyIdentifier) {
+        LOGGER.trace("leaveTable");
+        serverComponent.getSbKingServer().leaveTable(requestOnlyIdentifier.getUUID());
+    }
+
 }
