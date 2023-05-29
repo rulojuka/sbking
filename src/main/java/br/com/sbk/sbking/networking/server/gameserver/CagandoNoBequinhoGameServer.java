@@ -33,9 +33,8 @@ public class CagandoNoBequinhoGameServer extends GameServer {
 
             this.dealHasChanged = true;
             while (!shouldStop && !this.game.getCurrentDeal().isFinished()) {
-                LOGGER.info("Sleeping for 300ms waiting for all clients to prepare themselves.");
-                sleepFor(300);
                 if (this.dealHasChanged) {
+                    waitForClientsToPrepare();
                     LOGGER.info("Sending new 'round' of deals");
                     this.sendDealAll();
                     this.dealHasChanged = false;
@@ -46,7 +45,7 @@ public class CagandoNoBequinhoGameServer extends GameServer {
                 synchronized (cardPlayNotification) {
                     // wait until object notifies - which relinquishes the lock on the object too
                     try {
-                        LOGGER.info("I am waiting for some thread to notify that it wants to play a card.");
+                        LOGGER.trace("I am waiting for some thread to notify that it wants to play a card.");
                         cardPlayNotification.wait(this.timeoutCardPlayNotification);
                     } catch (InterruptedException e) {
                         LOGGER.error(e);

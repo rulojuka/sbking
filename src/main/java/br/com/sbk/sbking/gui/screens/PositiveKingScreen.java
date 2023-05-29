@@ -16,13 +16,10 @@ public class PositiveKingScreen extends GameScreen {
 
     @Override
     public void runAt(SBKingClientJFrame sbkingClientJFrame) {
-        LOGGER.info("Waiting for sbKingClient.isDirectionSet() to be true");
-        while (!sbkingClient.isDirectionOrSpectatorSet()) {
-            sleepFor(100);
-        }
+        waitForDirection();
 
         while (true) {
-            sleepFor(300);
+            sleepFor(WAIT_FOR_REDRAW_IN_MILISECONDS);
             if (!this.checkIfStillIsOnGameScreen()) {
                 return; // Exits when server says it is not on the game anymore.
             }
@@ -40,7 +37,6 @@ public class PositiveKingScreen extends GameScreen {
                     }
                 }
             } else {
-                sleepFor(1000);
                 if (sbkingClient.getDealHasChanged() || ClientApplicationState.getGUIHasChanged()) {
                     if (!ClientApplicationState.getGUIHasChanged()) {
                         LOGGER.trace("Deal has changed. Painting deal.");
@@ -67,7 +63,7 @@ public class PositiveKingScreen extends GameScreen {
                                     sbkingClient.getDirection(), sbkingClient.getGameModeOrStrainChooser(), true);
                             sbkingClientJFrame.paintPainter(painter);
                             while (!sbkingClient.isRulesetValidSet()) {
-                                sleepFor(100);
+                                sleepFor(WAIT_FOR_SERVER_MESSAGE_IN_MILISECONDS);
                             }
                         }
                     }

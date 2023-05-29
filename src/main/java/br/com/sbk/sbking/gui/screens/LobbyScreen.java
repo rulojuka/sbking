@@ -14,6 +14,9 @@ public class LobbyScreen implements SBKingScreen {
 
   private SBKingClient sbkingClient;
 
+  private static final int WAIT_FOR_SERVER_MESSAGE_IN_MILISECONDS = 10;
+  private static final int DELAY_FOR_UPDATING_TABLES = 1000;
+
   public LobbyScreen(SBKingClient sbkingClient) {
     this.sbkingClient = sbkingClient;
     this.sbkingClient.sendGetTables();
@@ -41,7 +44,7 @@ public class LobbyScreen implements SBKingScreen {
         sbkingClientJFrame
             .paintPainter(new LobbyScreenPainter(tables, this.sbkingClient.getActionListener(), this.sbkingClient));
       }
-      sleepFor(100);
+      sleepFor(DELAY_FOR_UPDATING_TABLES);
     }
     tableUpdater.shouldStop();
   }
@@ -50,7 +53,7 @@ public class LobbyScreen implements SBKingScreen {
     List<LobbyScreenTableDTO> tables = null;
     while (tables == null) {
       tables = this.sbkingClient.getTables();
-      sleepFor(100);
+      sleepFor(WAIT_FOR_SERVER_MESSAGE_IN_MILISECONDS);
       LOGGER.info("Waiting to get tables from server.");
     }
     return tables;

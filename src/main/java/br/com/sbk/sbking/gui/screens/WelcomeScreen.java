@@ -19,6 +19,8 @@ public class WelcomeScreen implements SBKingScreen {
   private boolean connectedToServer = false;
   private SBKingClient sbkingClient;
 
+  private static final int WAIT_FOR_SERVER_MESSAGE_IN_MILISECONDS = 10;
+
   public WelcomeScreen() {
     super();
     this.networkingProperties = new NetworkingProperties(new FileProperties(), new SystemProperties());
@@ -57,7 +59,7 @@ public class WelcomeScreen implements SBKingScreen {
 
     LOGGER.info("Waiting for connectedToServer to be true");
     while (!connectedToServer) {
-      sleepFor(100);
+      sleepFor(WAIT_FOR_SERVER_MESSAGE_IN_MILISECONDS);
     }
     LOGGER.info("connectedToServer is true. Leaving WelcomeScreen");
   }

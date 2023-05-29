@@ -21,8 +21,16 @@ public abstract class GameServer implements Runnable {
 
     protected TrickGame game;
 
-    protected int timeoutCardPlayNotification = 1000;
+    protected int timeoutCardPlayNotification = 10000;
     protected boolean shouldStop = false;
+
+    protected static final int WAIT_FOR_CLIENTS_TO_PREPARE_IN_MILISECONDS = 50;
+
+    public void waitForClientsToPrepare() {
+        LOGGER.info("Sleeping for " + WAIT_FOR_CLIENTS_TO_PREPARE_IN_MILISECONDS
+                + "ms waiting for all clients to prepare themselves.");
+        sleepFor(WAIT_FOR_CLIENTS_TO_PREPARE_IN_MILISECONDS);
+    }
 
     public void setTable(Table table) {
         this.table = table;

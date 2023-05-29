@@ -16,10 +16,7 @@ public class CagandoNoBequinhoScreen extends GameScreen {
 
     @Override
     public void runAt(SBKingClientJFrame sbkingClientJFrame) {
-        LOGGER.info("Waiting for sbKingClient.isDirectionSet() to be true");
-        while (!sbkingClient.isDirectionOrSpectatorSet()) {
-            sleepFor(100);
-        }
+        waitForDirection();
 
         while (true) {
             if (!this.checkIfStillIsOnGameScreen()) {
@@ -55,7 +52,7 @@ public class CagandoNoBequinhoScreen extends GameScreen {
                 }
 
             }
-            sleepFor(300);
+            sleepFor(WAIT_FOR_REDRAW_IN_MILISECONDS);
         }
     }
 

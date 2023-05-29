@@ -93,7 +93,7 @@ public class MinibridgeGameServer extends GameServer {
         synchronized (cardPlayNotification) {
           // wait until object notifies - which relinquishes the lock on the object too
           try {
-            LOGGER.info("I am waiting for some thread to notify that it wants to play a card.");
+            LOGGER.trace("I am waiting for some thread to notify that it wants to play a card.");
             cardPlayNotification.wait(this.timeoutCardPlayNotification);
           } catch (InterruptedException e) {
             LOGGER.error(e);

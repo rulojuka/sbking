@@ -44,16 +44,15 @@ public class KingGameServer extends GameServer {
 
                 initializeNotifications();
                 this.sendInitializeDealAll();
-                LOGGER.info("Sleeping for 300ms waiting for clients to initialize its deals.");
-                sleepFor(300);
+                waitForClientsToPrepare();
                 if (this.shouldStop) {
                     return;
                 }
                 this.getSBKingServer().sendDealToTable(this.game.getCurrentDeal(), this.table);
-                sleepFor(300);
                 if (this.shouldStop) {
                     return;
                 }
+                waitForClientsToPrepare();
                 this.sendPositiveOrNegativeChooserAll();
 
                 synchronized (positiveOrNegativeNotification) {
@@ -88,10 +87,10 @@ public class KingGameServer extends GameServer {
                         + positiveOrNegativeNotification.getPositiveOrNegative().toString());
                 this.currentPositiveOrNegative = positiveOrNegativeNotification.getPositiveOrNegative();
                 this.sendPositiveOrNegativeAll();
-                sleepFor(300);
                 if (this.shouldStop) {
                     return;
                 }
+                waitForClientsToPrepare();
                 this.sendGameModeOrStrainChooserAll();
 
                 synchronized (gameModeOrStrainNotification) {
@@ -103,7 +102,7 @@ public class KingGameServer extends GameServer {
                                     "I am waiting for some thread to notify that it wants to choose game Mode Or Strain");
                             gameModeOrStrainNotification.wait(3000);
                             this.sendPositiveOrNegativeAll();
-                            sleepFor(300);
+                            waitForClientsToPrepare();
                             this.sendGameModeOrStrainChooserAll();
 
                         } catch (InterruptedException e) {
@@ -130,8 +129,6 @@ public class KingGameServer extends GameServer {
 
             } while (!shouldStop && !isRulesetPermitted);
 
-            LOGGER.info("Sleeping for 300ms waiting for everything come out right.");
-            sleepFor(300);
             if (this.shouldStop) {
                 return;
             }
@@ -141,8 +138,7 @@ public class KingGameServer extends GameServer {
             this.copyPlayersFromTableToDeal();
 
             this.dealHasChanged = true;
-            LOGGER.info("Sleeping for 300ms waiting for all clients to prepare themselves.");
-            sleepFor(300);
+            waitForClientsToPrepare();
             while (!shouldStop && !this.game.getCurrentDeal().isFinished()) {
                 if (this.dealHasChanged) {
                     LOGGER.info("Sending new 'round' of deals");
@@ -152,7 +148,7 @@ public class KingGameServer extends GameServer {
                 synchronized (cardPlayNotification) {
                     // wait until object notifies - which relinquishes the lock on the object too
                     try {
-                        LOGGER.info("I am waiting for some thread to notify that it wants to play a card.");
+                        LOGGER.trace("I am waiting for some thread to notify that it wants to play a card.");
                         cardPlayNotification.wait(this.timeoutCardPlayNotification);
                     } catch (InterruptedException e) {
                         LOGGER.error(e);
@@ -182,15 +178,13 @@ public class KingGameServer extends GameServer {
 
             this.game.finishDeal();
 
-            LOGGER.info("Sleeping for 300ms waiting for all clients to prepare themselves.");
-            sleepFor(300);
             if (this.shouldStop) {
                 return;
             }
+            waitForClientsToPrepare();
             this.sbkingServer.sendFinishDealToTable(this.table);
             LOGGER.info("Deal finished!");
-            LOGGER.info("Sleeping for 300ms waiting for all clients to prepare themselves.");
-            sleepFor(300);
+            waitForClientsToPrepare();
             if (this.shouldStop) {
                 return;
             }

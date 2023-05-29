@@ -42,8 +42,7 @@ public class PositiveKingGameServer extends GameServer {
             do {
                 this.gameModeOrStrainNotification = new GameModeOrStrainNotification();
                 this.positiveOrNegativeNotification = new PositiveOrNegativeNotification();
-                LOGGER.info("Sleeping for 300ms waiting for clients to initialize its deals.");
-                sleepFor(300);
+                waitForClientsToPrepare();
                 if (this.shouldStop) {
                     return;
                 }
@@ -53,10 +52,10 @@ public class PositiveKingGameServer extends GameServer {
                 this.copyPlayersFromTableToDeal();
 
                 this.sendInitializeDealAll();
-                sleepFor(200);
                 if (this.shouldStop) {
                     return;
                 }
+                waitForClientsToPrepare();
                 this.sendDealAll();
 
                 synchronized (gameModeOrStrainNotification) {
@@ -92,8 +91,7 @@ public class PositiveKingGameServer extends GameServer {
 
             } while (!shouldStop && !isRulesetPermitted);
 
-            LOGGER.info("Sleeping for 300ms waiting for everything come out right.");
-            sleepFor(300);
+            waitForClientsToPrepare();
             if (this.shouldStop) {
                 return;
             }
@@ -105,8 +103,7 @@ public class PositiveKingGameServer extends GameServer {
 
             this.dealHasChanged = true;
             while (!shouldStop && !this.game.getCurrentDeal().isFinished()) {
-                LOGGER.info("Sleeping for 300ms waiting for all clients to prepare themselves.");
-                sleepFor(300);
+                waitForClientsToPrepare();
                 if (this.shouldStop) {
                     return;
                 }
@@ -118,7 +115,7 @@ public class PositiveKingGameServer extends GameServer {
                 synchronized (cardPlayNotification) {
                     // wait until object notifies - which relinquishes the lock on the object too
                     try {
-                        LOGGER.info("I am waiting for some thread to notify that it wants to play a card.");
+                        LOGGER.trace("I am waiting for some thread to notify that it wants to play a card.");
                         cardPlayNotification.wait(this.timeoutCardPlayNotification);
                     } catch (InterruptedException e) {
                         LOGGER.error(e);
