@@ -54,4 +54,11 @@ class AppController {
         serverComponent.getSbKingServer().moveToSeat(direction, requestOnlyIdentifier.getUUID());
     }
 
+    @PostMapping("/player/nickname")
+    void setNickname(@RequestBody RequestWithString requestWithString) {
+        LOGGER.trace("setNickname");
+        serverComponent.getSbKingServer().setNickname(
+                requestWithString.getUUID(), requestWithString.getContent());
+    }
+
 }

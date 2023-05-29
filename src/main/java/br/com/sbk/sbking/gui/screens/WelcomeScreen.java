@@ -2,39 +2,25 @@ package br.com.sbk.sbking.gui.screens;
 
 import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import br.com.sbk.sbking.gui.frames.SBKingClientJFrame;
-import br.com.sbk.sbking.gui.painters.ConnectToServerPainter;
+import br.com.sbk.sbking.gui.painters.SetNicknameScreenPainter;
 import br.com.sbk.sbking.networking.client.SBKingClient;
-import br.com.sbk.sbking.networking.client.SBKingClientFactory;
-import br.com.sbk.sbking.networking.core.properties.FileProperties;
-import br.com.sbk.sbking.networking.core.properties.NetworkingProperties;
-import br.com.sbk.sbking.networking.core.properties.SystemProperties;
 
 public class WelcomeScreen implements SBKingScreen {
 
-  private NetworkingProperties networkingProperties;
   private boolean connectedToServer = false;
   private SBKingClient sbkingClient;
 
   private static final int WAIT_FOR_SERVER_MESSAGE_IN_MILISECONDS = 10;
 
-  public WelcomeScreen() {
+  public WelcomeScreen(SBKingClient sbkingClient) {
     super();
-    this.networkingProperties = new NetworkingProperties(new FileProperties(), new SystemProperties());
+    this.sbkingClient = sbkingClient;
   }
 
-  public void connectToServer(String nickname) {
-    String hostname = this.networkingProperties.getHost();
-    int port = this.networkingProperties.getPort();
-    if (isValidIP(hostname)) {
-      this.sbkingClient = SBKingClientFactory.createWithKryonetConnection(nickname, hostname, port);
-      this.connectedToServer = true;
-    } else {
-      LOGGER.error("Invalid IP"); // FIXME warn user about this.
-    }
+  public void setAndSendNickname(String nickname) {
+    this.sbkingClient.setNickname(nickname);
+    this.sbkingClient.sendNickname();
   }
 
   public boolean isConnectedToServer() {
@@ -45,23 +31,17 @@ public class WelcomeScreen implements SBKingScreen {
     return sbkingClient;
   }
 
-  private boolean isValidIP(String ipAddr) {
-    Pattern ptn = Pattern.compile("^(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})$");
-    Matcher mtch = ptn.matcher(ipAddr);
-    return mtch.find();
-  }
-
   @Override
   public void runAt(SBKingClientJFrame sbkingClientJFrame) {
     LOGGER.debug("Starting to paint WelcomeScreen");
-    sbkingClientJFrame.paintPainter(new ConnectToServerPainter(this));
+    sbkingClientJFrame.paintPainter(new SetNicknameScreenPainter(this));
     LOGGER.debug("Finished painting WelcomeScreen");
 
-    LOGGER.info("Waiting for connectedToServer to be true");
-    while (!connectedToServer) {
+    LOGGER.info("Waiting for nickname to be set");
+    while (!this.sbkingClient.isNicknameSet()) {
       sleepFor(WAIT_FOR_SERVER_MESSAGE_IN_MILISECONDS);
     }
-    LOGGER.info("connectedToServer is true. Leaving WelcomeScreen");
+    LOGGER.info("nicknameSet is true. Leaving WelcomeScreen");
   }
 
   private void sleepFor(int miliseconds) {

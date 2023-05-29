@@ -17,10 +17,11 @@ public class MainNetworkGame {
         ClientApplicationState.startAppState();
         SBKingClientJFrame sbkingClientJFrame = new SBKingClientJFrame();
 
-        WelcomeScreen welcomeScreen = new WelcomeScreen();
+        SBKingClient sbkingClient = ConnectToServer.connectToServer();
+
+        WelcomeScreen welcomeScreen = new WelcomeScreen(sbkingClient);
         welcomeScreen.runAt(sbkingClientJFrame);
 
-        SBKingClient sbkingClient = welcomeScreen.getSBKingClient();
         SBKingScreen currentScreen;
 
         SpectatorNamesUpdater tableUpdater = new SpectatorNamesUpdater(sbkingClient);

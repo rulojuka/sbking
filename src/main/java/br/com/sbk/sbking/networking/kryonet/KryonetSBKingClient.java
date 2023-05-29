@@ -4,6 +4,7 @@ import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 
 import com.esotericsoftware.kryonet.Client;
 
+import br.com.sbk.sbking.networking.client.SBKingClient;
 import br.com.sbk.sbking.networking.kryonet.messages.SBKingMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.AcceptClaimMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.ChooseGameModeOrStrainMessage;
@@ -13,25 +14,23 @@ import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.ClaimMessage
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.GetTableSpectatorsMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.GetTablesMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.RejectClaimMessage;
-import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.SetNicknameMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.UndoMessage;
 
 public class KryonetSBKingClient extends Client {
 
-  private String nickname;
+  private SBKingClient sbkingClient;
+
+  public SBKingClient getSbkingClient() {
+    return sbkingClient;
+  }
+
+  public void setSbkingClient(SBKingClient sbkingClient) {
+    this.sbkingClient = sbkingClient;
+  }
 
   private void sendMessage(SBKingMessage message) {
     LOGGER.debug("Sending " + message.getClass().toString() + " to server.");
     this.sendTCP(message);
-  }
-
-  public void setAndSendNickname(String nickname) {
-    this.nickname = nickname;
-    this.sendMessage(new SetNicknameMessage(nickname));
-  }
-
-  public void sendNickname() {
-    this.sendMessage(new SetNicknameMessage(this.nickname));
   }
 
   public void sendChoosePositiveMessage() {

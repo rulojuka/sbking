@@ -15,7 +15,6 @@ import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.ClaimMessage
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.GetTableSpectatorsMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.GetTablesMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.RejectClaimMessage;
-import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.SetNicknameMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.UndoMessage;
 import br.com.sbk.sbking.networking.server.SBKingServer;
 
@@ -48,9 +47,7 @@ public class SBKingServerMessageConsumer implements Runnable {
   private void consume(SBKingMessage message, UUID playerIdentifier) {
     LOGGER.trace("Entered server --consume--");
     Object content = message.getContent();
-    if (message instanceof SetNicknameMessage) {
-      this.sbkingServer.setNickname(playerIdentifier, (String) content);
-    } else if (message instanceof ChoosePositiveMessage) {
+    if (message instanceof ChoosePositiveMessage) {
       this.sbkingServer.choosePositive(playerIdentifier);
     } else if (message instanceof ChooseNegativeMessage) {
       this.sbkingServer.chooseNegative(playerIdentifier);

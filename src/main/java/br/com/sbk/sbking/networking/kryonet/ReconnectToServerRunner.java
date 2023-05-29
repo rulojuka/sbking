@@ -5,10 +5,12 @@ import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 import java.io.IOException;
 
 import br.com.sbk.sbking.core.constants.ErrorCodes;
+import br.com.sbk.sbking.networking.client.SBKingClient;
 
 public class ReconnectToServerRunner implements Runnable {
 
   private KryonetSBKingClient kryonetSBKingClient;
+  private SBKingClient sbkingClient;
 
   public ReconnectToServerRunner(KryonetSBKingClient kryonetSBKingClient) {
     this.kryonetSBKingClient = kryonetSBKingClient;
@@ -19,7 +21,7 @@ public class ReconnectToServerRunner implements Runnable {
     try {
       LOGGER.info("Reconnecting: ");
       kryonetSBKingClient.reconnect();
-      kryonetSBKingClient.sendNickname();
+      kryonetSBKingClient.getSbkingClient().sendNickname();
       LOGGER.info("Reconnected and sent nickname.");
     } catch (IOException ex) {
       LOGGER.fatal("Could not reconnect to server");

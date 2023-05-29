@@ -40,6 +40,8 @@ public class SBKingClient {
 
     private List<String> spectatorNames;
 
+    private String nickname;
+
     public void setActionListener(ClientActionListener actionListener) {
         this.actionListener = actionListener;
     }
@@ -53,7 +55,11 @@ public class SBKingClient {
     }
 
     public void setNickname(String nickname) {
-        this.sendSetNickname(nickname);
+        this.nickname = nickname;
+    }
+
+    public boolean isNicknameSet() {
+        return this.nickname != null;
     }
 
     public void initializeDirection(Direction direction) {
@@ -206,8 +212,8 @@ public class SBKingClient {
         this.kryonetSBKingClient.sendChooseNegativeMessage();
     }
 
-    public void sendSetNickname(String nickname) {
-        this.kryonetSBKingClient.setAndSendNickname(nickname);
+    public void sendNickname() {
+        this.restHTTPClient.sendNickname(this.nickname);
     }
 
     public void sendGetTables() {

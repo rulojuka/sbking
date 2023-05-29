@@ -9,12 +9,12 @@ import br.com.sbk.sbking.gui.elements.ConnectToServerElement;
 import br.com.sbk.sbking.gui.jelements.SBKingButton;
 import br.com.sbk.sbking.gui.screens.WelcomeScreen;
 
-public class ConnectToServerPainter implements Painter {
+public class SetNicknameScreenPainter implements Painter {
 
-    private WelcomeScreen connectToNetworkScreen;
+    private WelcomeScreen welcomeScreen;
 
-    public ConnectToServerPainter(WelcomeScreen connectToNetworkScreen) {
-        this.connectToNetworkScreen = connectToNetworkScreen;
+    public SetNicknameScreenPainter(WelcomeScreen welcomeScreen) {
+        this.welcomeScreen = welcomeScreen;
     }
 
     @Override
@@ -38,7 +38,7 @@ public class ConnectToServerPainter implements Painter {
                     nickname = nicknameTextField.getText();
                 }
             }
-            connectToNetworkScreen.connectToServer(nickname);
+            welcomeScreen.setAndSendNickname(nickname);
         }
     }
 

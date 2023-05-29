@@ -4,7 +4,10 @@ import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 
 import java.util.UUID;
 
+import org.apache.http.HttpMessage;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
+import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -31,12 +34,19 @@ public class RestHTTPClient {
         this.identifier = UUID.fromString(identifier);
     }
 
+    public String getIdentifierString() {
+        if (this.identifier == null) {
+            throw new IdentifierNotSetException();
+        }
+        return identifier.toString();
+    }
+
     public void play(Card card) {
         String url = this.baseUrl + "playcard/";
 
         String body = String
                 .format("{\"rank\":\"%s\",\"suit\":\"%s\",\"identifier\":\"%s\"}",
-                        card.getRank().getSymbol(), card.getSuit().getSymbol(), identifier.toString());
+                        card.getRank().getSymbol(), card.getSuit().getSymbol(), this.getIdentifierString());
 
         createAndSendPostRequest(url, body);
     }
@@ -45,49 +55,60 @@ public class RestHTTPClient {
         String url = this.baseUrl + "table/";
         String body = String
                 .format("{\"content\":\"%s\",\"identifier\":\"%s\"}",
-                        gameName, identifier.toString());
+                        gameName, this.getIdentifierString());
         createAndSendPostRequest(url, body);
     }
 
     public void sendJoinTableMessage(UUID tableId) {
         String url = this.baseUrl + "table/join/" + tableId.toString();
         String body = String
-                .format("{\"identifier\":\"%s\"}", identifier.toString());
+                .format("{\"identifier\":\"%s\"}", this.getIdentifierString());
         createAndSendPostRequest(url, body);
     }
 
     public void leaveTable() {
         String url = this.baseUrl + "table/leave";
         String body = String
-                .format("{\"identifier\":\"%s\"}", identifier.toString());
+                .format("{\"identifier\":\"%s\"}", this.getIdentifierString());
         createAndSendPostRequest(url, body);
     }
 
     public void moveToSeat(Direction direction) {
         String url = this.baseUrl + "/moveToSeat/" + direction.getAbbreviation();
         String body = String
-                .format("{\"identifier\":\"%s\"}", identifier.toString());
+                .format("{\"identifier\":\"%s\"}", this.getIdentifierString());
+        createAndSendPostRequest(url, body);
+    }
+
+    public void sendNickname(String nickname) {
+        String url = this.baseUrl + "/player/nickname/";
+        String body = String
+                .format("{\"content\":\"%s\",\"identifier\":\"%s\"}", nickname, this.getIdentifierString());
         createAndSendPostRequest(url, body);
     }
 
     private void createAndSendPostRequest(String url, String body) {
-        LOGGER.info("URL: " + url);
+        LOGGER.info("[POST] URL: " + url);
         LOGGER.info("Body: " + body);
-        if (this.identifier == null) {
-            throw new IdentifierNotSetException();
-        }
-        sendPostRequest(createPostRequest(url, body));
+        HttpPost httpPost = new HttpPost(url);
+        this.fillRequestWithBodyAndJson(httpPost, body);
+        sendRequest(httpPost);
     }
 
-    private HttpPost createPostRequest(String url, String body) {
-        final HttpPost httpPost = new HttpPost(url);
+    private void createAndSendPutRequest(String url, String body) {
+        LOGGER.info("[PUT] URL: " + url);
+        LOGGER.info("Body: " + body);
+        HttpPut httpPut = new HttpPut(url);
+        // this.fillRequestWithBodyAndJson(httpPost, body);
+        // sendRequest(httpPost);
+    }
 
+    private void fillRequestWithBodyAndJson(HttpPost httpPost, String body) {
         StringEntity requestEntity = new StringEntity(
                 body,
                 ContentType.APPLICATION_JSON);
 
-        httpPost.setHeader("Accept", "application/json");
-        httpPost.setHeader("Content-Type", "application/json");
+        this.setJsonHeaders(httpPost);
 
         try {
             httpPost.setEntity(requestEntity);
@@ -95,12 +116,16 @@ public class RestHTTPClient {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        return httpPost;
     }
 
-    private void sendPostRequest(HttpPost httpPost) {
+    private void setJsonHeaders(HttpMessage httpMessage) {
+        httpMessage.setHeader("Accept", "application/json");
+        httpMessage.setHeader("Content-Type", "application/json");
+    }
+
+    private void sendRequest(HttpUriRequest request) {
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
-            httpClient.execute(httpPost, response -> {
+            httpClient.execute(request, response -> {
                 return response;
             });
         } catch (Exception e) {

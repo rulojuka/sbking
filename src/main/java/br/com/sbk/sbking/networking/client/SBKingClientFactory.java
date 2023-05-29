@@ -18,7 +18,7 @@ import br.com.sbk.sbking.networking.rest.RestHTTPClient;
 
 public class SBKingClientFactory {
 
-  public static SBKingClient createWithKryonetConnection(String nickname, String hostname, int port) {
+  public static SBKingClient createWithKryonetConnection(String hostname, int port) {
     SBKingClient sbKingClient = new SBKingClient();
     RestHTTPClient restHTTPClient = new RestHTTPClient(hostname);
     sbKingClient.setRestHTTPClient(restHTTPClient);
@@ -44,7 +44,6 @@ public class SBKingClientFactory {
       System.exit(ErrorCodes.COULD_NOT_CONNECT_TO_SERVER);
     }
     sbKingClient.setKryonetSBKingClient(kryonetSBKingClient);
-    sbKingClient.sendSetNickname(nickname);
     return sbKingClient;
   }
 
