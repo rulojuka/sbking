@@ -47,9 +47,7 @@ public class KryonetServerListenerFactory {
         TextMessage response = new TextMessage("You just connected! Welcome to SBKing!");
         connection.sendTCP(response);
 
-        TextMessage yourIdentifierIs = new TextMessage("Your identifier is: " + connectionWithPlayer.getIdentifier());
-        connection.sendTCP(yourIdentifierIs);
-
+        kryonetSBKingServer.sendYourIdIsTo(connectionWithPlayer.getIdentifier());
         kryonetSBKingServer.sendYourTableIsTo(null, connectionWithPlayer.getIdentifier());
       }
 

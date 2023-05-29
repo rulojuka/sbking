@@ -251,4 +251,8 @@ public class SBKingClient {
         this.kryonetSBKingClient.sendGetTableSpectators();
     }
 
+    public void initializeId(String id) {
+        this.kryonetSBKingClient.setIdentifier(id);
+    }
+
 }

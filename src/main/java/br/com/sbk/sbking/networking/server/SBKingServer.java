@@ -341,4 +341,8 @@ public class SBKingServer {
     }
   }
 
+  public void sendYourIdIsTo(UUID playerIdentifier) {
+    this.kryonetSBKingServer.sendYourIdIsTo(playerIdentifier);
+  }
+
 }

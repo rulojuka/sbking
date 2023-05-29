@@ -24,6 +24,7 @@ import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.PositiveOrNe
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.TextMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.ValidRulesetMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.YourDirectionIsMessage;
+import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.YourIdIsMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.YourTableIsMessage;
 
 public class SBKingClientMessageConsumer implements Runnable {
@@ -84,6 +85,8 @@ public class SBKingClientMessageConsumer implements Runnable {
       this.sbkingClient.setTables((List<LobbyScreenTableDTO>) content);
     } else if (message instanceof GetTableSpectatorsResponseMessage) {
       this.sbkingClient.setSpectatorNames((List<String>) content);
+    } else if (message instanceof YourIdIsMessage) {
+      this.sbkingClient.initializeId((String) content);
     } else {
       LOGGER.error("Could not understand message.");
       LOGGER.error(message);

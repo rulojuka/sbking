@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
+import org.objenesis.instantiator.ObjectInstantiator;
+
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.Registration;
 import com.esotericsoftware.kryonet.EndPoint;
-
-import org.objenesis.instantiator.ObjectInstantiator;
 
 import br.com.sbk.sbking.core.Board;
 import br.com.sbk.sbking.core.Card;
@@ -51,7 +51,6 @@ import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.GetTablesMes
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.JoinTableMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.LeaveTableMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.MoveToSeatMessage;
-import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.PlayCardMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.RejectClaimMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.SetNicknameMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.UndoMessage;
@@ -69,6 +68,7 @@ import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.PositiveOrNe
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.TextMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.ValidRulesetMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.YourDirectionIsMessage;
+import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.YourIdIsMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.YourTableIsMessage;
 
 public class KryonetUtils {
@@ -142,6 +142,7 @@ public class KryonetUtils {
     kryo.register(UndoMessage.class);
     kryo.register(ValidRulesetMessage.class);
     kryo.register(YourDirectionIsMessage.class);
+    kryo.register(YourIdIsMessage.class);
     kryo.register(YourTableIsMessage.class);
 
     // Client to Server Message classes
@@ -153,7 +154,6 @@ public class KryonetUtils {
     kryo.register(JoinTableMessage.class);
     kryo.register(LeaveTableMessage.class);
     kryo.register(MoveToSeatMessage.class);
-    kryo.register(PlayCardMessage.class);
     kryo.register(SetNicknameMessage.class);
   }
 }

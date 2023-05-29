@@ -5,7 +5,6 @@ import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 import java.util.UUID;
 import java.util.concurrent.BlockingQueue;
 
-import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.networking.kryonet.messages.GameServerFromGameNameIdentifier;
 import br.com.sbk.sbking.networking.kryonet.messages.SBKingMessage;
@@ -21,7 +20,6 @@ import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.GetTablesMes
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.JoinTableMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.LeaveTableMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.MoveToSeatMessage;
-import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.PlayCardMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.RejectClaimMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.SetNicknameMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.UndoMessage;
@@ -59,8 +57,6 @@ public class SBKingServerMessageConsumer implements Runnable {
     Object content = message.getContent();
     if (message instanceof SetNicknameMessage) {
       this.sbkingServer.setNickname(playerIdentifier, (String) content);
-    } else if (message instanceof PlayCardMessage) {
-      this.sbkingServer.play((Card) content, playerIdentifier);
     } else if (message instanceof MoveToSeatMessage) {
       this.sbkingServer.moveToSeat((Direction) content, playerIdentifier);
     } else if (message instanceof ChoosePositiveMessage) {

@@ -13,8 +13,8 @@ public class KryonetSBKingClientActionListener {
     this.client = client;
   }
 
-  public void play(Card card) {
-    client.sendCard(card);
+  public void playHttp(Card card) {
+    client.sendHttpPlayCardMessage(card);
   }
 
   public void sitOrLeave(Direction direction) {

@@ -31,7 +31,7 @@ public class ClientActionListener implements java.awt.event.ActionListener {
             CardButton clickedCardButton = (CardButton) source;
             Card card = clickedCardButton.getCard();
             try {
-                client.play(card);
+                client.playHttp(card);
             } catch (RuntimeException e) {
                 throw e;
             }

@@ -20,22 +20,23 @@ import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.GetTablesMes
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.JoinTableMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.LeaveTableMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.MoveToSeatMessage;
-import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.PlayCardMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.RejectClaimMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.SetNicknameMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.UndoMessage;
+import br.com.sbk.sbking.networking.rest.RestHTTPClient;
 
 public class KryonetSBKingClient extends Client {
 
   private String nickname;
+  private UUID identifier;
 
   private void sendMessage(SBKingMessage message) {
     LOGGER.debug("Sending " + message.getClass().toString() + " to server.");
     this.sendTCP(message);
   }
 
-  public void sendCard(Card card) {
-    this.sendMessage(new PlayCardMessage(card));
+  public void sendHttpPlayCardMessage(Card card) {
+    new RestHTTPClient(this.getRemoteAddressTCP().getHostString()).sendHttpPlayCardMessage(card, identifier);
   }
 
   public void sitOrLeave(Direction direction) {
@@ -97,6 +98,10 @@ public class KryonetSBKingClient extends Client {
 
   public void sendGetTableSpectators() {
     this.sendMessage(new GetTableSpectatorsMessage());
+  }
+
+  public void setIdentifier(String id) {
+    this.identifier = UUID.fromString(id);
   }
 
 }
