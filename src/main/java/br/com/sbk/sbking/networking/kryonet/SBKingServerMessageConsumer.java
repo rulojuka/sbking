@@ -6,7 +6,6 @@ import java.util.UUID;
 import java.util.concurrent.BlockingQueue;
 
 import br.com.sbk.sbking.core.Direction;
-import br.com.sbk.sbking.networking.kryonet.messages.GameServerFromGameNameIdentifier;
 import br.com.sbk.sbking.networking.kryonet.messages.SBKingMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.SBKingMessageWithIdentifier;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.AcceptClaimMessage;
@@ -14,7 +13,6 @@ import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.ChooseGameMo
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.ChooseNegativeMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.ChoosePositiveMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.ClaimMessage;
-import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.CreateTableMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.GetTableSpectatorsMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.GetTablesMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.JoinTableMessage;
@@ -24,7 +22,6 @@ import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.RejectClaimM
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.SetNicknameMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.UndoMessage;
 import br.com.sbk.sbking.networking.server.SBKingServer;
-import br.com.sbk.sbking.networking.server.gameserver.GameServer;
 
 public class SBKingServerMessageConsumer implements Runnable {
 
@@ -67,9 +64,6 @@ public class SBKingServerMessageConsumer implements Runnable {
       this.sbkingServer.chooseGameModeOrStrain((String) content, playerIdentifier);
     } else if (message instanceof UndoMessage) {
       this.sbkingServer.undo(playerIdentifier);
-    } else if (message instanceof CreateTableMessage) {
-      Class<? extends GameServer> gameServerClass = GameServerFromGameNameIdentifier.identify((String) content);
-      this.sbkingServer.createTable(gameServerClass, playerIdentifier);
     } else if (message instanceof GetTablesMessage) {
       this.sbkingServer.sendTablesTo(playerIdentifier);
     } else if (message instanceof JoinTableMessage) {

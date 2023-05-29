@@ -14,7 +14,6 @@ import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.ChooseGameMo
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.ChooseNegativeMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.ChoosePositiveMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.ClaimMessage;
-import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.CreateTableMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.GetTableSpectatorsMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.GetTablesMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.JoinTableMessage;
@@ -36,7 +35,7 @@ public class KryonetSBKingClient extends Client {
   }
 
   public void sendHttpPlayCardMessage(Card card) {
-    new RestHTTPClient(this.getRemoteAddressTCP().getHostString()).sendHttpPlayCardMessage(card, identifier);
+    new RestHTTPClient(this.getRemoteAddressTCP().getHostString(), identifier).sendHttpPlayCardMessage(card);
   }
 
   public void sitOrLeave(Direction direction) {
@@ -70,10 +69,6 @@ public class KryonetSBKingClient extends Client {
 
   public void sendClaim() {
     this.sendMessage(new ClaimMessage());
-  }
-
-  public void sendCreateTableMessage(String gameName) {
-    this.sendMessage(new CreateTableMessage(gameName));
   }
 
   public void sendGetTablesMessage() {

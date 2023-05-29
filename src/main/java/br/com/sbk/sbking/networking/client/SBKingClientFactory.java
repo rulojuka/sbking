@@ -14,11 +14,13 @@ import br.com.sbk.sbking.networking.kryonet.KryonetSBKingClient;
 import br.com.sbk.sbking.networking.kryonet.KryonetSBKingClientActionListener;
 import br.com.sbk.sbking.networking.kryonet.SBKingClientMessageConsumer;
 import br.com.sbk.sbking.networking.kryonet.messages.SBKingMessage;
+import br.com.sbk.sbking.networking.rest.RestHTTPClient;
 
 public class SBKingClientFactory {
 
   public static SBKingClient createWithKryonetConnection(String nickname, String hostname, int port) {
     SBKingClient sbKingClient = new SBKingClient();
+    sbKingClient.setRestHTTPClient(new RestHTTPClient(hostname));
     BlockingQueue<SBKingMessage> clientMessageQueue = new LinkedBlockingQueue<SBKingMessage>();
     KryonetSBKingClient kryonetSBKingClient = KryonetClientFactory.getRegisteredClient();
     kryonetSBKingClient

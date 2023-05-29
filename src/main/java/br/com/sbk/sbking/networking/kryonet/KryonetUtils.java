@@ -45,7 +45,6 @@ import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.ChooseGameMo
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.ChooseNegativeMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.ChoosePositiveMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.ClaimMessage;
-import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.CreateTableMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.GetTableSpectatorsMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.GetTablesMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.JoinTableMessage;
@@ -149,7 +148,6 @@ public class KryonetUtils {
     kryo.register(ChooseGameModeOrStrainMessage.class);
     kryo.register(ChooseNegativeMessage.class);
     kryo.register(ChoosePositiveMessage.class);
-    kryo.register(CreateTableMessage.class);
     kryo.register(GetTablesMessage.class);
     kryo.register(JoinTableMessage.class);
     kryo.register(LeaveTableMessage.class);

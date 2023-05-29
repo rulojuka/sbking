@@ -9,6 +9,7 @@ import br.com.sbk.sbking.gui.listeners.ClientActionListener;
 import br.com.sbk.sbking.gui.models.KingGameScoreboard;
 import br.com.sbk.sbking.gui.models.PositiveOrNegative;
 import br.com.sbk.sbking.networking.kryonet.KryonetSBKingClient;
+import br.com.sbk.sbking.networking.rest.RestHTTPClient;
 
 public class SBKingClient {
 
@@ -31,6 +32,8 @@ public class SBKingClient {
 
     private KryonetSBKingClient kryonetSBKingClient;
 
+    private RestHTTPClient restHTTPClient;
+
     private String gameName;
 
     private List<LobbyScreenTableDTO> tables;
@@ -43,6 +46,10 @@ public class SBKingClient {
 
     public void setKryonetSBKingClient(KryonetSBKingClient kryonetSBKingClient) {
         this.kryonetSBKingClient = kryonetSBKingClient;
+    }
+
+    public void setRestHTTPClient(RestHTTPClient restHTTPClient) {
+        this.restHTTPClient = restHTTPClient;
     }
 
     public void setNickname(String nickname) {
@@ -220,7 +227,7 @@ public class SBKingClient {
     }
 
     public void sendCreateTable(String gameName) {
-        this.kryonetSBKingClient.sendCreateTableMessage(gameName);
+        this.restHTTPClient.sendCreateTableMessage(gameName);
     }
 
     public void setGameName(String gameName) {
@@ -253,6 +260,7 @@ public class SBKingClient {
 
     public void initializeId(String id) {
         this.kryonetSBKingClient.setIdentifier(id);
+        this.restHTTPClient.setIdentifier(id);
     }
 
 }
