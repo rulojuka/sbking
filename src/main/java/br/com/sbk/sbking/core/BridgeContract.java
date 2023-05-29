@@ -1,15 +1,23 @@
 package br.com.sbk.sbking.core;
 
+import java.util.HashMap;
 import java.util.Map;
-import static java.util.Map.entry;
 
 public class BridgeContract {
   private final int level;
   private final Strain strain;
   private final boolean doubled;
   private final boolean redoubled;
-  private static Map<Strain, Integer> gameLevel = Map.ofEntries(entry(Strain.CLUBS, 5), entry(Strain.DIAMONDS, 5),
-      entry(Strain.HEARTS, 4), entry(Strain.SPADES, 4), entry(Strain.NOTRUMPS, 3));
+  private static Map<Strain, Integer> gameLevel;
+
+  static {
+    gameLevel = new HashMap<Strain, Integer>();
+    gameLevel.put(Strain.CLUBS, 5);
+    gameLevel.put(Strain.DIAMONDS, 5);
+    gameLevel.put(Strain.HEARTS, 4);
+    gameLevel.put(Strain.SPADES, 4);
+    gameLevel.put(Strain.NOTRUMPS, 3);
+  }
 
   public BridgeContract(int level, Strain strain, boolean doubled, boolean redoubled) {
     this.validateArguments(level, strain, doubled, redoubled);

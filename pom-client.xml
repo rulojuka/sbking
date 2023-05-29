@@ -119,7 +119,7 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.11.0</version>
 				<configuration>
-					<release>11</release>
+					<release>8</release> <!-- Target release -->
 					<excludes>
 						<exclude>br/com/sbk/sbking/networking/server/*.java</exclude>
 						<exclude>br/com/sbk/sbking/persistence/*.java</exclude>

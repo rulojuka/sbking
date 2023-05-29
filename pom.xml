@@ -182,7 +182,7 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.11.0</version>
 				<configuration>
-					<release>11</release>
+					<release>11</release> <!-- Target release -->
 					<includes> <!-- Just being explicit -->
 						<include>br/com/sbk/sbking/**/*.java</include>
 					</includes>
