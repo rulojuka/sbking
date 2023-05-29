@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.networking.kryonet.messages.GameServerFromGameNameIdentifier;
 import br.com.sbk.sbking.networking.server.gameserver.GameServer;
 
@@ -43,6 +44,14 @@ class AppController {
     void leaveTable(@RequestBody RequestOnlyIdentifier requestOnlyIdentifier) {
         LOGGER.trace("leaveTable");
         serverComponent.getSbKingServer().leaveTable(requestOnlyIdentifier.getUUID());
+    }
+
+    @PostMapping("/moveToSeat/{directionAbbreviation}")
+    void moveToSeat(@PathVariable String directionAbbreviation,
+            @RequestBody RequestOnlyIdentifier requestOnlyIdentifier) {
+        LOGGER.trace("moveToSeat");
+        Direction direction = Direction.getFromAbbreviation(directionAbbreviation.charAt(0));
+        serverComponent.getSbKingServer().moveToSeat(direction, requestOnlyIdentifier.getUUID());
     }
 
 }

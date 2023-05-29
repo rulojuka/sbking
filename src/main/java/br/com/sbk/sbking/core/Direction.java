@@ -1,5 +1,7 @@
 package br.com.sbk.sbking.core;
 
+import br.com.sbk.sbking.core.exceptions.DirectionDoesNotExist;
+
 public enum Direction {
 
     // Clockwise order
@@ -74,5 +76,14 @@ public enum Direction {
             return vals.length + result;
         }
         return result;
+    }
+
+    public static Direction getFromAbbreviation(char abbreviation) {
+        for (Direction direction : vals) {
+            if (direction.getAbbreviation() == abbreviation) {
+                return direction;
+            }
+        }
+        throw new DirectionDoesNotExist();
     }
 }

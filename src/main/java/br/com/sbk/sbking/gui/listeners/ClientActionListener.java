@@ -41,7 +41,7 @@ public class ClientActionListener implements java.awt.event.ActionListener {
         } else if (source instanceof SitOrLeaveButton) {
             SitOrLeaveButton clickedSitOrLeaveButton = (SitOrLeaveButton) source;
             Direction direction = (Direction) clickedSitOrLeaveButton.getClientProperty("direction");
-            client.sitOrLeave(direction);
+            restClient.moveToSeat(direction);
         } else if (source instanceof UndoButton) {
             client.undo();
         } else if (source instanceof ClaimButton) {

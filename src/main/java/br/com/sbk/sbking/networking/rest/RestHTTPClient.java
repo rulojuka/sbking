@@ -11,6 +11,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 
 import br.com.sbk.sbking.core.Card;
+import br.com.sbk.sbking.core.Direction;
 
 public class RestHTTPClient {
 
@@ -57,6 +58,13 @@ public class RestHTTPClient {
 
     public void leaveTable() {
         String url = this.baseUrl + "table/leave";
+        String body = String
+                .format("{\"identifier\":\"%s\"}", identifier.toString());
+        createAndSendPostRequest(url, body);
+    }
+
+    public void moveToSeat(Direction direction) {
+        String url = this.baseUrl + "/moveToSeat/" + direction.getAbbreviation();
         String body = String
                 .format("{\"identifier\":\"%s\"}", identifier.toString());
         createAndSendPostRequest(url, body);

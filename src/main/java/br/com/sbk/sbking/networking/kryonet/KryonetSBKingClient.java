@@ -2,11 +2,8 @@ package br.com.sbk.sbking.networking.kryonet;
 
 import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 
-import java.util.UUID;
-
 import com.esotericsoftware.kryonet.Client;
 
-import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.networking.kryonet.messages.SBKingMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.AcceptClaimMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.ChooseGameModeOrStrainMessage;
@@ -15,7 +12,6 @@ import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.ChoosePositi
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.ClaimMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.GetTableSpectatorsMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.GetTablesMessage;
-import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.MoveToSeatMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.RejectClaimMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.SetNicknameMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.UndoMessage;
@@ -23,15 +19,10 @@ import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.UndoMessage;
 public class KryonetSBKingClient extends Client {
 
   private String nickname;
-  private UUID identifier;
 
   private void sendMessage(SBKingMessage message) {
     LOGGER.debug("Sending " + message.getClass().toString() + " to server.");
     this.sendTCP(message);
-  }
-
-  public void sitOrLeave(Direction direction) {
-    this.sendMessage(new MoveToSeatMessage(direction));
   }
 
   public void setAndSendNickname(String nickname) {
@@ -77,10 +68,6 @@ public class KryonetSBKingClient extends Client {
 
   public void sendGetTableSpectators() {
     this.sendMessage(new GetTableSpectatorsMessage());
-  }
-
-  public void setIdentifier(String id) {
-    this.identifier = UUID.fromString(id);
   }
 
 }

@@ -259,7 +259,6 @@ public class SBKingClient {
     }
 
     public void initializeId(String id) {
-        this.kryonetSBKingClient.setIdentifier(id);
         this.restHTTPClient.setIdentifier(id);
     }
 
