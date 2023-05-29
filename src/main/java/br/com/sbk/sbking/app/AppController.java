@@ -7,6 +7,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -54,7 +55,7 @@ class AppController {
         serverComponent.getSbKingServer().moveToSeat(direction, requestOnlyIdentifier.getUUID());
     }
 
-    @PostMapping("/player/nickname")
+    @PutMapping("/player/nickname")
     void setNickname(@RequestBody RequestWithString requestWithString) {
         LOGGER.trace("setNickname");
         serverComponent.getSbKingServer().setNickname(

@@ -5,6 +5,7 @@ import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 import java.util.UUID;
 
 import org.apache.http.HttpMessage;
+import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.methods.HttpUriRequest;
@@ -74,17 +75,17 @@ public class RestHTTPClient {
     }
 
     public void moveToSeat(Direction direction) {
-        String url = this.baseUrl + "/moveToSeat/" + direction.getAbbreviation();
+        String url = this.baseUrl + "moveToSeat/" + direction.getAbbreviation();
         String body = String
                 .format("{\"identifier\":\"%s\"}", this.getIdentifierString());
         createAndSendPostRequest(url, body);
     }
 
     public void sendNickname(String nickname) {
-        String url = this.baseUrl + "/player/nickname/";
+        String url = this.baseUrl + "player/nickname/";
         String body = String
                 .format("{\"content\":\"%s\",\"identifier\":\"%s\"}", nickname, this.getIdentifierString());
-        createAndSendPostRequest(url, body);
+        createAndSendPutRequest(url, body);
     }
 
     private void createAndSendPostRequest(String url, String body) {
@@ -99,23 +100,16 @@ public class RestHTTPClient {
         LOGGER.info("[PUT] URL: " + url);
         LOGGER.info("Body: " + body);
         HttpPut httpPut = new HttpPut(url);
-        // this.fillRequestWithBodyAndJson(httpPost, body);
-        // sendRequest(httpPost);
+        this.fillRequestWithBodyAndJson(httpPut, body);
+        sendRequest(httpPut);
     }
 
-    private void fillRequestWithBodyAndJson(HttpPost httpPost, String body) {
+    private void fillRequestWithBodyAndJson(HttpEntityEnclosingRequestBase requestBase, String body) {
         StringEntity requestEntity = new StringEntity(
                 body,
                 ContentType.APPLICATION_JSON);
-
-        this.setJsonHeaders(httpPost);
-
-        try {
-            httpPost.setEntity(requestEntity);
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        this.setJsonHeaders(requestBase);
+        requestBase.setEntity(requestEntity);
     }
 
     private void setJsonHeaders(HttpMessage httpMessage) {
@@ -129,8 +123,7 @@ public class RestHTTPClient {
                 return response;
             });
         } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            throw new CouldNotSendRequestException(e);
         }
     }
 
