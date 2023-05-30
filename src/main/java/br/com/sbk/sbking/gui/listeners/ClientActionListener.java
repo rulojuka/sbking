@@ -45,11 +45,11 @@ public class ClientActionListener implements java.awt.event.ActionListener {
         } else if (source instanceof UndoButton) {
             client.undo();
         } else if (source instanceof ClaimButton) {
-            client.claim();
+            restClient.claim();
         } else if (source instanceof AcceptClaimButton) {
-            client.acceptClaim();
+            restClient.handleClaim(true);
         } else if (source instanceof RejectClaimButton) {
-            client.rejectClaim();
+            restClient.handleClaim(false);
         } else if (source instanceof JoinTableButton) {
             JoinTableButton button = (JoinTableButton) source;
             UUID tableId = (UUID) button.getClientProperty("tableId");

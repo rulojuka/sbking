@@ -43,7 +43,7 @@ public class RestHTTPClient {
     }
 
     public void play(Card card) {
-        String url = this.baseUrl + "playcard/";
+        String url = this.baseUrl + "playcard";
 
         String body = String
                 .format("{\"rank\":\"%s\",\"suit\":\"%s\",\"identifier\":\"%s\"}",
@@ -53,7 +53,7 @@ public class RestHTTPClient {
     }
 
     public void sendCreateTableMessage(String gameName) {
-        String url = this.baseUrl + "table/";
+        String url = this.baseUrl + "table";
         String body = String
                 .format("{\"content\":\"%s\",\"identifier\":\"%s\"}",
                         gameName, this.getIdentifierString());
@@ -82,10 +82,24 @@ public class RestHTTPClient {
     }
 
     public void sendNickname(String nickname) {
-        String url = this.baseUrl + "player/nickname/";
+        String url = this.baseUrl + "player/nickname";
         String body = String
                 .format("{\"content\":\"%s\",\"identifier\":\"%s\"}", nickname, this.getIdentifierString());
         createAndSendPutRequest(url, body);
+    }
+
+    public void claim() {
+        String url = this.baseUrl + "claim";
+        String body = String
+                .format("{\"identifier\":\"%s\"}", this.getIdentifierString());
+        createAndSendPostRequest(url, body);
+    }
+
+    public void handleClaim(boolean accept) {
+        String url = this.baseUrl + "claim/" + accept;
+        String body = String
+                .format("{\"identifier\":\"%s\"}", this.getIdentifierString());
+        createAndSendPostRequest(url, body);
     }
 
     private void createAndSendPostRequest(String url, String body) {

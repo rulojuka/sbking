@@ -7,14 +7,11 @@ import java.util.concurrent.BlockingQueue;
 
 import br.com.sbk.sbking.networking.kryonet.messages.SBKingMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.SBKingMessageWithIdentifier;
-import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.AcceptClaimMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.ChooseGameModeOrStrainMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.ChooseNegativeMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.ChoosePositiveMessage;
-import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.ClaimMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.GetTableSpectatorsMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.GetTablesMessage;
-import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.RejectClaimMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.UndoMessage;
 import br.com.sbk.sbking.networking.server.SBKingServer;
 
@@ -57,12 +54,6 @@ public class SBKingServerMessageConsumer implements Runnable {
       this.sbkingServer.undo(playerIdentifier);
     } else if (message instanceof GetTablesMessage) {
       this.sbkingServer.sendTablesTo(playerIdentifier);
-    } else if (message instanceof ClaimMessage) {
-      this.sbkingServer.claim(playerIdentifier);
-    } else if (message instanceof AcceptClaimMessage) {
-      this.sbkingServer.acceptClaim(playerIdentifier);
-    } else if (message instanceof RejectClaimMessage) {
-      this.sbkingServer.rejectClaim(playerIdentifier);
     } else if (message instanceof GetTableSpectatorsMessage) {
       this.sbkingServer.sendSpectatorsTo(playerIdentifier);
     } else {

@@ -12,16 +12,4 @@ public class KryonetSBKingClientActionListener {
     client.sendUndo();
   }
 
-  public void claim() {
-    client.sendClaim();
-  }
-
-  public void acceptClaim() {
-    client.sendAcceptClaim();
-  }
-
-  public void rejectClaim() {
-    client.sendRejectClaim();
-  }
-
 }
