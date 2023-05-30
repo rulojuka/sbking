@@ -32,7 +32,7 @@ public abstract class BaseRestHTTPClient {
         this.identifier = UUID.fromString(identifier);
     }
 
-    protected String getIdentifierString() {
+    private String getIdentifierString() {
         if (this.identifier == null) {
             throw new IdentifierNotSetException();
         }
@@ -45,6 +45,10 @@ public abstract class BaseRestHTTPClient {
         HttpPost httpPost = new HttpPost(url);
         this.fillRequestWithBodyAndJson(httpPost, body);
         sendRequest(httpPost);
+    }
+
+    protected void createAndSendPostRequest(String url) {
+        this.createAndSendPostRequest(url, "");
     }
 
     protected void createAndSendPutRequest(String url, String body) {
@@ -60,12 +64,17 @@ public abstract class BaseRestHTTPClient {
                 body,
                 ContentType.APPLICATION_JSON);
         this.setJsonHeaders(requestBase);
+        this.setIdentifierHeader(requestBase);
         requestBase.setEntity(requestEntity);
     }
 
     private void setJsonHeaders(HttpMessage httpMessage) {
         httpMessage.setHeader("Accept", "application/json");
         httpMessage.setHeader("Content-Type", "application/json");
+    }
+
+    private void setIdentifierHeader(HttpMessage httpMessage) {
+        httpMessage.setHeader("PlayerUUID", this.getIdentifierString());
     }
 
     private void sendRequest(HttpUriRequest request) {
@@ -77,13 +86,5 @@ public abstract class BaseRestHTTPClient {
             throw new CouldNotSendRequestException(e);
         }
     }
-
-    protected String simpleBodyWithIdentifier() {
-        return String.format("{\"identifier\":\"%s\"}", this.getIdentifierString());
-    }
-
-    // private void setIdentifierHeader(HttpMessage httpMessage) {
-    // httpMessage.setHeader("PlayerUUID", this.getIdentifierString());
-    // }
 
 }

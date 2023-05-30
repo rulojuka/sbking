@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.sbk.sbking.core.Direction;
@@ -26,79 +27,82 @@ class AppController {
         return this.serverComponent.getSbKingServer();
     }
 
+    private UUID getUUID(String uuidString) {
+        return UUID.fromString(uuidString);
+    }
+
     @PostMapping("/playcard")
-    void playCard(@RequestBody RequestCard requestCard) {
+    void playCard(@RequestHeader("PlayerUUID") String playerUUID, @RequestBody RequestCard requestCard) {
         LOGGER.trace("playCard");
-        this.getServer().play(requestCard.getCard(), requestCard.getUUID());
+        this.getServer().play(requestCard.getCard(), getUUID(playerUUID));
     }
 
     @PostMapping("/table")
-    void createTable(@RequestBody RequestWithString requestWithString) {
+    void createTable(@RequestHeader("PlayerUUID") String playerUUID, @RequestBody RequestWithString requestWithString) {
         LOGGER.trace("createTable");
         Class<? extends GameServer> gameServerClass = GameServerFromGameNameIdentifier
                 .identify((String) requestWithString.getContent());
-        this.getServer().createTable(gameServerClass, requestWithString.getUUID());
+        this.getServer().createTable(gameServerClass, getUUID(playerUUID));
     }
 
     @PostMapping("/table/join/{tableId}")
-    void joinTable(@PathVariable String tableId, @RequestBody RequestOnlyIdentifier requestOnlyIdentifier) {
+    void joinTable(@RequestHeader("PlayerUUID") String playerUUID, @PathVariable String tableId) {
         LOGGER.trace("joinTable");
-        this.getServer().joinTable(requestOnlyIdentifier.getUUID(), UUID.fromString(tableId));
+        this.getServer().joinTable(getUUID(playerUUID), UUID.fromString(tableId));
     }
 
     @PostMapping("/table/leave") // Each player can only be in one table for now
-    void leaveTable(@RequestBody RequestOnlyIdentifier requestOnlyIdentifier) {
+    void leaveTable(@RequestHeader("PlayerUUID") String playerUUID) {
         LOGGER.trace("leaveTable");
-        this.getServer().leaveTable(requestOnlyIdentifier.getUUID());
+        this.getServer().leaveTable(getUUID(playerUUID));
     }
 
     @PostMapping("/moveToSeat/{directionAbbreviation}")
-    void moveToSeat(@PathVariable String directionAbbreviation,
-            @RequestBody RequestOnlyIdentifier requestOnlyIdentifier) {
+    void moveToSeat(@RequestHeader("PlayerUUID") String playerUUID, @PathVariable String directionAbbreviation) {
         LOGGER.trace("moveToSeat");
         Direction direction = Direction.getFromAbbreviation(directionAbbreviation.charAt(0));
-        this.getServer().moveToSeat(direction, requestOnlyIdentifier.getUUID());
+        this.getServer().moveToSeat(direction, getUUID(playerUUID));
     }
 
     @PutMapping("/player/nickname")
-    void setNickname(@RequestBody RequestWithString requestWithString) {
+    void setNickname(@RequestHeader("PlayerUUID") String playerUUID, @RequestBody RequestWithString requestWithString) {
         LOGGER.trace("setNickname");
         this.getServer().setNickname(
-                requestWithString.getUUID(), requestWithString.getContent());
+                getUUID(playerUUID), requestWithString.getContent());
     }
 
     @PostMapping("/claim")
-    void claim(@RequestBody RequestOnlyIdentifier requestOnlyIdentifier) {
+    void claim(@RequestHeader("PlayerUUID") String playerUUID) {
         LOGGER.trace("claim");
-        this.getServer().claim(requestOnlyIdentifier.getUUID());
+        this.getServer().claim(getUUID(playerUUID));
     }
 
     @PostMapping("/claim/{accept}")
-    void handleClaim(@PathVariable Boolean accept, @RequestBody RequestOnlyIdentifier requestOnlyIdentifier) {
+    void handleClaim(@RequestHeader("PlayerUUID") String playerUUID, @PathVariable Boolean accept) {
         LOGGER.info("handleClaim");
         LOGGER.info(accept);
-        this.getServer().claim(requestOnlyIdentifier.getUUID());
+        this.getServer().claim(getUUID(playerUUID));
         if (accept) {
-            this.getServer().acceptClaim(requestOnlyIdentifier.getUUID());
+            this.getServer().acceptClaim(getUUID(playerUUID));
         } else {
-            this.getServer().rejectClaim(requestOnlyIdentifier.getUUID());
+            this.getServer().rejectClaim(getUUID(playerUUID));
         }
     }
 
     @PostMapping("/undo")
-    void undo(@RequestBody RequestOnlyIdentifier requestOnlyIdentifier) {
+    void undo(@RequestHeader("PlayerUUID") String playerUUID) {
         LOGGER.trace("undo");
-        this.getServer().undo(requestOnlyIdentifier.getUUID());
+        this.getServer().undo(getUUID(playerUUID));
     }
 
     @PostMapping("/choosePositiveOrNegative/{positiveOrNegative}")
-    void choosePositiveOrNegative(@PathVariable String positiveOrNegative,
-            @RequestBody RequestOnlyIdentifier requestOnlyIdentifier) {
+    void choosePositiveOrNegative(@RequestHeader("PlayerUUID") String playerUUID,
+            @PathVariable String positiveOrNegative) {
         LOGGER.trace("choosePositiveOrNegative");
         if ("+".equals(positiveOrNegative)) {
-            this.getServer().choosePositive(requestOnlyIdentifier.getUUID());
+            this.getServer().choosePositive(getUUID(playerUUID));
         } else {
-            this.getServer().chooseNegative(requestOnlyIdentifier.getUUID());
+            this.getServer().chooseNegative(getUUID(playerUUID));
         }
     }
 
