@@ -82,15 +82,15 @@ public class ChooseGameModeOrStrainElement {
                     PositiveWithTrumpsRuleset positiveWithTrumpsRuleset = (PositiveWithTrumpsRuleset) strain
                             .getPositiveRuleset();
                     java.awt.Color textColor = positiveWithTrumpsRuleset.getTrumpSuit().getColor();
-                    texts.add(new TextWithColorAndFont(newText, textColor, 22));
+                    texts.add(new TextWithColorAndFont(newText, textColor, 22, strain.getName()));
                 } else {
-                    texts.add(new TextWithColorAndFont(newText));
+                    texts.add(new TextWithColorAndFont(newText, strain.getName()));
                 }
             }
         } else {
             for (NegativeRulesetsEnum negativeRulesetEnumElement : NegativeRulesetsEnum.values()) {
                 String newText = negativeRulesetEnumElement.getNegativeRuleset().getShortDescription();
-                texts.add(new TextWithColorAndFont(newText));
+                texts.add(new TextWithColorAndFont(newText, newText));
             }
         }
 
@@ -122,9 +122,10 @@ public class ChooseGameModeOrStrainElement {
                 }
             }
             if (selectedOnRadio != null) {
-                sbKingClient.sendChooseGameModeOrStrain(selectedOnRadio.getText());
+                sbKingClient.sendChooseGameModeOrStrain(selectedOnRadio.getToolTipText());
             }
         }
+
     }
 
     private void addLabel(Point labelPosition) {

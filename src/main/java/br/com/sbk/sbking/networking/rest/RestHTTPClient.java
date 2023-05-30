@@ -74,4 +74,10 @@ public class RestHTTPClient extends BaseRestHTTPClient {
         createAndSendPostRequest(url);
     }
 
+    public void chooseGameModeOrStrain(String gameModeOrStrain) {
+        String url = this.baseUrl + "chooseGameModeOrStrain";
+        String body = String.format("{\"content\":\"%s\"}", gameModeOrStrain);
+        createAndSendPostRequest(url, body);
+    }
+
 }

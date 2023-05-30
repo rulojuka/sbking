@@ -201,7 +201,7 @@ public class SBKingClient {
     }
 
     public void sendChooseGameModeOrStrain(String gameModeOrStrain) {
-        this.kryonetSBKingClient.sendChooseGameModeOrStrain(gameModeOrStrain);
+        this.restHTTPClient.chooseGameModeOrStrain(gameModeOrStrain);
     }
 
     public void sendPositive() {

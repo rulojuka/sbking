@@ -19,7 +19,7 @@ public class RulesetFromShortDescriptionIdentifier {
         }
         for (Strain strain : Strain.values()) {
             Ruleset current = strain.getPositiveRuleset();
-            shortDescriptionOfRulesets.put(current.getShortDescription(), current);
+            shortDescriptionOfRulesets.put(strain.getName(), current);
         }
     }
 

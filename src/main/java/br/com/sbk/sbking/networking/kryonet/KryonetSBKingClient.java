@@ -6,7 +6,6 @@ import com.esotericsoftware.kryonet.Client;
 
 import br.com.sbk.sbking.networking.client.SBKingClient;
 import br.com.sbk.sbking.networking.kryonet.messages.SBKingMessage;
-import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.ChooseGameModeOrStrainMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.GetTableSpectatorsMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.GetTablesMessage;
 
@@ -25,10 +24,6 @@ public class KryonetSBKingClient extends Client {
   private void sendMessage(SBKingMessage message) {
     LOGGER.debug("Sending " + message.getClass().toString() + " to server.");
     this.sendTCP(message);
-  }
-
-  public void sendChooseGameModeOrStrain(String gameModeOrStrain) {
-    this.sendMessage(new ChooseGameModeOrStrainMessage(gameModeOrStrain));
   }
 
   public void sendGetTablesMessage() {

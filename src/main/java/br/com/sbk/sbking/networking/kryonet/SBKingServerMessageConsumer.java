@@ -7,7 +7,6 @@ import java.util.concurrent.BlockingQueue;
 
 import br.com.sbk.sbking.networking.kryonet.messages.SBKingMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.SBKingMessageWithIdentifier;
-import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.ChooseGameModeOrStrainMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.GetTableSpectatorsMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.GetTablesMessage;
 import br.com.sbk.sbking.networking.server.SBKingServer;
@@ -41,9 +40,7 @@ public class SBKingServerMessageConsumer implements Runnable {
   private void consume(SBKingMessage message, UUID playerIdentifier) {
     LOGGER.trace("Entered server --consume--");
     Object content = message.getContent();
-    if (message instanceof ChooseGameModeOrStrainMessage) {
-      this.sbkingServer.chooseGameModeOrStrain((String) content, playerIdentifier);
-    } else if (message instanceof GetTablesMessage) {
+    if (message instanceof GetTablesMessage) {
       this.sbkingServer.sendTablesTo(playerIdentifier);
     } else if (message instanceof GetTableSpectatorsMessage) {
       this.sbkingServer.sendSpectatorsTo(playerIdentifier);

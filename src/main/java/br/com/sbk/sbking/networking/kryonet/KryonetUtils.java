@@ -40,7 +40,6 @@ import br.com.sbk.sbking.core.rulesets.implementations.ProhibitsHearts;
 import br.com.sbk.sbking.core.rulesets.implementations.TrumpSuitWinnable;
 import br.com.sbk.sbking.dto.LobbyScreenTableDTO;
 import br.com.sbk.sbking.gui.models.KingGameScoreboard;
-import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.ChooseGameModeOrStrainMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.GetTableSpectatorsMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.GetTablesMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.DealMessage;
@@ -131,7 +130,6 @@ public class KryonetUtils {
     kryo.register(YourTableIsMessage.class);
 
     // Client to Server Message classes
-    kryo.register(ChooseGameModeOrStrainMessage.class);
     kryo.register(GetTablesMessage.class);
   }
 }

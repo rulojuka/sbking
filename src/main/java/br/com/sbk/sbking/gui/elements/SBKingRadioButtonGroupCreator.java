@@ -21,6 +21,7 @@ public class SBKingRadioButtonGroupCreator {
       currentButton.setBounds(x, y, elementWidth, elementHeight);
       currentButton.setForeground(textWithColorAndFont.getColor());
       currentButton.setFont(textWithColorAndFont.getFont());
+      currentButton.setToolTipText(textWithColorAndFont.getCompleteLabel());
       y += elementHeight;
 
       buttonGroup.add(currentButton);

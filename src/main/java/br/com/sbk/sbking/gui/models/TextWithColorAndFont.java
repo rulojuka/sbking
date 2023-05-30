@@ -10,17 +10,21 @@ public class TextWithColorAndFont {
   private java.awt.Color color;
   private String text;
   private Font font;
+  private String toolTipText;
 
-  public TextWithColorAndFont(String text, Color color, int size) {
+  public TextWithColorAndFont(String text, Color color, int size, String toolTipText) {
     this.color = color;
     this.text = text;
     this.font = new Font(FontConstants.FONT_NAME, Font.PLAIN, size);
+    this.toolTipText = toolTipText;
+  }
+
+  public TextWithColorAndFont(String text, String toolTipText) {
+    this(text, new Color(0, 0, 0), 14, toolTipText);
   }
 
   public TextWithColorAndFont(String text) {
-    this.color = new Color(0, 0, 0);
-    this.text = text;
-    this.font = new Font(FontConstants.FONT_NAME, Font.BOLD, 14);
+    this(text, new Color(0, 0, 0), 14, "");
   }
 
   public String getText() {
@@ -33,6 +37,10 @@ public class TextWithColorAndFont {
 
   public Font getFont() {
     return this.font;
+  }
+
+  public String getCompleteLabel() {
+    return this.toolTipText;
   }
 
 }

@@ -79,8 +79,8 @@ class AppController {
 
     @PostMapping("/claim/{accept}")
     void handleClaim(@RequestHeader("PlayerUUID") String playerUUID, @PathVariable Boolean accept) {
-        LOGGER.info("handleClaim");
-        LOGGER.info(accept);
+        LOGGER.trace("handleClaim");
+        LOGGER.trace(accept);
         this.getServer().claim(getUUID(playerUUID));
         if (accept) {
             this.getServer().acceptClaim(getUUID(playerUUID));
@@ -104,6 +104,13 @@ class AppController {
         } else {
             this.getServer().chooseNegative(getUUID(playerUUID));
         }
+    }
+
+    @PostMapping("/chooseGameModeOrStrain")
+    void chooseGameModeOrStrain(@RequestHeader("PlayerUUID") String playerUUID,
+            @RequestBody RequestWithString requestWithString) {
+        LOGGER.trace("chooseGameModeOrStrain");
+        this.getServer().chooseGameModeOrStrain(requestWithString.getContent(), getUUID(playerUUID));
     }
 
 }
