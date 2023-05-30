@@ -85,4 +85,10 @@ class AppController {
         }
     }
 
+    @PostMapping("/undo")
+    void undo(@RequestBody RequestOnlyIdentifier requestOnlyIdentifier) {
+        LOGGER.trace("undo");
+        this.getServer().undo(requestOnlyIdentifier.getUUID());
+    }
+
 }

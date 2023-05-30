@@ -11,7 +11,6 @@ import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.ChooseNegati
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.ChoosePositiveMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.GetTableSpectatorsMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.GetTablesMessage;
-import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.UndoMessage;
 
 public class KryonetSBKingClient extends Client {
 
@@ -40,10 +39,6 @@ public class KryonetSBKingClient extends Client {
 
   public void sendChooseGameModeOrStrain(String gameModeOrStrain) {
     this.sendMessage(new ChooseGameModeOrStrainMessage(gameModeOrStrain));
-  }
-
-  public void sendUndo() {
-    this.sendMessage(new UndoMessage());
   }
 
   public void sendGetTablesMessage() {

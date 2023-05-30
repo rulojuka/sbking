@@ -102,6 +102,13 @@ public class RestHTTPClient {
         createAndSendPostRequest(url, body);
     }
 
+    public void undo() {
+        String url = this.baseUrl + "undo";
+        String body = String
+                .format("{\"identifier\":\"%s\"}", this.getIdentifierString());
+        createAndSendPostRequest(url, body);
+    }
+
     private void createAndSendPostRequest(String url, String body) {
         LOGGER.info("[POST] URL: " + url);
         LOGGER.info("Body: " + body);

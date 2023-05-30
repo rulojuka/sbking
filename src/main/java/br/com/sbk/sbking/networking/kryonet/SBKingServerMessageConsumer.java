@@ -12,7 +12,6 @@ import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.ChooseNegati
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.ChoosePositiveMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.GetTableSpectatorsMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.GetTablesMessage;
-import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.UndoMessage;
 import br.com.sbk.sbking.networking.server.SBKingServer;
 
 public class SBKingServerMessageConsumer implements Runnable {
@@ -50,8 +49,6 @@ public class SBKingServerMessageConsumer implements Runnable {
       this.sbkingServer.chooseNegative(playerIdentifier);
     } else if (message instanceof ChooseGameModeOrStrainMessage) {
       this.sbkingServer.chooseGameModeOrStrain((String) content, playerIdentifier);
-    } else if (message instanceof UndoMessage) {
-      this.sbkingServer.undo(playerIdentifier);
     } else if (message instanceof GetTablesMessage) {
       this.sbkingServer.sendTablesTo(playerIdentifier);
     } else if (message instanceof GetTableSpectatorsMessage) {

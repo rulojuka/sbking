@@ -11,7 +11,6 @@ import br.com.sbk.sbking.gui.listeners.ClientActionListener;
 import br.com.sbk.sbking.networking.kryonet.KryonetClientFactory;
 import br.com.sbk.sbking.networking.kryonet.KryonetClientListenerFactory;
 import br.com.sbk.sbking.networking.kryonet.KryonetSBKingClient;
-import br.com.sbk.sbking.networking.kryonet.KryonetSBKingClientActionListener;
 import br.com.sbk.sbking.networking.kryonet.SBKingClientMessageConsumer;
 import br.com.sbk.sbking.networking.kryonet.messages.SBKingMessage;
 import br.com.sbk.sbking.networking.rest.RestHTTPClient;
@@ -31,7 +30,7 @@ public class SBKingClientFactory {
     new Thread(sbKingClientMessageConsumer, "msg-consumer").start();
     sbKingClient
         .setActionListener(
-            new ClientActionListener(new KryonetSBKingClientActionListener(kryonetSBKingClient), restHTTPClient));
+            new ClientActionListener(restHTTPClient));
     LOGGER.info("Trying to connect.");
     try {
       kryonetSBKingClient.connect(5000, hostname, port);

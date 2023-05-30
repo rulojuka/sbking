@@ -12,17 +12,14 @@ import br.com.sbk.sbking.gui.jelements.LeaveTableButton;
 import br.com.sbk.sbking.gui.jelements.RejectClaimButton;
 import br.com.sbk.sbking.gui.jelements.SitOrLeaveButton;
 import br.com.sbk.sbking.gui.jelements.UndoButton;
-import br.com.sbk.sbking.networking.kryonet.KryonetSBKingClientActionListener;
 import br.com.sbk.sbking.networking.rest.RestHTTPClient;
 
 public class ClientActionListener implements java.awt.event.ActionListener {
 
-    private KryonetSBKingClientActionListener client;
     private RestHTTPClient restClient;
 
-    public ClientActionListener(KryonetSBKingClientActionListener client, RestHTTPClient restClient) {
+    public ClientActionListener(RestHTTPClient restClient) {
         super();
-        this.client = client;
         this.restClient = restClient;
     }
 
@@ -43,7 +40,7 @@ public class ClientActionListener implements java.awt.event.ActionListener {
             Direction direction = (Direction) clickedSitOrLeaveButton.getClientProperty("direction");
             restClient.moveToSeat(direction);
         } else if (source instanceof UndoButton) {
-            client.undo();
+            restClient.undo();
         } else if (source instanceof ClaimButton) {
             restClient.claim();
         } else if (source instanceof AcceptClaimButton) {
