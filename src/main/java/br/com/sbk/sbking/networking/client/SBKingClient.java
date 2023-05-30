@@ -205,11 +205,11 @@ public class SBKingClient {
     }
 
     public void sendPositive() {
-        this.kryonetSBKingClient.sendChoosePositiveMessage();
+        this.restHTTPClient.choosePositive();
     }
 
     public void sendNegative() {
-        this.kryonetSBKingClient.sendChooseNegativeMessage();
+        this.restHTTPClient.chooseNegative();
     }
 
     public void sendNickname() {

@@ -109,6 +109,20 @@ public class RestHTTPClient {
         createAndSendPostRequest(url, body);
     }
 
+    public void choosePositive() {
+        String url = this.baseUrl + "choosePositiveOrNegative/" + "+";
+        String body = String
+                .format("{\"identifier\":\"%s\"}", this.getIdentifierString());
+        createAndSendPostRequest(url, body);
+    }
+
+    public void chooseNegative() {
+        String url = this.baseUrl + "choosePositiveOrNegative/" + "-";
+        String body = String
+                .format("{\"identifier\":\"%s\"}", this.getIdentifierString());
+        createAndSendPostRequest(url, body);
+    }
+
     private void createAndSendPostRequest(String url, String body) {
         LOGGER.info("[POST] URL: " + url);
         LOGGER.info("Body: " + body);

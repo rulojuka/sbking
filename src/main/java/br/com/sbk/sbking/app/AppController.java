@@ -91,4 +91,15 @@ class AppController {
         this.getServer().undo(requestOnlyIdentifier.getUUID());
     }
 
+    @PostMapping("/choosePositiveOrNegative/{positiveOrNegative}")
+    void choosePositiveOrNegative(@PathVariable String positiveOrNegative,
+            @RequestBody RequestOnlyIdentifier requestOnlyIdentifier) {
+        LOGGER.trace("choosePositiveOrNegative");
+        if ("+".equals(positiveOrNegative)) {
+            this.getServer().choosePositive(requestOnlyIdentifier.getUUID());
+        } else {
+            this.getServer().chooseNegative(requestOnlyIdentifier.getUUID());
+        }
+    }
+
 }

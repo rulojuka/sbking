@@ -41,8 +41,6 @@ import br.com.sbk.sbking.core.rulesets.implementations.TrumpSuitWinnable;
 import br.com.sbk.sbking.dto.LobbyScreenTableDTO;
 import br.com.sbk.sbking.gui.models.KingGameScoreboard;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.ChooseGameModeOrStrainMessage;
-import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.ChooseNegativeMessage;
-import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.ChoosePositiveMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.GetTableSpectatorsMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.GetTablesMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.DealMessage;
@@ -134,8 +132,6 @@ public class KryonetUtils {
 
     // Client to Server Message classes
     kryo.register(ChooseGameModeOrStrainMessage.class);
-    kryo.register(ChooseNegativeMessage.class);
-    kryo.register(ChoosePositiveMessage.class);
     kryo.register(GetTablesMessage.class);
   }
 }
