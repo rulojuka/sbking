@@ -6,7 +6,6 @@ import com.esotericsoftware.kryonet.Client;
 
 import br.com.sbk.sbking.networking.client.SBKingClient;
 import br.com.sbk.sbking.networking.kryonet.messages.SBKingMessage;
-import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.GetTableSpectatorsMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.GetTablesMessage;
 
 public class KryonetSBKingClient extends Client {
@@ -28,10 +27,6 @@ public class KryonetSBKingClient extends Client {
 
   public void sendGetTablesMessage() {
     this.sendMessage(new GetTablesMessage());
-  }
-
-  public void sendGetTableSpectators() {
-    this.sendMessage(new GetTableSpectatorsMessage());
   }
 
 }

@@ -13,7 +13,6 @@ import br.com.sbk.sbking.networking.kryonet.messages.SBKingMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.DealMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.FinishDealMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.GameModeOrStrainChooserMessage;
-import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.GetTableSpectatorsResponseMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.GetTablesResponseMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.InitializeDealMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.InvalidRulesetMessage;
@@ -83,8 +82,6 @@ public class SBKingClientMessageConsumer implements Runnable {
       this.sbkingClient.setGameName((String) content);
     } else if (message instanceof GetTablesResponseMessage) {
       this.sbkingClient.setTables((List<LobbyScreenTableDTO>) content);
-    } else if (message instanceof GetTableSpectatorsResponseMessage) {
-      this.sbkingClient.setSpectatorNames((List<String>) content);
     } else if (message instanceof YourIdIsMessage) {
       this.sbkingClient.initializeId((String) content);
     } else {

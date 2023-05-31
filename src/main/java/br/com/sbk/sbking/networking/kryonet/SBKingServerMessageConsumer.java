@@ -7,7 +7,6 @@ import java.util.concurrent.BlockingQueue;
 
 import br.com.sbk.sbking.networking.kryonet.messages.SBKingMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.SBKingMessageWithIdentifier;
-import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.GetTableSpectatorsMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.GetTablesMessage;
 import br.com.sbk.sbking.networking.server.SBKingServer;
 
@@ -42,8 +41,6 @@ public class SBKingServerMessageConsumer implements Runnable {
     Object content = message.getContent();
     if (message instanceof GetTablesMessage) {
       this.sbkingServer.sendTablesTo(playerIdentifier);
-    } else if (message instanceof GetTableSpectatorsMessage) {
-      this.sbkingServer.sendSpectatorsTo(playerIdentifier);
     } else {
       LOGGER.error("Could not understand message.");
       LOGGER.error(message);

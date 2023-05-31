@@ -261,7 +261,8 @@ public class SBKingClient {
     }
 
     public void sendGetSpectatorNames() {
-        this.kryonetSBKingClient.sendGetTableSpectators();
+        List<String> spectators = this.restHTTPClient.getSpectators();
+        this.setSpectatorNames(spectators);
     }
 
     public void initializeId(String id) {

@@ -2,9 +2,11 @@ package br.com.sbk.sbking.app;
 
 import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -32,13 +34,14 @@ class AppController {
     }
 
     @PostMapping("/playcard")
-    void playCard(@RequestHeader("PlayerUUID") String playerUUID, @RequestBody RequestCard requestCard) {
+    public void playCard(@RequestHeader("PlayerUUID") String playerUUID, @RequestBody RequestCard requestCard) {
         LOGGER.trace("playCard");
         this.getServer().play(requestCard.getCard(), getUUID(playerUUID));
     }
 
     @PostMapping("/table")
-    void createTable(@RequestHeader("PlayerUUID") String playerUUID, @RequestBody RequestWithString requestWithString) {
+    public void createTable(@RequestHeader("PlayerUUID") String playerUUID,
+            @RequestBody RequestWithString requestWithString) {
         LOGGER.trace("createTable");
         Class<? extends GameServer> gameServerClass = GameServerFromGameNameIdentifier
                 .identify((String) requestWithString.getContent());
@@ -46,39 +49,40 @@ class AppController {
     }
 
     @PostMapping("/table/join/{tableId}")
-    void joinTable(@RequestHeader("PlayerUUID") String playerUUID, @PathVariable String tableId) {
+    public void joinTable(@RequestHeader("PlayerUUID") String playerUUID, @PathVariable String tableId) {
         LOGGER.trace("joinTable");
         this.getServer().joinTable(getUUID(playerUUID), UUID.fromString(tableId));
     }
 
     @PostMapping("/table/leave") // Each player can only be in one table for now
-    void leaveTable(@RequestHeader("PlayerUUID") String playerUUID) {
+    public void leaveTable(@RequestHeader("PlayerUUID") String playerUUID) {
         LOGGER.trace("leaveTable");
         this.getServer().leaveTable(getUUID(playerUUID));
     }
 
     @PostMapping("/moveToSeat/{directionAbbreviation}")
-    void moveToSeat(@RequestHeader("PlayerUUID") String playerUUID, @PathVariable String directionAbbreviation) {
+    public void moveToSeat(@RequestHeader("PlayerUUID") String playerUUID, @PathVariable String directionAbbreviation) {
         LOGGER.trace("moveToSeat");
         Direction direction = Direction.getFromAbbreviation(directionAbbreviation.charAt(0));
         this.getServer().moveToSeat(direction, getUUID(playerUUID));
     }
 
     @PutMapping("/player/nickname")
-    void setNickname(@RequestHeader("PlayerUUID") String playerUUID, @RequestBody RequestWithString requestWithString) {
+    public void setNickname(@RequestHeader("PlayerUUID") String playerUUID,
+            @RequestBody RequestWithString requestWithString) {
         LOGGER.trace("setNickname");
         this.getServer().setNickname(
                 getUUID(playerUUID), requestWithString.getContent());
     }
 
     @PostMapping("/claim")
-    void claim(@RequestHeader("PlayerUUID") String playerUUID) {
+    public void claim(@RequestHeader("PlayerUUID") String playerUUID) {
         LOGGER.trace("claim");
         this.getServer().claim(getUUID(playerUUID));
     }
 
     @PostMapping("/claim/{accept}")
-    void handleClaim(@RequestHeader("PlayerUUID") String playerUUID, @PathVariable Boolean accept) {
+    public void handleClaim(@RequestHeader("PlayerUUID") String playerUUID, @PathVariable Boolean accept) {
         LOGGER.trace("handleClaim");
         LOGGER.trace(accept);
         this.getServer().claim(getUUID(playerUUID));
@@ -90,13 +94,13 @@ class AppController {
     }
 
     @PostMapping("/undo")
-    void undo(@RequestHeader("PlayerUUID") String playerUUID) {
+    public void undo(@RequestHeader("PlayerUUID") String playerUUID) {
         LOGGER.trace("undo");
         this.getServer().undo(getUUID(playerUUID));
     }
 
     @PostMapping("/choosePositiveOrNegative/{positiveOrNegative}")
-    void choosePositiveOrNegative(@RequestHeader("PlayerUUID") String playerUUID,
+    public void choosePositiveOrNegative(@RequestHeader("PlayerUUID") String playerUUID,
             @PathVariable String positiveOrNegative) {
         LOGGER.trace("choosePositiveOrNegative");
         if ("+".equals(positiveOrNegative)) {
@@ -107,10 +111,17 @@ class AppController {
     }
 
     @PostMapping("/chooseGameModeOrStrain")
-    void chooseGameModeOrStrain(@RequestHeader("PlayerUUID") String playerUUID,
+    public void chooseGameModeOrStrain(@RequestHeader("PlayerUUID") String playerUUID,
             @RequestBody RequestWithString requestWithString) {
         LOGGER.trace("chooseGameModeOrStrain");
         this.getServer().chooseGameModeOrStrain(requestWithString.getContent(), getUUID(playerUUID));
+    }
+
+    @GetMapping("/spectators")
+    public List<String> getSpectators(@RequestHeader("PlayerUUID") String playerUUID) {
+        LOGGER.trace("getSpectators");
+        List<String> spectatorList = this.getServer().getSpectatorList(getUUID(playerUUID));
+        return spectatorList;
     }
 
 }

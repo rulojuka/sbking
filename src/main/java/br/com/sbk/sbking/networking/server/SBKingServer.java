@@ -2,6 +2,7 @@ package br.com.sbk.sbking.networking.server;
 
 import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -324,13 +325,13 @@ public class SBKingServer {
     table.rejectClaim(player);
   }
 
-  public void sendSpectatorsTo(UUID playerIdentifier) {
+  public List<String> getSpectatorList(UUID playerIdentifier) {
     Player player = identifierToPlayerMap.get(playerIdentifier);
     Table table = playersTable.get(player);
     if (table != null) {
-      List<String> spectatorNames = table.getSpectatorNames();
-      this.kryonetSBKingServer.sendSpectatorsTo(spectatorNames, playerIdentifier);
+      return table.getSpectatorNames();
     }
+    return new ArrayList<String>();
   }
 
   public void sendYourIdIsTo(UUID playerIdentifier) {

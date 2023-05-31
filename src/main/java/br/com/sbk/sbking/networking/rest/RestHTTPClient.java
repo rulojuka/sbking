@@ -1,6 +1,11 @@
 package br.com.sbk.sbking.networking.rest;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import org.apache.http.client.methods.HttpGet;
 
 import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Direction;
@@ -78,6 +83,15 @@ public class RestHTTPClient extends BaseRestHTTPClient {
         String url = this.baseUrl + "chooseGameModeOrStrain";
         String body = String.format("{\"content\":\"%s\"}", gameModeOrStrain);
         createAndSendPostRequest(url, body);
+    }
+
+    public List<String> getSpectators() {
+        String url = this.baseUrl + "spectators";
+        HttpGet httpGet = createGetRequest(url);
+        Result result = sendRequestWithResponse(httpGet);
+        return Stream
+                .of(deserializer.fromJson(result.getContent(), String[].class))
+                .collect(Collectors.toList());
     }
 
 }
