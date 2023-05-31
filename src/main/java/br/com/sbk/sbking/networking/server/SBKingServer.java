@@ -213,10 +213,6 @@ public class SBKingServer {
     }
   }
 
-  public boolean nobodyIsConnected() {
-    return this.kryonetSBKingServer.nobodyIsConnected();
-  }
-
   public void addSpectator(Player player, Table table) {
     Table currentTable = playersTable.get(player);
     if (player == null || table == null) {
@@ -278,10 +274,6 @@ public class SBKingServer {
 
   public void sendTablesTo(UUID playerIdentifier) {
     this.kryonetSBKingServer.sendTablesTo(createTablesDTO(), playerIdentifier);
-  }
-
-  public void sendTablesToAll() {
-    this.kryonetSBKingServer.sendTablesToAll(createTablesDTO());
   }
 
   private List<LobbyScreenTableDTO> createTablesDTO() {

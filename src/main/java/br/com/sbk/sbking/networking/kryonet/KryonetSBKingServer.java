@@ -133,20 +133,12 @@ public class KryonetSBKingServer extends Server {
     return this.sbkingServer.getNicknameFromIdentifier(identifier);
   }
 
-  public boolean nobodyIsConnected() {
-    return this.connections.isEmpty();
-  }
-
   public void sendYourTableIsTo(String gameName, UUID playerIdentifier) {
     this.sendOneTo(new YourTableIsMessage(gameName), playerIdentifier);
   }
 
   public void sendTablesTo(List<LobbyScreenTableDTO> tablesDTO, UUID playerIdentifier) {
     this.sendOneTo(new GetTablesResponseMessage(tablesDTO), playerIdentifier);
-  }
-
-  public void sendTablesToAll(List<LobbyScreenTableDTO> tablesDTO) {
-    this.sendToAllTCP(new GetTablesResponseMessage(tablesDTO));
   }
 
   public void sendSpectatorsTo(List<String> spectatorNames, UUID playerIdentifier) {
