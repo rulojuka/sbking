@@ -1,5 +1,6 @@
 package br.com.sbk.sbking.networking.client;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import br.com.sbk.sbking.core.Deal;
@@ -8,7 +9,6 @@ import br.com.sbk.sbking.dto.LobbyScreenTableDTO;
 import br.com.sbk.sbking.gui.listeners.ClientActionListener;
 import br.com.sbk.sbking.gui.models.KingGameScoreboard;
 import br.com.sbk.sbking.gui.models.PositiveOrNegative;
-import br.com.sbk.sbking.networking.kryonet.KryonetSBKingClient;
 import br.com.sbk.sbking.networking.rest.RestHTTPClient;
 
 public class SBKingClient {
@@ -30,8 +30,6 @@ public class SBKingClient {
 
     private boolean spectator;
 
-    private KryonetSBKingClient kryonetSBKingClient;
-
     private RestHTTPClient restHTTPClient;
 
     private String gameName;
@@ -42,12 +40,10 @@ public class SBKingClient {
 
     private String nickname;
 
+    private boolean shouldRedrawTables = true;
+
     public void setActionListener(ClientActionListener actionListener) {
         this.actionListener = actionListener;
-    }
-
-    public void setKryonetSBKingClient(KryonetSBKingClient kryonetSBKingClient) {
-        this.kryonetSBKingClient = kryonetSBKingClient;
     }
 
     public void setRestHTTPClient(RestHTTPClient restHTTPClient) {
@@ -217,7 +213,12 @@ public class SBKingClient {
     }
 
     public void sendGetTables() {
-        this.kryonetSBKingClient.sendGetTablesMessage();
+        List<LobbyScreenTableDTO> tables = this.restHTTPClient.getTables();
+        if (tables == null) {
+            this.initializeTables();
+        } else {
+            this.setTables(tables);
+        }
     }
 
     public void setPositiveOrNegative(String content) {
@@ -245,11 +246,29 @@ public class SBKingClient {
     }
 
     public void setTables(List<LobbyScreenTableDTO> tables) {
-        this.tables = tables;
+        if (tables.size() != this.tables.size()) {
+            // This is a bad attempt at avoiding redraws when the tables don't change.
+            // It should be done in the drawing, not here.
+            this.tables = tables;
+            this.shouldRedrawTables = true;
+        }
     }
 
     public List<LobbyScreenTableDTO> getTables() {
+        if (this.tables == null) {
+            this.initializeTables();
+        }
+        this.shouldRedrawTables = false;
         return tables;
+    }
+
+    public void initializeTables() {
+        this.tables = new ArrayList<LobbyScreenTableDTO>();
+        this.shouldRedrawTables = true;
+    }
+
+    public boolean shouldRedrawTables() {
+        return this.shouldRedrawTables;
     }
 
     public void setSpectatorNames(List<String> spectatorNames) {
@@ -267,6 +286,7 @@ public class SBKingClient {
 
     public void initializeId(String id) {
         this.restHTTPClient.setIdentifier(id);
+        System.out.println("Teste");
     }
 
 }

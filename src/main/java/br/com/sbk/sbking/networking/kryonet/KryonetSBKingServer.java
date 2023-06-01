@@ -11,12 +11,10 @@ import com.esotericsoftware.kryonet.Server;
 
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
-import br.com.sbk.sbking.dto.LobbyScreenTableDTO;
 import br.com.sbk.sbking.networking.kryonet.messages.SBKingMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.DealMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.FinishDealMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.GameModeOrStrainChooserMessage;
-import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.GetTablesResponseMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.InitializeDealMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.InvalidRulesetMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.IsNotSpectatorMessage;
@@ -134,10 +132,6 @@ public class KryonetSBKingServer extends Server {
 
   public void sendYourTableIsTo(String gameName, UUID playerIdentifier) {
     this.sendOneTo(new YourTableIsMessage(gameName), playerIdentifier);
-  }
-
-  public void sendTablesTo(List<LobbyScreenTableDTO> tablesDTO, UUID playerIdentifier) {
-    this.sendOneTo(new GetTablesResponseMessage(tablesDTO), playerIdentifier);
   }
 
   public void sendYourIdIsTo(UUID playerIdentifier) {

@@ -3,6 +3,7 @@ package br.com.sbk.sbking.networking.server;
 import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -241,12 +242,7 @@ public class Table {
   }
 
   public Map<Direction, Player> getPlayersDirections() {
-    // FIXME This should be unmodifiable/immutable but we don't have kryo
-    // serializers for this at this time
-    // The code should be:
-    // return Collections.unmodifiableMap(new HashMap<Direction,
-    // Player>(this.seatedPlayers));
-    return this.seatedPlayers;
+    return Collections.unmodifiableMap(new HashMap<Direction, Player>(this.seatedPlayers));
   }
 
   public String getGameName() {

@@ -1,9 +1,10 @@
 package br.com.sbk.sbking.gui.elements;
 
-import java.awt.event.ActionListener;
 import java.awt.Container;
 import java.awt.Point;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -11,7 +12,6 @@ import java.util.UUID;
 import javax.swing.JLabel;
 
 import br.com.sbk.sbking.core.Direction;
-import br.com.sbk.sbking.core.Player;
 import br.com.sbk.sbking.dto.LobbyScreenTableDTO;
 import br.com.sbk.sbking.gui.jelements.JoinTableButton;
 import br.com.sbk.sbking.gui.jelements.SBKingLabel;
@@ -21,18 +21,21 @@ public class TableCardElement {
   public TableCardElement(Container container, LobbyScreenTableDTO table, Point position,
       ActionListener actionListener) {
     List<String> allLines = new ArrayList<String>();
-    Map<Direction, Player> playersDirection = table.getPlayersDirection();
+    Map<String, String> playersDirection = table.getPlayersDirections();
+    if (playersDirection == null) {
+      playersDirection = new HashMap<String, String>();
+    }
 
     String title = table.getGameName();
     allLines.add(title);
 
     for (Direction direction : Direction.values()) {
       String playerName;
-      Player player = playersDirection.get(direction);
+      String player = playersDirection.get(direction.getCompleteName());
       if (player == null) {
         playerName = "EMPTY";
       } else {
-        playerName = player.getNickname();
+        playerName = player;
       }
       String playerLine = direction.getAbbreviation() + ": " + playerName;
       allLines.add(playerLine);

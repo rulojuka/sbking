@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.sbk.sbking.core.Direction;
+import br.com.sbk.sbking.dto.LobbyScreenTableDTO;
 import br.com.sbk.sbking.networking.kryonet.messages.GameServerFromGameNameIdentifier;
 import br.com.sbk.sbking.networking.server.SBKingServer;
 import br.com.sbk.sbking.networking.server.gameserver.GameServer;
@@ -119,9 +120,15 @@ class AppController {
 
     @GetMapping("/spectators")
     public List<String> getSpectators(@RequestHeader("PlayerUUID") String playerUUID) {
-        LOGGER.trace("getSpectators");
+        LOGGER.info("getSpectators");
         List<String> spectatorList = this.getServer().getSpectatorList(getUUID(playerUUID));
         return spectatorList;
+    }
+
+    @GetMapping("/tables")
+    public List<LobbyScreenTableDTO> getTables() {
+        LOGGER.info("getTables");
+        return this.getServer().getTablesDTO();
     }
 
 }

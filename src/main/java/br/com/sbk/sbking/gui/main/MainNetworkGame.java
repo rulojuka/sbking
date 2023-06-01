@@ -32,7 +32,7 @@ public class MainNetworkGame {
 
             String gameName = sbkingClient.getGameName();
             if (gameName == null) {
-                sbkingClient.setTables(null);
+                sbkingClient.initializeTables();
             }
 
             currentScreen = new LobbyScreen(sbkingClient);

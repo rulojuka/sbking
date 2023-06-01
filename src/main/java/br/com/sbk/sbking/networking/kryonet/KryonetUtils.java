@@ -40,11 +40,9 @@ import br.com.sbk.sbking.core.rulesets.implementations.ProhibitsHearts;
 import br.com.sbk.sbking.core.rulesets.implementations.TrumpSuitWinnable;
 import br.com.sbk.sbking.dto.LobbyScreenTableDTO;
 import br.com.sbk.sbking.gui.models.KingGameScoreboard;
-import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.GetTablesMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.DealMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.FinishDealMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.GameModeOrStrainChooserMessage;
-import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.GetTablesResponseMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.InitializeDealMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.InvalidRulesetMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.IsNotSpectatorMessage;
@@ -112,7 +110,6 @@ public class KryonetUtils {
     kryo.register(DealMessage.class);
     kryo.register(FinishDealMessage.class);
     kryo.register(GameModeOrStrainChooserMessage.class);
-    kryo.register(GetTablesResponseMessage.class);
     kryo.register(InitializeDealMessage.class);
     kryo.register(InvalidRulesetMessage.class);
     kryo.register(IsNotSpectatorMessage.class);
@@ -124,8 +121,5 @@ public class KryonetUtils {
     kryo.register(YourDirectionIsMessage.class);
     kryo.register(YourIdIsMessage.class);
     kryo.register(YourTableIsMessage.class);
-
-    // Client to Server Message classes
-    kryo.register(GetTablesMessage.class);
   }
 }

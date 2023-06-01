@@ -42,7 +42,6 @@ public class SBKingClientFactory {
       LOGGER.fatal(ex);
       System.exit(ErrorCodes.COULD_NOT_CONNECT_TO_SERVER);
     }
-    sbKingClient.setKryonetSBKingClient(kryonetSBKingClient);
     return sbKingClient;
   }
 

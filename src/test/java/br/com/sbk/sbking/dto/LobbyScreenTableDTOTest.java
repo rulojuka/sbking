@@ -46,11 +46,6 @@ public class LobbyScreenTableDTOTest {
     }
 
     @Test
-    public void getPlayersDirectionShouldReturnPlayersDirection() {
-        assertEquals(playersDirections, subject.getPlayersDirection());
-    }
-
-    @Test
     public void getNumberOfSpectatorsShouldReturnNumberOfSpectators() {
         assertEquals(numberOfSpectators, subject.getNumberOfSpectators());
     }

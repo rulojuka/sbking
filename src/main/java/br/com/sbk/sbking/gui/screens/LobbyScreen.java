@@ -14,22 +14,16 @@ public class LobbyScreen implements SBKingScreen {
 
   private SBKingClient sbkingClient;
 
-  private static final int WAIT_FOR_SERVER_MESSAGE_IN_MILISECONDS = 10;
   private static final int DELAY_FOR_UPDATING_TABLES = 1000;
 
   public LobbyScreen(SBKingClient sbkingClient) {
     this.sbkingClient = sbkingClient;
-    this.sbkingClient.sendGetTables();
   }
 
   @Override
   public void runAt(SBKingClientJFrame sbkingClientJFrame) {
-    List<LobbyScreenTableDTO> updatedTables;
-    List<LobbyScreenTableDTO> tables;
     LOGGER.info("Entered Lobby Screen");
-    tables = this.getTables();
-    sbkingClientJFrame
-        .paintPainter(new LobbyScreenPainter(tables, this.sbkingClient.getActionListener(), this.sbkingClient));
+    this.paintEverything(sbkingClientJFrame);
 
     TableUpdater tableUpdater = new TableUpdater(sbkingClient);
     Thread tableUpdaterThread = new Thread(tableUpdater, "table-updater");
@@ -37,12 +31,8 @@ public class LobbyScreen implements SBKingScreen {
 
     LOGGER.info("Waiting to receive gameName from server.");
     while (this.sbkingClient.getGameName() == null) {
-      updatedTables = tableUpdater.getTables();
-      if (updatedTables != null && !updatedTables.equals(tables)) {
-        LOGGER.info("Updated tables!");
-        tables = updatedTables;
-        sbkingClientJFrame
-            .paintPainter(new LobbyScreenPainter(tables, this.sbkingClient.getActionListener(), this.sbkingClient));
+      if (this.sbkingClient.shouldRedrawTables()) {
+        this.paintEverything(sbkingClientJFrame);
       }
       sleepFor(DELAY_FOR_UPDATING_TABLES);
     }
@@ -50,13 +40,13 @@ public class LobbyScreen implements SBKingScreen {
   }
 
   public List<LobbyScreenTableDTO> getTables() {
-    List<LobbyScreenTableDTO> tables = null;
-    while (tables == null) {
-      tables = this.sbkingClient.getTables();
-      sleepFor(WAIT_FOR_SERVER_MESSAGE_IN_MILISECONDS);
-      LOGGER.info("Waiting to get tables from server.");
-    }
-    return tables;
+    return this.sbkingClient.getTables();
+  }
+
+  private void paintEverything(SBKingClientJFrame sbkingClientJFrame) {
+    sbkingClientJFrame
+        .paintPainter(
+            new LobbyScreenPainter(this.getTables(), this.sbkingClient.getActionListener(), this.sbkingClient));
   }
 
   private void sleepFor(int miliseconds) {

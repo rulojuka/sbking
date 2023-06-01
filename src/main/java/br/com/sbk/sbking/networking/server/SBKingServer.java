@@ -273,11 +273,7 @@ public class SBKingServer {
     this.joinTable(playerIdentifier, table.getId());
   }
 
-  public void sendTablesTo(UUID playerIdentifier) {
-    this.kryonetSBKingServer.sendTablesTo(createTablesDTO(), playerIdentifier);
-  }
-
-  private List<LobbyScreenTableDTO> createTablesDTO() {
+  public List<LobbyScreenTableDTO> getTablesDTO() {
     return this.tables.values().stream().map(LobbyScreenTableDTO::new).collect(Collectors.toList());
   }
 

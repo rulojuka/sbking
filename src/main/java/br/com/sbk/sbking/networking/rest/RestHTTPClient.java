@@ -1,5 +1,7 @@
 package br.com.sbk.sbking.networking.rest;
 
+import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
+
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -9,6 +11,7 @@ import org.apache.http.client.methods.HttpGet;
 
 import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Direction;
+import br.com.sbk.sbking.dto.LobbyScreenTableDTO;
 
 public class RestHTTPClient extends BaseRestHTTPClient {
 
@@ -91,6 +94,16 @@ public class RestHTTPClient extends BaseRestHTTPClient {
         Result result = sendRequestWithResponse(httpGet);
         return Stream
                 .of(deserializer.fromJson(result.getContent(), String[].class))
+                .collect(Collectors.toList());
+    }
+
+    public List<LobbyScreenTableDTO> getTables() {
+        String url = this.baseUrl + "tables";
+        LOGGER.info("getTables");
+        HttpGet httpGet = createGetRequest(url);
+        Result result = sendRequestWithResponse(httpGet);
+        return Stream
+                .of(deserializer.fromJson(result.getContent(), LobbyScreenTableDTO[].class))
                 .collect(Collectors.toList());
     }
 

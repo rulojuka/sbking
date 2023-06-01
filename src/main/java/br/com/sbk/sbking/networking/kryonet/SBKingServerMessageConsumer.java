@@ -7,17 +7,12 @@ import java.util.concurrent.BlockingQueue;
 
 import br.com.sbk.sbking.networking.kryonet.messages.SBKingMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.SBKingMessageWithIdentifier;
-import br.com.sbk.sbking.networking.kryonet.messages.clienttoserver.GetTablesMessage;
-import br.com.sbk.sbking.networking.server.SBKingServer;
 
 public class SBKingServerMessageConsumer implements Runnable {
 
-  private SBKingServer sbkingServer;
   private BlockingQueue<SBKingMessageWithIdentifier> serverMessageQueue;
 
-  public SBKingServerMessageConsumer(SBKingServer sbkingServer,
-      BlockingQueue<SBKingMessageWithIdentifier> serverMessageQueue) {
-    this.sbkingServer = sbkingServer;
+  public SBKingServerMessageConsumer(BlockingQueue<SBKingMessageWithIdentifier> serverMessageQueue) {
     this.serverMessageQueue = serverMessageQueue;
   }
 
@@ -39,14 +34,9 @@ public class SBKingServerMessageConsumer implements Runnable {
   private void consume(SBKingMessage message, UUID playerIdentifier) {
     LOGGER.trace("Entered server --consume--");
     Object content = message.getContent();
-    if (message instanceof GetTablesMessage) {
-      this.sbkingServer.sendTablesTo(playerIdentifier);
-    } else {
-      LOGGER.error("Could not understand message.");
-      LOGGER.error(message);
-      LOGGER.error(content);
-    }
-
+    LOGGER.error("Could not understand message.");
+    LOGGER.error(message);
+    LOGGER.error(content);
   }
 
 }

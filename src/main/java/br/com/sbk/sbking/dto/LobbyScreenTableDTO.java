@@ -1,5 +1,6 @@
 package br.com.sbk.sbking.dto;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -10,7 +11,7 @@ import br.com.sbk.sbking.networking.server.Table;
 public class LobbyScreenTableDTO {
 
     private UUID id;
-    private Map<Direction, Player> playersDirections;
+    private Map<String, String> playersDirections;
     private String gameName;
     private int numberOfSpectators;
 
@@ -23,7 +24,11 @@ public class LobbyScreenTableDTO {
 
     public LobbyScreenTableDTO(Table table) {
         this.id = table.getId();
-        this.playersDirections = table.getPlayersDirections();
+        Map<Direction, Player> tempMap = table.getPlayersDirections();
+        this.playersDirections = new HashMap<String, String>();
+        for (Direction direction : tempMap.keySet()) {
+            this.playersDirections.put(direction.getCompleteName(), tempMap.get(direction).getNickname());
+        }
         this.gameName = table.getGameName();
         this.numberOfSpectators = table.getNumberOfSpectators();
     }
@@ -32,7 +37,7 @@ public class LobbyScreenTableDTO {
         return id;
     }
 
-    public Map<Direction, Player> getPlayersDirection() {
+    public Map<String, String> getPlayersDirections() {
         return this.playersDirections;
     }
 

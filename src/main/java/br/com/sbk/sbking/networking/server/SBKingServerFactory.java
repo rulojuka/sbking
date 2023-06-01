@@ -22,8 +22,7 @@ public class SBKingServerFactory {
     KryonetSBKingServer server = KryonetServerFactory.getRegisteredServer(sbKingServer);
 
     Listener kryonetServerListener = KryonetServerListenerFactory.getServerListener(server, serverMessageQueue); // Producer
-    SBKingServerMessageConsumer sbKingServerMessageConsumer = new SBKingServerMessageConsumer(sbKingServer,
-        serverMessageQueue); // Consumer
+    SBKingServerMessageConsumer sbKingServerMessageConsumer = new SBKingServerMessageConsumer(serverMessageQueue); // Consumer
 
     new Thread(sbKingServerMessageConsumer, "msg-consumer").start();
     server.addListener(kryonetServerListener);
