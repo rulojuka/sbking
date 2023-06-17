@@ -122,6 +122,7 @@
 					<release>8</release> <!-- Target release -->
 					<excludes>
 						<exclude>br/com/sbk/sbking/networking/server/*.java</exclude>
+						<exclude>br/com/sbk/sbking/networking/websockets/*.java</exclude>
 						<exclude>br/com/sbk/sbking/persistence/*.java</exclude>
 						<exclude>br/com/sbk/sbking/app/*.java</exclude>
 					</excludes>
