@@ -156,23 +156,23 @@
 		<dependency>
 			<groupId>org.webjars</groupId>
 			<artifactId>webjars-locator-core</artifactId>
-			</dependency>
-			<dependency>
+		</dependency>
+		<dependency>
 			<groupId>org.webjars</groupId>
 			<artifactId>sockjs-client</artifactId>
 			<version>1.0.2</version>
-			</dependency>
-			<dependency>
+		</dependency>
+		<dependency>
 			<groupId>org.webjars</groupId>
 			<artifactId>stomp-websocket</artifactId>
 			<version>2.3.3</version>
-			</dependency>
-			<dependency>
+		</dependency>
+		<dependency>
 			<groupId>org.webjars</groupId>
 			<artifactId>bootstrap</artifactId>
 			<version>3.3.7</version>
-			</dependency>
-			<dependency>
+		</dependency>
+		<dependency>
 			<groupId>org.webjars</groupId>
 			<artifactId>jquery</artifactId>
 			<version>3.1.1-1</version>
@@ -233,6 +233,7 @@
 					<excludes> <!-- sadly, this does not work sometimes. https://issues.apache.org/jira/browse/MCOMPILER-174 -->
 						<exclude>br/com/sbk/sbking/gui/**/*.java</exclude> <!-- Client only -->
 						<exclude>br/com/sbk/sbking/networking/client/*.java</exclude> <!-- Client only -->
+						<exclude>br/com/sbk/sbking/clientapp/*.java</exclude> <!-- Client only -->
 						<exclude>br/com/sbk/sbking/persistence/**/*.java</exclude> <!-- Not using it yet -->
 					</excludes>
 					<testIncludes> <!-- Just being explicit -->

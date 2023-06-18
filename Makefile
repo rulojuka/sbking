@@ -26,7 +26,7 @@ package_client:
 	mvn -f pom-client.xml clean package
 
 copy_client:
-	cp target/sbking-client-1.0.0-alpha-jar-with-dependencies.jar ./sbking-client.jar && chmod +x ./sbking-client.jar
+	cp target/sbking-client-1.0.0-alpha.jar ./sbking-client.jar && chmod +x ./sbking-client.jar
 
 build:
 	docker build -t $(APP_NAME) .

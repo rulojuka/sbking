@@ -9,8 +9,17 @@
 	<description>More information at https://github.com/rulojuka/sbking</description>
 	<packaging>jar</packaging>
 
+	<!-- Adds the base pom from spring boot -->
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.7.12</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java.version>11</java.version> <!-- For spring-boot-maven-plugin -->
 	</properties>
 
 	<repositories>
@@ -79,9 +88,23 @@
 			<artifactId>httpclient</artifactId>
 			<version>4.5.14</version>
 		</dependency>
+		<dependency>
+			<groupId>org.java-websocket</groupId>
+			<artifactId>Java-WebSocket</artifactId>
+			<version>1.5.3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>            
+			<artifactId>spring-boot-starter-websocket</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-websocket</artifactId>
+			<version>5.3.27</version>
+		</dependency>
 	</dependencies>
 
-	<build>
+	<build> <!-- Run mvn fr.jcgay.maven.plugins:buildplan-maven-plugin:list-phase to see the phase and goals-->
 		<plugins>
 			<!-- validate: check if all information necessary for the build is available -->
 			<plugin>
@@ -140,33 +163,22 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>3.1.0</version>
+				<configuration>
+					<excludes>
+						<exclude>br/com/sbk/sbking/persistence/*.java</exclude> <!-- This should run on the integration-test phase -->
+					</excludes>
+				</configuration>
 			</plugin>
 
-			<!-- package: package compiled source code into the distributable format (jar, war, …) -->
+			<!-- Phase: package - package compiled source code into the distributable format (jar, war, …) -->
+			<!-- Spring boot automatically uses maven-jar-plugin and maven-assembly-plugin here -->
+				<!-- Goal: maven-jar-plugin:jar -->
+				<!-- Goal: spring-boot-maven-plugin:repackage -->
 			<plugin>
-				<!-- Only goal: assembly:single -->
-				<!-- Bound to lifecycle phase: test -->
-				<artifactId>maven-assembly-plugin</artifactId>
-				<version>3.5.0</version>
-				<executions>
-					<execution>
-						<id>jar-with-dependencies</id>
-						<phase>package</phase>
-						<goals>
-							<goal>single</goal>
-						</goals>
-						<configuration>
-							<archive>
-								<manifest>
-									<mainClass>br.com.sbk.sbking.gui.main.MainNetworkGame</mainClass>
-								</manifest>
-							</archive>
-							<descriptorRefs>
-								<descriptorRef>jar-with-dependencies</descriptorRef>
-							</descriptorRefs>
-						</configuration>
-					</execution>
-				</executions>
+				<!-- Anyway, the explicit addition of the plugin is needed -->
+				<!-- for spring boot to bind spring-boot-maven-plugin:repackage to package phase -->
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 
 			<!-- verify: run any checks to verify the package is valid and meets quality criteria. -->

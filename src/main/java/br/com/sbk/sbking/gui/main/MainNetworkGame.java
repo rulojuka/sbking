@@ -13,7 +13,7 @@ import br.com.sbk.sbking.networking.kryonet.messages.GameScreenFromGameNameIdent
 
 public class MainNetworkGame {
 
-    public static void main(String[] args) {
+    public void run() {
         ClientApplicationState.startAppState();
         SBKingClientJFrame sbkingClientJFrame = new SBKingClientJFrame();
 

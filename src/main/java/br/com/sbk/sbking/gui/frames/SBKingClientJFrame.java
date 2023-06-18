@@ -27,10 +27,21 @@ public class SBKingClientJFrame extends JFrame {
 
     private void initializeFrame() {
         this.setVisible(true);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(FrameConstants.tableWidth, FrameConstants.tableHeight);
 
         this.setApplicationIcon();
+
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        // Might have to fix this later
+        // import java.awt.event.WindowAdapter;
+        // import java.awt.event.WindowEvent;
+        // this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        // this.addWindowListener(new WindowAdapter() {
+        // public void windowClosing(WindowEvent e) {
+        // System.exit(0);
+        // }
+        // });
     }
 
     private void initializeContentPane(SBKingClientJFrame screen) {
