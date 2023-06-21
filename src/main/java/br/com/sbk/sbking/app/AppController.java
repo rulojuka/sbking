@@ -120,14 +120,14 @@ class AppController {
 
     @GetMapping("/spectators")
     public List<String> getSpectators(@RequestHeader("PlayerUUID") String playerUUID) {
-        LOGGER.info("getSpectators");
+        LOGGER.trace("getSpectators");
         List<String> spectatorList = this.getServer().getSpectatorList(getUUID(playerUUID));
         return spectatorList;
     }
 
     @GetMapping("/tables")
     public List<LobbyScreenTableDTO> getTables() {
-        LOGGER.info("getTables");
+        LOGGER.trace("getTables");
         return this.getServer().getTablesDTO();
     }
 

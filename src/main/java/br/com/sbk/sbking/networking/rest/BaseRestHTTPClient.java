@@ -37,7 +37,7 @@ public abstract class BaseRestHTTPClient {
 
     public void setIdentifier(String identifier) {
         this.identifier = UUID.fromString(identifier);
-        LOGGER.info("\n\n" + this.identifier + "\n\n");
+        LOGGER.info("Setting identifier:" + this.identifier);
     }
 
     private String getIdentifierString() {
@@ -48,8 +48,8 @@ public abstract class BaseRestHTTPClient {
     }
 
     protected void createAndSendPostRequest(String url, String body) {
-        LOGGER.info("[POST] URL: " + url);
-        LOGGER.info("Body: " + body);
+        LOGGER.trace("[POST] URL: " + url);
+        LOGGER.trace("Body: " + body);
         HttpPost httpPost = new HttpPost(url);
         this.fillRequestWithBodyAndJson(httpPost, body);
         sendRequest(httpPost);
@@ -60,15 +60,15 @@ public abstract class BaseRestHTTPClient {
     }
 
     protected void createAndSendPutRequest(String url, String body) {
-        LOGGER.info("[PUT] URL: " + url);
-        LOGGER.info("Body: " + body);
+        LOGGER.trace("[PUT] URL: " + url);
+        LOGGER.trace("Body: " + body);
         HttpPut httpPut = new HttpPut(url);
         this.fillRequestWithBodyAndJson(httpPut, body);
         sendRequest(httpPut);
     }
 
     protected HttpGet createGetRequest(String url) {
-        LOGGER.info("[GET] URL: " + url);
+        LOGGER.trace("[GET] URL: " + url);
         HttpGet httpGet = new HttpGet(url);
         this.setJsonAndIdentifierHeaders(httpGet);
         return httpGet;

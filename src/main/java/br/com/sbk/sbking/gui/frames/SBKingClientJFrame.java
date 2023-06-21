@@ -21,6 +21,7 @@ public class SBKingClientJFrame extends JFrame {
 
     public SBKingClientJFrame() {
         super();
+        ClientApplicationState.startAppState();
         initializeFrame();
         initializeContentPane(this);
     }

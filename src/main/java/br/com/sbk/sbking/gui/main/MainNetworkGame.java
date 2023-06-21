@@ -13,12 +13,15 @@ import br.com.sbk.sbking.networking.kryonet.messages.GameScreenFromGameNameIdent
 
 public class MainNetworkGame {
 
+    SBKingClient sbkingClient;
+    SBKingClientJFrame sbkingClientJFrame;
+
+    public MainNetworkGame(SBKingClient sbkingClient, SBKingClientJFrame sbkingClientJFrame) {
+        this.sbkingClient = sbkingClient;
+        this.sbkingClientJFrame = sbkingClientJFrame;
+    }
+
     public void run() {
-        ClientApplicationState.startAppState();
-        SBKingClientJFrame sbkingClientJFrame = new SBKingClientJFrame();
-
-        SBKingClient sbkingClient = ConnectToServer.connectToServer();
-
         WelcomeScreen welcomeScreen = new WelcomeScreen(sbkingClient);
         welcomeScreen.runAt(sbkingClientJFrame);
 

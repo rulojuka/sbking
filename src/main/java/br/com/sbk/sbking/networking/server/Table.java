@@ -112,7 +112,7 @@ public class Table {
   }
 
   private void logAllPlayers() {
-    LOGGER.info("\n\n--- Logging all players from table " + this.id + " ---");
+    LOGGER.info("\n--- Logging all players from table " + this.id + " ---");
     seatedPlayers.values().stream().forEach(this::printPlayerInfo);
     spectatorPlayers.stream().forEach(this::printPlayerInfo);
     LOGGER.info("--- Finished Logging players ---\n");

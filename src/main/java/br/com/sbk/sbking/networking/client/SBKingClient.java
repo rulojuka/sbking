@@ -286,7 +286,6 @@ public class SBKingClient {
 
     public void initializeId(String id) {
         this.restHTTPClient.setIdentifier(id);
-        System.out.println("Teste");
     }
 
 }

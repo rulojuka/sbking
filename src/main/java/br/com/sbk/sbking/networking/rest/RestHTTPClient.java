@@ -99,7 +99,7 @@ public class RestHTTPClient extends BaseRestHTTPClient {
 
     public List<LobbyScreenTableDTO> getTables() {
         String url = this.baseUrl + "tables";
-        LOGGER.info("getTables");
+        LOGGER.trace("getTables");
         HttpGet httpGet = createGetRequest(url);
         Result result = sendRequestWithResponse(httpGet);
         return Stream
