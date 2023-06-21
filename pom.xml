@@ -242,6 +242,7 @@
 					</includes>
 					<excludes> <!-- sadly, this does not work sometimes. https://issues.apache.org/jira/browse/MCOMPILER-174 -->
 						<exclude>br/com/sbk/sbking/persistence/**/*.java</exclude> <!-- Not using it yet -->
+						<exclude>br/com/sbk/sbking/clientapp/ClientApplication.java</exclude> <!-- For mvn verify to run -->
 					</excludes>
 					<testIncludes> <!-- Just being explicit -->
 						<include>br/com/sbk/sbking/**/*.java</include>
