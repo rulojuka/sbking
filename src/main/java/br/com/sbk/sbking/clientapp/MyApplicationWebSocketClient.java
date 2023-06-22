@@ -2,12 +2,15 @@ package br.com.sbk.sbking.clientapp;
 
 import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 import org.springframework.messaging.simp.stomp.StompSession;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.client.WebSocketClient;
 import org.springframework.web.socket.client.standard.StandardWebSocketClient;
 import org.springframework.web.socket.messaging.WebSocketStompClient;
+
+import br.com.sbk.sbking.networking.client.SBKingClient;
 
 @Component
 public class MyApplicationWebSocketClient {
@@ -17,14 +20,15 @@ public class MyApplicationWebSocketClient {
     private MyStompSessionHandler stompSessionHandler;
     private String serverUrl;
 
-    public MyApplicationWebSocketClient() {
+    public MyApplicationWebSocketClient(@Autowired ClientComponent clientComponent) {
         LOGGER.trace("Initializing MyApplicationWebSocketClient");
         this.webSocketClient = new StandardWebSocketClient();
         this.webSocketStompClient = new WebSocketStompClient(webSocketClient);
         this.webSocketStompClient.setMessageConverter(new MappingJackson2MessageConverter());
         // stompClient.setTaskScheduler(taskScheduler); // for heartbeats
 
-        this.stompSessionHandler = new MyStompSessionHandler();
+        SBKingClient sbKingClient = clientComponent.getSBKingClient();
+        this.stompSessionHandler = new MyStompSessionHandler(sbKingClient);
         this.serverUrl = "ws://localhost:8080/gs-guide-websocket";
     }
 

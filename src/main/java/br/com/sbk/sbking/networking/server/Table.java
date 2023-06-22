@@ -107,7 +107,7 @@ public class Table {
     }
   }
 
-  private boolean isSpectator(Player player) {
+  public boolean isSpectator(Player player) {
     return this.spectatorPlayers.contains(player);
   }
 

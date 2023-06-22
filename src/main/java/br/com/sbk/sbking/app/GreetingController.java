@@ -14,8 +14,8 @@ import br.com.sbk.sbking.networking.websockets.HelloMessage;
 @Controller
 public class GreetingController {
 
-    @MessageMapping("/hello")
-    @SendTo("/topic/greetings")
+    @MessageMapping("/hello") // session.send("/app/hello", helloMessage);
+    @SendTo("/topic/greetings") // session.subscribe("/topic/greetings", this);
     public Greeting greeting(HelloMessage message) throws Exception {
         // Thread.sleep(1000); // simulated delay
         final String time = new SimpleDateFormat("HH:mm").format(new Date());

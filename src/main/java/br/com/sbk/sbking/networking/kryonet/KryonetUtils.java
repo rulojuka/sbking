@@ -45,13 +45,10 @@ import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.FinishDealMe
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.GameModeOrStrainChooserMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.InitializeDealMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.InvalidRulesetMessage;
-import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.IsNotSpectatorMessage;
-import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.IsSpectatorMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.PositiveOrNegativeChooserMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.PositiveOrNegativeMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.TextMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.ValidRulesetMessage;
-import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.YourDirectionIsMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.YourIdIsMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.YourTableIsMessage;
 
@@ -112,13 +109,10 @@ public class KryonetUtils {
     kryo.register(GameModeOrStrainChooserMessage.class);
     kryo.register(InitializeDealMessage.class);
     kryo.register(InvalidRulesetMessage.class);
-    kryo.register(IsNotSpectatorMessage.class);
-    kryo.register(IsSpectatorMessage.class);
     kryo.register(PositiveOrNegativeChooserMessage.class);
     kryo.register(PositiveOrNegativeMessage.class);
     kryo.register(TextMessage.class);
     kryo.register(ValidRulesetMessage.class);
-    kryo.register(YourDirectionIsMessage.class);
     kryo.register(YourIdIsMessage.class);
     kryo.register(YourTableIsMessage.class);
   }

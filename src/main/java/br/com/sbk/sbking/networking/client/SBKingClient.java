@@ -2,6 +2,7 @@ package br.com.sbk.sbking.networking.client;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
@@ -41,6 +42,8 @@ public class SBKingClient {
     private String nickname;
 
     private boolean shouldRedrawTables = true;
+
+    private UUID identifier;
 
     public void setActionListener(ClientActionListener actionListener) {
         this.actionListener = actionListener;
@@ -286,6 +289,11 @@ public class SBKingClient {
 
     public void initializeId(String id) {
         this.restHTTPClient.setIdentifier(id);
+        this.identifier = UUID.fromString(id);
+    }
+
+    public UUID getId() {
+        return this.identifier;
     }
 
 }

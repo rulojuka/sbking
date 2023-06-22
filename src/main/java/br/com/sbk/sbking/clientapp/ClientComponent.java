@@ -12,18 +12,21 @@ import br.com.sbk.sbking.networking.client.SBKingClient;
 @Component
 public class ClientComponent {
 
-    MainNetworkGame game;
+    private MainNetworkGame game;
+    private SBKingClient sbkingClient;
 
     public ClientComponent() {
         LOGGER.trace("Initializing ClientComponent");
-        SBKingClient sbkingClient = ConnectToServer.connectToServer();
-        SBKingClientJFrame sbkingClientJFrame = new SBKingClientJFrame();
-
-        game = new MainNetworkGame(sbkingClient, sbkingClientJFrame);
+        this.sbkingClient = ConnectToServer.connectToServer();
+        game = new MainNetworkGame(sbkingClient, new SBKingClientJFrame());
     }
 
     public void run() {
         game.run();
+    }
+
+    public SBKingClient getSBKingClient() {
+        return this.sbkingClient;
     }
 
 }

@@ -13,6 +13,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
+import br.com.sbk.sbking.app.PlayerController;
 import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
@@ -27,6 +28,8 @@ import br.com.sbk.sbking.networking.server.gameserver.GameServer;
 import br.com.sbk.sbking.networking.server.gameserver.KingGameServer;
 import br.com.sbk.sbking.networking.server.gameserver.MinibridgeGameServer;
 import br.com.sbk.sbking.networking.server.gameserver.PositiveKingGameServer;
+import br.com.sbk.sbking.networking.websockets.PlayerDTO;
+import br.com.sbk.sbking.networking.websockets.PlayerListDTO;
 
 /**
  * This class has two responsibilities: 1: receiving method calls from the
@@ -37,6 +40,7 @@ import br.com.sbk.sbking.networking.server.gameserver.PositiveKingGameServer;
 public class SBKingServer {
 
   private KryonetSBKingServer kryonetSBKingServer = null;
+  private PlayerController playerController;
 
   private Map<UUID, Player> identifierToPlayerMap = new HashMap<UUID, Player>();
   private Map<UUID, Table> tables;
@@ -45,11 +49,12 @@ public class SBKingServer {
   private static final int MAXIMUM_NUMBER_OF_CONCURRENT_GAME_SERVERS = 10;
   private ExecutorService pool;
 
-  public SBKingServer() {
+  public SBKingServer(PlayerController playerController) {
     this.tables = new HashMap<UUID, Table>();
     this.playersTable = new HashMap<Player, Table>();
     this.identifierToPlayerMap = new HashMap<UUID, Player>();
     this.pool = Executors.newFixedThreadPool(MAXIMUM_NUMBER_OF_CONCURRENT_GAME_SERVERS);
+    this.playerController = playerController;
   }
 
   public void setKryonetSBKingServer(KryonetSBKingServer kryonetSBKingServer) {
@@ -155,16 +160,18 @@ public class SBKingServer {
     return allPlayersOnTable;
   }
 
+  // This should be optimized when we have websockets messages directly for
+  // players.
   public void sendDirectionTo(Direction direction, UUID playerIdentifier) {
-    this.kryonetSBKingServer.sendDirectionTo(direction, playerIdentifier);
+    this.sendUpdatePlayerList();
   }
 
   public void sendIsSpectatorTo(UUID playerIdentifier) {
-    this.kryonetSBKingServer.sendIsSpectatorTo(playerIdentifier);
+    this.sendUpdatePlayerList();
   }
 
   public void sendIsNotSpectatorTo(UUID playerIdentifier) {
-    this.kryonetSBKingServer.sendIsNotSpectatorTo(playerIdentifier);
+    this.sendUpdatePlayerList();
   }
 
   public void sendDealToTable(Deal deal, Table table) {
@@ -332,6 +339,35 @@ public class SBKingServer {
 
   public void sendYourIdIsTo(UUID playerIdentifier) {
     this.kryonetSBKingServer.sendYourIdIsTo(playerIdentifier);
+  }
+
+  public void sendUpdatePlayerList() {
+    List<PlayerDTO> list = new ArrayList<>();
+    for (Map.Entry<UUID, Player> pair : identifierToPlayerMap.entrySet()) {
+      UUID playerIdentifier = pair.getKey();
+      Player player = pair.getValue();
+      Table table = playersTable.get(player);
+      Boolean isSpectator = true;
+      Direction direction = null;
+      UUID tableIdentifier = null;
+      if (table != null) {
+        tableIdentifier = table.getId();
+        isSpectator = table.isSpectator(player);
+        direction = table.getDirectionFrom(player);
+      }
+      PlayerDTO playerDTO = new PlayerDTO(playerIdentifier, tableIdentifier, isSpectator, direction);
+      list.add(playerDTO);
+      LOGGER.info("Added player:" + playerIdentifier + tableIdentifier + isSpectator + direction);
+    }
+
+    PlayerListDTO playerList = new PlayerListDTO();
+    playerList.setList(list);
+    try {
+      this.playerController.getPlayers(playerList);
+    } catch (Exception e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
   }
 
 }

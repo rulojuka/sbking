@@ -17,12 +17,9 @@ import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.FinishDealMe
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.GameModeOrStrainChooserMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.InitializeDealMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.InvalidRulesetMessage;
-import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.IsNotSpectatorMessage;
-import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.IsSpectatorMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.PositiveOrNegativeChooserMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.PositiveOrNegativeMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.ValidRulesetMessage;
-import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.YourDirectionIsMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.YourIdIsMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.YourTableIsMessage;
 import br.com.sbk.sbking.networking.server.SBKingServer;
@@ -80,18 +77,6 @@ public class KryonetSBKingServer extends Server {
 
   public void sendFinishDealTo(Iterable<UUID> receivers) {
     this.sendMany(new FinishDealMessage(), receivers);
-  }
-
-  public void sendDirectionTo(Direction direction, UUID playerIdentifier) {
-    this.sendOneTo(new YourDirectionIsMessage(direction), playerIdentifier);
-  }
-
-  public void sendIsSpectatorTo(UUID playerIdentifier) {
-    this.sendOneTo(new IsSpectatorMessage(), playerIdentifier);
-  }
-
-  public void sendIsNotSpectatorTo(UUID playerIdentifier) {
-    this.sendOneTo(new IsNotSpectatorMessage(), playerIdentifier);
   }
 
   public void sendDealTo(Deal deal, Iterable<UUID> receivers) {

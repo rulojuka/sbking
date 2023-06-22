@@ -8,6 +8,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 import com.esotericsoftware.kryonet.Listener;
 
+import br.com.sbk.sbking.app.PlayerController;
 import br.com.sbk.sbking.networking.kryonet.KryonetSBKingServer;
 import br.com.sbk.sbking.networking.kryonet.KryonetServerFactory;
 import br.com.sbk.sbking.networking.kryonet.KryonetServerListenerFactory;
@@ -16,8 +17,8 @@ import br.com.sbk.sbking.networking.kryonet.messages.SBKingMessageWithIdentifier
 
 public class SBKingServerFactory {
 
-  public static SBKingServer createWithKryonetConnection(int port) {
-    SBKingServer sbKingServer = new SBKingServer();
+  public static SBKingServer createWithKryonetConnection(int port, PlayerController playerController) {
+    SBKingServer sbKingServer = new SBKingServer(playerController);
     BlockingQueue<SBKingMessageWithIdentifier> serverMessageQueue = new LinkedBlockingQueue<SBKingMessageWithIdentifier>();
     KryonetSBKingServer server = KryonetServerFactory.getRegisteredServer(sbKingServer);
 

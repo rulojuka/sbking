@@ -13,13 +13,10 @@ import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.FinishDealMe
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.GameModeOrStrainChooserMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.InitializeDealMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.InvalidRulesetMessage;
-import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.IsNotSpectatorMessage;
-import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.IsSpectatorMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.PositiveOrNegativeChooserMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.PositiveOrNegativeMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.TextMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.ValidRulesetMessage;
-import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.YourDirectionIsMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.YourIdIsMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.YourTableIsMessage;
 
@@ -55,8 +52,6 @@ public class SBKingClientMessageConsumer implements Runnable {
       LOGGER.info("Received message from server: " + content);
     } else if (message instanceof DealMessage) {
       this.sbkingClient.setCurrentDeal((Deal) content);
-    } else if (message instanceof YourDirectionIsMessage) {
-      this.sbkingClient.initializeDirection((Direction) content);
     } else if (message instanceof PositiveOrNegativeChooserMessage) {
       this.sbkingClient.setPositiveOrNegativeChooser((Direction) content);
     } else if (message instanceof PositiveOrNegativeMessage) {
@@ -71,10 +66,6 @@ public class SBKingClientMessageConsumer implements Runnable {
       this.sbkingClient.setRulesetValid(false);
     } else if (message instanceof ValidRulesetMessage) {
       this.sbkingClient.setRulesetValid(true);
-    } else if (message instanceof IsSpectatorMessage) {
-      this.sbkingClient.setSpectator(true);
-    } else if (message instanceof IsNotSpectatorMessage) {
-      this.sbkingClient.setSpectator(false);
     } else if (message instanceof YourTableIsMessage) {
       this.sbkingClient.setGameName((String) content);
     } else if (message instanceof YourIdIsMessage) {
