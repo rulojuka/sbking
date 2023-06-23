@@ -335,10 +335,6 @@ public class SBKingServer {
     return new ArrayList<String>();
   }
 
-  public void sendYourIdIsTo(UUID playerIdentifier) {
-    this.kryonetSBKingServer.sendYourIdIsTo(playerIdentifier);
-  }
-
   private void sendUpdatePlayerList() {
     List<PlayerDTO> list = new ArrayList<>();
     for (Map.Entry<UUID, Player> pair : identifierToPlayerMap.entrySet()) {
