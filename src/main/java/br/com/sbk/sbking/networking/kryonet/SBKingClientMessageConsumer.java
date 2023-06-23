@@ -18,7 +18,6 @@ import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.PositiveOrNe
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.TextMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.ValidRulesetMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.YourIdIsMessage;
-import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.YourTableIsMessage;
 
 public class SBKingClientMessageConsumer implements Runnable {
 
@@ -66,8 +65,6 @@ public class SBKingClientMessageConsumer implements Runnable {
       this.sbkingClient.setRulesetValid(false);
     } else if (message instanceof ValidRulesetMessage) {
       this.sbkingClient.setRulesetValid(true);
-    } else if (message instanceof YourTableIsMessage) {
-      this.sbkingClient.setGameName((String) content);
     } else if (message instanceof YourIdIsMessage) {
       this.sbkingClient.initializeId((String) content);
     } else {

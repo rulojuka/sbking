@@ -237,11 +237,9 @@ public class SBKingServer {
     Table table = this.tables.get(tableIdentifier);
     Player player = this.identifierToPlayerMap.get(playerIdentifier);
     if (table != null && player != null) {
-      GameServer gameServer = table.getGameServer();
-      String gameName = GameNameFromGameServerIdentifier.identify(gameServer.getClass());
-      this.kryonetSBKingServer.sendYourTableIsTo(gameName, playerIdentifier);
       this.addSpectator(player, table);
       this.playersTable.put(player, table);
+      this.sendUpdatePlayerList();
     }
   }
 
@@ -297,8 +295,7 @@ public class SBKingServer {
       this.tables.remove(table.getId());
       table.dismantle();
     }
-    this.kryonetSBKingServer.sendYourTableIsTo(null, playerIdentifier);
-
+    this.sendUpdatePlayerList();
   }
 
   public void claim(UUID playerIdentifier) {
@@ -341,7 +338,7 @@ public class SBKingServer {
     this.kryonetSBKingServer.sendYourIdIsTo(playerIdentifier);
   }
 
-  public void sendUpdatePlayerList() {
+  private void sendUpdatePlayerList() {
     List<PlayerDTO> list = new ArrayList<>();
     for (Map.Entry<UUID, Player> pair : identifierToPlayerMap.entrySet()) {
       UUID playerIdentifier = pair.getKey();
@@ -350,12 +347,13 @@ public class SBKingServer {
       Boolean isSpectator = true;
       Direction direction = null;
       UUID tableIdentifier = null;
+      String gameName = this.getGameNameFrom(table);
       if (table != null) {
         tableIdentifier = table.getId();
         isSpectator = table.isSpectator(player);
         direction = table.getDirectionFrom(player);
       }
-      PlayerDTO playerDTO = new PlayerDTO(playerIdentifier, tableIdentifier, isSpectator, direction);
+      PlayerDTO playerDTO = new PlayerDTO(playerIdentifier, tableIdentifier, isSpectator, direction, gameName);
       list.add(playerDTO);
       LOGGER.info("Added player:" + playerIdentifier + tableIdentifier + isSpectator + direction);
     }
@@ -368,6 +366,14 @@ public class SBKingServer {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
+  }
+
+  private String getGameNameFrom(Table table) {
+    if (table == null) {
+      return null;
+    }
+    GameServer gameServer = table.getGameServer();
+    return GameNameFromGameServerIdentifier.identify(gameServer.getClass());
   }
 
 }

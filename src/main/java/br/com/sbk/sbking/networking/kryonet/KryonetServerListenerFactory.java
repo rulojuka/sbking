@@ -48,7 +48,6 @@ public class KryonetServerListenerFactory {
         connection.sendTCP(response);
 
         kryonetSBKingServer.sendYourIdIsTo(connectionWithPlayer.getIdentifier());
-        kryonetSBKingServer.sendYourTableIsTo(null, connectionWithPlayer.getIdentifier());
       }
 
       public void received(Connection connection, Object object) {

@@ -33,7 +33,7 @@ public class SBKingClient {
 
     private RestHTTPClient restHTTPClient;
 
-    private String gameName;
+    private String gameName = null;
 
     private List<LobbyScreenTableDTO> tables;
 

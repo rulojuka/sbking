@@ -9,15 +9,17 @@ public class PlayerDTO {
     private UUID table;
     private boolean spectator;
     private Direction direction;
+    private String gameName;
 
     public PlayerDTO() {
     }
 
-    public PlayerDTO(UUID player, UUID table, boolean spectator, Direction direction) {
+    public PlayerDTO(UUID player, UUID table, boolean spectator, Direction direction, String gameName) {
         this.player = player;
         this.table = table;
         this.spectator = spectator;
         this.direction = direction;
+        this.gameName = gameName;
     }
 
     public UUID getPlayer() {
@@ -50,5 +52,13 @@ public class PlayerDTO {
 
     public void setDirection(Direction direction) {
         this.direction = direction;
+    }
+
+    public String getGameName() {
+        return gameName;
+    }
+
+    public void setGameName(String gameName) {
+        this.gameName = gameName;
     }
 }

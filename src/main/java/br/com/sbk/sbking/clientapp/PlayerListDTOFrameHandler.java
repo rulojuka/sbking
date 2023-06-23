@@ -40,10 +40,12 @@ public class PlayerListDTOFrameHandler implements StompFrameHandler {
                     + "\nUUID:" + myself.getPlayer().toString()
                     + "\nTable:" + myself.getTable()
                     + "\nDirection:" + myself.getDirection()
-                    + "\nIsSpectator:" + myself.getSpectator());
+                    + "\nIsSpectator:" + myself.getSpectator()
+                    + "\nGameName:" + myself.getGameName());
 
             this.sbkingClient.setSpectator(myself.getSpectator());
             this.sbkingClient.initializeDirection(myself.getDirection());
+            this.sbkingClient.setGameName(myself.getGameName());
         }
     }
 

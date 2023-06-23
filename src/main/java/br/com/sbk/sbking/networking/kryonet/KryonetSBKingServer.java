@@ -21,7 +21,6 @@ import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.PositiveOrNe
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.PositiveOrNegativeMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.ValidRulesetMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.YourIdIsMessage;
-import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.YourTableIsMessage;
 import br.com.sbk.sbking.networking.server.SBKingServer;
 
 public class KryonetSBKingServer extends Server {
@@ -113,10 +112,6 @@ public class KryonetSBKingServer extends Server {
 
   public String getNicknameFromIdentifier(UUID identifier) {
     return this.sbkingServer.getNicknameFromIdentifier(identifier);
-  }
-
-  public void sendYourTableIsTo(String gameName, UUID playerIdentifier) {
-    this.sendOneTo(new YourTableIsMessage(gameName), playerIdentifier);
   }
 
   public void sendYourIdIsTo(UUID playerIdentifier) {

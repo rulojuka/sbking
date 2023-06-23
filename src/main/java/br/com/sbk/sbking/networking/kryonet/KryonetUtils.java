@@ -50,7 +50,6 @@ import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.PositiveOrNe
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.TextMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.ValidRulesetMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.YourIdIsMessage;
-import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.YourTableIsMessage;
 
 public class KryonetUtils {
   // This registers objects that are going to be sent over the network.
@@ -114,6 +113,5 @@ public class KryonetUtils {
     kryo.register(TextMessage.class);
     kryo.register(ValidRulesetMessage.class);
     kryo.register(YourIdIsMessage.class);
-    kryo.register(YourTableIsMessage.class);
   }
 }
