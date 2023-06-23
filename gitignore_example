@@ -16,5 +16,8 @@ TODO
 # vscode
 .vscode/
 
+# Eclipse
+.checkstyle
+
 # configuration file example
 src/main/resources/config.dev.xml
