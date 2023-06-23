@@ -7,6 +7,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
 import br.com.sbk.sbking.networking.websockets.PlayerListDTO;
+import br.com.sbk.sbking.networking.websockets.TableDealDTO;
 
 @Controller
 public class PlayerController {
@@ -17,6 +18,12 @@ public class PlayerController {
     public void getPlayers(PlayerListDTO playerList) {
         LOGGER.info("Sending list of players to subscribers");
         this.template.convertAndSend("/topic/players", playerList);
+    }
+
+    public void getDeal(TableDealDTO tableDealDTO) {
+        LOGGER.info("Sending deal to table:" + tableDealDTO.getTableId());
+        String destination = "/topic/deal/" + tableDealDTO.getTableId();
+        this.template.convertAndSend(destination, tableDealDTO);
     }
 
 }

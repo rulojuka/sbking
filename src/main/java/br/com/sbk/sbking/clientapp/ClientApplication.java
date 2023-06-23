@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.messaging.simp.stomp.StompSession;
 
 @SpringBootApplication
 public class ClientApplication {
@@ -39,10 +40,11 @@ public class ClientApplication {
         // Main "loop"
         MyApplicationWebSocketClient webSocketClientComponent = ctx.getBean(MyApplicationWebSocketClient.class);
         LOGGER.trace("Running MyApplicationWebSocketClient");
-        webSocketClientComponent.connect();
+        StompSession stompSession = webSocketClientComponent.connect();
 
         ClientComponent clientComponent = ctx.getBean(ClientComponent.class);
         LOGGER.trace("Running ClientComponent");
+        clientComponent.getSBKingClient().setStompSession(stompSession);
         clientComponent.run(); // This takes hold of the thread forever
         // Execution never gets to this line
         LOGGER.error("SHOULD NOT GET HERE");

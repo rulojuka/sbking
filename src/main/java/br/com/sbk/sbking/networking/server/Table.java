@@ -183,6 +183,7 @@ public class Table {
 
   public void sendDealAll() {
     this.getSBKingServer().sendDealToTable(this.gameServer.getDeal(), this);
+    this.getSBKingServer().sendTableDealWebsocket(this);
   }
 
   public void sendDealTo(Player player) {

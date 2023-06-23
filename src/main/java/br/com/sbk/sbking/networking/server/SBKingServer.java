@@ -30,6 +30,7 @@ import br.com.sbk.sbking.networking.server.gameserver.MinibridgeGameServer;
 import br.com.sbk.sbking.networking.server.gameserver.PositiveKingGameServer;
 import br.com.sbk.sbking.networking.websockets.PlayerDTO;
 import br.com.sbk.sbking.networking.websockets.PlayerListDTO;
+import br.com.sbk.sbking.networking.websockets.TableDealDTO;
 
 /**
  * This class has two responsibilities: 1: receiving method calls from the
@@ -374,6 +375,12 @@ public class SBKingServer {
     }
     GameServer gameServer = table.getGameServer();
     return GameNameFromGameServerIdentifier.identify(gameServer.getClass());
+  }
+
+  public void sendTableDealWebsocket(Table table) {
+    TableDealDTO tableDealDTO = new TableDealDTO();
+    tableDealDTO.setTableId(table.getId().toString());
+    this.playerController.getDeal(tableDealDTO);
   }
 
 }

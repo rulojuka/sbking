@@ -1,9 +1,15 @@
 package br.com.sbk.sbking.networking.client;
 
+import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.messaging.simp.stomp.StompSession;
+import org.springframework.messaging.simp.stomp.StompSession.Subscription;
+
+import br.com.sbk.sbking.clientapp.DealFrameHandler;
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.dto.LobbyScreenTableDTO;
@@ -44,6 +50,30 @@ public class SBKingClient {
     private boolean shouldRedrawTables = true;
 
     private UUID identifier;
+
+    private UUID currentTable = null;
+
+    private StompSession stompSession;
+
+    private Subscription dealSubscription;
+
+    public void setStompSession(StompSession stompSession) {
+        this.stompSession = stompSession;
+    }
+
+    public void setCurrentTable(UUID newTable) {
+        if (this.currentTable != null && newTable == null) {
+            LOGGER.info("Unsubscribing!");
+            this.dealSubscription.unsubscribe(); // dealSubscription should not be null here
+            this.dealSubscription = null;
+        }
+        if (newTable != null && !newTable.equals(this.currentTable)) {
+            String topic = "/topic/deal/" + newTable.toString();
+            LOGGER.info("Subscribing to:" + topic);
+            this.dealSubscription = this.stompSession.subscribe(topic, new DealFrameHandler());
+        }
+        this.currentTable = newTable;
+    }
 
     public void setActionListener(ClientActionListener actionListener) {
         this.actionListener = actionListener;
