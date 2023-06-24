@@ -9,6 +9,9 @@ import java.util.UUID;
 import org.springframework.messaging.simp.stomp.StompSession;
 import org.springframework.messaging.simp.stomp.StompSession.Subscription;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import br.com.sbk.sbking.clientapp.DealFrameHandler;
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
@@ -70,7 +73,8 @@ public class SBKingClient {
         if (newTable != null && !newTable.equals(this.currentTable)) {
             String topic = "/topic/deal/" + newTable.toString();
             LOGGER.info("Subscribing to:" + topic);
-            this.dealSubscription = this.stompSession.subscribe(topic, new DealFrameHandler());
+            this.dealSubscription = this.stompSession.subscribe(topic, new DealFrameHandler(this));
+            this.restHTTPClient.refreshTable(newTable);
         }
         this.currentTable = newTable;
     }
@@ -266,8 +270,16 @@ public class SBKingClient {
         }
     }
 
-    public void sendCreateTable(String gameName) {
-        this.restHTTPClient.sendCreateTableMessage(gameName);
+    public UUID sendCreateTable(String gameName) {
+        String response = this.restHTTPClient.sendCreateTableMessage(gameName);
+        ObjectMapper objectMapper = new ObjectMapper();
+        UUID tableId = null;
+        try {
+            tableId = objectMapper.readValue(response, UUID.class);
+        } catch (JsonProcessingException e) {
+            LOGGER.error(e);
+        }
+        return tableId;
     }
 
     public void setGameName(String gameName) {
@@ -324,6 +336,10 @@ public class SBKingClient {
 
     public UUID getId() {
         return this.identifier;
+    }
+
+    public void sendJoinTable(UUID tableId) {
+        this.restHTTPClient.sendJoinTableMessage(tableId);
     }
 
 }

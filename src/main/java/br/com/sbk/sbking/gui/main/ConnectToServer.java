@@ -8,6 +8,7 @@ import br.com.sbk.sbking.networking.client.SBKingClientFactory;
 import br.com.sbk.sbking.networking.core.properties.FileProperties;
 import br.com.sbk.sbking.networking.core.properties.NetworkingProperties;
 import br.com.sbk.sbking.networking.core.properties.SystemProperties;
+import br.com.sbk.sbking.networking.rest.RestHTTPClient;
 
 public class ConnectToServer {
 
@@ -17,7 +18,8 @@ public class ConnectToServer {
         String hostname = networkingProperties.getHost();
         int port = networkingProperties.getPort();
         if (isValidIP(hostname)) {
-            return SBKingClientFactory.createWithKryonetConnection(hostname, port);
+            RestHTTPClient restHTTPClient = new RestHTTPClient(hostname);
+            return SBKingClientFactory.createWithKryonetConnection(hostname, port, restHTTPClient);
         } else {
             throw new InvalidIpException();
         }

@@ -10,6 +10,8 @@ import org.springframework.web.socket.client.WebSocketClient;
 import org.springframework.web.socket.client.standard.StandardWebSocketClient;
 import org.springframework.web.socket.messaging.WebSocketStompClient;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import br.com.sbk.sbking.networking.client.SBKingClient;
 
 @Component
@@ -19,12 +21,18 @@ public class MyApplicationWebSocketClient {
     private WebSocketStompClient webSocketStompClient;
     private MyStompSessionHandler stompSessionHandler;
     private String serverUrl;
+    private ObjectMapper objectMapperOnlyFields;
 
-    public MyApplicationWebSocketClient(@Autowired ClientComponent clientComponent) {
+    public MyApplicationWebSocketClient(@Autowired ClientComponent clientComponent,
+            @Autowired ObjectMapper objectMapper) {
         LOGGER.trace("Initializing MyApplicationWebSocketClient");
         this.webSocketClient = new StandardWebSocketClient();
         this.webSocketStompClient = new WebSocketStompClient(webSocketClient);
-        this.webSocketStompClient.setMessageConverter(new MappingJackson2MessageConverter());
+
+        MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
+        converter.setObjectMapper(objectMapper);
+
+        this.webSocketStompClient.setMessageConverter(converter);
         // stompClient.setTaskScheduler(taskScheduler); // for heartbeats
 
         SBKingClient sbKingClient = clientComponent.getSBKingClient();

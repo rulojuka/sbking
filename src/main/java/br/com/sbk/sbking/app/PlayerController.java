@@ -16,13 +16,13 @@ public class PlayerController {
     private SimpMessagingTemplate template;
 
     public void getPlayers(PlayerListDTO playerList) {
-        LOGGER.info("Sending list of players to subscribers");
+        LOGGER.debug("Sending list of players to subscribers");
         this.template.convertAndSend("/topic/players", playerList);
     }
 
     public void getDeal(TableDealDTO tableDealDTO) {
-        LOGGER.info("Sending deal to table:" + tableDealDTO.getTableId());
         String destination = "/topic/deal/" + tableDealDTO.getTableId();
+        LOGGER.debug("Sending deal to: " + destination);
         this.template.convertAndSend(destination, tableDealDTO);
     }
 

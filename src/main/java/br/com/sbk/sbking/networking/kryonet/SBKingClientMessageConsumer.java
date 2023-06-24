@@ -4,11 +4,9 @@ import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 
 import java.util.concurrent.BlockingQueue;
 
-import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.networking.client.SBKingClient;
 import br.com.sbk.sbking.networking.kryonet.messages.SBKingMessage;
-import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.DealMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.FinishDealMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.GameModeOrStrainChooserMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.InitializeDealMessage;
@@ -49,8 +47,6 @@ public class SBKingClientMessageConsumer implements Runnable {
     Object content = message.getContent();
     if (message instanceof TextMessage) {
       LOGGER.info("Received message from server: " + content);
-    } else if (message instanceof DealMessage) {
-      this.sbkingClient.setCurrentDeal((Deal) content);
     } else if (message instanceof PositiveOrNegativeChooserMessage) {
       this.sbkingClient.setPositiveOrNegativeChooser((Direction) content);
     } else if (message instanceof PositiveOrNegativeMessage) {

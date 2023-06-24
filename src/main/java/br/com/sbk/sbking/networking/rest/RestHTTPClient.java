@@ -12,6 +12,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import br.com.sbk.sbking.clientapp.ClientObjectMapperConfiguration;
 import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.dto.LobbyScreenTableDTO;
@@ -22,7 +23,7 @@ public class RestHTTPClient extends BaseRestHTTPClient {
 
     public RestHTTPClient(String ip, UUID identifier) {
         super(ip, identifier);
-        this.mapper = new ObjectMapper();
+        this.mapper = new ClientObjectMapperConfiguration().objectMapper();
     }
 
     public RestHTTPClient(String ip) {
@@ -36,10 +37,10 @@ public class RestHTTPClient extends BaseRestHTTPClient {
         createAndSendPostRequest(url, body);
     }
 
-    public void sendCreateTableMessage(String gameName) {
+    public String sendCreateTableMessage(String gameName) {
         String url = this.baseUrl + "table";
         String body = String.format("{\"content\":\"%s\"}", gameName);
-        createAndSendPostRequest(url, body);
+        return createAndSendPostRequest(url, body);
     }
 
     public void sendJoinTableMessage(UUID tableId) {
@@ -50,6 +51,12 @@ public class RestHTTPClient extends BaseRestHTTPClient {
     public void leaveTable() {
         String url = this.baseUrl + "table/leave";
         createAndSendPostRequest(url);
+    }
+
+    public void refreshTable(UUID tableId) {
+        String url = this.baseUrl + "table/refresh/" + tableId.toString();
+        HttpGet httpGet = createGetRequest(url);
+        sendRequestWithResponse(httpGet);
     }
 
     public void moveToSeat(Direction direction) {

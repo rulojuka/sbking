@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -41,18 +43,25 @@ class AppController {
     }
 
     @PostMapping("/table")
-    public void createTable(@RequestHeader("PlayerUUID") String playerUUID,
+    public ResponseEntity<UUID> createTable(@RequestHeader("PlayerUUID") String playerUUID,
             @RequestBody RequestWithString requestWithString) {
         LOGGER.trace("createTable");
         Class<? extends GameServer> gameServerClass = GameServerFromGameNameIdentifier
                 .identify((String) requestWithString.getContent());
-        this.getServer().createTable(gameServerClass, getUUID(playerUUID));
+        UUID tableId = this.getServer().createTable(gameServerClass, getUUID(playerUUID));
+        return new ResponseEntity<>(tableId, HttpStatus.CREATED);
     }
 
     @PostMapping("/table/join/{tableId}")
     public void joinTable(@RequestHeader("PlayerUUID") String playerUUID, @PathVariable String tableId) {
         LOGGER.trace("joinTable");
         this.getServer().joinTable(getUUID(playerUUID), UUID.fromString(tableId));
+    }
+
+    @GetMapping("/table/refresh/{tableId}")
+    public void refreshTable(@RequestHeader("PlayerUUID") String playerUUID, @PathVariable String tableId) {
+        LOGGER.trace("refreshTable");
+        this.getServer().refreshTable(UUID.fromString(tableId));
     }
 
     @PostMapping("/table/leave") // Each player can only be in one table for now

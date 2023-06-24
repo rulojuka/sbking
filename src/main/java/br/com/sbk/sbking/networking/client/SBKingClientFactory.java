@@ -17,9 +17,8 @@ import br.com.sbk.sbking.networking.rest.RestHTTPClient;
 
 public class SBKingClientFactory {
 
-  public static SBKingClient createWithKryonetConnection(String hostname, int port) {
+  public static SBKingClient createWithKryonetConnection(String hostname, int port, RestHTTPClient restHTTPClient) {
     SBKingClient sbKingClient = new SBKingClient();
-    RestHTTPClient restHTTPClient = new RestHTTPClient(hostname);
     sbKingClient.setRestHTTPClient(restHTTPClient);
     BlockingQueue<SBKingMessage> clientMessageQueue = new LinkedBlockingQueue<SBKingMessage>();
     KryonetSBKingClient kryonetSBKingClient = KryonetClientFactory.getRegisteredClient();

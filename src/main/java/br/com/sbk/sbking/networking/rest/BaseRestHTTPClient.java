@@ -43,12 +43,12 @@ public abstract class BaseRestHTTPClient {
         return identifier.toString();
     }
 
-    protected void createAndSendPostRequest(String url, String body) {
+    protected String createAndSendPostRequest(String url, String body) {
         LOGGER.trace("[POST] URL: " + url);
         LOGGER.trace("Body: " + body);
         HttpPost httpPost = new HttpPost(url);
         this.fillRequestWithBodyAndJson(httpPost, body);
-        sendRequest(httpPost);
+        return sendRequest(httpPost);
     }
 
     protected void createAndSendPostRequest(String url) {
@@ -93,10 +93,10 @@ public abstract class BaseRestHTTPClient {
         httpMessage.setHeader("PlayerUUID", this.getIdentifierString());
     }
 
-    private void sendRequest(HttpUriRequest request) {
+    private String sendRequest(HttpUriRequest request) {
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
-            httpClient.execute(request, response -> {
-                return response;
+            return httpClient.execute(request, response -> {
+                return EntityUtils.toString(response.getEntity());
             });
         } catch (Exception e) {
             throw new CouldNotSendRequestException(e);

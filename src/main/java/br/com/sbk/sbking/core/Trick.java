@@ -65,11 +65,19 @@ public class Trick {
     }
 
     public Suit getLeadSuit() {
-        return this.getLeadCard().getSuit();
+        Card leadCard = this.getLeadCard();
+        if (leadCard == null) {
+            return null;
+        }
+        return leadCard.getSuit();
     }
 
     private Card getLeadCard() {
-        return this.getCards().get(0);
+        List<Card> cards = this.getCards();
+        if (cards.isEmpty()) {
+            return null;
+        }
+        return cards.get(0);
     }
 
     public Direction getWinnerWithoutTrumpSuit() {

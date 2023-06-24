@@ -176,11 +176,10 @@ public class SBKingServer {
   }
 
   public void sendDealToTable(Deal deal, Table table) {
-    this.kryonetSBKingServer.sendDealTo(deal, this.getAllPlayersUUIDsOnTable(table));
-  }
-
-  public void sendDealTo(Deal deal, UUID playerIdentifier) {
-    this.kryonetSBKingServer.sendDealTo(deal, playerIdentifier);
+    TableDealDTO tableDealDTO = new TableDealDTO();
+    tableDealDTO.setTableId(table.getId().toString());
+    tableDealDTO.setDeal(deal);
+    this.playerController.getDeal(tableDealDTO);
   }
 
   public void sendGameModeOrStrainChooserToTable(Direction direction, Table table) {
@@ -231,7 +230,7 @@ public class SBKingServer {
       currentTable.removePlayer(player.getIdentifier());
     }
     table.addSpectator(player);
-    table.sendDealTo(player);
+    table.sendDealAll();
   }
 
   public void joinTable(UUID playerIdentifier, UUID tableIdentifier) {
@@ -262,21 +261,20 @@ public class SBKingServer {
     return this.tables.get(tableIdentifier);
   }
 
-  public void createTable(Class<? extends GameServer> gameServerClass, UUID playerIdentifier) {
+  public UUID createTable(Class<? extends GameServer> gameServerClass, UUID playerIdentifier) {
     GameServer gameServer;
     try {
       gameServer = gameServerClass.getDeclaredConstructor().newInstance();
     } catch (Exception e) {
       LOGGER.fatal("Could not initialize GameServer with received gameServerClass.");
-      return;
+      return null;
     }
     Table table = new Table(gameServer);
     gameServer.setSBKingServer(this);
     tables.put(table.getId(), table);
     pool.execute(gameServer);
     LOGGER.info("Created new table and executed its gameServer!");
-
-    this.joinTable(playerIdentifier, table.getId());
+    return table.getId();
   }
 
   public List<LobbyScreenTableDTO> getTablesDTO() {
@@ -360,8 +358,7 @@ public class SBKingServer {
     try {
       this.playerController.getPlayers(playerList);
     } catch (Exception e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
+      LOGGER.error(e);
     }
   }
 
@@ -373,10 +370,8 @@ public class SBKingServer {
     return GameNameFromGameServerIdentifier.identify(gameServer.getClass());
   }
 
-  public void sendTableDealWebsocket(Table table) {
-    TableDealDTO tableDealDTO = new TableDealDTO();
-    tableDealDTO.setTableId(table.getId().toString());
-    this.playerController.getDeal(tableDealDTO);
+  public void refreshTable(UUID tableId) {
+    this.getTable(tableId).sendDealAll();
   }
 
 }

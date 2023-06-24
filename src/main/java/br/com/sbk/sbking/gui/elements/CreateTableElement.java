@@ -8,6 +8,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.UUID;
 
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
@@ -100,7 +101,8 @@ public class CreateTableElement {
         }
       }
       if (selectedOnRadio != null) {
-        sbKingClient.sendCreateTable(selectedOnRadio.getText());
+        UUID tableID = sbKingClient.sendCreateTable(selectedOnRadio.getText());
+        sbKingClient.sendJoinTable(tableID);
       }
     }
   }
