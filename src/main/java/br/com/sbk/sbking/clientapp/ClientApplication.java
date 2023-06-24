@@ -52,7 +52,7 @@ public class ClientApplication {
         try {
             closeLatch.await();
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            LOGGER.error(e);
         }
 
         // EventQueue.invokeLater(() -> {

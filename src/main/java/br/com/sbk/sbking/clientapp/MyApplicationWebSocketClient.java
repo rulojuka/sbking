@@ -46,7 +46,7 @@ public class MyApplicationWebSocketClient {
         try {
             stompSession = webSocketStompClient.connect(serverUrl, stompSessionHandler).get();
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error(e);
         }
         return stompSession;
     }
