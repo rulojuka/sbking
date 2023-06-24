@@ -236,7 +236,6 @@
 					</testIncludes>
 					<testExcludes>
 						<exclude>br/com/sbk/sbking/gui/**/*.java</exclude> <!-- Client only -->
-						<exclude>br/com/sbk/sbking/learning/**/*.java</exclude>  <!-- Will only run if needed -->
 						<exclude>br/com/sbk/sbking/persistence/**/*.java</exclude> <!-- Not using it yet -->
 					</testExcludes>
 				</configuration>

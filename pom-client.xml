@@ -135,7 +135,6 @@
 						<exclude>br/com/sbk/sbking/app/*.java</exclude>
 					</excludes>
 					<testExcludes>
-						<exclude>br/com/sbk/sbking/learning/**/*.java</exclude>
 						<exclude>br/com/sbk/sbking/persistence/**/*.java</exclude>
 					</testExcludes>
 				</configuration>
