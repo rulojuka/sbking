@@ -2,12 +2,15 @@ package br.com.sbk.sbking.networking.rest;
 
 import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.apache.http.client.methods.HttpGet;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Direction;
@@ -15,8 +18,11 @@ import br.com.sbk.sbking.dto.LobbyScreenTableDTO;
 
 public class RestHTTPClient extends BaseRestHTTPClient {
 
+    ObjectMapper mapper;
+
     public RestHTTPClient(String ip, UUID identifier) {
         super(ip, identifier);
+        this.mapper = new ObjectMapper();
     }
 
     public RestHTTPClient(String ip) {
@@ -92,9 +98,14 @@ public class RestHTTPClient extends BaseRestHTTPClient {
         String url = this.baseUrl + "spectators";
         HttpGet httpGet = createGetRequest(url);
         Result result = sendRequestWithResponse(httpGet);
-        return Stream
-                .of(deserializer.fromJson(result.getContent(), String[].class))
-                .collect(Collectors.toList());
+        List<String> response = new ArrayList<String>();
+        try {
+            response = this.mapper.readValue(result.getContent(), new TypeReference<List<String>>() {
+            });
+        } catch (JsonProcessingException e) {
+            LOGGER.error(e);
+        }
+        return response;
     }
 
     public List<LobbyScreenTableDTO> getTables() {
@@ -102,9 +113,14 @@ public class RestHTTPClient extends BaseRestHTTPClient {
         LOGGER.trace("getTables");
         HttpGet httpGet = createGetRequest(url);
         Result result = sendRequestWithResponse(httpGet);
-        return Stream
-                .of(deserializer.fromJson(result.getContent(), LobbyScreenTableDTO[].class))
-                .collect(Collectors.toList());
+        List<LobbyScreenTableDTO> response = new ArrayList<LobbyScreenTableDTO>();
+        try {
+            response = this.mapper.readValue(result.getContent(), new TypeReference<List<LobbyScreenTableDTO>>() {
+            });
+        } catch (JsonProcessingException e) {
+            LOGGER.error(e);
+        }
+        return response;
     }
 
 }

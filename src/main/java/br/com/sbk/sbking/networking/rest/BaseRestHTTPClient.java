@@ -17,18 +17,14 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
-import com.google.gson.Gson;
-
 public abstract class BaseRestHTTPClient {
 
     protected String baseUrl;
     protected UUID identifier;
-    protected Gson deserializer;
 
     public BaseRestHTTPClient(String ip, UUID identifier) {
         this.baseUrl = String.format("http://%s:8080/", ip);
         this.identifier = identifier;
-        this.deserializer = new Gson();
     }
 
     public BaseRestHTTPClient(String ip) {

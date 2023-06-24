@@ -3,16 +3,18 @@ package br.com.sbk.sbking.core;
 import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.google.gson.Gson;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public final class RandomNameGenerator {
 
@@ -31,28 +33,25 @@ public final class RandomNameGenerator {
     URL completeAnimalsURL = RandomNameGenerator.class.getResource(completeAnimalsFileName);
     String completeAdjectivesFileName = BASE_PATH + ADJECTIVES_FILE_NAME;
     URL completeAdjectivesURL = RandomNameGenerator.class.getResource(completeAdjectivesFileName);
-    Gson gson = new Gson();
-    Reader reader;
     randomUtils = new RandomUtils();
 
-    try {
-      reader = new BufferedReader(new InputStreamReader(completeAnimalsURL.openStream()));
-      animals = Stream.of(gson.fromJson(reader, String[].class)).filter(RandomNameGenerator::smallEnough)
+    ObjectMapper mapper = new ObjectMapper();
+    try (Reader animalReader = new BufferedReader(new InputStreamReader(completeAnimalsURL.openStream()));
+        Reader adjectiveReader = new BufferedReader(new InputStreamReader(completeAdjectivesURL.openStream()))) {
+      animals = mapper.readValue(animalReader, new TypeReference<ArrayList<String>>() {
+      }).stream().filter(RandomNameGenerator::smallEnough)
           .collect(Collectors.toList());
-      reader.close();
-
-      reader = new BufferedReader(new InputStreamReader(completeAdjectivesURL.openStream()));
-      adjectives = Stream.of(gson.fromJson(reader, String[].class)).map(StringUtils::capitalize)
+      adjectives = mapper.readValue(adjectiveReader, new TypeReference<ArrayList<String>>() {
+      }).stream().map(StringUtils::capitalize)
           .collect(Collectors.toList());
-      reader.close();
-
-    } catch (Exception e) {
+    } catch (IOException e) {
       LOGGER.error(e);
     }
   }
 
   public static String getRandomName() {
-    return animals.get(randomUtils.nextInt(animals.size())) + " " + adjectives.get(randomUtils.nextInt(adjectives.size()));
+    return animals.get(randomUtils.nextInt(animals.size())) + " "
+        + adjectives.get(randomUtils.nextInt(adjectives.size()));
   }
 
   private static boolean smallEnough(String name) {
