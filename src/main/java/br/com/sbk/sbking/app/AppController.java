@@ -50,7 +50,7 @@ class AppController {
         LOGGER.trace("createTable");
         Class<? extends GameServer> gameServerClass = GameServerFromGameNameIdentifier
                 .identify(requestWithString.getContent());
-        UUID tableId = this.getServer().createTable(gameServerClass, getUUID(playerUUID));
+        UUID tableId = this.getServer().createTable(gameServerClass);
         return new ResponseEntity<>(tableId, HttpStatus.CREATED);
     }
 

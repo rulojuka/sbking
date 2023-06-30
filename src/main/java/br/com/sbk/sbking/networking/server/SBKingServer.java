@@ -161,16 +161,20 @@ public class SBKingServer {
     return allPlayersOnTable;
   }
 
-  // This should be optimized when we have websockets messages directly for
+  // TODO This should be optimized when we have websockets messages directly for
   // players.
   public void sendDirectionTo(Direction direction, UUID playerIdentifier) {
     this.sendUpdatePlayerList();
   }
 
+  // TODO This should be optimized when we have websockets messages directly for
+  // players.
   public void sendIsSpectatorTo(UUID playerIdentifier) {
     this.sendUpdatePlayerList();
   }
 
+  // TODO This should be optimized when we have websockets messages directly for
+  // players.
   public void sendIsNotSpectatorTo(UUID playerIdentifier) {
     this.sendUpdatePlayerList();
   }
@@ -261,7 +265,7 @@ public class SBKingServer {
     return this.tables.get(tableIdentifier);
   }
 
-  public UUID createTable(Class<? extends GameServer> gameServerClass, UUID playerIdentifier) {
+  public UUID createTable(Class<? extends GameServer> gameServerClass) {
     GameServer gameServer;
     try {
       gameServer = gameServerClass.getDeclaredConstructor().newInstance();
