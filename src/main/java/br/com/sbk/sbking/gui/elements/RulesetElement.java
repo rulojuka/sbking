@@ -19,7 +19,6 @@ import br.com.sbk.sbking.gui.jelements.SBKingLabel;
 public class RulesetElement {
 
     private static final int DEFAULT_FONT_SIZE = 40;
-    private static double scaleFactor;
 
     public RulesetElement(Ruleset ruleset, Container container, Point point) {
         JLabel rulesetLabel = createLabel(ruleset);
@@ -29,7 +28,7 @@ public class RulesetElement {
 
     private JLabel createLabel(Ruleset ruleset) {
         SBKingLabel label;
-        scaleFactor = FrameConstants.getScreenScale();
+        double scaleFactor = FrameConstants.getScreenScale();
         int fontSize = (int) (scaleFactor * DEFAULT_FONT_SIZE);
         if (ruleset instanceof NoRuleset) {
             label = new SBKingLabel("Choosing ruleset.");

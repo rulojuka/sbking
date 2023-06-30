@@ -16,7 +16,7 @@ public class CardButton extends SBKingButton {
     private ImageIcon frontImage;
     private ImageIcon backImage;
     private boolean faceUp;
-    private Card card;
+    private Card card; // NOSONAR WONTFIX because we are not using serialization of GUI
     private int offsetWhenSelected;
     private boolean isCardInHand;
 

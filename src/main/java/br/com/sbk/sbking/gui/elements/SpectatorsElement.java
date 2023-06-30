@@ -7,6 +7,7 @@ import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.ScrollPaneConstants;
 
 import br.com.sbk.sbking.gui.constants.FrameConstants;
 
@@ -35,8 +36,8 @@ public class SpectatorsElement {
         spectatorsArea.setBackground(FrameConstants.TABLE_COLOR);
         spectatorsArea.setForeground(FrameConstants.TEXT_COLOR);
 
-        JScrollPane scrollPane = new JScrollPane(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
-                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        JScrollPane scrollPane = new JScrollPane(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
+                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setViewportView(spectatorsArea);
         scrollPane.setBounds(point.x - xOffset, point.y - yOffset, 250, 200);
         scrollPane.setBackground(FrameConstants.TABLE_COLOR);

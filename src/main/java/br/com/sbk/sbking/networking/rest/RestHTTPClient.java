@@ -39,7 +39,7 @@ public class RestHTTPClient extends BaseRestHTTPClient {
 
     public String sendCreateTableMessage(String gameName) {
         String url = this.baseUrl + "table";
-        String body = String.format("{\"content\":\"%s\"}", gameName);
+        String body = createBodyFromContent(gameName);
         return createAndSendPostRequest(url, body);
     }
 
@@ -66,7 +66,7 @@ public class RestHTTPClient extends BaseRestHTTPClient {
 
     public void sendNickname(String nickname) {
         String url = this.baseUrl + "player/nickname";
-        String body = String.format("{\"content\":\"%s\"}", nickname);
+        String body = createBodyFromContent(nickname);
         createAndSendPutRequest(url, body);
     }
 
@@ -97,7 +97,7 @@ public class RestHTTPClient extends BaseRestHTTPClient {
 
     public void chooseGameModeOrStrain(String gameModeOrStrain) {
         String url = this.baseUrl + "chooseGameModeOrStrain";
-        String body = String.format("{\"content\":\"%s\"}", gameModeOrStrain);
+        String body = createBodyFromContent(gameModeOrStrain);
         createAndSendPostRequest(url, body);
     }
 
@@ -128,6 +128,10 @@ public class RestHTTPClient extends BaseRestHTTPClient {
             LOGGER.error(e);
         }
         return response;
+    }
+
+    private String createBodyFromContent(String content) {
+        return String.format("{\"content\":\"%s\"}", content);
     }
 
 }

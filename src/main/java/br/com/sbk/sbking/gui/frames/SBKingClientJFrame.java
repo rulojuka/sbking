@@ -11,6 +11,7 @@ import java.net.URL;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.Timer;
+import javax.swing.WindowConstants;
 
 import br.com.sbk.sbking.gui.constants.FrameConstants;
 import br.com.sbk.sbking.gui.main.ClientApplicationState;
@@ -32,7 +33,7 @@ public class SBKingClientJFrame extends JFrame {
 
         this.setApplicationIcon();
 
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         // Might have to fix this later
         // import java.awt.event.WindowAdapter;
