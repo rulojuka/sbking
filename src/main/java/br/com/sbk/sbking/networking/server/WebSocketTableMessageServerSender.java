@@ -67,6 +67,14 @@ public class WebSocketTableMessageServerSender {
         this.tableController.sendMessage(tableDealDTO);
     }
 
+    public void sendGameModeOrStrainChooserToTable(Direction direction, Table table) {
+        TableMessageDTO tableDealDTO = createBuilderWithTable(table)
+                .withMessage("gameModeOrStrainChooser")
+                .withDirection(direction)
+                .build();
+        this.tableController.sendMessage(tableDealDTO);
+    }
+
     private Builder createBuilderWithTable(Table table) {
         return new TableMessageDTO.Builder().withTableId(table.getId().toString());
     }

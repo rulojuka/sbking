@@ -5,13 +5,10 @@ import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.StreamSupport;
 
 import com.esotericsoftware.kryonet.Server;
 
-import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.networking.kryonet.messages.SBKingMessage;
-import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.GameModeOrStrainChooserMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.YourIdIsMessage;
 import br.com.sbk.sbking.networking.server.SBKingServer;
 
@@ -60,14 +57,6 @@ public class KryonetSBKingServer extends Server {
       LOGGER.debug("Sending {} to {}", message.getClass().toString(), connectionWithIdentifier.getIdentifier());
       connectionWithIdentifier.sendTCP(message);
     }
-  }
-
-  private void sendMany(SBKingMessage message, Iterable<UUID> receivers) {
-    StreamSupport.stream(receivers.spliterator(), false).forEach(clientId -> this.sendOneTo(message, clientId));
-  }
-
-  public void sendGameModeOrStrainChooserTo(Direction direction, Iterable<UUID> receivers) {
-    this.sendMany(new GameModeOrStrainChooserMessage(direction), receivers);
   }
 
   public String getNicknameFromIdentifier(UUID identifier) {

@@ -4,7 +4,6 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.EndPoint;
 
 import br.com.sbk.sbking.core.Direction;
-import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.GameModeOrStrainChooserMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.YourIdIsMessage;
 
 public final class KryonetUtils {
@@ -21,7 +20,6 @@ public final class KryonetUtils {
     kryo.register(Direction.class);
 
     // Server to Client Message classes
-    kryo.register(GameModeOrStrainChooserMessage.class);
     kryo.register(YourIdIsMessage.class);
   }
 }

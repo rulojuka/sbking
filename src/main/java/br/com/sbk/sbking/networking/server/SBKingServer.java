@@ -208,7 +208,7 @@ public class SBKingServer {
   }
 
   public void sendGameModeOrStrainChooserToTable(Direction direction, Table table) {
-    this.kryonetSBKingServer.sendGameModeOrStrainChooserTo(direction, this.getAllPlayersUUIDsOnTable(table));
+    this.webSocketTableMessageServerSender.sendGameModeOrStrainChooserToTable(direction, table);
   }
 
   public void setNickname(UUID identifier, String nickname) {

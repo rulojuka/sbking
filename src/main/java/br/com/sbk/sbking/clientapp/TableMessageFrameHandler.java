@@ -48,6 +48,9 @@ public class TableMessageFrameHandler implements StompFrameHandler {
         } else if ("positiveOrNegativeChooser".equals(messageType)) {
             LOGGER.info("Received message: --TableMessage:positiveOrNegativeChooser--");
             this.sbkingClient.setPositiveOrNegativeChooser(tableDealDTO.getDirection());
+        } else if ("gameModeOrStrainChooser".equals(messageType)) {
+            LOGGER.info("Received message: --TableMessage:gameModeOrStrainChooser--");
+            this.sbkingClient.setGameModeOrStrainChooser(tableDealDTO.getDirection());
         } else {
             LOGGER.error("Could not understand message.");
             LOGGER.error(headers);
