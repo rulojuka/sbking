@@ -42,12 +42,16 @@ public class TableMessageFrameHandler implements StompFrameHandler {
         } else if ("validRuleset".equals(messageType)) {
             LOGGER.info("Received message: --TableMessage:validRuleset--");
             this.sbkingClient.setRulesetValid(true);
+        } else if ("positiveOrNegative".equals(messageType)) {
+            LOGGER.info("Received message: --TableMessage:positiveOrNegative--");
+            this.sbkingClient.setPositiveOrNegative(tableDealDTO.getContent());
         } else {
             LOGGER.error("Could not understand message.");
             LOGGER.error(headers);
-            LOGGER.error(tableDealDTO.getMessage());
-            LOGGER.error(tableDealDTO.getTableId());
-            LOGGER.error(tableDealDTO.getDeal());
+            LOGGER.error("Message: {}", tableDealDTO.getMessage());
+            LOGGER.error("Table: {}", tableDealDTO.getTableId());
+            LOGGER.error("Deal: {}", tableDealDTO.getDeal());
+            LOGGER.error("Content: {}", tableDealDTO.getContent());
         }
     }
 

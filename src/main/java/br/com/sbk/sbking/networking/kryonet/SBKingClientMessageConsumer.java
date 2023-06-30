@@ -9,7 +9,6 @@ import br.com.sbk.sbking.networking.client.SBKingClient;
 import br.com.sbk.sbking.networking.kryonet.messages.SBKingMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.GameModeOrStrainChooserMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.PositiveOrNegativeChooserMessage;
-import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.PositiveOrNegativeMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.YourIdIsMessage;
 
 public class SBKingClientMessageConsumer implements Runnable {
@@ -42,8 +41,6 @@ public class SBKingClientMessageConsumer implements Runnable {
     Object content = message.getContent();
     if (message instanceof PositiveOrNegativeChooserMessage) {
       this.sbkingClient.setPositiveOrNegativeChooser((Direction) content);
-    } else if (message instanceof PositiveOrNegativeMessage) {
-      this.sbkingClient.setPositiveOrNegative((String) content);
     } else if (message instanceof GameModeOrStrainChooserMessage) {
       this.sbkingClient.setGameModeOrStrainChooser((Direction) content);
     } else if (message instanceof YourIdIsMessage) {

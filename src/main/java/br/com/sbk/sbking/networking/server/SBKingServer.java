@@ -184,30 +184,49 @@ public class SBKingServer {
   }
 
   public void sendFinishDealToTable(Table table) {
-    TableMessageDTO tableDealDTO = createTableMessageDTO("finishDeal", table, null);
+    TableMessageDTO tableDealDTO = createTableMessageDTO("finishDeal", table);
     this.tableController.sendMessage(tableDealDTO);
   }
 
   public void sendInitializeDealToTable(Table table) {
-    TableMessageDTO tableDealDTO = createTableMessageDTO("initializeDeal", table, null);
+    TableMessageDTO tableDealDTO = createTableMessageDTO("initializeDeal", table);
     this.tableController.sendMessage(tableDealDTO);
   }
 
   public void sendInvalidRulesetToTable(Table table) {
-    TableMessageDTO tableDealDTO = createTableMessageDTO("invalidRuleset", table, null);
+    TableMessageDTO tableDealDTO = createTableMessageDTO("invalidRuleset", table);
     this.tableController.sendMessage(tableDealDTO);
   }
 
   public void sendValidRulesetToTable(Table table) {
-    TableMessageDTO tableDealDTO = createTableMessageDTO("validRuleset", table, null);
+    TableMessageDTO tableDealDTO = createTableMessageDTO("validRuleset", table);
+    this.tableController.sendMessage(tableDealDTO);
+  }
+
+  public void sendPositiveOrNegativeToTable(PositiveOrNegative positiveOrNegative, Table table) {
+    String positiveOrNegativeString = positiveOrNegative.toString().toUpperCase();
+    TableMessageDTO tableDealDTO = createTableMessageDTO("positiveOrNegative", table, positiveOrNegativeString);
     this.tableController.sendMessage(tableDealDTO);
   }
 
   private TableMessageDTO createTableMessageDTO(String message, Table table, Deal deal) {
+    return createTableMessageDTO(message, table, deal, null);
+  }
+
+  private TableMessageDTO createTableMessageDTO(String message, Table table) {
+    return createTableMessageDTO(message, table, null, null);
+  }
+
+  private TableMessageDTO createTableMessageDTO(String message, Table table, String content) {
+    return createTableMessageDTO(message, table, null, content);
+  }
+
+  private TableMessageDTO createTableMessageDTO(String message, Table table, Deal deal, String content) {
     TableMessageDTO tableDealDTO = new TableMessageDTO();
     tableDealDTO.setMessage(message);
     tableDealDTO.setTableId(table.getId().toString());
     tableDealDTO.setDeal(deal);
+    tableDealDTO.setContent(content);
     return tableDealDTO;
   }
 
@@ -217,11 +236,6 @@ public class SBKingServer {
 
   public void sendPositiveOrNegativeChooserToTable(Direction direction, Table table) {
     this.kryonetSBKingServer.sendPositiveOrNegativeChooserTo(direction, this.getAllPlayersUUIDsOnTable(table));
-  }
-
-  public void sendPositiveOrNegativeToTable(PositiveOrNegative positiveOrNegative, Table table) {
-    String positiveOrNegativeString = positiveOrNegative.toString().toUpperCase();
-    this.kryonetSBKingServer.sendPositiveOrNegativeTo(positiveOrNegativeString, this.getAllPlayersUUIDsOnTable(table));
   }
 
   public void setNickname(UUID identifier, String nickname) {

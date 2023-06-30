@@ -7,6 +7,7 @@ public class TableMessageDTO {
     private String message;
     private String tableId;
     private Deal deal;
+    private String content;
 
     public String getMessage() {
         return message;
@@ -30,6 +31,14 @@ public class TableMessageDTO {
 
     public void setDeal(Deal deal) {
         this.deal = deal;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
 }

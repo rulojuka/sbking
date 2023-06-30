@@ -13,7 +13,6 @@ import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.networking.kryonet.messages.SBKingMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.GameModeOrStrainChooserMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.PositiveOrNegativeChooserMessage;
-import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.PositiveOrNegativeMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.YourIdIsMessage;
 import br.com.sbk.sbking.networking.server.SBKingServer;
 
@@ -74,10 +73,6 @@ public class KryonetSBKingServer extends Server {
 
   public void sendPositiveOrNegativeChooserTo(Direction direction, Iterable<UUID> receivers) {
     this.sendMany(new PositiveOrNegativeChooserMessage(direction), receivers);
-  }
-
-  public void sendPositiveOrNegativeTo(String positiveOrNegative, Iterable<UUID> receivers) {
-    this.sendMany(new PositiveOrNegativeMessage(positiveOrNegative), receivers);
   }
 
   public String getNicknameFromIdentifier(UUID identifier) {
