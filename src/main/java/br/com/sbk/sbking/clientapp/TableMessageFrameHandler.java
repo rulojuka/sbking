@@ -1,5 +1,13 @@
 package br.com.sbk.sbking.clientapp;
 
+import static br.com.sbk.sbking.core.MessageTypes.DEAL_MESSAGE;
+import static br.com.sbk.sbking.core.MessageTypes.FINISH_DEAL_MESSAGE;
+import static br.com.sbk.sbking.core.MessageTypes.GAME_MODE_OR_STRAIN_CHOOSER_MESSAGE;
+import static br.com.sbk.sbking.core.MessageTypes.INITIALIZE_DEAL_MESSAGE;
+import static br.com.sbk.sbking.core.MessageTypes.INVALID_RULESET_MESSAGE;
+import static br.com.sbk.sbking.core.MessageTypes.POSITIVE_OR_NEGATIVE_CHOOSER_MESSAGE;
+import static br.com.sbk.sbking.core.MessageTypes.POSITIVE_OR_NEGATIVE_MESSAGE;
+import static br.com.sbk.sbking.core.MessageTypes.VALID_RULESET_MESSAGE;
 import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 
 import java.lang.reflect.Type;
@@ -27,29 +35,29 @@ public class TableMessageFrameHandler implements StompFrameHandler {
     public void handleFrame(StompHeaders headers, Object payload) {
         TableMessageDTO tableDealDTO = (TableMessageDTO) payload;
         String messageType = tableDealDTO.getMessage();
-        if ("deal".equals(messageType)) {
-            LOGGER.info("Received message: --TableMessage:deal--");
+        if (DEAL_MESSAGE.equals(messageType)) {
+            LOGGER.info("Received message: --TableMessage:{}--", DEAL_MESSAGE);
             this.sbkingClient.setCurrentDeal(tableDealDTO.getDeal());
-        } else if ("finishDeal".equals(messageType)) {
-            LOGGER.info("Received message: --TableMessage:finishDeal--");
+        } else if (FINISH_DEAL_MESSAGE.equals(messageType)) {
+            LOGGER.info("Received message: --TableMessage:{}--", FINISH_DEAL_MESSAGE);
             this.sbkingClient.finishDeal();
-        } else if ("initializeDeal".equals(messageType)) {
-            LOGGER.info("Received message: --TableMessage:initializeDeal--");
+        } else if (INITIALIZE_DEAL_MESSAGE.equals(messageType)) {
+            LOGGER.info("Received message: --TableMessage:{}--", INITIALIZE_DEAL_MESSAGE);
             this.sbkingClient.initializeDeal();
-        } else if ("invalidRuleset".equals(messageType)) {
-            LOGGER.info("Received message: --TableMessage:invalidRuleset--");
+        } else if (INVALID_RULESET_MESSAGE.equals(messageType)) {
+            LOGGER.info("Received message: --TableMessage:{}--", INVALID_RULESET_MESSAGE);
             this.sbkingClient.setRulesetValid(false);
-        } else if ("validRuleset".equals(messageType)) {
-            LOGGER.info("Received message: --TableMessage:validRuleset--");
+        } else if (VALID_RULESET_MESSAGE.equals(messageType)) {
+            LOGGER.info("Received message: --TableMessage:{}--", VALID_RULESET_MESSAGE);
             this.sbkingClient.setRulesetValid(true);
-        } else if ("positiveOrNegative".equals(messageType)) {
-            LOGGER.info("Received message: --TableMessage:positiveOrNegative--");
+        } else if (POSITIVE_OR_NEGATIVE_MESSAGE.equals(messageType)) {
+            LOGGER.info("Received message: --TableMessage:{}--", POSITIVE_OR_NEGATIVE_MESSAGE);
             this.sbkingClient.setPositiveOrNegative(tableDealDTO.getContent());
-        } else if ("positiveOrNegativeChooser".equals(messageType)) {
-            LOGGER.info("Received message: --TableMessage:positiveOrNegativeChooser--");
+        } else if (POSITIVE_OR_NEGATIVE_CHOOSER_MESSAGE.equals(messageType)) {
+            LOGGER.info("Received message: --TableMessage:{}--", POSITIVE_OR_NEGATIVE_CHOOSER_MESSAGE);
             this.sbkingClient.setPositiveOrNegativeChooser(tableDealDTO.getDirection());
-        } else if ("gameModeOrStrainChooser".equals(messageType)) {
-            LOGGER.info("Received message: --TableMessage:gameModeOrStrainChooser--");
+        } else if (GAME_MODE_OR_STRAIN_CHOOSER_MESSAGE.equals(messageType)) {
+            LOGGER.info("Received message: --TableMessage:{}--", GAME_MODE_OR_STRAIN_CHOOSER_MESSAGE);
             this.sbkingClient.setGameModeOrStrainChooser(tableDealDTO.getDirection());
         } else {
             LOGGER.error("Could not understand message.");
