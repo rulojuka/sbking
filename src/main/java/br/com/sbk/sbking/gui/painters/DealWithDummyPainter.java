@@ -24,7 +24,7 @@ public class DealWithDummyPainter extends DealPainter {
 
   @Override
   public void paint(Container contentPane) {
-    LOGGER.trace("Painting deal that contains this trick: " + deal.getCurrentTrick());
+    LOGGER.trace("Painting deal that contains this trick: {}", deal.getCurrentTrick());
     contentPane.removeAll();
 
     new SpecificDirectionWithDummyBoardElements(this.direction, this.deal, contentPane, this.actionListener,

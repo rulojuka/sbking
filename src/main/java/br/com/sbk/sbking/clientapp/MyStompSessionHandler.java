@@ -20,7 +20,7 @@ public class MyStompSessionHandler extends StompSessionHandlerAdapter {
 
     @Override
     public void afterConnected(StompSession session, StompHeaders connectedHeaders) {
-        LOGGER.info("New session established : " + session.getSessionId());
+        LOGGER.info("New session established: {}", session.getSessionId());
         session.subscribe("/topic/players", new PlayerListDTOFrameHandler(sbKingClient));
         LOGGER.info("Subscribed to /topic/players");
     }

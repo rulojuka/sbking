@@ -86,9 +86,11 @@ public class KryonetServerListenerFactory {
         }
 
         UUID identifier = connectionWithPlayer.getIdentifier();
-        LOGGER.debug("Received " + message.getClass() + " message from UUID/Nickname: " + identifier + "/"
-            + kryonetSBKingServer.getNicknameFromIdentifier(identifier));
-        LOGGER.trace("Content is " + message.getContent() + ".");
+        LOGGER.debug("Received {} message from UUID/Nickname: {}/{}",
+            message.getClass(),
+            identifier,
+            kryonetSBKingServer.getNicknameFromIdentifier(identifier));
+        LOGGER.trace("Content is {}.", message.getContent());
         // This possibly needs to be in a Thread
         addToQueue(message, connectionWithPlayer);
       }
@@ -125,7 +127,7 @@ public class KryonetServerListenerFactory {
           return;
         }
 
-        LOGGER.info("Lost connection to UUID: " + connectionWithPlayer.getIdentifier());
+        LOGGER.info("Lost connection to UUID: {}", connectionWithPlayer.getIdentifier());
         kryonetSBKingServer.removeConnection(connectionWithPlayer);
       }
     };

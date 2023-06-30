@@ -46,7 +46,7 @@ public class SBKingClientMessageConsumer implements Runnable {
     LOGGER.trace("Entered --onMessage--");
     Object content = message.getContent();
     if (message instanceof TextMessage) {
-      LOGGER.info("Received message from server: " + content);
+      LOGGER.info("Received message from server: {}", content);
     } else if (message instanceof PositiveOrNegativeChooserMessage) {
       this.sbkingClient.setPositiveOrNegativeChooser((Direction) content);
     } else if (message instanceof PositiveOrNegativeMessage) {

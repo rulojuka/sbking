@@ -52,12 +52,12 @@ public class Table {
     LOGGER.debug("Entered moveToSeat.");
     Player currentSeatedPlayer = this.seatedPlayers.get(direction);
     if (currentSeatedPlayer != null) {
-      LOGGER.trace("Trying to seat in an occupied seat. First unsitting player from " + direction.getCompleteName());
+      LOGGER.trace("Trying to seat in an occupied seat. First unsitting player from {}", direction.getCompleteName());
       this.unsit(direction);
     }
 
     if (!playerTryingToSeat.equals(currentSeatedPlayer)) {
-      LOGGER.trace("Now trying to seat in an empty seat: " + direction.getCompleteName());
+      LOGGER.trace("Now trying to seat in an empty seat: {}", direction.getCompleteName());
       this.sitOnEmptySeat(playerTryingToSeat, direction);
     }
 
@@ -67,7 +67,7 @@ public class Table {
   }
 
   private void unsit(Direction direction) {
-    LOGGER.debug("Removing player from " + direction.getCompleteName() + "to spectators");
+    LOGGER.debug("Removing player from {} to spectators", direction.getCompleteName());
     Player currentSeatedPlayer = this.seatedPlayers.get(direction);
     if (currentSeatedPlayer != null) {
       this.removeFromSeatedPlayers(currentSeatedPlayer);
@@ -84,7 +84,7 @@ public class Table {
     }
 
     if (this.isSpectator(player)) {
-      LOGGER.debug("Trying to move from espectators to " + direction.getCompleteName() + ".");
+      LOGGER.debug("Trying to move from espectators to {}", direction.getCompleteName());
       this.seatedPlayers.put(direction, player);
       this.removeFromSpectators(player);
       this.getSBKingServer().sendIsNotSpectatorTo(player.getIdentifier());
@@ -96,7 +96,7 @@ public class Table {
         return;
       }
       Direction to = direction;
-      LOGGER.debug("Trying to move from " + from.getCompleteName() + " to " + to.getCompleteName() + ".");
+      LOGGER.debug("Trying to move from {} to {}", from.getCompleteName(), to.getCompleteName());
 
       this.removeFromSeatedPlayers(player);
 
@@ -112,10 +112,12 @@ public class Table {
   }
 
   private void logAllPlayers() {
-    LOGGER.info("\n--- Logging all players from table " + this.id + " ---");
-    seatedPlayers.values().stream().forEach(this::printPlayerInfo);
-    spectatorPlayers.stream().forEach(this::printPlayerInfo);
-    LOGGER.info("--- Finished Logging players ---\n");
+    if (LOGGER.isDebugEnabled()) {
+      LOGGER.debug("--- Logging all players from table {} ---", this.id);
+      seatedPlayers.values().stream().forEach(this::printPlayerInfo);
+      spectatorPlayers.stream().forEach(this::printPlayerInfo);
+      LOGGER.debug("--- Finished Logging players ---\n");
+    }
   }
 
   private void printPlayerInfo(Player player) {
@@ -123,9 +125,9 @@ public class Table {
     String identifier = player.getIdentifier().toString();
     Direction direction = this.getDirectionFrom(player);
     if (direction == null) {
-      LOGGER.info("SPEC: " + name + "(" + identifier + ")");
+      LOGGER.info("SPEC: {} - {}", name, identifier);
     } else {
-      LOGGER.info("   " + direction.getAbbreviation() + ": " + name + "(" + identifier + ")");
+      LOGGER.info("SEAT: {} - {} - {}", name, identifier, direction.getAbbreviation());
     }
   }
 
@@ -143,7 +145,7 @@ public class Table {
     }
     Direction playerDirection = getDirectionFrom(player);
     if (playerDirection != null) {
-      LOGGER.debug("Removing player from " + playerDirection.getCompleteName());
+      LOGGER.debug("Removing player from {}", playerDirection.getCompleteName());
       seatedPlayers.remove(playerDirection);
       this.gameServer.getDeal().unsetPlayerOf(playerDirection);
     }

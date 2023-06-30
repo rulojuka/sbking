@@ -35,8 +35,8 @@ public class KryonetClientListenerFactory {
           return;
         }
 
-        LOGGER.debug("Received " + message.getClass() + " message.");
-        LOGGER.debug("Content is " + message.getContent() + ".");
+        LOGGER.debug("Received {} message.", message.getClass());
+        LOGGER.debug("Content is {}.", message.getContent());
         // This possibly needs to be in a Thread
         addToQueue(message);
       }

@@ -22,7 +22,7 @@ public class PlayerController {
 
     public void getDeal(TableDealDTO tableDealDTO) {
         String destination = "/topic/deal/" + tableDealDTO.getTableId();
-        LOGGER.debug("Sending deal to: " + destination);
+        LOGGER.debug("Sending deal to: {0}", destination);
         this.template.convertAndSend(destination, tableDealDTO);
     }
 

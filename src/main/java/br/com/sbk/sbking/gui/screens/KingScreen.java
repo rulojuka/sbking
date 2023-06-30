@@ -59,8 +59,8 @@ public class KingScreen extends GameScreen {
                             continue;
                         } else {
                             LOGGER.trace("paintWaitingForChoosingGameModeOrStrainScreen!");
-                            LOGGER.trace("My direction: " + sbkingClient.getDirection());
-                            LOGGER.trace("Chooser: " + sbkingClient.getGameModeOrStrainChooser());
+                            LOGGER.trace("My direction: {}", sbkingClient.getDirection());
+                            LOGGER.trace("Chooser: {}", sbkingClient.getGameModeOrStrainChooser());
                             Painter painter = this.painterFactory.getWaitingForChoosingPositiveOrNegativePainter(
                                     sbkingClient.getDirection(), sbkingClient.getPositiveOrNegativeChooser());
                             sbkingClientJFrame.paintPainter(painter);
@@ -76,8 +76,8 @@ public class KingScreen extends GameScreen {
                             continue;
                         } else {
                             LOGGER.trace("paintWaitingForChoosingGameModeOrStrainScreen!");
-                            LOGGER.trace("My direction: " + sbkingClient.getDirection());
-                            LOGGER.trace("Chooser: " + sbkingClient.getGameModeOrStrainChooser());
+                            LOGGER.trace("My direction: {}", sbkingClient.getDirection());
+                            LOGGER.trace("Chooser: {}", sbkingClient.getGameModeOrStrainChooser());
 
                             Painter painter = this.painterFactory.getWaitingForChoosingGameModeOrStrainPainter(
                                     sbkingClient.getDirection(), sbkingClient.getGameModeOrStrainChooser(),

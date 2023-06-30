@@ -51,7 +51,7 @@ public class KryonetSBKingServer extends Server {
       String errorMessage = "Did not found connection with UUID:" + playerIdentifier;
       IllegalArgumentException illegalArgumentException = new IllegalArgumentException(errorMessage);
       LOGGER.error(errorMessage);
-      LOGGER.error("Failed to send message:" + message);
+      LOGGER.error("Failed to send message: {}", message);
       LOGGER.error(illegalArgumentException);
       LOGGER.error(illegalArgumentException.getStackTrace());
     }
@@ -63,7 +63,7 @@ public class KryonetSBKingServer extends Server {
       LOGGER.fatal(errorMessage);
       throw new IllegalArgumentException(errorMessage);
     } else {
-      LOGGER.debug("Sending " + message.getClass().toString() + " to " + connectionWithIdentifier.getIdentifier());
+      LOGGER.debug("Sending {} to {}", message.getClass().toString(), connectionWithIdentifier.getIdentifier());
       connectionWithIdentifier.sendTCP(message);
     }
   }

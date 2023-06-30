@@ -43,7 +43,7 @@ public class MinibridgeGameServer extends GameServer {
         synchronized (gameModeOrStrainNotification) {
           // wait until object notifies - which relinquishes the lock on the object too
           while (!shouldStop && gameModeOrStrainNotification.getGameModeOrStrain() == null) {
-            LOGGER.debug("getGameModeOrStrain:" + gameModeOrStrainNotification.getGameModeOrStrain());
+            LOGGER.debug("getGameModeOrStrain: {}", gameModeOrStrainNotification.getGameModeOrStrain());
             try {
               LOGGER.debug("I am waiting for some thread to notify that it wants to choose game Mode Or Strain");
               gameModeOrStrainNotification.wait(3000);
@@ -134,7 +134,7 @@ public class MinibridgeGameServer extends GameServer {
   @Override
   protected void playCard(Card card, Direction direction) {
     Direction currentDirectionToPlay = this.game.getCurrentDeal().getCurrentPlayer();
-    LOGGER.info("It is currently the " + currentDirectionToPlay + " turn");
+    LOGGER.info("It is currently the {} turn", currentDirectionToPlay);
     try {
       if (this.isAllowedToPlayCardInTurnOf(direction, currentDirectionToPlay)) {
         syncPlayCard(card);

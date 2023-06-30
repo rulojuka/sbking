@@ -29,7 +29,7 @@ public class DealFrameHandler implements StompFrameHandler {
         LOGGER.info("Received message: --TableDealDTO--");
         TableDealDTO tableDealDTO = (TableDealDTO) payload;
         Deal currentDeal = tableDealDTO.getDeal();
-        LOGGER.info("Table id: " + tableDealDTO.getTableId());
+        LOGGER.info("Table id: {}", tableDealDTO.getTableId());
         LOGGER.info("Setting current deal!");
         this.sbkingClient.setCurrentDeal(currentDeal);
     }

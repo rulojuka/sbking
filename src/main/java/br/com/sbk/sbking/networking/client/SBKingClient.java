@@ -72,7 +72,7 @@ public class SBKingClient {
         }
         if (newTable != null && !newTable.equals(this.currentTable)) {
             String topic = "/topic/deal/" + newTable.toString();
-            LOGGER.info("Subscribing to:" + topic);
+            LOGGER.info("Subscribing to: {}", topic);
             this.dealSubscription = this.stompSession.subscribe(topic, new DealFrameHandler(this));
             this.restHTTPClient.refreshTable(newTable);
         }

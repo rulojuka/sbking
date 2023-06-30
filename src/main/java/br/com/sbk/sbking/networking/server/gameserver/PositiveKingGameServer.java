@@ -61,7 +61,7 @@ public class PositiveKingGameServer extends GameServer {
                 synchronized (gameModeOrStrainNotification) {
                     // wait until object notifies - which relinquishes the lock on the object too
                     while (!shouldStop && gameModeOrStrainNotification.getGameModeOrStrain() == null) {
-                        LOGGER.debug("getGameModeOrStrain:" + gameModeOrStrainNotification.getGameModeOrStrain());
+                        LOGGER.debug("getGameModeOrStrain: {}", gameModeOrStrainNotification.getGameModeOrStrain());
                         try {
                             LOGGER.info(
                                     "I am waiting for some thread to notify that it wants to choose game Mode Or Strain");

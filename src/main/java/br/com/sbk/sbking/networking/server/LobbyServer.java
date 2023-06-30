@@ -27,21 +27,21 @@ public class LobbyServer {
 
         this.sbKingServer = SBKingServerFactory.createWithKryonetConnection(port, playerController);
         LOGGER.info("SBKingServer created.");
-        LOGGER.info("Listening for connections on port: " + port);
+        LOGGER.info("Listening for connections on port: {}", port);
     }
 
     private int getPortFromNetworkingProperties() {
         int port = 0;
         FileProperties fileProperties = new FileProperties();
         LOGGER.info("Created fileProperties.");
-        LOGGER.info("Host: " + fileProperties.getHost() + " Port: " + fileProperties.getPort());
+        LOGGER.info("Host: {}\nPort: {}", fileProperties.getHost(), fileProperties.getPort());
         try {
             NetworkingProperties networkingProperties = new NetworkingProperties(fileProperties,
                     new SystemProperties());
             LOGGER.info("Created networkingProperties.");
             String finalHost = networkingProperties.getHost();
             port = networkingProperties.getPort();
-            LOGGER.info("Host: " + finalHost + "\nPort: " + port);
+            LOGGER.info("Host: {}\nPort: {}", finalHost, port);
         } catch (Exception e) {
             LOGGER.fatal("Could not get port from properties.");
             LOGGER.fatal(e);

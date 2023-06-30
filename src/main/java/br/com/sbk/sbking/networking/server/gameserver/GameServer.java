@@ -27,8 +27,8 @@ public abstract class GameServer implements Runnable {
     protected static final int WAIT_FOR_CLIENTS_TO_PREPARE_IN_MILISECONDS = 50;
 
     public void waitForClientsToPrepare() {
-        LOGGER.info("Sleeping for " + WAIT_FOR_CLIENTS_TO_PREPARE_IN_MILISECONDS
-                + "ms waiting for all clients to prepare themselves.");
+        LOGGER.info("Sleeping for {} ms waiting for all clients to prepare themselves.",
+                WAIT_FOR_CLIENTS_TO_PREPARE_IN_MILISECONDS);
         sleepFor(WAIT_FOR_CLIENTS_TO_PREPARE_IN_MILISECONDS);
     }
 
@@ -41,7 +41,7 @@ public abstract class GameServer implements Runnable {
     }
 
     protected void playCard(Card card, Direction direction) {
-        LOGGER.info("It is currently the " + this.game.getCurrentDeal().getCurrentPlayer() + " turn");
+        LOGGER.info("It is currently the {} turn", this.game.getCurrentDeal().getCurrentPlayer());
         try {
             if (this.game.getCurrentDeal().getCurrentPlayer() == direction) {
                 syncPlayCard(card);
@@ -62,9 +62,9 @@ public abstract class GameServer implements Runnable {
 
     public void notifyPlayCard(Card card, Direction direction) {
         synchronized (cardPlayNotification) {
-            LOGGER.trace("Started notifying main thread that I(" + direction + ") want to play the " + card);
+            LOGGER.trace("Started notifying main thread that I({}) want to play the {}", direction, card);
             this.releaseAllWaiters(card, direction);
-            LOGGER.trace("Finished notifying main thread that I(" + direction + ") want to play the " + card);
+            LOGGER.trace("Finished notifying main thread that I({}) want to play the {}", direction, card);
         }
     }
 
@@ -149,7 +149,7 @@ public abstract class GameServer implements Runnable {
         Direction directionToBePlayed = cardPlayNotification.getDirection();
         if (directionToBePlayed != null) {
             Card cardToBePlayed = cardPlayNotification.getCard();
-            LOGGER.info("Received notification that " + directionToBePlayed + " wants to play the " + cardToBePlayed);
+            LOGGER.info("Received notification that {} wants to play the {}", directionToBePlayed, cardToBePlayed);
             try {
                 this.playCard(cardToBePlayed, directionToBePlayed);
             } catch (Exception e) {

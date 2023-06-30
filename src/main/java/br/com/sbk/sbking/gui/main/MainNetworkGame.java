@@ -51,7 +51,7 @@ public class MainNetworkGame {
                 Class[] constructorArguments = new Class[1];
                 constructorArguments[0] = SBKingClient.class;
                 gameScreen = gameScreenClass.getDeclaredConstructor(constructorArguments).newInstance(sbkingClient);
-                LOGGER.info("Created GameScreen:" + gameScreen.getClass());
+                LOGGER.info("Created GameScreen: {}", gameScreen.getClass());
                 currentScreen = gameScreen;
                 currentScreen.runAt(sbkingClientJFrame);
             } catch (Exception e) {

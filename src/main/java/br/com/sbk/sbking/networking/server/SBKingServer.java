@@ -350,7 +350,7 @@ public class SBKingServer {
       }
       PlayerDTO playerDTO = new PlayerDTO(playerIdentifier, tableIdentifier, isSpectator, direction, gameName);
       list.add(playerDTO);
-      LOGGER.info("Added player:" + playerIdentifier + tableIdentifier + isSpectator + direction);
+      LOGGER.debug("Added player: {} {} {} {}", playerIdentifier, tableIdentifier, isSpectator, direction);
     }
 
     PlayerListDTO playerList = new PlayerListDTO();

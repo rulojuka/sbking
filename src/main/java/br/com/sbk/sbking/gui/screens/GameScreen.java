@@ -21,7 +21,7 @@ public abstract class GameScreen implements SBKingScreen {
   protected void sleepFor(int miliseconds) {
     try {
       if (miliseconds > 10) {
-        LOGGER.info("Sleeping for " + miliseconds + " miliseconds.");
+        LOGGER.info("Sleeping for {} miliseconds.", miliseconds);
       }
       Thread.sleep(miliseconds);
       if (miliseconds > 10) {
