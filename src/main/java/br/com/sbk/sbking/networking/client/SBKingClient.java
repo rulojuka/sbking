@@ -250,11 +250,11 @@ public class SBKingClient {
     }
 
     public void sendGetTables() {
-        List<LobbyScreenTableDTO> tables = this.restHTTPClient.getTables();
-        if (tables == null) {
+        List<LobbyScreenTableDTO> tablesFromServer = this.restHTTPClient.getTables();
+        if (tablesFromServer == null) {
             this.initializeTables();
         } else {
-            this.setTables(tables);
+            this.setTables(tablesFromServer);
         }
     }
 

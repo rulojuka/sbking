@@ -187,13 +187,13 @@ public class Deal {
     }
 
     private Trick startNewTrick() {
-        Trick currentTrick = new Trick(currentPlayer);
-        tricks.add(currentTrick);
+        Trick newTrick = new Trick(currentPlayer);
+        tricks.add(newTrick);
         boolean isOneOfLastTwoTricks = completedTricks >= (NUMBER_OF_TRICKS_IN_A_COMPLETE_HAND - 2);
         if (isOneOfLastTwoTricks) {
-            currentTrick.setLastTwo();
+            newTrick.setLastTwo();
         }
-        return currentTrick;
+        return newTrick;
     }
 
     private void moveCardFromHandToCurrentTrick(Card card, Hand handOfCurrentPlayer) {

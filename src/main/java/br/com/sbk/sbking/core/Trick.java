@@ -73,11 +73,10 @@ public class Trick {
     }
 
     private Card getLeadCard() {
-        List<Card> cards = this.getCards();
-        if (cards.isEmpty()) {
+        if (this.cards.isEmpty()) {
             return null;
         }
-        return cards.get(0);
+        return this.cards.get(0);
     }
 
     public Direction getWinnerWithoutTrumpSuit() {
