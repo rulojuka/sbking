@@ -10,7 +10,6 @@ import br.com.sbk.sbking.networking.kryonet.messages.SBKingMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.GameModeOrStrainChooserMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.PositiveOrNegativeChooserMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.PositiveOrNegativeMessage;
-import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.TextMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.YourIdIsMessage;
 
 public class SBKingClientMessageConsumer implements Runnable {
@@ -41,9 +40,7 @@ public class SBKingClientMessageConsumer implements Runnable {
   private void consume(SBKingMessage message) {
     LOGGER.trace("Entered --onMessage--");
     Object content = message.getContent();
-    if (message instanceof TextMessage) {
-      LOGGER.info("Received message from server: {}", content);
-    } else if (message instanceof PositiveOrNegativeChooserMessage) {
+    if (message instanceof PositiveOrNegativeChooserMessage) {
       this.sbkingClient.setPositiveOrNegativeChooser((Direction) content);
     } else if (message instanceof PositiveOrNegativeMessage) {
       this.sbkingClient.setPositiveOrNegative((String) content);

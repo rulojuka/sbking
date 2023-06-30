@@ -12,7 +12,6 @@ import com.esotericsoftware.kryonet.Server;
 
 import br.com.sbk.sbking.networking.kryonet.messages.SBKingMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.SBKingMessageWithIdentifier;
-import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.TextMessage;
 
 public final class KryonetServerListenerFactory {
 
@@ -47,9 +46,6 @@ public final class KryonetServerListenerFactory {
         }
 
         kryonetSBKingServer.addConnection(connectionWithPlayer);
-
-        TextMessage response = new TextMessage("You just connected! Welcome to SBKing!");
-        connection.sendTCP(response);
 
         kryonetSBKingServer.sendYourIdIsTo(connectionWithPlayer.getIdentifier());
       }
