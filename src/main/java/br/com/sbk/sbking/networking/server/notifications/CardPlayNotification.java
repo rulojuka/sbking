@@ -11,7 +11,7 @@ public class CardPlayNotification {
     public void notifyAllWithCardAndDirection(Card card, Direction direction) {
         this.card = card;
         this.direction = direction;
-        this.notifyAll();
+        this.notifyAll(); // NOSONAR WONTFIX
     }
 
     public Card getCard() {

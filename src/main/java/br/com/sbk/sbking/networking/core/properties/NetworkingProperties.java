@@ -5,7 +5,7 @@ public class NetworkingProperties {
     private final FileProperties fileProperties;
     private final SystemProperties systemProperties;
     private static final int DEFAULT_PORT = 60000;
-    private static final String DEFAULT_IP = "164.90.254.243";
+    private static final String DEFAULT_IP = "164.90.254.243"; // NOSONAR WONTFIX
 
     public NetworkingProperties(FileProperties fileProperties, SystemProperties systemProperties) {
         this.fileProperties = fileProperties;

@@ -8,7 +8,7 @@ public class PositiveOrNegativeNotification {
 
     public void notifyAllWithPositiveOrNegative(PositiveOrNegative positiveOrNegative) {
         this.positiveOrNegative = positiveOrNegative;
-        this.notifyAll();
+        this.notifyAll(); // NOSONAR WONTFIX
     }
 
     public PositiveOrNegative getPositiveOrNegative() {

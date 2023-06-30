@@ -8,7 +8,7 @@ public class GameModeOrStrainNotification {
 
     public void notifyAllWithGameModeOrStrain(Ruleset gameModeOrStrain) {
         this.gameModeOrStrain = gameModeOrStrain;
-        this.notifyAll();
+        this.notifyAll(); // NOSONAR WONTFIX
     }
 
     public Ruleset getGameModeOrStrain() {
