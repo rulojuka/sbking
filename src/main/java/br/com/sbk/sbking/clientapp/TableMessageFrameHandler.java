@@ -45,6 +45,9 @@ public class TableMessageFrameHandler implements StompFrameHandler {
         } else if ("positiveOrNegative".equals(messageType)) {
             LOGGER.info("Received message: --TableMessage:positiveOrNegative--");
             this.sbkingClient.setPositiveOrNegative(tableDealDTO.getContent());
+        } else if ("positiveOrNegativeChooser".equals(messageType)) {
+            LOGGER.info("Received message: --TableMessage:positiveOrNegativeChooser--");
+            this.sbkingClient.setPositiveOrNegativeChooser(tableDealDTO.getDirection());
         } else {
             LOGGER.error("Could not understand message.");
             LOGGER.error(headers);
@@ -52,6 +55,7 @@ public class TableMessageFrameHandler implements StompFrameHandler {
             LOGGER.error("Table: {}", tableDealDTO.getTableId());
             LOGGER.error("Deal: {}", tableDealDTO.getDeal());
             LOGGER.error("Content: {}", tableDealDTO.getContent());
+            LOGGER.error("Direction: {}", tableDealDTO.getDirection());
         }
     }
 

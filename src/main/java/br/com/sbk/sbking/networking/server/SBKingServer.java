@@ -31,7 +31,6 @@ import br.com.sbk.sbking.networking.server.gameserver.MinibridgeGameServer;
 import br.com.sbk.sbking.networking.server.gameserver.PositiveKingGameServer;
 import br.com.sbk.sbking.networking.websockets.PlayerDTO;
 import br.com.sbk.sbking.networking.websockets.PlayerListDTO;
-import br.com.sbk.sbking.networking.websockets.TableMessageDTO;
 
 /**
  * This class has two responsibilities: 1: receiving method calls from the
@@ -51,6 +50,7 @@ public class SBKingServer {
 
   private static final int MAXIMUM_NUMBER_OF_CONCURRENT_GAME_SERVERS = 10;
   private ExecutorService pool;
+  private WebSocketTableMessageServerSender webSocketTableMessageServerSender;
 
   public SBKingServer(PlayerController playerController, TableController tableController) {
     this.tables = new HashMap<UUID, Table>();
@@ -59,6 +59,7 @@ public class SBKingServer {
     this.pool = Executors.newFixedThreadPool(MAXIMUM_NUMBER_OF_CONCURRENT_GAME_SERVERS);
     this.playerController = playerController;
     this.tableController = tableController;
+    this.webSocketTableMessageServerSender = new WebSocketTableMessageServerSender(tableController);
   }
 
   public void setKryonetSBKingServer(KryonetSBKingServer kryonetSBKingServer) {
@@ -179,63 +180,35 @@ public class SBKingServer {
   }
 
   public void sendDealToTable(Deal deal, Table table) {
-    TableMessageDTO tableDealDTO = createTableMessageDTO("deal", table, deal);
-    this.tableController.sendMessage(tableDealDTO);
+    this.webSocketTableMessageServerSender.sendDealToTable(deal, table);
   }
 
   public void sendFinishDealToTable(Table table) {
-    TableMessageDTO tableDealDTO = createTableMessageDTO("finishDeal", table);
-    this.tableController.sendMessage(tableDealDTO);
+    this.webSocketTableMessageServerSender.sendFinishDealToTable(table);
   }
 
   public void sendInitializeDealToTable(Table table) {
-    TableMessageDTO tableDealDTO = createTableMessageDTO("initializeDeal", table);
-    this.tableController.sendMessage(tableDealDTO);
+    this.webSocketTableMessageServerSender.sendInitializeDealToTable(table);
   }
 
   public void sendInvalidRulesetToTable(Table table) {
-    TableMessageDTO tableDealDTO = createTableMessageDTO("invalidRuleset", table);
-    this.tableController.sendMessage(tableDealDTO);
+    this.webSocketTableMessageServerSender.sendInvalidRulesetToTable(table);
   }
 
   public void sendValidRulesetToTable(Table table) {
-    TableMessageDTO tableDealDTO = createTableMessageDTO("validRuleset", table);
-    this.tableController.sendMessage(tableDealDTO);
+    this.webSocketTableMessageServerSender.sendValidRulesetToTable(table);
   }
 
   public void sendPositiveOrNegativeToTable(PositiveOrNegative positiveOrNegative, Table table) {
-    String positiveOrNegativeString = positiveOrNegative.toString().toUpperCase();
-    TableMessageDTO tableDealDTO = createTableMessageDTO("positiveOrNegative", table, positiveOrNegativeString);
-    this.tableController.sendMessage(tableDealDTO);
+    this.webSocketTableMessageServerSender.sendPositiveOrNegativeToTable(positiveOrNegative, table);
   }
 
-  private TableMessageDTO createTableMessageDTO(String message, Table table, Deal deal) {
-    return createTableMessageDTO(message, table, deal, null);
-  }
-
-  private TableMessageDTO createTableMessageDTO(String message, Table table) {
-    return createTableMessageDTO(message, table, null, null);
-  }
-
-  private TableMessageDTO createTableMessageDTO(String message, Table table, String content) {
-    return createTableMessageDTO(message, table, null, content);
-  }
-
-  private TableMessageDTO createTableMessageDTO(String message, Table table, Deal deal, String content) {
-    TableMessageDTO tableDealDTO = new TableMessageDTO();
-    tableDealDTO.setMessage(message);
-    tableDealDTO.setTableId(table.getId().toString());
-    tableDealDTO.setDeal(deal);
-    tableDealDTO.setContent(content);
-    return tableDealDTO;
+  public void sendPositiveOrNegativeChooserToTable(Direction direction, Table table) {
+    this.webSocketTableMessageServerSender.sendPositiveOrNegativeChooserToTable(direction, table);
   }
 
   public void sendGameModeOrStrainChooserToTable(Direction direction, Table table) {
     this.kryonetSBKingServer.sendGameModeOrStrainChooserTo(direction, this.getAllPlayersUUIDsOnTable(table));
-  }
-
-  public void sendPositiveOrNegativeChooserToTable(Direction direction, Table table) {
-    this.kryonetSBKingServer.sendPositiveOrNegativeChooserTo(direction, this.getAllPlayersUUIDsOnTable(table));
   }
 
   public void setNickname(UUID identifier, String nickname) {
