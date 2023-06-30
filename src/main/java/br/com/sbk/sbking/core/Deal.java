@@ -21,6 +21,7 @@ public class Deal {
      * @deprecated Kryo needs a no-arg constructor
      */
     @Deprecated
+    @SuppressWarnings("unused")
     private Deal() {
     }
 

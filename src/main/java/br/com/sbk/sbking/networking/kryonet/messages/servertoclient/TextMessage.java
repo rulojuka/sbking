@@ -10,6 +10,7 @@ public class TextMessage implements SBKingMessage {
    * @deprecated Kryo needs a no-arg constructor
    */
   @Deprecated
+  @SuppressWarnings("unused")
   private TextMessage() {
   }
 

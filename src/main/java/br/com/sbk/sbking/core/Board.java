@@ -14,6 +14,7 @@ public class Board {
      * @deprecated Kryo needs a no-arg constructor
      */
     @Deprecated
+    @SuppressWarnings("unused")
     private Board() {
     }
 

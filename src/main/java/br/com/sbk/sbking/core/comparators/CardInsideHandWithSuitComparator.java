@@ -49,6 +49,7 @@ public class CardInsideHandWithSuitComparator implements Comparator<Card> {
    * @deprecated Kryo needs a no-arg constructor
    */
   @Deprecated
+  @SuppressWarnings("unused")
   private CardInsideHandWithSuitComparator() {
   }
 

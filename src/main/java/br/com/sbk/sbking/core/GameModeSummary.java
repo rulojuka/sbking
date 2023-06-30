@@ -8,6 +8,7 @@ public class GameModeSummary {
      * @deprecated Kryo needs a no-arg constructor
      */
     @Deprecated
+    @SuppressWarnings("unused")
     private GameModeSummary() {
     }
 

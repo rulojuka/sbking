@@ -11,6 +11,7 @@ public class TrumpSuitWinnable implements Winnable {
      * @deprecated Kryo needs a no-arg constructor
      */
     @Deprecated
+    @SuppressWarnings("unused")
     private TrumpSuitWinnable() {
     }
 

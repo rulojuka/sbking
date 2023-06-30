@@ -21,7 +21,6 @@ public class MyApplicationWebSocketClient {
     private WebSocketStompClient webSocketStompClient;
     private MyStompSessionHandler stompSessionHandler;
     private String serverUrl;
-    private ObjectMapper objectMapperOnlyFields;
 
     public MyApplicationWebSocketClient(@Autowired ClientComponent clientComponent,
             @Autowired ObjectMapper objectMapper) {

@@ -10,6 +10,7 @@ public class YourIdIsMessage implements SBKingMessage {
      * @deprecated Kryo needs a no-arg constructor
      */
     @Deprecated
+    @SuppressWarnings("unused")
     private YourIdIsMessage() {
     }
 

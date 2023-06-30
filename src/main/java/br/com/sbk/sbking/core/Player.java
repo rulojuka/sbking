@@ -11,6 +11,7 @@ public class Player {
    * @deprecated Kryo needs a no-arg constructor
    */
   @Deprecated
+  @SuppressWarnings("unused")
   private Player() {
   }
 

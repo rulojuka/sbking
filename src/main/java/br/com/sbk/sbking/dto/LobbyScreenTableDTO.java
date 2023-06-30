@@ -19,6 +19,7 @@ public class LobbyScreenTableDTO {
      * @deprecated Kryo needs a no-arg constructor
      */
     @Deprecated
+    @SuppressWarnings("unused")
     private LobbyScreenTableDTO() {
     }
 
