@@ -1,7 +1,7 @@
 package br.com.sbk.sbking.core.boarddealer;
 
 import java.util.Deque;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 
 import br.com.sbk.sbking.core.Board;
@@ -29,7 +29,7 @@ public class RuledBoardDealer implements BoardDealer {
   }
 
   private Board createShuffledBoard(Direction dealer, Deque<Card> deck) {
-    Map<Direction, Hand> hands = new HashMap<Direction, Hand>();
+    Map<Direction, Hand> hands = new EnumMap<Direction, Hand>(Direction.class);
     Direction currentDirection;
     ShuffledDeck currentDeck;
 

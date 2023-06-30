@@ -1,6 +1,6 @@
 package br.com.sbk.sbking.core;
 
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 
 public class BridgeContract {
@@ -11,7 +11,7 @@ public class BridgeContract {
   private static Map<Strain, Integer> gameLevel;
 
   static {
-    gameLevel = new HashMap<Strain, Integer>();
+    gameLevel = new EnumMap<Strain, Integer>(Strain.class);
     gameLevel.put(Strain.CLUBS, 5);
     gameLevel.put(Strain.DIAMONDS, 5);
     gameLevel.put(Strain.HEARTS, 4);

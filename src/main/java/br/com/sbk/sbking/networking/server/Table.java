@@ -4,7 +4,7 @@ import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -31,7 +31,7 @@ public class Table {
   public Table(GameServer gameServer) {
     this.gameServer = gameServer;
     this.gameServer.setTable(this);
-    this.seatedPlayers = new HashMap<Direction, Player>();
+    this.seatedPlayers = new EnumMap<Direction, Player>(Direction.class);
     this.spectatorPlayers = new ArrayList<Player>();
     this.id = UUID.randomUUID();
   }
@@ -240,7 +240,8 @@ public class Table {
   }
 
   public Map<Direction, Player> getPlayersDirections() {
-    return Collections.unmodifiableMap(new HashMap<Direction, Player>(this.seatedPlayers));
+    // To make sure the class is registered on kryo we put it as EnumMap
+    return Collections.unmodifiableMap(new EnumMap<Direction, Player>(this.seatedPlayers));
   }
 
   public String getGameName() {

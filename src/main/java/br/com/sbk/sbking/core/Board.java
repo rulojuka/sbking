@@ -2,7 +2,7 @@ package br.com.sbk.sbking.core;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,7 +17,7 @@ public class Board {
     private Board() {
     }
 
-    private Map<Direction, Hand> hands = new HashMap<Direction, Hand>();
+    private Map<Direction, Hand> hands = new EnumMap<Direction, Hand>(Direction.class);
     private Direction dealer;
 
     public Board(Map<Direction, Hand> hands, Direction dealer) {

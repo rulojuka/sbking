@@ -7,7 +7,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
@@ -339,7 +339,7 @@ public class HandEvaluationsTest {
   private Hand createMockedHandWithDistribution(Map<Suit, Integer> suitDistribution) {
     Hand hand = mock(Hand.class);
     List<Card> mockedCards = new ArrayList<Card>();
-    Map<Suit, Card> mockedCardOfSuit = new HashMap<Suit, Card>();
+    Map<Suit, Card> mockedCardOfSuit = new EnumMap<Suit, Card>(Suit.class);
     mockedCardOfSuit.put(Suit.SPADES, aceOfSpades);
     mockedCardOfSuit.put(Suit.HEARTS, kingOfHearts);
     mockedCardOfSuit.put(Suit.DIAMONDS, sevenOfDiamonds);
@@ -360,7 +360,7 @@ public class HandEvaluationsTest {
   }
 
   private Map<Suit, Integer> createSuitDistribution(int spades, int hearts, int diamonds, int clubs) {
-    Map<Suit, Integer> suitDistribution = new HashMap<Suit, Integer>();
+    Map<Suit, Integer> suitDistribution = new EnumMap<Suit, Integer>(Suit.class);
     suitDistribution.put(Suit.SPADES, spades);
     suitDistribution.put(Suit.HEARTS, hearts);
     suitDistribution.put(Suit.DIAMONDS, diamonds);

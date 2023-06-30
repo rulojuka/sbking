@@ -8,7 +8,7 @@ import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.verify;
 
 import java.util.Comparator;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 
 import org.junit.Before;
@@ -20,7 +20,7 @@ public class BoardTest {
 
     private Direction dealer;
     private Board board;
-    private Map<Direction, Hand> hands = new HashMap<Direction, Hand>();
+    private Map<Direction, Hand> hands = new EnumMap<Direction, Hand>(Direction.class);
 
     @Before
     public void createNorthBoard() {

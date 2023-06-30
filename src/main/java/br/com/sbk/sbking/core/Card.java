@@ -1,6 +1,6 @@
 package br.com.sbk.sbking.core;
 
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 
 public class Card {
@@ -96,7 +96,7 @@ public class Card {
     }
 
     public int getPoints() {
-        Map<Rank, Integer> points = new HashMap<Rank, Integer>();
+        Map<Rank, Integer> points = new EnumMap<Rank, Integer>(Rank.class);
         points.put(Rank.ACE, 4);
         points.put(Rank.KING, 3);
         points.put(Rank.QUEEN, 2);

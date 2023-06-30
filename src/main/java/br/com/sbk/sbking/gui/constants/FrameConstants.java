@@ -2,7 +2,7 @@ package br.com.sbk.sbking.gui.constants;
 
 import java.awt.Color;
 import java.awt.Point;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 
 import br.com.sbk.sbking.core.Direction;
@@ -29,7 +29,7 @@ public final class FrameConstants {
     private static double scaleX;
     private static double scaleY;
 
-    public static Map<Direction, Point> pointOfDirection = new HashMap<Direction, Point>();
+    public static Map<Direction, Point> pointOfDirection = new EnumMap<Direction, Point>(Direction.class);
     public static Point spectatorNamesPosition = new Point();
     public static Point rulesetPosition = new Point();
 

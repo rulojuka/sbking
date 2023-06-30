@@ -3,7 +3,7 @@ package br.com.sbk.sbking.core;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -30,7 +30,7 @@ public final class HandEvaluations {
   }
 
   private Map<Suit, Integer> getNumberOfCardsPerSuit() {
-    Map<Suit, Integer> numberOfCards = new HashMap<Suit, Integer>();
+    Map<Suit, Integer> numberOfCards = new EnumMap<Suit, Integer>(Suit.class);
     for (Suit suit : Suit.values()) {
       numberOfCards.put(suit, this.getCardsPerSuit(suit).size());
     }

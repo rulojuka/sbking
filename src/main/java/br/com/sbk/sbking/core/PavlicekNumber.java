@@ -3,6 +3,7 @@ package br.com.sbk.sbking.core;
 import java.math.BigInteger;
 import java.util.Collection;
 import java.util.Deque;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -113,7 +114,7 @@ public class PavlicekNumber {
         long west = 13;
         BigInteger k = clone(bigD);
         BigInteger x = BigInteger.ZERO;
-        Map<Direction, Hand> map = new HashMap<Direction, Hand>();
+        Map<Direction, Hand> map = new EnumMap<Direction, Hand>(Direction.class);
         for (Direction direction : Direction.values()) {
             map.put(direction, new Hand());
         }

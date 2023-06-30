@@ -3,6 +3,7 @@ package br.com.sbk.sbking.core;
 import static br.com.sbk.sbking.core.GameConstants.NUMBER_OF_TRICKS_IN_A_COMPLETE_HAND;
 
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,7 +29,7 @@ public class Deal {
     private int startingNumberOfCardsInTheHand;
     private Direction currentPlayer;
     private Score score;
-    private Map<Direction, Player> players = new HashMap<Direction, Player>();
+    private Map<Direction, Player> players = new EnumMap<Direction, Player>(Direction.class);
 
     private Ruleset ruleset;
 
@@ -37,7 +38,7 @@ public class Deal {
     private Direction dummy;
 
     private Direction claimer;
-    private Map<Direction, Boolean> acceptedClaimMap = new HashMap<Direction, Boolean>();
+    private Map<Direction, Boolean> acceptedClaimMap = new EnumMap<Direction, Boolean>(Direction.class);
     private Boolean isPartnershipGame;
 
     public Deal(Board board, Ruleset ruleset, Direction leader, Boolean isPartnershipGame) {
@@ -47,7 +48,7 @@ public class Deal {
         this.completedTricks = 0;
         this.startingNumberOfCardsInTheHand = board.getHandOf(leader).size();
         this.tricks = new ArrayList<Trick>();
-        this.players = new HashMap<Direction, Player>();
+        this.players = new EnumMap<Direction, Player>(Direction.class);
         for (Direction direction : Direction.values()) {
             acceptedClaimMap.put(direction, false);
         }
