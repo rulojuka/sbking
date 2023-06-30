@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.dto.LobbyScreenTableDTO;
@@ -25,6 +26,7 @@ import br.com.sbk.sbking.networking.server.gameserver.GameServer;
 @RestController
 class AppController {
 
+    private static final String ACCEPT_CANNOT_BE_EMPTY = "Accept cannot be empty. It must be true or false.";
     @Autowired
     private ServerComponent serverComponent;
 
@@ -47,7 +49,7 @@ class AppController {
             @RequestBody RequestWithString requestWithString) {
         LOGGER.trace("createTable");
         Class<? extends GameServer> gameServerClass = GameServerFromGameNameIdentifier
-                .identify((String) requestWithString.getContent());
+                .identify(requestWithString.getContent());
         UUID tableId = this.getServer().createTable(gameServerClass, getUUID(playerUUID));
         return new ResponseEntity<>(tableId, HttpStatus.CREATED);
     }
@@ -95,6 +97,9 @@ class AppController {
     public void handleClaim(@RequestHeader("PlayerUUID") String playerUUID, @PathVariable Boolean accept) {
         LOGGER.trace("handleClaim");
         LOGGER.trace(accept);
+        if (accept == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ACCEPT_CANNOT_BE_EMPTY);
+        }
         this.getServer().claim(getUUID(playerUUID));
         if (accept) {
             this.getServer().acceptClaim(getUUID(playerUUID));
@@ -130,8 +135,7 @@ class AppController {
     @GetMapping("/spectators")
     public List<String> getSpectators(@RequestHeader("PlayerUUID") String playerUUID) {
         LOGGER.trace("getSpectators");
-        List<String> spectatorList = this.getServer().getSpectatorList(getUUID(playerUUID));
-        return spectatorList;
+        return this.getServer().getSpectatorList(getUUID(playerUUID));
     }
 
     @GetMapping("/tables")
