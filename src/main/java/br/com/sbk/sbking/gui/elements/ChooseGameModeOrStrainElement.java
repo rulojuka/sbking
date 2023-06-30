@@ -1,8 +1,5 @@
 package br.com.sbk.sbking.gui.elements;
 
-import static br.com.sbk.sbking.gui.constants.FrameConstants.halfHeight;
-import static br.com.sbk.sbking.gui.constants.FrameConstants.halfWidth;
-
 import java.awt.Container;
 import java.awt.Point;
 import java.util.ArrayList;
@@ -18,6 +15,7 @@ import javax.swing.JRadioButton;
 import br.com.sbk.sbking.core.Strain;
 import br.com.sbk.sbking.core.rulesets.NegativeRulesetsEnum;
 import br.com.sbk.sbking.core.rulesets.concrete.PositiveWithTrumpsRuleset;
+import br.com.sbk.sbking.gui.constants.FrameConstants;
 import br.com.sbk.sbking.gui.jelements.SBKingLabel;
 import br.com.sbk.sbking.gui.models.TextWithColorAndFont;
 import br.com.sbk.sbking.networking.client.SBKingClient;
@@ -50,8 +48,8 @@ public class ChooseGameModeOrStrainElement {
     }
 
     public void add() {
-        int initialX = halfWidth;
-        int initialY = halfHeight;
+        int initialX = FrameConstants.getHalfWidth();
+        int initialY = FrameConstants.getHalfHeight();
 
         elementHeight = 20;
         xSpacing = 5;

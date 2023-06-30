@@ -28,7 +28,7 @@ public class SBKingClientJFrame extends JFrame {
 
     private void initializeFrame() {
         this.setVisible(true);
-        this.setSize(FrameConstants.tableWidth, FrameConstants.tableHeight);
+        this.setSize(FrameConstants.getTableWidth(), FrameConstants.getTableHeight());
 
         this.setApplicationIcon();
 

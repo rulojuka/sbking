@@ -1,11 +1,10 @@
 package br.com.sbk.sbking.gui.painters;
 
-import static br.com.sbk.sbking.gui.constants.FrameConstants.tableWidth;
-
 import java.awt.Container;
 import java.awt.Point;
 
 import br.com.sbk.sbking.core.Direction;
+import br.com.sbk.sbking.gui.constants.FrameConstants;
 import br.com.sbk.sbking.gui.elements.ChoosePositiveOrNegativeElement;
 import br.com.sbk.sbking.gui.elements.EssentialDirectionBoardElements;
 import br.com.sbk.sbking.gui.elements.GameScoreboardElement;
@@ -30,7 +29,7 @@ public class WaitingForChoosingPositiveOrNegativePainter implements Painter {
 
     @Override
     public void paint(Container contentPane) {
-        int xCenterLocation = tableWidth - 160;
+        int xCenterLocation = FrameConstants.getTableWidth() - 160;
         int yCenterLocation = 110;
         Point centerOfScoreboardPosition = new Point(xCenterLocation, yCenterLocation);
         new GameScoreboardElement(gameScoreboard, contentPane, centerOfScoreboardPosition);

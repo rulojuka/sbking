@@ -18,7 +18,7 @@ public class SpecificDirectionBoardElements {
                         boolean isVisible = currentDirection.equals(direction) || deal.isFinished()
                                         || currentDirection.equals(deal.getClaimer());
                         new HandElement(deal, container, actionListener,
-                                        FrameConstants.pointOfDirection.get(currentDirection),
+                                        FrameConstants.getPointOfDirection(currentDirection),
                                         deal.getPlayerOf(currentDirection), isVisible, currentDirection);
                 }
 
@@ -27,7 +27,7 @@ public class SpecificDirectionBoardElements {
                 new TrickElement(deal.getCurrentTrick(), container,
                                 new Point(container.getWidth() / 2, container.getHeight() / 2));
 
-                new RulesetElement(deal.getRuleset(), container, FrameConstants.rulesetPosition);
+                new RulesetElement(deal.getRuleset(), container, FrameConstants.getRulesetPosition());
 
                 new UndoElement(container, new Point(150, container.getHeight() - 50), actionListener);
 
@@ -44,10 +44,10 @@ public class SpecificDirectionBoardElements {
                                 deal.getAcceptedClaimMap(), container, new Point(420, container.getHeight() - 50),
                                 actionListener);
 
-                new SpectatorsElement(container, FrameConstants.spectatorNamesPosition, spectators);
+                new SpectatorsElement(container, FrameConstants.getSpectatorNamesPosition(), spectators);
 
                 GameNameElement.addGameNameToContainerAtPosition(gameName, container,
-                                new Point(FrameConstants.halfWidth, 10));
+                                new Point(FrameConstants.getHalfWidth(), 10));
         }
 
 }

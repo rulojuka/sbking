@@ -19,7 +19,7 @@ public class SpecificDirectionWithDummyBoardElements {
     for (Direction currentHandDirection : Direction.values()) {
       boolean shouldDrawVisible = this.shouldDrawVisible(playerDirection, currentHandDirection, dummy, dummyVisible,
           deal);
-      new HandElement(deal, container, actionListener, FrameConstants.pointOfDirection.get(currentHandDirection),
+      new HandElement(deal, container, actionListener, FrameConstants.getPointOfDirection(currentHandDirection),
           deal.getPlayerOf(currentHandDirection), shouldDrawVisible, currentHandDirection);
     }
 
@@ -27,13 +27,13 @@ public class SpecificDirectionWithDummyBoardElements {
 
     new TrickElement(deal.getCurrentTrick(), container, new Point(container.getWidth() / 2, container.getHeight() / 2));
 
-    new RulesetElement(deal.getRuleset(), container, FrameConstants.rulesetPosition);
+    new RulesetElement(deal.getRuleset(), container, FrameConstants.getRulesetPosition());
 
     new LeaveTableElement(container, new Point(150, 50), actionListener);
 
-    new SpectatorsElement(container, FrameConstants.spectatorNamesPosition, spectators);
+    new SpectatorsElement(container, FrameConstants.getSpectatorNamesPosition(), spectators);
 
-    GameNameElement.addGameNameToContainerAtPosition(gameName, container, new Point(FrameConstants.halfWidth, 10));
+    GameNameElement.addGameNameToContainerAtPosition(gameName, container, new Point(FrameConstants.getHalfWidth(), 10));
 
     if (!playerDirection.equals(dummy)) {
 

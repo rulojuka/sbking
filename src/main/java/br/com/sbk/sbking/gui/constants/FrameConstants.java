@@ -21,17 +21,47 @@ public final class FrameConstants {
     public static final int ORIGINAL_TABLE_WIDTH = 2200;
     public static final int ORIGINAL_TABLE_HEIGHT = 1400;
 
-    public static int tableWidth;
-    public static int tableHeight;
-    public static int halfWidth;
-    public static int halfHeight;
+    private static int tableWidth;
+    private static int tableHeight;
+    private static int halfWidth;
+    private static int halfHeight;
+
+    public static int getTableWidth() {
+        return tableWidth;
+    }
+
+    public static int getTableHeight() {
+        return tableHeight;
+    }
+
+    public static int getHalfWidth() {
+        return halfWidth;
+    }
+
+    public static int getHalfHeight() {
+        return halfHeight;
+    }
 
     private static double scaleX;
     private static double scaleY;
 
-    public static Map<Direction, Point> pointOfDirection = new EnumMap<Direction, Point>(Direction.class);
-    public static Point spectatorNamesPosition = new Point();
-    public static Point rulesetPosition = new Point();
+    private static Map<Direction, Point> pointOfDirection = new EnumMap<Direction, Point>(Direction.class);
+
+    public static Point getPointOfDirection(Direction direction) {
+        return pointOfDirection.get(direction);
+    }
+
+    private static Point spectatorNamesPosition = new Point();
+
+    public static Point getSpectatorNamesPosition() {
+        return spectatorNamesPosition;
+    }
+
+    private static Point rulesetPosition = new Point();
+
+    public static Point getRulesetPosition() {
+        return rulesetPosition;
+    }
 
     public static void initFrameConstants() {
         computeConstants(1400, 820);

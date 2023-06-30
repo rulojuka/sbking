@@ -7,6 +7,7 @@ import java.awt.Container;
 import javax.swing.JLabel;
 
 import br.com.sbk.sbking.core.Direction;
+import br.com.sbk.sbking.gui.constants.FrameConstants;
 import br.com.sbk.sbking.gui.jelements.SBKingLabel;
 
 public final class WaitingForChooserElement {
@@ -24,8 +25,8 @@ public final class WaitingForChooserElement {
         waitingLabel.setHorizontalAlignment(CENTER);
         int width = 300;
         int height = 30;
-        int x = br.com.sbk.sbking.gui.constants.FrameConstants.halfWidth;
-        int y = br.com.sbk.sbking.gui.constants.FrameConstants.halfHeight;
+        int x = FrameConstants.getHalfWidth();
+        int y = FrameConstants.getHalfHeight();
         waitingLabel.setSize(width, height);
         waitingLabel.setLocation(x - width / 2, y - height / 2);
         container.add(waitingLabel);

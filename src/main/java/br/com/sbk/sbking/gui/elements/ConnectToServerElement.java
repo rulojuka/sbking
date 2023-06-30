@@ -1,20 +1,21 @@
 package br.com.sbk.sbking.gui.elements;
 
-import static br.com.sbk.sbking.gui.constants.FrameConstants.halfHeight;
-import static br.com.sbk.sbking.gui.constants.FrameConstants.halfWidth;
-
 import java.awt.Container;
 import java.awt.event.ActionListener;
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import br.com.sbk.sbking.gui.constants.FrameConstants;
 import br.com.sbk.sbking.gui.jelements.ConnectToServerButton;
 import br.com.sbk.sbking.gui.jelements.SBKingLabel;
 
 public class ConnectToServerElement {
 
     public void add(Container container, ActionListener actionListener) {
+
+        int halfWidth = FrameConstants.getHalfWidth();
+        int halfHeight = FrameConstants.getHalfHeight();
 
         ConnectToServerButton connectToServerButton = new ConnectToServerButton();
         connectToServerButton.addActionListener(actionListener);
