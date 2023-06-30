@@ -2,10 +2,19 @@ package br.com.sbk.sbking.networking.websockets;
 
 import br.com.sbk.sbking.core.Deal;
 
-public class TableDealDTO {
+public class TableMessageDTO {
 
+    private String message;
     private String tableId;
     private Deal deal;
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
     public String getTableId() {
         return tableId;

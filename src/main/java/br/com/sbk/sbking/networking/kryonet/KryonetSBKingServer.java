@@ -11,7 +11,6 @@ import com.esotericsoftware.kryonet.Server;
 
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.networking.kryonet.messages.SBKingMessage;
-import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.FinishDealMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.GameModeOrStrainChooserMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.InitializeDealMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.InvalidRulesetMessage;
@@ -70,10 +69,6 @@ public class KryonetSBKingServer extends Server {
 
   private void sendMany(SBKingMessage message, Iterable<UUID> receivers) {
     StreamSupport.stream(receivers.spliterator(), false).forEach(clientId -> this.sendOneTo(message, clientId));
-  }
-
-  public void sendFinishDealTo(Iterable<UUID> receivers) {
-    this.sendMany(new FinishDealMessage(), receivers);
   }
 
   public void sendGameModeOrStrainChooserTo(Direction direction, Iterable<UUID> receivers) {

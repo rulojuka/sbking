@@ -4,7 +4,6 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.EndPoint;
 
 import br.com.sbk.sbking.core.Direction;
-import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.FinishDealMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.GameModeOrStrainChooserMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.InitializeDealMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.InvalidRulesetMessage;
@@ -28,7 +27,6 @@ public final class KryonetUtils {
     kryo.register(Direction.class);
 
     // Server to Client Message classes
-    kryo.register(FinishDealMessage.class);
     kryo.register(GameModeOrStrainChooserMessage.class);
     kryo.register(InitializeDealMessage.class);
     kryo.register(InvalidRulesetMessage.class);

@@ -14,6 +14,7 @@ import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
 import br.com.sbk.sbking.app.PlayerController;
+import br.com.sbk.sbking.app.TableController;
 import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
@@ -30,7 +31,7 @@ import br.com.sbk.sbking.networking.server.gameserver.MinibridgeGameServer;
 import br.com.sbk.sbking.networking.server.gameserver.PositiveKingGameServer;
 import br.com.sbk.sbking.networking.websockets.PlayerDTO;
 import br.com.sbk.sbking.networking.websockets.PlayerListDTO;
-import br.com.sbk.sbking.networking.websockets.TableDealDTO;
+import br.com.sbk.sbking.networking.websockets.TableMessageDTO;
 
 /**
  * This class has two responsibilities: 1: receiving method calls from the
@@ -42,6 +43,7 @@ public class SBKingServer {
 
   private KryonetSBKingServer kryonetSBKingServer = null;
   private PlayerController playerController;
+  private TableController tableController;
 
   private Map<UUID, Player> identifierToPlayerMap = new HashMap<UUID, Player>();
   private Map<UUID, Table> tables;
@@ -50,12 +52,13 @@ public class SBKingServer {
   private static final int MAXIMUM_NUMBER_OF_CONCURRENT_GAME_SERVERS = 10;
   private ExecutorService pool;
 
-  public SBKingServer(PlayerController playerController) {
+  public SBKingServer(PlayerController playerController, TableController tableController) {
     this.tables = new HashMap<UUID, Table>();
     this.playersTable = new HashMap<Player, Table>();
     this.identifierToPlayerMap = new HashMap<UUID, Player>();
     this.pool = Executors.newFixedThreadPool(MAXIMUM_NUMBER_OF_CONCURRENT_GAME_SERVERS);
     this.playerController = playerController;
+    this.tableController = tableController;
   }
 
   public void setKryonetSBKingServer(KryonetSBKingServer kryonetSBKingServer) {
@@ -144,10 +147,6 @@ public class SBKingServer {
     }
   }
 
-  public void sendFinishDealToTable(Table table) {
-    this.kryonetSBKingServer.sendFinishDealTo(this.getAllPlayersUUIDsOnTable(table));
-  }
-
   private Iterable<UUID> getAllPlayersUUIDsOnTable(Table table) {
     Collection<UUID> allPlayersOnTable = new LinkedList<UUID>();
     if (table == null) {
@@ -180,10 +179,21 @@ public class SBKingServer {
   }
 
   public void sendDealToTable(Deal deal, Table table) {
-    TableDealDTO tableDealDTO = new TableDealDTO();
-    tableDealDTO.setTableId(table.getId().toString());
+    TableMessageDTO tableDealDTO = createTableMessageDTO("deal", table.getId().toString(), deal);
+    this.tableController.getDeal(tableDealDTO);
+  }
+
+  public void sendFinishDealToTable(Table table) {
+    TableMessageDTO tableDealDTO = createTableMessageDTO("finishDeal", table.getId().toString(), null);
+    this.tableController.sendFinishDeal(tableDealDTO);
+  }
+
+  private TableMessageDTO createTableMessageDTO(String message, String tableId, Deal deal) {
+    TableMessageDTO tableDealDTO = new TableMessageDTO();
+    tableDealDTO.setMessage(message);
+    tableDealDTO.setTableId(tableId);
     tableDealDTO.setDeal(deal);
-    this.playerController.getDeal(tableDealDTO);
+    return tableDealDTO;
   }
 
   public void sendGameModeOrStrainChooserToTable(Direction direction, Table table) {

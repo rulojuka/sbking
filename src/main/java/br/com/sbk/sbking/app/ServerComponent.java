@@ -17,9 +17,9 @@ public class ServerComponent {
         return sbKingServer;
     }
 
-    public ServerComponent(@Autowired PlayerController spectatorController) {
+    public ServerComponent(@Autowired PlayerController playerController, @Autowired TableController tableController) {
         LOGGER.info("Entering Main Thread.");
-        LobbyServer lobbyServer = new LobbyServer(spectatorController);
+        LobbyServer lobbyServer = new LobbyServer(playerController, tableController);
         lobbyServer.run();
         this.sbKingServer = lobbyServer.getSbKingServer();
         LOGGER.info("Exiting Main Thread.");

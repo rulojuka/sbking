@@ -3,6 +3,7 @@ package br.com.sbk.sbking.networking.server;
 import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 
 import br.com.sbk.sbking.app.PlayerController;
+import br.com.sbk.sbking.app.TableController;
 import br.com.sbk.sbking.core.constants.ErrorCodes;
 import br.com.sbk.sbking.networking.core.properties.FileProperties;
 import br.com.sbk.sbking.networking.core.properties.NetworkingProperties;
@@ -12,9 +13,11 @@ public class LobbyServer {
 
     private SBKingServer sbKingServer;
     private PlayerController playerController;
+    private TableController tableController;
 
-    public LobbyServer(PlayerController playerController) {
+    public LobbyServer(PlayerController playerController, TableController tableController) {
         this.playerController = playerController;
+        this.tableController = tableController;
     }
 
     public SBKingServer getSbKingServer() {
@@ -25,7 +28,7 @@ public class LobbyServer {
         int port = this.getPortFromNetworkingProperties();
         LOGGER.info("LobbyServer is Running...");
 
-        this.sbKingServer = SBKingServerFactory.createWithKryonetConnection(port, playerController);
+        this.sbKingServer = SBKingServerFactory.createWithKryonetConnection(port, playerController, tableController);
         LOGGER.info("SBKingServer created.");
         LOGGER.info("Listening for connections on port: {}", port);
     }
