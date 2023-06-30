@@ -1,45 +1,9 @@
 package br.com.sbk.sbking.networking.kryonet;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.UUID;
-
-import org.objenesis.instantiator.ObjectInstantiator;
-
 import com.esotericsoftware.kryo.Kryo;
-import com.esotericsoftware.kryo.Registration;
 import com.esotericsoftware.kryonet.EndPoint;
 
-import br.com.sbk.sbking.core.Board;
-import br.com.sbk.sbking.core.Card;
-import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
-import br.com.sbk.sbking.core.GameModeSummary;
-import br.com.sbk.sbking.core.Hand;
-import br.com.sbk.sbking.core.Player;
-import br.com.sbk.sbking.core.Rank;
-import br.com.sbk.sbking.core.Score;
-import br.com.sbk.sbking.core.Suit;
-import br.com.sbk.sbking.core.Trick;
-import br.com.sbk.sbking.core.comparators.CardInsideHandComparator;
-import br.com.sbk.sbking.core.comparators.CardInsideHandWithSuitComparator;
-import br.com.sbk.sbking.core.comparators.RankComparator;
-import br.com.sbk.sbking.core.rulesets.concrete.NegativeHeartsRuleset;
-import br.com.sbk.sbking.core.rulesets.concrete.NegativeKingRuleset;
-import br.com.sbk.sbking.core.rulesets.concrete.NegativeLastTwoRuleset;
-import br.com.sbk.sbking.core.rulesets.concrete.NegativeMenRuleset;
-import br.com.sbk.sbking.core.rulesets.concrete.NegativeTricksRuleset;
-import br.com.sbk.sbking.core.rulesets.concrete.NegativeWomenRuleset;
-import br.com.sbk.sbking.core.rulesets.concrete.NoRuleset;
-import br.com.sbk.sbking.core.rulesets.concrete.PositiveNoTrumpsRuleset;
-import br.com.sbk.sbking.core.rulesets.concrete.PositiveWithTrumpsRuleset;
-import br.com.sbk.sbking.core.rulesets.implementations.DefaultSuitFollowable;
-import br.com.sbk.sbking.core.rulesets.implementations.DontProhibitsHearts;
-import br.com.sbk.sbking.core.rulesets.implementations.NoTrumpSuitWinnable;
-import br.com.sbk.sbking.core.rulesets.implementations.ProhibitsHearts;
-import br.com.sbk.sbking.core.rulesets.implementations.TrumpSuitWinnable;
-import br.com.sbk.sbking.dto.LobbyScreenTableDTO;
-import br.com.sbk.sbking.gui.models.KingGameScoreboard;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.FinishDealMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.GameModeOrStrainChooserMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.InitializeDealMessage;
@@ -60,51 +24,8 @@ public final class KryonetUtils {
   public static void register(EndPoint endPoint) {
     Kryo kryo = endPoint.getKryo();
 
-    // Java classes
-    kryo.register(ArrayList.class);
-    kryo.register(HashMap.class);
-    Registration uuidRegistration = kryo.register(UUID.class);
-    uuidRegistration.setInstantiator(new ObjectInstantiator<UUID>() {
-      public UUID newInstance() {
-        return new UUID(0, 0);
-      }
-    });
-
     // Core classes
-    kryo.register(Board.class);
-    kryo.register(Card.class);
-    kryo.register(Deal.class);
     kryo.register(Direction.class);
-    kryo.register(GameModeSummary.class);
-    kryo.register(Hand.class);
-    kryo.register(KingGameScoreboard.class);
-    kryo.register(Player.class);
-    kryo.register(Rank.class);
-    kryo.register(Score.class);
-    kryo.register(Suit.class);
-    kryo.register(Trick.class);
-    // Concrete Rulesets
-    kryo.register(NegativeHeartsRuleset.class);
-    kryo.register(NegativeKingRuleset.class);
-    kryo.register(NegativeLastTwoRuleset.class);
-    kryo.register(NegativeMenRuleset.class);
-    kryo.register(NegativeTricksRuleset.class);
-    kryo.register(NegativeWomenRuleset.class);
-    kryo.register(NoRuleset.class);
-    kryo.register(PositiveNoTrumpsRuleset.class);
-    kryo.register(PositiveWithTrumpsRuleset.class);
-    // Rulesets implementations
-    kryo.register(DefaultSuitFollowable.class);
-    kryo.register(DontProhibitsHearts.class);
-    kryo.register(NoTrumpSuitWinnable.class);
-    kryo.register(ProhibitsHearts.class);
-    kryo.register(TrumpSuitWinnable.class);
-    // Card comparators
-    kryo.register(CardInsideHandComparator.class);
-    kryo.register(CardInsideHandWithSuitComparator.class);
-    kryo.register(RankComparator.class);
-    // DTOs
-    kryo.register(LobbyScreenTableDTO.class);
 
     // Server to Client Message classes
     kryo.register(FinishDealMessage.class);
