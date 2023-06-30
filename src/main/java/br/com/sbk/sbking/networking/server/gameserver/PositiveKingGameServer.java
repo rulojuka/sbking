@@ -108,7 +108,7 @@ public class PositiveKingGameServer extends GameServer {
                     return;
                 }
                 if (this.dealHasChanged) {
-                    LOGGER.info("Sending new 'round' of deals");
+                    LOGGER.debug("Sending new 'round' of deals");
                     this.sendDealAll();
                     this.dealHasChanged = false;
                 }

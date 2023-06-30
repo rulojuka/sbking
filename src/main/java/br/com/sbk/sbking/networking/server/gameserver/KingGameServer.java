@@ -141,7 +141,7 @@ public class KingGameServer extends GameServer {
             waitForClientsToPrepare();
             while (!shouldStop && !this.game.getCurrentDeal().isFinished()) {
                 if (this.dealHasChanged) {
-                    LOGGER.info("Sending new 'round' of deals");
+                    LOGGER.debug("Sending new 'round' of deals");
                     this.sendDealAll();
                     this.dealHasChanged = false;
                 }

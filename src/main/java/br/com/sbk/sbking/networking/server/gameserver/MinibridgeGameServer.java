@@ -86,7 +86,7 @@ public class MinibridgeGameServer extends GameServer {
       this.dealHasChanged = true;
       while (!shouldStop && !this.game.getCurrentDeal().isFinished()) {
         if (this.dealHasChanged) {
-          LOGGER.info("Sending new 'round' of deals");
+          LOGGER.debug("Sending new 'round' of deals");
           this.sendDealAll();
           this.dealHasChanged = false;
         }
@@ -134,7 +134,7 @@ public class MinibridgeGameServer extends GameServer {
   @Override
   protected void playCard(Card card, Direction direction) {
     Direction currentDirectionToPlay = this.game.getCurrentDeal().getCurrentPlayer();
-    LOGGER.info("It is currently the {} turn", currentDirectionToPlay);
+    LOGGER.debug("It is currently the {} turn", currentDirectionToPlay);
     try {
       if (this.isAllowedToPlayCardInTurnOf(direction, currentDirectionToPlay)) {
         syncPlayCard(card);

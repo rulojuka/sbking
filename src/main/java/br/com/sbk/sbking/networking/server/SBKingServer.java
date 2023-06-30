@@ -212,6 +212,7 @@ public class SBKingServer {
   }
 
   public void setNickname(UUID identifier, String nickname) {
+    LOGGER.info("Setting nickname {} for player {}", nickname, identifier);
     Player player = identifierToPlayerMap.get(identifier);
     player.setNickname(nickname);
   }

@@ -35,7 +35,7 @@ public class CagandoNoBequinhoGameServer extends GameServer {
             while (!shouldStop && !this.game.getCurrentDeal().isFinished()) {
                 if (this.dealHasChanged) {
                     waitForClientsToPrepare();
-                    LOGGER.info("Sending new 'round' of deals");
+                    LOGGER.debug("Sending new 'round' of deals");
                     this.sendDealAll();
                     this.dealHasChanged = false;
                 }
