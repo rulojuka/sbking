@@ -18,15 +18,9 @@ public class TableController {
         return "/topic/table/" + tableDealDTO.getTableId();
     }
 
-    public void getDeal(TableMessageDTO tableDealDTO) {
+    public void sendMessage(TableMessageDTO tableDealDTO) {
         String destination = this.getDestination(tableDealDTO);
-        LOGGER.debug("Sending deal to: {0}", destination);
-        this.template.convertAndSend(destination, tableDealDTO);
-    }
-
-    public void sendFinishDeal(TableMessageDTO tableDealDTO) {
-        String destination = this.getDestination(tableDealDTO);
-        LOGGER.info("Sending finishDeal to: {0}", destination);
+        LOGGER.info("Sending {} to: {}", tableDealDTO.getMessage(), destination);
         this.template.convertAndSend(destination, tableDealDTO);
     }
 

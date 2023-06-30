@@ -179,19 +179,24 @@ public class SBKingServer {
   }
 
   public void sendDealToTable(Deal deal, Table table) {
-    TableMessageDTO tableDealDTO = createTableMessageDTO("deal", table.getId().toString(), deal);
-    this.tableController.getDeal(tableDealDTO);
+    TableMessageDTO tableDealDTO = createTableMessageDTO("deal", table, deal);
+    this.tableController.sendMessage(tableDealDTO);
   }
 
   public void sendFinishDealToTable(Table table) {
-    TableMessageDTO tableDealDTO = createTableMessageDTO("finishDeal", table.getId().toString(), null);
-    this.tableController.sendFinishDeal(tableDealDTO);
+    TableMessageDTO tableDealDTO = createTableMessageDTO("finishDeal", table, null);
+    this.tableController.sendMessage(tableDealDTO);
   }
 
-  private TableMessageDTO createTableMessageDTO(String message, String tableId, Deal deal) {
+  public void sendInitializeDealToTable(Table table) {
+    TableMessageDTO tableDealDTO = createTableMessageDTO("initializeDeal", table, null);
+    this.tableController.sendMessage(tableDealDTO);
+  }
+
+  private TableMessageDTO createTableMessageDTO(String message, Table table, Deal deal) {
     TableMessageDTO tableDealDTO = new TableMessageDTO();
     tableDealDTO.setMessage(message);
-    tableDealDTO.setTableId(tableId);
+    tableDealDTO.setTableId(table.getId().toString());
     tableDealDTO.setDeal(deal);
     return tableDealDTO;
   }
@@ -207,10 +212,6 @@ public class SBKingServer {
   public void sendPositiveOrNegativeToTable(PositiveOrNegative positiveOrNegative, Table table) {
     String positiveOrNegativeString = positiveOrNegative.toString().toUpperCase();
     this.kryonetSBKingServer.sendPositiveOrNegativeTo(positiveOrNegativeString, this.getAllPlayersUUIDsOnTable(table));
-  }
-
-  public void sendInitializeDealToTable(Table table) {
-    this.kryonetSBKingServer.sendInitializeDealTo(this.getAllPlayersUUIDsOnTable(table));
   }
 
   public void sendInvalidRulesetToTable(Table table) {

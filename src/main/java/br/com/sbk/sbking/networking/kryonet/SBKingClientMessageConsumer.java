@@ -8,7 +8,6 @@ import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.networking.client.SBKingClient;
 import br.com.sbk.sbking.networking.kryonet.messages.SBKingMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.GameModeOrStrainChooserMessage;
-import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.InitializeDealMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.InvalidRulesetMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.PositiveOrNegativeChooserMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.PositiveOrNegativeMessage;
@@ -52,8 +51,6 @@ public class SBKingClientMessageConsumer implements Runnable {
       this.sbkingClient.setPositiveOrNegative((String) content);
     } else if (message instanceof GameModeOrStrainChooserMessage) {
       this.sbkingClient.setGameModeOrStrainChooser((Direction) content);
-    } else if (message instanceof InitializeDealMessage) {
-      this.sbkingClient.initializeDeal();
     } else if (message instanceof InvalidRulesetMessage) {
       this.sbkingClient.setRulesetValid(false);
     } else if (message instanceof ValidRulesetMessage) {

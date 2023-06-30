@@ -12,7 +12,6 @@ import com.esotericsoftware.kryonet.Server;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.networking.kryonet.messages.SBKingMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.GameModeOrStrainChooserMessage;
-import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.InitializeDealMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.InvalidRulesetMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.PositiveOrNegativeChooserMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.PositiveOrNegativeMessage;
@@ -81,10 +80,6 @@ public class KryonetSBKingServer extends Server {
 
   public void sendPositiveOrNegativeTo(String positiveOrNegative, Iterable<UUID> receivers) {
     this.sendMany(new PositiveOrNegativeMessage(positiveOrNegative), receivers);
-  }
-
-  public void sendInitializeDealTo(Iterable<UUID> receivers) {
-    this.sendMany(new InitializeDealMessage(), receivers);
   }
 
   public void sendInvalidRulesetTo(Iterable<UUID> receivers) {

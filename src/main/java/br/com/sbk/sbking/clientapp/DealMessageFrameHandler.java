@@ -34,6 +34,15 @@ public class DealMessageFrameHandler implements StompFrameHandler {
         } else if ("finishDeal".equals(messageType)) {
             LOGGER.info("Received message: --TableMessage:finishDeal--");
             this.sbkingClient.finishDeal();
+        } else if ("initializeDeal".equals(messageType)) {
+            LOGGER.info("Received message: --TableMessage:initializeDeal--");
+            this.sbkingClient.initializeDeal();
+        } else {
+            LOGGER.error("Could not understand message.");
+            LOGGER.error(headers);
+            LOGGER.error(tableDealDTO.getMessage());
+            LOGGER.error(tableDealDTO.getTableId());
+            LOGGER.error(tableDealDTO.getDeal());
         }
     }
 
