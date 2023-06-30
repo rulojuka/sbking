@@ -193,6 +193,16 @@ public class SBKingServer {
     this.tableController.sendMessage(tableDealDTO);
   }
 
+  public void sendInvalidRulesetToTable(Table table) {
+    TableMessageDTO tableDealDTO = createTableMessageDTO("invalidRuleset", table, null);
+    this.tableController.sendMessage(tableDealDTO);
+  }
+
+  public void sendValidRulesetToTable(Table table) {
+    TableMessageDTO tableDealDTO = createTableMessageDTO("validRuleset", table, null);
+    this.tableController.sendMessage(tableDealDTO);
+  }
+
   private TableMessageDTO createTableMessageDTO(String message, Table table, Deal deal) {
     TableMessageDTO tableDealDTO = new TableMessageDTO();
     tableDealDTO.setMessage(message);
@@ -212,14 +222,6 @@ public class SBKingServer {
   public void sendPositiveOrNegativeToTable(PositiveOrNegative positiveOrNegative, Table table) {
     String positiveOrNegativeString = positiveOrNegative.toString().toUpperCase();
     this.kryonetSBKingServer.sendPositiveOrNegativeTo(positiveOrNegativeString, this.getAllPlayersUUIDsOnTable(table));
-  }
-
-  public void sendInvalidRulesetToTable(Table table) {
-    this.kryonetSBKingServer.sendInvalidRulesetTo(this.getAllPlayersUUIDsOnTable(table));
-  }
-
-  public void sendValidRulesetToTable(Table table) {
-    this.kryonetSBKingServer.sendValidRulesetTo(this.getAllPlayersUUIDsOnTable(table));
   }
 
   public void setNickname(UUID identifier, String nickname) {

@@ -5,11 +5,9 @@ import com.esotericsoftware.kryonet.EndPoint;
 
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.GameModeOrStrainChooserMessage;
-import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.InvalidRulesetMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.PositiveOrNegativeChooserMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.PositiveOrNegativeMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.TextMessage;
-import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.ValidRulesetMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.YourIdIsMessage;
 
 public final class KryonetUtils {
@@ -27,11 +25,9 @@ public final class KryonetUtils {
 
     // Server to Client Message classes
     kryo.register(GameModeOrStrainChooserMessage.class);
-    kryo.register(InvalidRulesetMessage.class);
     kryo.register(PositiveOrNegativeChooserMessage.class);
     kryo.register(PositiveOrNegativeMessage.class);
     kryo.register(TextMessage.class);
-    kryo.register(ValidRulesetMessage.class);
     kryo.register(YourIdIsMessage.class);
   }
 }

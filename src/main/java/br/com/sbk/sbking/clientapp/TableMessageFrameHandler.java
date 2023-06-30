@@ -10,11 +10,11 @@ import org.springframework.messaging.simp.stomp.StompHeaders;
 import br.com.sbk.sbking.networking.client.SBKingClient;
 import br.com.sbk.sbking.networking.websockets.TableMessageDTO;
 
-public class DealMessageFrameHandler implements StompFrameHandler {
+public class TableMessageFrameHandler implements StompFrameHandler {
 
     private SBKingClient sbkingClient;
 
-    public DealMessageFrameHandler(SBKingClient sbkingClient) {
+    public TableMessageFrameHandler(SBKingClient sbkingClient) {
         this.sbkingClient = sbkingClient;
     }
 
@@ -25,7 +25,6 @@ public class DealMessageFrameHandler implements StompFrameHandler {
 
     @Override
     public void handleFrame(StompHeaders headers, Object payload) {
-        LOGGER.info("Received message: --TableMessage--");
         TableMessageDTO tableDealDTO = (TableMessageDTO) payload;
         String messageType = tableDealDTO.getMessage();
         if ("deal".equals(messageType)) {
@@ -37,6 +36,12 @@ public class DealMessageFrameHandler implements StompFrameHandler {
         } else if ("initializeDeal".equals(messageType)) {
             LOGGER.info("Received message: --TableMessage:initializeDeal--");
             this.sbkingClient.initializeDeal();
+        } else if ("invalidRuleset".equals(messageType)) {
+            LOGGER.info("Received message: --TableMessage:invalidRuleset--");
+            this.sbkingClient.setRulesetValid(false);
+        } else if ("validRuleset".equals(messageType)) {
+            LOGGER.info("Received message: --TableMessage:validRuleset--");
+            this.sbkingClient.setRulesetValid(true);
         } else {
             LOGGER.error("Could not understand message.");
             LOGGER.error(headers);

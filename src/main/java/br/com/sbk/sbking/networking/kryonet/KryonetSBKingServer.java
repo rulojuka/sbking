@@ -12,10 +12,8 @@ import com.esotericsoftware.kryonet.Server;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.networking.kryonet.messages.SBKingMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.GameModeOrStrainChooserMessage;
-import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.InvalidRulesetMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.PositiveOrNegativeChooserMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.PositiveOrNegativeMessage;
-import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.ValidRulesetMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.YourIdIsMessage;
 import br.com.sbk.sbking.networking.server.SBKingServer;
 
@@ -80,14 +78,6 @@ public class KryonetSBKingServer extends Server {
 
   public void sendPositiveOrNegativeTo(String positiveOrNegative, Iterable<UUID> receivers) {
     this.sendMany(new PositiveOrNegativeMessage(positiveOrNegative), receivers);
-  }
-
-  public void sendInvalidRulesetTo(Iterable<UUID> receivers) {
-    this.sendMany(new InvalidRulesetMessage(), receivers);
-  }
-
-  public void sendValidRulesetTo(Iterable<UUID> receivers) {
-    this.sendMany(new ValidRulesetMessage(), receivers);
   }
 
   public String getNicknameFromIdentifier(UUID identifier) {

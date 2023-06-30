@@ -8,11 +8,9 @@ import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.networking.client.SBKingClient;
 import br.com.sbk.sbking.networking.kryonet.messages.SBKingMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.GameModeOrStrainChooserMessage;
-import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.InvalidRulesetMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.PositiveOrNegativeChooserMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.PositiveOrNegativeMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.TextMessage;
-import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.ValidRulesetMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.YourIdIsMessage;
 
 public class SBKingClientMessageConsumer implements Runnable {
@@ -51,10 +49,6 @@ public class SBKingClientMessageConsumer implements Runnable {
       this.sbkingClient.setPositiveOrNegative((String) content);
     } else if (message instanceof GameModeOrStrainChooserMessage) {
       this.sbkingClient.setGameModeOrStrainChooser((Direction) content);
-    } else if (message instanceof InvalidRulesetMessage) {
-      this.sbkingClient.setRulesetValid(false);
-    } else if (message instanceof ValidRulesetMessage) {
-      this.sbkingClient.setRulesetValid(true);
     } else if (message instanceof YourIdIsMessage) {
       this.sbkingClient.initializeId((String) content);
     } else {

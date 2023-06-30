@@ -12,7 +12,7 @@ import org.springframework.messaging.simp.stomp.StompSession.Subscription;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import br.com.sbk.sbking.clientapp.DealMessageFrameHandler;
+import br.com.sbk.sbking.clientapp.TableMessageFrameHandler;
 import br.com.sbk.sbking.core.Deal;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.dto.LobbyScreenTableDTO;
@@ -73,7 +73,7 @@ public class SBKingClient {
         if (newTable != null && !newTable.equals(this.currentTable)) {
             String topic = "/topic/table/" + newTable.toString();
             LOGGER.info("Subscribing to: {}", topic);
-            this.dealSubscription = this.stompSession.subscribe(topic, new DealMessageFrameHandler(this));
+            this.dealSubscription = this.stompSession.subscribe(topic, new TableMessageFrameHandler(this));
             this.restHTTPClient.refreshTable(newTable);
         }
         this.currentTable = newTable;
