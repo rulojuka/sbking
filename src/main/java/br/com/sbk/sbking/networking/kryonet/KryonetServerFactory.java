@@ -6,7 +6,12 @@ import com.esotericsoftware.kryonet.Connection;
 
 import br.com.sbk.sbking.networking.server.SBKingServer;
 
-public class KryonetServerFactory {
+public final class KryonetServerFactory {
+
+  private KryonetServerFactory() {
+    throw new IllegalStateException("Utility class");
+  }
+
   public static KryonetSBKingServer getRegisteredServer(SBKingServer sbkingServer) {
     KryonetSBKingServer server;
     server = new KryonetSBKingServer(sbkingServer) {

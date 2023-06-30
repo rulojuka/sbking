@@ -11,7 +11,11 @@ import com.esotericsoftware.kryonet.Listener;
 
 import br.com.sbk.sbking.networking.kryonet.messages.SBKingMessage;
 
-public class KryonetClientListenerFactory {
+public final class KryonetClientListenerFactory {
+
+  private KryonetClientListenerFactory() {
+    throw new IllegalStateException("Utility class");
+  }
 
   public static Listener getClientListener(Client client, BlockingQueue<SBKingMessage> clientMessageQueue) {
     return new Listener() {

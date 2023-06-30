@@ -4,10 +4,14 @@ import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 
 import br.com.sbk.sbking.gui.constants.FrameConstants;
 
-public class ClientApplicationState {
+public final class ClientApplicationState {
 
     private static boolean guiHasChanged = false;
     private static boolean guiScaleValid = true;
+
+    private ClientApplicationState() {
+        throw new IllegalStateException("Utility class");
+    }
 
     public static void setGUIHasChanged(boolean changed) {
         guiHasChanged = changed;

@@ -1,6 +1,11 @@
 package br.com.sbk.sbking.networking.kryonet;
 
-public class KryonetClientFactory {
+public final class KryonetClientFactory {
+
+  private KryonetClientFactory() {
+    throw new IllegalStateException("Utility class");
+  }
+
   public static KryonetSBKingClient getRegisteredClient() {
     KryonetSBKingClient client = new KryonetSBKingClient();
     client.start();

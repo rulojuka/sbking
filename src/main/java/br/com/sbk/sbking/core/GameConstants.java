@@ -1,6 +1,11 @@
 package br.com.sbk.sbking.core;
 
-public class GameConstants {
+public final class GameConstants {
+
+    private GameConstants() {
+        throw new IllegalStateException("Utility class");
+    }
+
     public static final int NUMBER_OF_HANDS = 4;
     public static final int SIZE_OF_HAND = 13;
     public static final int NUMBER_OF_TRICKS_IN_A_COMPLETE_HAND = SIZE_OF_HAND;
@@ -13,4 +18,5 @@ public class GameConstants {
     public static final int NUMBER_OF_LAST_TWO_TRICKS = 2;
     public static final int NUMBER_OF_MEN = 8;
     public static final int NUMBER_OF_WOMEN = 4;
+
 }

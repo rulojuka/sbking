@@ -10,9 +10,13 @@ import br.com.sbk.sbking.core.Rank;
 import br.com.sbk.sbking.core.Suit;
 import br.com.sbk.sbking.gui.models.DeckCardImageInformation;
 
-public class AssetLoader {
+public final class AssetLoader {
     private static Map<Card, ImageIcon> imageByCard = new HashMap<Card, ImageIcon>();
     private static ImageIcon cachedBack;
+
+    private AssetLoader() {
+        throw new IllegalStateException("Utility class");
+    }
 
     public static void initAssetLoader() {
         loadCache();

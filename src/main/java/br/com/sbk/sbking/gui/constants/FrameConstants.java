@@ -1,13 +1,18 @@
 package br.com.sbk.sbking.gui.constants;
 
+import java.awt.Color;
+import java.awt.Point;
 import java.util.HashMap;
 import java.util.Map;
-import java.awt.Point;
-import java.awt.Color;
 
 import br.com.sbk.sbking.core.Direction;
 
 public final class FrameConstants {
+
+    private FrameConstants() {
+        throw new IllegalStateException("Utility class");
+    }
+
     public static final Color TABLE_COLOR = new Color(0, 100, 0); // Tablecloth green
     public static final Color TEXT_COLOR = new Color(255, 255, 255); // White
     public static final Color RED_SUIT_COLOR = new Color(255, 0, 0); // Red

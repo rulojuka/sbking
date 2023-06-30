@@ -14,7 +14,11 @@ import br.com.sbk.sbking.networking.kryonet.KryonetServerFactory;
 import br.com.sbk.sbking.networking.kryonet.KryonetServerListenerFactory;
 import br.com.sbk.sbking.networking.kryonet.messages.SBKingMessageWithIdentifier;
 
-public class SBKingServerFactory {
+public final class SBKingServerFactory {
+
+  private SBKingServerFactory() {
+    throw new IllegalStateException("Utility class");
+  }
 
   public static SBKingServer createWithKryonetConnection(int port, PlayerController playerController) {
     SBKingServer sbKingServer = new SBKingServer(playerController);

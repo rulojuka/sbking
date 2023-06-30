@@ -46,7 +46,8 @@ public class SpecificDirectionBoardElements {
 
                 new SpectatorsElement(container, FrameConstants.spectatorNamesPosition, spectators);
 
-                new GameNameElement(gameName, container, new Point(FrameConstants.halfWidth, 10));
+                GameNameElement.addGameNameToContainerAtPosition(gameName, container,
+                                new Point(FrameConstants.halfWidth, 10));
         }
 
 }

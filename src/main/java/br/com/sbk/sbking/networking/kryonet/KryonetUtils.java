@@ -50,7 +50,12 @@ import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.TextMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.ValidRulesetMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.YourIdIsMessage;
 
-public class KryonetUtils {
+public final class KryonetUtils {
+
+  private KryonetUtils() {
+    throw new IllegalStateException("Utility class");
+  }
+
   // This registers objects that are going to be sent over the network.
   public static void register(EndPoint endPoint) {
     Kryo kryo = endPoint.getKryo();

@@ -14,10 +14,14 @@ import br.com.sbk.sbking.networking.kryonet.messages.SBKingMessage;
 import br.com.sbk.sbking.networking.kryonet.messages.SBKingMessageWithIdentifier;
 import br.com.sbk.sbking.networking.kryonet.messages.servertoclient.TextMessage;
 
-public class KryonetServerListenerFactory {
+public final class KryonetServerListenerFactory {
 
   private static final String CLIENT_FATAL_ERROR_MESSAGE = "Client should be a KryonetSBKingServer";
   private static final String CONNECTION_FATAL_ERROR_MESSAGE = "connection should be a ConnectionWithPlayer";
+
+  private KryonetServerListenerFactory() {
+    throw new IllegalStateException("Utility class");
+  }
 
   public static Listener getServerListener(Server server,
       BlockingQueue<SBKingMessageWithIdentifier> serverMessageQueue) {

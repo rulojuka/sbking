@@ -12,14 +12,17 @@ import br.com.sbk.sbking.gui.constants.FontConstants;
 import br.com.sbk.sbking.gui.constants.FrameConstants;
 import br.com.sbk.sbking.gui.jelements.SBKingLabel;
 
-public class GameNameElement {
+public final class GameNameElement {
 
     private static final int DEFAULT_FONT_SIZE = 40;
     private static final int DEFAULT_WIDTH = 500;
-    private static double scaleFactor;
 
-    public GameNameElement(String gameName, Container container, Point position) {
-        scaleFactor = FrameConstants.getScreenScale();
+    private GameNameElement() {
+        throw new IllegalStateException("Utility class");
+    }
+
+    public static void addGameNameToContainerAtPosition(String gameName, Container container, Point position) {
+        double scaleFactor = FrameConstants.getScreenScale();
         int fontSize = (int) (scaleFactor * DEFAULT_FONT_SIZE);
         int labelWidth = (int) (DEFAULT_WIDTH * scaleFactor);
         int labelHeight = (int) (fontSize * 1.1);

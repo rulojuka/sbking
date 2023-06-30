@@ -9,7 +9,11 @@ import javax.swing.JLabel;
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.gui.jelements.SBKingLabel;
 
-public class WaitingForChooserElement {
+public final class WaitingForChooserElement {
+
+    private WaitingForChooserElement() {
+        throw new IllegalStateException("Utility class");
+    }
 
     public static void add(Container container, Direction direction, String text) {
         String labelTextPrefix = "<html>Waiting for " + direction.toString() + " to choose<br/>";

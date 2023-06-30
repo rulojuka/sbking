@@ -15,7 +15,11 @@ import br.com.sbk.sbking.networking.kryonet.SBKingClientMessageConsumer;
 import br.com.sbk.sbking.networking.kryonet.messages.SBKingMessage;
 import br.com.sbk.sbking.networking.rest.RestHTTPClient;
 
-public class SBKingClientFactory {
+public final class SBKingClientFactory {
+
+  private SBKingClientFactory() {
+    throw new IllegalStateException("Utility class");
+  }
 
   public static SBKingClient createWithKryonetConnection(String hostname, int port, RestHTTPClient restHTTPClient) {
     SBKingClient sbKingClient = new SBKingClient();

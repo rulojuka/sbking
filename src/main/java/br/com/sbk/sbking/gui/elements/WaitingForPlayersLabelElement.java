@@ -10,7 +10,11 @@ import javax.swing.JLabel;
 
 import br.com.sbk.sbking.gui.jelements.SBKingLabel;
 
-public class WaitingForPlayersLabelElement {
+public final class WaitingForPlayersLabelElement {
+
+    private WaitingForPlayersLabelElement() {
+        throw new IllegalStateException("Utility class");
+    }
 
     public static void add(Container container) {
         JLabel rulesetLabel = new SBKingLabel("Waiting for players...");

@@ -6,7 +6,11 @@ import java.util.Map;
 import br.com.sbk.sbking.core.Strain;
 import br.com.sbk.sbking.core.rulesets.abstractrulesets.Ruleset;
 
-public class RulesetFromShortDescriptionIdentifier {
+public final class RulesetFromShortDescriptionIdentifier {
+
+    private RulesetFromShortDescriptionIdentifier() {
+        throw new IllegalStateException("Utility class");
+    }
 
     private static Map<String, Ruleset> shortDescriptionOfRulesets = new HashMap<String, Ruleset>();
 

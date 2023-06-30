@@ -10,7 +10,11 @@ import br.com.sbk.sbking.networking.core.properties.NetworkingProperties;
 import br.com.sbk.sbking.networking.core.properties.SystemProperties;
 import br.com.sbk.sbking.networking.rest.RestHTTPClient;
 
-public class ConnectToServer {
+public final class ConnectToServer {
+
+    private ConnectToServer() {
+        throw new IllegalStateException("Utility class");
+    }
 
     public static SBKingClient connectToServer() {
         NetworkingProperties networkingProperties = new NetworkingProperties(new FileProperties(),
