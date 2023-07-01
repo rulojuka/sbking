@@ -70,6 +70,13 @@ public abstract class BaseRestHTTPClient {
         return httpGet;
     }
 
+    protected HttpGet createGetRequestWithoutIdentification(String url) {
+        LOGGER.trace("[GET] (No identification) URL: {}", url);
+        HttpGet httpGet = new HttpGet(url);
+        this.setJsonHeaders(httpGet);
+        return httpGet;
+    }
+
     private void setJsonAndIdentifierHeaders(HttpRequestBase requestBase) {
         this.setJsonHeaders(requestBase);
         this.setIdentifierHeader(requestBase);

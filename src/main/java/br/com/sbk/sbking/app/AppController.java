@@ -19,7 +19,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.dto.LobbyScreenTableDTO;
-import br.com.sbk.sbking.networking.kryonet.messages.GameServerFromGameNameIdentifier;
+import br.com.sbk.sbking.networking.messages.GameServerFromGameNameIdentifier;
 import br.com.sbk.sbking.networking.server.SBKingServer;
 import br.com.sbk.sbking.networking.server.gameserver.GameServer;
 
@@ -36,6 +36,15 @@ class AppController {
 
     private UUID getUUID(String uuidString) {
         return UUID.fromString(uuidString);
+    }
+
+    @GetMapping("/connect")
+    public ResponseEntity<UUID> connect() {
+        LOGGER.info("RECEIVED A CONNECT MESSAGE!");
+        UUID playerId = UUID.randomUUID();
+        // TODO remove this player at disconnection in the future
+        this.getServer().addUnnammedPlayer(playerId);
+        return new ResponseEntity<>(playerId, HttpStatus.CREATED);
     }
 
     @PostMapping("/playcard")

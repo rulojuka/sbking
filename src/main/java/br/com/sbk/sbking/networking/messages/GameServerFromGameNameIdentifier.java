@@ -1,4 +1,4 @@
-package br.com.sbk.sbking.networking.kryonet.messages;
+package br.com.sbk.sbking.networking.messages;
 
 import java.util.HashMap;
 import java.util.Map;

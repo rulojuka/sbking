@@ -36,4 +36,4 @@ deploy: build
 	docker push rulojuka/sbking
 
 run:
-	docker run -p 60000:60000 -p 8080:8080 --rm $(APP_NAME)
+	docker run -p 8080:8080 --rm $(APP_NAME)

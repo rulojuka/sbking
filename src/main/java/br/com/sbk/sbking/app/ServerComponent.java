@@ -5,7 +5,6 @@ import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import br.com.sbk.sbking.networking.server.LobbyServer;
 import br.com.sbk.sbking.networking.server.SBKingServer;
 
 @Component
@@ -19,9 +18,8 @@ public class ServerComponent {
 
     public ServerComponent(@Autowired PlayerController playerController, @Autowired TableController tableController) {
         LOGGER.info("Entering Main Thread.");
-        LobbyServer lobbyServer = new LobbyServer(playerController, tableController);
-        lobbyServer.run();
-        this.sbKingServer = lobbyServer.getSbKingServer();
+        this.sbKingServer = new SBKingServer(playerController, tableController);
+        LOGGER.info("SBKingServer created.");
         LOGGER.info("Exiting Main Thread.");
     }
 

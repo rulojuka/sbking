@@ -56,13 +56,13 @@ You can also pull the image directly from the [Docker Hub](https://hub.docker.co
 
 If you want to just start the server on the default port:
 ```
-docker run -p 60000:60000 -p 8080:8080 rulojuka/sbking
+docker run -p 8080:8080 rulojuka/sbking
 ```
 
 ### On DigitalOcean
 Create a [docker based droplet](https://marketplace.digitalocean.com/apps/docker) and
 ```
-docker run -p 60000:60000 -p 8080:8080 rulojuka/sbking
+docker run -p 8080:8080 rulojuka/sbking
 ```
 
 ### Pushing to DockerHub

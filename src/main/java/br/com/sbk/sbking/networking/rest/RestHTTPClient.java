@@ -21,13 +21,24 @@ public class RestHTTPClient extends BaseRestHTTPClient {
 
     ObjectMapper mapper;
 
-    public RestHTTPClient(String ip, UUID identifier) {
-        super(ip, identifier);
+    public RestHTTPClient(String ip) {
+        super(ip, null);
         this.mapper = new ClientObjectMapperConfiguration().objectMapper();
     }
 
-    public RestHTTPClient(String ip) {
-        this(ip, null);
+    public UUID connect() {
+        String url = this.baseUrl + "connect";
+        LOGGER.info("SENDING FIRST CONNECT MESSAGE to URL: {}", url);
+        HttpGet httpGet = createGetRequestWithoutIdentification(url);
+        Result result = sendRequestWithResponse(httpGet);
+        UUID response = null;
+        try {
+            response = this.mapper.readValue(result.getContent(), UUID.class);
+        } catch (JsonProcessingException e) {
+            LOGGER.error(e);
+        }
+        LOGGER.info("RECEIVED RESPONSE: {}", response);
+        return response;
     }
 
     public void play(Card card) {

@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 import br.com.sbk.sbking.core.Direction;
 import br.com.sbk.sbking.core.Player;
-import br.com.sbk.sbking.networking.kryonet.messages.GameNameFromGameServerIdentifier;
+import br.com.sbk.sbking.networking.messages.GameNameFromGameServerIdentifier;
 import br.com.sbk.sbking.networking.server.gameserver.GameServer;
 
 /**
@@ -240,8 +240,7 @@ public class Table {
   }
 
   public Map<Direction, Player> getPlayersDirections() {
-    // To make sure the class is registered on kryo we put it as EnumMap
-    return Collections.unmodifiableMap(new EnumMap<Direction, Player>(this.seatedPlayers));
+    return Collections.unmodifiableMap(this.seatedPlayers);
   }
 
   public String getGameName() {

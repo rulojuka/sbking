@@ -9,7 +9,7 @@ import br.com.sbk.sbking.gui.screens.LobbyScreen;
 import br.com.sbk.sbking.gui.screens.SBKingScreen;
 import br.com.sbk.sbking.gui.screens.WelcomeScreen;
 import br.com.sbk.sbking.networking.client.SBKingClient;
-import br.com.sbk.sbking.networking.kryonet.messages.GameScreenFromGameNameIdentifier;
+import br.com.sbk.sbking.networking.messages.GameScreenFromGameNameIdentifier;
 
 public class MainNetworkGame {
 

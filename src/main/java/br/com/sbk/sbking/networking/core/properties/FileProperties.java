@@ -18,7 +18,6 @@ public class FileProperties {
     private static final String PRODUCTION_FILE_NAME = "config.xml";
 
     private String host = null;
-    private Integer port = null;
 
     public FileProperties() {
         Configurations configurations = new Configurations();
@@ -61,10 +60,8 @@ public class FileProperties {
 
         if (configuration == null) {
             this.host = null;
-            this.port = null;
         } else {
             this.host = configuration.getString(PropertiesConstants.HOST);
-            this.port = configuration.getInt(PropertiesConstants.PORT);
         }
     }
 
@@ -72,7 +69,4 @@ public class FileProperties {
         return this.host;
     }
 
-    public Integer getPort() {
-        return this.port;
-    }
 }

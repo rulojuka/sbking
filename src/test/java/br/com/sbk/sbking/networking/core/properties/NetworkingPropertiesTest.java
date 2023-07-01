@@ -13,8 +13,6 @@ public class NetworkingPropertiesTest {
     private SystemProperties systemProperties;
     private NetworkingProperties networkingProperties;
 
-    private final String portString = "60000";
-    private final int portNumber = 60000;
     private final String host = "localhost";
 
     @Before
@@ -39,23 +37,6 @@ public class NetworkingPropertiesTest {
         Mockito.when(fileProperties.getHost()).thenReturn(host);
 
         assertEquals(host, this.networkingProperties.getHost());
-    }
-
-    @Test
-    public void shouldGetPortFromSystemPropertiesIfItReturnsNotNull() {
-        Mockito.when(systemProperties.getPort()).thenReturn(portString);
-
-        assertEquals(portNumber, this.networkingProperties.getPort());
-
-        Mockito.verifyZeroInteractions(fileProperties);
-    }
-
-    @Test
-    public void shouldGetPortFromFilePropertiesIfSystemPropertiesReturnsNull() {
-        Mockito.when(systemProperties.getPort()).thenReturn(null);
-        Mockito.when(fileProperties.getPort()).thenReturn(portNumber);
-
-        assertEquals(portNumber, this.networkingProperties.getPort());
     }
 
 }

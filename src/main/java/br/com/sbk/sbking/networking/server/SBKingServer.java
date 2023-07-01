@@ -23,8 +23,7 @@ import br.com.sbk.sbking.core.rulesets.RulesetFromShortDescriptionIdentifier;
 import br.com.sbk.sbking.core.rulesets.abstractrulesets.Ruleset;
 import br.com.sbk.sbking.dto.LobbyScreenTableDTO;
 import br.com.sbk.sbking.gui.models.PositiveOrNegative;
-import br.com.sbk.sbking.networking.kryonet.KryonetSBKingServer;
-import br.com.sbk.sbking.networking.kryonet.messages.GameNameFromGameServerIdentifier;
+import br.com.sbk.sbking.networking.messages.GameNameFromGameServerIdentifier;
 import br.com.sbk.sbking.networking.server.gameserver.GameServer;
 import br.com.sbk.sbking.networking.server.gameserver.KingGameServer;
 import br.com.sbk.sbking.networking.server.gameserver.MinibridgeGameServer;
@@ -35,14 +34,12 @@ import br.com.sbk.sbking.networking.websockets.PlayerListDTO;
 /**
  * This class has two responsibilities: 1: receiving method calls from the
  * GameServer and sending to client(s) over the network layer
- * (KryonetSBKingServer). 2: receiving method calls from the network layer and
+ * (Controllers). 2: receiving method calls from the network layer and
  * act on the GameServer (via Table).
  */
 public class SBKingServer {
 
-  private KryonetSBKingServer kryonetSBKingServer = null;
   private PlayerController playerController;
-  private TableController tableController;
 
   private Map<UUID, Player> identifierToPlayerMap = new HashMap<UUID, Player>();
   private Map<UUID, Table> tables;
@@ -58,12 +55,7 @@ public class SBKingServer {
     this.identifierToPlayerMap = new HashMap<UUID, Player>();
     this.pool = Executors.newFixedThreadPool(MAXIMUM_NUMBER_OF_CONCURRENT_GAME_SERVERS);
     this.playerController = playerController;
-    this.tableController = tableController;
     this.webSocketTableMessageServerSender = new WebSocketTableMessageServerSender(tableController);
-  }
-
-  public void setKryonetSBKingServer(KryonetSBKingServer kryonetSBKingServer) {
-    this.kryonetSBKingServer = kryonetSBKingServer;
   }
 
   public void addUnnammedPlayer(UUID identifier) {
