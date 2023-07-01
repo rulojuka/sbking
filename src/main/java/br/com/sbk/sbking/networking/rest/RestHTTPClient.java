@@ -37,7 +37,7 @@ public class RestHTTPClient extends BaseRestHTTPClient {
         } catch (JsonProcessingException e) {
             LOGGER.error(e);
         }
-        LOGGER.info("RECEIVED RESPONSE: {}", response);
+        LOGGER.debug("RECEIVED RESPONSE: {}", response);
         return response;
     }
 

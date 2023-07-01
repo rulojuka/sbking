@@ -17,10 +17,8 @@ public class ServerComponent {
     }
 
     public ServerComponent(@Autowired PlayerController playerController, @Autowired TableController tableController) {
-        LOGGER.info("Entering Main Thread.");
         this.sbKingServer = new SBKingServer(playerController, tableController);
         LOGGER.info("SBKingServer created.");
-        LOGGER.info("Exiting Main Thread.");
     }
 
 }

@@ -36,28 +36,28 @@ public class TableMessageFrameHandler implements StompFrameHandler {
         TableMessageDTO tableDealDTO = (TableMessageDTO) payload;
         String messageType = tableDealDTO.getMessage();
         if (DEAL_MESSAGE.equals(messageType)) {
-            LOGGER.info("Received message: --TableMessage:{}--", DEAL_MESSAGE);
+            LOGGER.trace("Received message: --TableMessage:{}--", DEAL_MESSAGE);
             this.sbkingClient.setCurrentDeal(tableDealDTO.getDeal());
         } else if (FINISH_DEAL_MESSAGE.equals(messageType)) {
-            LOGGER.info("Received message: --TableMessage:{}--", FINISH_DEAL_MESSAGE);
+            LOGGER.trace("Received message: --TableMessage:{}--", FINISH_DEAL_MESSAGE);
             this.sbkingClient.finishDeal();
         } else if (INITIALIZE_DEAL_MESSAGE.equals(messageType)) {
-            LOGGER.info("Received message: --TableMessage:{}--", INITIALIZE_DEAL_MESSAGE);
+            LOGGER.trace("Received message: --TableMessage:{}--", INITIALIZE_DEAL_MESSAGE);
             this.sbkingClient.initializeDeal();
         } else if (INVALID_RULESET_MESSAGE.equals(messageType)) {
-            LOGGER.info("Received message: --TableMessage:{}--", INVALID_RULESET_MESSAGE);
+            LOGGER.trace("Received message: --TableMessage:{}--", INVALID_RULESET_MESSAGE);
             this.sbkingClient.setRulesetValid(false);
         } else if (VALID_RULESET_MESSAGE.equals(messageType)) {
-            LOGGER.info("Received message: --TableMessage:{}--", VALID_RULESET_MESSAGE);
+            LOGGER.trace("Received message: --TableMessage:{}--", VALID_RULESET_MESSAGE);
             this.sbkingClient.setRulesetValid(true);
         } else if (POSITIVE_OR_NEGATIVE_MESSAGE.equals(messageType)) {
-            LOGGER.info("Received message: --TableMessage:{}--", POSITIVE_OR_NEGATIVE_MESSAGE);
+            LOGGER.trace("Received message: --TableMessage:{}--", POSITIVE_OR_NEGATIVE_MESSAGE);
             this.sbkingClient.setPositiveOrNegative(tableDealDTO.getContent());
         } else if (POSITIVE_OR_NEGATIVE_CHOOSER_MESSAGE.equals(messageType)) {
-            LOGGER.info("Received message: --TableMessage:{}--", POSITIVE_OR_NEGATIVE_CHOOSER_MESSAGE);
+            LOGGER.trace("Received message: --TableMessage:{}--", POSITIVE_OR_NEGATIVE_CHOOSER_MESSAGE);
             this.sbkingClient.setPositiveOrNegativeChooser(tableDealDTO.getDirection());
         } else if (GAME_MODE_OR_STRAIN_CHOOSER_MESSAGE.equals(messageType)) {
-            LOGGER.info("Received message: --TableMessage:{}--", GAME_MODE_OR_STRAIN_CHOOSER_MESSAGE);
+            LOGGER.trace("Received message: --TableMessage:{}--", GAME_MODE_OR_STRAIN_CHOOSER_MESSAGE);
             this.sbkingClient.setGameModeOrStrainChooser(tableDealDTO.getDirection());
         } else {
             LOGGER.error("Could not understand message.");

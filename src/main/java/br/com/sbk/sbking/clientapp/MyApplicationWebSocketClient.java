@@ -40,7 +40,7 @@ public class MyApplicationWebSocketClient {
     }
 
     public StompSession connect() {
-        LOGGER.info("Trying to connect!");
+        LOGGER.info("Trying to connect to the websocket!");
         StompSession stompSession = null;
         try {
             stompSession = webSocketStompClient.connect(serverUrl, stompSessionHandler).get();

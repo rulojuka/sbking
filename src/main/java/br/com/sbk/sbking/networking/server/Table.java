@@ -79,7 +79,7 @@ public class Table {
   private void sitOnEmptySeat(Player player, Direction direction) {
     Player currentSeatedPlayer = this.seatedPlayers.get(direction);
     if (currentSeatedPlayer != null) {
-      LOGGER.info("Trying to seat on occupied seat.");
+      LOGGER.debug("Trying to seat on occupied seat.");
       return;
     }
 
@@ -125,9 +125,9 @@ public class Table {
     String identifier = player.getIdentifier().toString();
     Direction direction = this.getDirectionFrom(player);
     if (direction == null) {
-      LOGGER.info("SPEC: {} - {}", name, identifier);
+      LOGGER.debug("SPEC: {} - {}", name, identifier);
     } else {
-      LOGGER.info("SEAT: {} - {} - {}", name, identifier, direction.getAbbreviation());
+      LOGGER.debug("SEAT: {} - {} - {}", name, identifier, direction.getAbbreviation());
     }
   }
 

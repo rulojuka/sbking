@@ -143,7 +143,7 @@ public class MinibridgeGameServer extends GameServer {
         throw new PlayedCardInAnotherPlayersTurnException();
       }
     } catch (Exception e) {
-      LOGGER.info(e);
+      LOGGER.error(e);
     }
   }
 

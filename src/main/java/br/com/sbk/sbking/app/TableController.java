@@ -20,7 +20,7 @@ public class TableController {
 
     public void sendMessage(TableMessageDTO tableDealDTO) {
         String destination = this.getDestination(tableDealDTO);
-        LOGGER.info("Sending {} to: {}", tableDealDTO.getMessage(), destination);
+        LOGGER.debug("Sending {} to: {}", tableDealDTO.getMessage(), destination);
         this.template.convertAndSend(destination, tableDealDTO);
     }
 

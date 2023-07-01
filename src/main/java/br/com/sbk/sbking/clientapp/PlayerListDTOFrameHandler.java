@@ -28,7 +28,7 @@ public class PlayerListDTOFrameHandler implements StompFrameHandler {
 
     @Override
     public void handleFrame(StompHeaders headers, Object payload) {
-        LOGGER.info("Received message: --PlayerListDTO--");
+        LOGGER.debug("Received message: --PlayerListDTO--");
         PlayerListDTO playerListDTO = (PlayerListDTO) payload;
 
         UUID id = this.sbkingClient.getId();
@@ -36,7 +36,7 @@ public class PlayerListDTOFrameHandler implements StompFrameHandler {
                 .findAny();
         if (playerFromList.isPresent()) {
             PlayerDTO myself = playerFromList.get();
-            LOGGER.info("My information:"
+            LOGGER.debug("My information:"
                     + "\nUUID:" + myself.getPlayer().toString()
                     + "\nTable:" + myself.getTable()
                     + "\nDirection:" + myself.getDirection()

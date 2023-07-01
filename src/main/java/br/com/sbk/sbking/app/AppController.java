@@ -40,7 +40,7 @@ class AppController {
 
     @GetMapping("/connect")
     public ResponseEntity<UUID> connect() {
-        LOGGER.info("RECEIVED A CONNECT MESSAGE!");
+        LOGGER.debug("connect");
         UUID playerId = UUID.randomUUID();
         // TODO remove this player at disconnection in the future
         this.getServer().addUnnammedPlayer(playerId);
