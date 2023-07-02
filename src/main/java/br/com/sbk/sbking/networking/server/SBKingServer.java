@@ -3,9 +3,7 @@ package br.com.sbk.sbking.networking.server;
 import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -138,19 +136,6 @@ public class SBKingServer {
         positiveKingGameServer.notifyChooseGameModeOrStrain(gameModeOrStrain, directionFromIdentifier);
       }
     }
-  }
-
-  private Iterable<UUID> getAllPlayersUUIDsOnTable(Table table) {
-    Collection<UUID> allPlayersOnTable = new LinkedList<UUID>();
-    if (table == null) {
-      return allPlayersOnTable;
-    }
-    for (Map.Entry<Player, Table> pair : playersTable.entrySet()) {
-      if (table.equals(pair.getValue())) {
-        allPlayersOnTable.add(pair.getKey().getIdentifier());
-      }
-    }
-    return allPlayersOnTable;
   }
 
   // TODO This should be optimized when we have websockets messages directly for
