@@ -12,6 +12,7 @@ import org.springframework.web.socket.messaging.WebSocketStompClient;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import br.com.sbk.sbking.gui.main.ConnectToServer;
 import br.com.sbk.sbking.networking.client.SBKingClient;
 
 @Component
@@ -36,7 +37,9 @@ public class MyApplicationWebSocketClient {
 
         SBKingClient sbKingClient = clientComponent.getSBKingClient();
         this.stompSessionHandler = new MyStompSessionHandler(sbKingClient);
-        this.serverUrl = "ws://localhost:8080/gs-guide-websocket";
+        String ipAddress = ConnectToServer.getIPAddress();
+        this.serverUrl = "ws://" + ipAddress + ":8080/sbking-websocket";
+        LOGGER.info("Server websocket address: {}", this.serverUrl);
     }
 
     public StompSession connect() {

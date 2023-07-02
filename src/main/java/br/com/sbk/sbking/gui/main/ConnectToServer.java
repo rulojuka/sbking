@@ -20,16 +20,20 @@ public final class ConnectToServer {
         throw new IllegalStateException("Utility class");
     }
 
-    public static SBKingClient connectToServer() {
+    public static String getIPAddress() {
         NetworkingProperties networkingProperties = new NetworkingProperties(new FileProperties(),
                 new SystemProperties());
         String hostname = networkingProperties.getHost();
         if (isValidIP(hostname)) {
-            RestHTTPClient restHTTPClient = new RestHTTPClient(hostname);
-            return createWithRestHttpClient(hostname, restHTTPClient);
+            return hostname;
         } else {
             throw new InvalidIpException();
         }
+    }
+
+    public static SBKingClient connectToServer() {
+        RestHTTPClient restHTTPClient = new RestHTTPClient(getIPAddress());
+        return createWithRestHttpClient(restHTTPClient);
     }
 
     private static boolean isValidIP(String ipAddr) {
@@ -38,7 +42,7 @@ public final class ConnectToServer {
         return mtch.find();
     }
 
-    private static SBKingClient createWithRestHttpClient(String hostname, RestHTTPClient restHTTPClient) {
+    private static SBKingClient createWithRestHttpClient(RestHTTPClient restHTTPClient) {
         SBKingClient sbKingClient = new SBKingClient();
         sbKingClient.setRestHTTPClient(restHTTPClient);
         sbKingClient

@@ -21,8 +21,8 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/gs-guide-websocket");
-        registry.addEndpoint("/gs-guide-websocket").withSockJS();
+        registry.addEndpoint("/sbking-websocket");
+        registry.addEndpoint("/sbking-websocket").withSockJS();
     }
 
 }
