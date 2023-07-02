@@ -30,7 +30,7 @@
 		<sonar.issue.ignore.multicriteria.e2.resourceKey>**/*</sonar.issue.ignore.multicriteria.e2.resourceKey>
 		<sonar.issue.ignore.multicriteria.e3.ruleKey>java:S2142</sonar.issue.ignore.multicriteria.e3.ruleKey> <!--ignoredInterruptedException-->
 		<sonar.issue.ignore.multicriteria.e3.resourceKey>**/*</sonar.issue.ignore.multicriteria.e3.resourceKey>
-		<java.version>11</java.version> <!-- For spring-boot-maven-plugin -->
+		<java.version>17</java.version> <!-- For spring-boot-maven-plugin -->
 	</properties>
 
 	<repositories>
@@ -216,7 +216,7 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.11.0</version>
 				<configuration>
-					<release>11</release> <!-- Target release -->
+					<release>17</release> <!-- Target release -->
 					<includes> <!-- Just being explicit -->
 						<include>br/com/sbk/sbking/**/*.java</include>
 					</includes>

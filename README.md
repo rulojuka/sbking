@@ -7,7 +7,7 @@ SBKing is a King card game software aimed to provide a rich and intuitive interf
 
 ## Java version
 
-SBKing uses some libraries that does not go very well with recent (16+) Java versions. The intended version for development is Java 11.
+SBKing uses Java 17 in development. Also, the release version for the client is Java 8.
 
 ## Compiling
 
