@@ -36,11 +36,18 @@
 		<sbking.hibernate-core.version>6.2.2.Final</sbking.hibernate-core.version>
 		<sbking.httpclient.version>4.5.14</sbking.httpclient.version>
 		<sbking.jackson.version>2.15.2</sbking.jackson.version>
+		<!-- https://github.com/junit-team/junit5/issues/2881 will have to upgrade spring boot first -->
+		<!-- before bringing the most recent junit version (5.9.3)-->
 		<sbking.junit.version>5.7.0</sbking.junit.version>
 		<sbking.log4j-core.version>2.20.0</sbking.log4j-core.version>
 		<sbking.mockito-core.version>5.4.0</sbking.mockito-core.version>
 		<sbking.mysql-connector-j.version>8.0.33</sbking.mysql-connector-j.version>
 		<sbking.spring-websocket.version>5.3.27</sbking.spring-websocket.version>
+		<sbking.plugin.maven-checkstyle-plugin.version>3.3.0</sbking.plugin.maven-checkstyle-plugin.version>
+		<sbking.plugin.maven-compiler-plugin.version>3.11.0</sbking.plugin.maven-compiler-plugin.version>
+		<sbking.plugin.maven-surefire-plugin.version>3.1.2</sbking.plugin.maven-surefire-plugin.version>
+		<sbking.plugin.jacoco-maven-plugin.version>0.8.10</sbking.plugin.jacoco-maven-plugin.version>
+		<sbking.plugin.spotbugs-maven-plugin.version>4.7.3.5</sbking.plugin.spotbugs-maven-plugin.version>
 	</properties>
 
 	<dependencies>
@@ -131,7 +138,7 @@
 				<!-- We bind it to: validate -->
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-checkstyle-plugin</artifactId>
-				<version>3.2.2</version>
+				<version>${sbking.plugin.maven-checkstyle-plugin.version}</version>
 				<configuration>
 					<configLocation>checkstyle/sbking_checkstyle.xml</configLocation>
 					<encoding>UTF-8</encoding>
@@ -167,7 +174,7 @@
 				<!-- Here, we exclude the client-only related files -->
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.11.0</version>
+				<version>${sbking.plugin.maven-compiler-plugin.version}</version>
 				<configuration>
 					<release>17</release> <!-- Target release -->
 					<includes> <!-- Just being explicit -->
@@ -195,7 +202,7 @@
 				<!-- Bound by default to lifecycle phase: test -->
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>3.1.0</version>
+				<version>${sbking.plugin.maven-surefire-plugin.version}</version>
 				<configuration>
 					<excludes>
 						<exclude>br/com/sbk/sbking/persistence/*.java</exclude> <!-- This should run on the integration-test phase -->
@@ -222,7 +229,7 @@
 				<!-- Goal: jacoco-maven-plugin:report -->
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.8.10</version>
+				<version>${sbking.plugin.jacoco-maven-plugin.version}</version>
 				<executions>
 					<execution>
 						<id>jacoco-prepare-agent</id>
@@ -244,7 +251,7 @@
 				<!-- Goal: spotbugs:spotbugs -->
 				<groupId>com.github.spotbugs</groupId>
 				<artifactId>spotbugs-maven-plugin</artifactId>
-				<version>4.7.3.4</version>
+				<version>${sbking.plugin.spotbugs-maven-plugin.version}</version>
 				<executions>
 					<execution>
 						<id>spotbugs-spotbugs</id>
