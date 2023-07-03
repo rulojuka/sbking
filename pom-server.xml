@@ -12,7 +12,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.7.12</version>
+		<version>3.1.1</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
@@ -42,7 +42,6 @@
 		<sbking.log4j-core.version>2.20.0</sbking.log4j-core.version>
 		<sbking.mockito-core.version>5.4.0</sbking.mockito-core.version>
 		<sbking.mysql-connector-j.version>8.0.33</sbking.mysql-connector-j.version>
-		<sbking.spring-websocket.version>5.3.27</sbking.spring-websocket.version>
 		<sbking.plugin.maven-checkstyle-plugin.version>3.3.0</sbking.plugin.maven-checkstyle-plugin.version>
 		<sbking.plugin.maven-compiler-plugin.version>3.11.0</sbking.plugin.maven-compiler-plugin.version>
 		<sbking.plugin.maven-surefire-plugin.version>3.1.2</sbking.plugin.maven-surefire-plugin.version>
@@ -100,17 +99,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-websocket</artifactId>
-			<version>${sbking.spring-websocket.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-messaging</artifactId>
-			<version>${sbking.spring-websocket.version}</version>
+			<artifactId>spring-boot-starter-websocket</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
