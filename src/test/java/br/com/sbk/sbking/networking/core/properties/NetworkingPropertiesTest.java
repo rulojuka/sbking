@@ -28,7 +28,7 @@ public class NetworkingPropertiesTest {
 
         assertEquals(host, this.networkingProperties.getHost());
 
-        Mockito.verifyZeroInteractions(fileProperties);
+        Mockito.verifyNoInteractions(fileProperties);
     }
 
     @Test

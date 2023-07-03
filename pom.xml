@@ -38,7 +38,7 @@
 		<sbking.jackson.version>2.15.2</sbking.jackson.version>
 		<sbking.junit.version>5.7.0</sbking.junit.version> <!-- https://github.com/junit-team/junit5/issues/2881 will have to upgrade spring boot first -->
 		<sbking.log4j-core.version>2.20.0</sbking.log4j-core.version>
-		<sbking.mockito-core.version>3.12.3</sbking.mockito-core.version>
+		<sbking.mockito-core.version>5.4.0</sbking.mockito-core.version>
 		<sbking.mysql-connector-j.version>8.0.33</sbking.mysql-connector-j.version>
 		<sbking.spring-websocket.version>5.3.27</sbking.spring-websocket.version>
 	</properties>

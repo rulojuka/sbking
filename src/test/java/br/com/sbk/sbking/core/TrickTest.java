@@ -11,7 +11,7 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.only;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.verifyZeroInteractions;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -37,7 +37,7 @@ public class TrickTest {
             trick.addCard(card);
         }
 
-        verifyZeroInteractions(card);
+        verifyNoInteractions(card);
     }
 
     @Test
@@ -50,7 +50,7 @@ public class TrickTest {
         Assertions.assertThrows(TrickAlreadyFullException.class, () -> {
             trick.addCard(card);
         });
-        verifyZeroInteractions(card);
+        verifyNoInteractions(card);
     }
 
     @Test
@@ -67,7 +67,7 @@ public class TrickTest {
             trick.addCard(card);
         }
         assertTrue(trick.isComplete());
-        verifyZeroInteractions(card);
+        verifyNoInteractions(card);
     }
 
     @Test
@@ -240,10 +240,10 @@ public class TrickTest {
 
         List<Card> receivedList = trick.getCards();
 
-        verifyZeroInteractions(jackOfClubs);
-        verifyZeroInteractions(queenOfHearts);
-        verifyZeroInteractions(aceOfSpades);
-        verifyZeroInteractions(kingOfClubs);
+        verifyNoInteractions(jackOfClubs);
+        verifyNoInteractions(queenOfHearts);
+        verifyNoInteractions(aceOfSpades);
+        verifyNoInteractions(kingOfClubs);
 
         assertEquals(jackOfClubs.getRank(), receivedList.get(0).getRank());
         assertEquals(jackOfClubs.getSuit(), receivedList.get(0).getSuit());
@@ -266,7 +266,7 @@ public class TrickTest {
             trick.addCard(jackOfClubs);
         }
         List<Card> receivedList = trick.getCards();
-        verifyZeroInteractions(jackOfClubs);
+        verifyNoInteractions(jackOfClubs);
         Assertions.assertThrows(UnsupportedOperationException.class, () -> {
             receivedList.add(0, jackOfClubs);
         });

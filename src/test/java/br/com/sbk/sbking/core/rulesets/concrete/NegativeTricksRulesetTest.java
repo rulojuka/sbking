@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verifyZeroInteractions;
+import static org.mockito.Mockito.verifyNoInteractions;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -35,7 +35,7 @@ public class NegativeTricksRulesetTest {
     public void shouldHaveTheCorrectPointsPerTrick() {
         Trick anyTrick = mock(Trick.class);
         assertEquals(NEGATIVE_POINTS_PER_TRICK, this.negativeTricksRuleset.getPoints(anyTrick));
-        verifyZeroInteractions(anyTrick);
+        verifyNoInteractions(anyTrick);
     }
 
     @Test
