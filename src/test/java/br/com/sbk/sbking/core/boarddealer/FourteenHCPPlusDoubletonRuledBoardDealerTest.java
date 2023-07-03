@@ -1,10 +1,10 @@
 package br.com.sbk.sbking.core.boarddealer;
 
 import static br.com.sbk.sbking.core.GameConstants.SIZE_OF_HAND;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import br.com.sbk.sbking.core.Board;
 import br.com.sbk.sbking.core.Direction;

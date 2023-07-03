@@ -1,13 +1,13 @@
 package br.com.sbk.sbking.core.boarddealer;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Rank;
@@ -17,7 +17,7 @@ public class Partial40CardDeckTest {
 
   private Partial40CardDeck subject;
 
-  @Before
+  @BeforeEach
   public void setup() {
     this.subject = new Partial40CardDeck();
   }

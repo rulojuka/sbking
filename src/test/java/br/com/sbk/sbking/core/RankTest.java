@@ -1,10 +1,10 @@
 package br.com.sbk.sbking.core;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 public class RankTest {
 
@@ -22,7 +22,7 @@ public class RankTest {
     private static Rank king;
     private static Rank ace;
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         two = Rank.TWO;
         three = Rank.THREE;

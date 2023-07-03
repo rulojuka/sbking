@@ -1,14 +1,14 @@
 package br.com.sbk.sbking.dto;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.util.Map;
 import java.util.UUID;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -26,7 +26,7 @@ public class LobbyScreenTableDTOTest {
 
     LobbyScreenTableDTO subject;
 
-    @Before
+    @BeforeEach
     public void setupMocks() {
         MockitoAnnotations.initMocks(this);
         this.tableId = UUID.randomUUID();

@@ -1,13 +1,13 @@
 package br.com.sbk.sbking.core.rulesets.concrete;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.only;
 import static org.mockito.Mockito.when;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import br.com.sbk.sbking.core.Trick;
@@ -22,7 +22,7 @@ public class NegativeKingRulesetTest {
 
     private NegativeKingRuleset negativeKingRuleset;
 
-    @Before
+    @BeforeEach
     public void createNegativeKingRuleset() {
         this.negativeKingRuleset = new NegativeKingRuleset();
     }

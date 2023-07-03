@@ -36,7 +36,7 @@
 		<sbking.hibernate-core.version>6.2.2.Final</sbking.hibernate-core.version>
 		<sbking.httpclient.version>4.5.14</sbking.httpclient.version>
 		<sbking.jackson.version>2.15.2</sbking.jackson.version>
-		<sbking.junit.version>4.13.2</sbking.junit.version>
+		<sbking.junit.version>5.7.0</sbking.junit.version>
 		<sbking.log4j-core.version>2.20.0</sbking.log4j-core.version>
 		<sbking.mockito-core.version>3.12.3</sbking.mockito-core.version>
 		<sbking.mysql-connector-j.version>8.0.33</sbking.mysql-connector-j.version>
@@ -45,8 +45,8 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-engine</artifactId>
 			<version>${sbking.junit.version}</version>
 			<scope>test</scope>
 		</dependency>
@@ -94,17 +94,6 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
-		<dependency> <!-- Needed for surefire to run junit4 tests-->
-			<groupId>org.junit.vintage</groupId>
-			<artifactId>junit-vintage-engine</artifactId>
-			<scope>test</scope>
-			<exclusions>
-				<exclusion>
-					<groupId>org.hamcrest</groupId>
-					<artifactId>hamcrest-core</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>

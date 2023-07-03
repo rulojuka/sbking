@@ -1,10 +1,10 @@
 package br.com.sbk.sbking.core;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 public class SuitTest {
 
@@ -13,7 +13,7 @@ public class SuitTest {
     private static Suit hearts;
     private static Suit spades;
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         diamonds = Suit.DIAMONDS;
         clubs = Suit.CLUBS;

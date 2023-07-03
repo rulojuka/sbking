@@ -1,7 +1,7 @@
 package br.com.sbk.sbking.core;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.only;
 import static org.mockito.Mockito.reset;
@@ -11,8 +11,8 @@ import java.util.Comparator;
 import java.util.EnumMap;
 import java.util.Map;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import br.com.sbk.sbking.core.comparators.CardInsideHandComparator;
 
@@ -22,7 +22,7 @@ public class BoardTest {
     private Board board;
     private Map<Direction, Hand> hands = new EnumMap<Direction, Hand>(Direction.class);
 
-    @Before
+    @BeforeEach
     public void createNorthBoard() {
         dealer = Direction.NORTH;
         hands.clear();

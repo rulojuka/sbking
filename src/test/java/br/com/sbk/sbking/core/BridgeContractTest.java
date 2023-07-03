@@ -1,9 +1,10 @@
 package br.com.sbk.sbking.core;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class BridgeContractTest {
 
@@ -16,24 +17,33 @@ public class BridgeContractTest {
         return new BridgeContract(anyLevel, anyStrain, doubled, redoubled);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void shouldThrowInvalidArgumentExceptionWhenConstructedWithInvalidLowerLevel() {
-        new BridgeContract(0, anyStrain, false, false);
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            new BridgeContract(0, anyStrain, false, false);
+        });
+
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void shouldThrowInvalidArgumentExceptionWhenConstructedWithInvalidUpperLevel() {
-        new BridgeContract(8, anyStrain, false, false);
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            new BridgeContract(8, anyStrain, false, false);
+        });
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void shouldThrowInvalidArgumentExceptionWhenConstructedWithInvalidStrain() {
-        new BridgeContract(7, null, false, false);
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            new BridgeContract(7, null, false, false);
+        });
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void shouldThrowInvalidArgumentExceptionWhenConstructedWithDoubledAndRedoubled() {
-        new BridgeContract(7, null, true, true);
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            new BridgeContract(7, null, true, true);
+        });
     }
 
     @Test

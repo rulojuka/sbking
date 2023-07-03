@@ -1,12 +1,12 @@
 package br.com.sbk.sbking.core.boarddealer;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Deque;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import br.com.sbk.sbking.core.Board;
 import br.com.sbk.sbking.core.Card;
@@ -22,7 +22,7 @@ public class MinibridgeBoardDealerTest {
   private static Direction anyDirection;
   private static Deque<Card> gameDeck;
 
-  @BeforeClass
+  @BeforeAll
   public static void setup() {
     minibridgeBoardDealer = new MinibridgeBoardDealer();
     anyDirection = Direction.SOUTH;

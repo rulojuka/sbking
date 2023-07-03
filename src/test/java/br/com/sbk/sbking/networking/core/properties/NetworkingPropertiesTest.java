@@ -1,10 +1,10 @@
 package br.com.sbk.sbking.networking.core.properties;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 public class NetworkingPropertiesTest {
@@ -15,7 +15,7 @@ public class NetworkingPropertiesTest {
 
     private final String host = "localhost";
 
-    @Before
+    @BeforeEach
     public void setup() {
         this.fileProperties = mock(FileProperties.class);
         this.systemProperties = mock(SystemProperties.class);

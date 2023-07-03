@@ -23,15 +23,15 @@
 		<sbking.commons-beanutils.version>1.9.4</sbking.commons-beanutils.version>
 		<sbking.commons-configuration2.version>2.9.0</sbking.commons-configuration2.version>
 		<sbking.httpclient.version>4.5.14</sbking.httpclient.version>
-		<sbking.junit.version>4.13.2</sbking.junit.version>
+		<sbking.junit.version>5.7.0</sbking.junit.version>
 		<sbking.log4j-core.version>2.20.0</sbking.log4j-core.version>
 		<sbking.mockito-core.version>3.12.3</sbking.mockito-core.version>
 	</properties>
 
 	<dependencies>
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-engine</artifactId>
 			<version>${sbking.junit.version}</version>
 			<scope>test</scope>
 		</dependency>

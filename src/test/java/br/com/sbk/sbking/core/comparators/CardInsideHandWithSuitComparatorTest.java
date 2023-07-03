@@ -1,8 +1,8 @@
 package br.com.sbk.sbking.core.comparators;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import br.com.sbk.sbking.core.Card;
 import br.com.sbk.sbking.core.Rank;

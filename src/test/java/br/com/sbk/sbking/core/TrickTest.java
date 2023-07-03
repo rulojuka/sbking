@@ -1,9 +1,9 @@
 package br.com.sbk.sbking.core;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.atLeast;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.mock;
@@ -18,7 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
@@ -39,14 +40,16 @@ public class TrickTest {
         verifyZeroInteractions(card);
     }
 
-    @Test(expected = TrickAlreadyFullException.class)
+    @Test
     public void shouldThrowExceptionWhenAddingMoreCardsThanTheMaximum() {
         Trick trick = new Trick(Direction.NORTH);
         Card card = mock(Card.class);
         for (int i = 0; i < COMPLETE_TRICK_NUMBER_OF_CARDS; i++) {
             trick.addCard(card);
         }
-        trick.addCard(card);
+        Assertions.assertThrows(TrickAlreadyFullException.class, () -> {
+            trick.addCard(card);
+        });
         verifyZeroInteractions(card);
     }
 
@@ -253,7 +256,7 @@ public class TrickTest {
 
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void getListOfCardsShouldReturnAnUnmodifiableList() {
         Trick trick = new Trick(Direction.NORTH);
         Card jackOfClubs = mock(Card.class);
@@ -264,7 +267,9 @@ public class TrickTest {
         }
         List<Card> receivedList = trick.getCards();
         verifyZeroInteractions(jackOfClubs);
-        receivedList.add(0, jackOfClubs);
+        Assertions.assertThrows(UnsupportedOperationException.class, () -> {
+            receivedList.add(0, jackOfClubs);
+        });
 
     }
 

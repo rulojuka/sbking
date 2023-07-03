@@ -1,12 +1,12 @@
 package br.com.sbk.sbking.persistence;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.math.BigInteger;
 import java.util.UUID;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import br.com.sbk.sbking.core.Board;
 import br.com.sbk.sbking.core.PavlicekNumber;
@@ -21,7 +21,7 @@ public class BoardDAOTest {
 
     private BoardDAO boardDAO;
 
-    @Before
+    @BeforeEach
     public void setup() {
         RandomUtils randomUtils = new RandomUtils();
         int randomNumber = randomUtils.nextInt(10000);

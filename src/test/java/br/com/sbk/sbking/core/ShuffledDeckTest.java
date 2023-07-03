@@ -1,14 +1,15 @@
 package br.com.sbk.sbking.core;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Deque;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import br.com.sbk.sbking.core.boarddealer.CardDeck;
 import br.com.sbk.sbking.core.boarddealer.Complete52CardDeck;
@@ -19,7 +20,7 @@ public class ShuffledDeckTest {
     private static final int DECK_SIZE = Suit.values().length * Rank.values().length;
     private static Deque<Card> gameDeck;
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         CardDeck cardDeck = new Complete52CardDeck();
         gameDeck = cardDeck.getDeck();
@@ -55,14 +56,16 @@ public class ShuffledDeckTest {
         assertTrue(equalCardCounter < 52);
     }
 
-    @Test(expected = DealingCardFromAnEmptyDeckException.class)
+    @Test
     public void shouldThrowExceptionWhenDealingCardFromAnEmptyDeck() {
         ShuffledDeck shuffledDeck = new ShuffledDeck(gameDeck);
         for (int i = 0; i < DECK_SIZE; i++) {
             shuffledDeck.dealCard();
         }
 
-        shuffledDeck.dealCard();
+        Assertions.assertThrows(DealingCardFromAnEmptyDeckException.class, () -> {
+            shuffledDeck.dealCard();
+        });
     }
 
 }

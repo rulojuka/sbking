@@ -1,10 +1,10 @@
 package br.com.sbk.sbking.core;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 public class SkatRankTest {
 
@@ -17,7 +17,7 @@ public class SkatRankTest {
     private static SkatRank king;
     private static SkatRank ace;
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         seven = SkatRank.SEVEN;
         eight = SkatRank.EIGHT;
@@ -42,7 +42,7 @@ public class SkatRankTest {
         SkatRank rank2 = SkatRank.ACE;
         assertEquals(rank1, rank2);
     }
-    
+
     @Test
     public void shouldGetName() {
         assertEquals("Seven", seven.getName());

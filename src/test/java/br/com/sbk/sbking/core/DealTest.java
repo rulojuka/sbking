@@ -1,23 +1,24 @@
 package br.com.sbk.sbking.core;
 
 import static br.com.sbk.sbking.core.GameConstants.NUMBER_OF_TRICKS_IN_A_COMPLETE_HAND;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.times;
 
 import java.util.Comparator;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import br.com.sbk.sbking.core.comparators.CardInsideHandWithSuitComparator;
 import br.com.sbk.sbking.core.exceptions.DoesNotFollowSuitException;
@@ -35,7 +36,7 @@ public class DealTest {
     private Direction dealer;
     private Hand hand;
 
-    @Before
+    @BeforeEach
     public void setup() {
         int anyNumberOfCards = 13;
         this.board = mock(Board.class);
@@ -122,7 +123,7 @@ public class DealTest {
         assertNotNull(deal.getCurrentTrick());
     }
 
-    @Test(expected = PlayedCardInAnotherPlayersTurnException.class)
+    @Test
     public void playCardShouldThrowExceptionWhenCardIsNotFromCurrentPlayer() {
         Direction currentPlayer = leader;
         Hand handOfCurrentPlayer = mock(Hand.class);
@@ -133,10 +134,12 @@ public class DealTest {
         when(handOfCurrentPlayer.containsCard(card)).thenReturn(false);
 
         Deal deal = new Deal(board, ruleset, currentPlayer, null);
-        deal.playCard(card);
+        Assertions.assertThrows(PlayedCardInAnotherPlayersTurnException.class, () -> {
+            deal.playCard(card);
+        });
     }
 
-    @Test(expected = PlayedHeartsWhenProhibitedException.class)
+    @Test
     public void playCardShouldThrowExceptionIfStartingATrickWithHeartsWhenRulesetProhibitsIt() {
         Direction currentPlayer = leader;
         Card card = mock(Card.class);
@@ -152,7 +155,10 @@ public class DealTest {
         when(handEvaluations.onlyHasHearts()).thenReturn(false);
 
         Deal deal = new Deal(board, ruleset, currentPlayer, null);
-        deal.playCard(card);
+
+        Assertions.assertThrows(PlayedHeartsWhenProhibitedException.class, () -> {
+            deal.playCard(card);
+        });
     }
 
     @Test
@@ -172,8 +178,8 @@ public class DealTest {
         assertNotEquals(leader, deal.getCurrentPlayer());
     }
 
-    @Test(expected = DoesNotFollowSuitException.class)
-    public void playCardShouldThrowExceptionIfCardDoesNotFollowSuit() {
+    @Test
+    public void playCardShouldThrowExceptionIfSecondCardDoesNotFollowSuit() {
         Card card = mock(Card.class);
 
         when(board.getDealer()).thenReturn(dealer);
@@ -184,8 +190,10 @@ public class DealTest {
 
         Deal deal = new Deal(board, ruleset, leader, null);
 
-        deal.playCard(card);
-        deal.playCard(card);
+        deal.playCard(card); // First card always follows suit.
+        Assertions.assertThrows(DoesNotFollowSuitException.class, () -> {
+            deal.playCard(card);
+        });
 
     }
 
@@ -398,13 +406,13 @@ public class DealTest {
         Deal deal = this.initDeal(hand, board);
         Direction directionThatCallsUndo = Direction.EAST;
         playNTimesCard(deal, 1, hand);
-        Direction currentPlayerBeforeUndo = deal.getCurrentPlayer();
+        Direction currentPlayerBeforeEachUndo = deal.getCurrentPlayer();
 
         deal.undo(directionThatCallsUndo);
 
         Direction currentPlayerAfterUndo = deal.getCurrentPlayer();
         verify(board, never()).putCardInHand(any());
-        assertEquals(currentPlayerBeforeUndo, currentPlayerAfterUndo);
+        assertEquals(currentPlayerBeforeEachUndo, currentPlayerAfterUndo);
     }
 
     @Test
@@ -455,7 +463,7 @@ public class DealTest {
     }
 
     @Test
-    public void undoShouldRemoveTwoTricksWhenLeaderOfThePreviousTrickAsksForUndoOnCurrentTrickBeforePlayCard() {
+    public void undoShouldRemoveTwoTricksWhenLeaderOfThePreviousTrickAsksForUndoOnCurrentTrickBeforeEachPlayCard() {
         Deal deal = this.initDeal(hand, ruleset);
         Direction firstPlayer = deal.getCurrentPlayer();
         Direction anyOtherPlayer = firstPlayer.next(3);

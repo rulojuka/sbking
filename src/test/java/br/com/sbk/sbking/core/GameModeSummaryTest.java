@@ -1,9 +1,9 @@
 package br.com.sbk.sbking.core;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import br.com.sbk.sbking.core.rulesets.abstractrulesets.Ruleset;
@@ -17,7 +17,7 @@ public class GameModeSummaryTest {
     private Score score;
     private GameModeSummary northChosenGameModeSummary;
 
-    @Before
+    @BeforeEach
     public void setup() {
         this.ruleset = Mockito.mock(Ruleset.class);
         this.orderOfPlay = Integer.valueOf(10);
