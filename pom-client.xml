@@ -20,41 +20,47 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>17</java.version> <!-- For spring-boot-maven-plugin -->
+		<sbking.commons-beanutils.version>1.9.4</sbking.commons-beanutils.version>
+		<sbking.commons-configuration2.version>2.9.0</sbking.commons-configuration2.version>
+		<sbking.httpclient.version>4.5.14</sbking.httpclient.version>
+		<sbking.junit.version>4.13.2</sbking.junit.version>
+		<sbking.log4j-core.version>2.20.0</sbking.log4j-core.version>
+		<sbking.mockito-core.version>3.12.3</sbking.mockito-core.version>
 	</properties>
 
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.13.2</version>
+			<version>${sbking.junit.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-core</artifactId>
-			<version>3.12.3</version>
+			<version>${sbking.mockito-core.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-core</artifactId>
-			<version>2.20.0</version>
+			<version>${sbking.log4j-core.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-configuration2</artifactId>
-			<version>2.9.0</version>
+			<version>${sbking.commons-configuration2.version}</version>
 		</dependency>
 		<!-- This commons-beanutils is needed for commons-configuration2 because the maven package is broken. -->
 		<dependency>
 			<groupId>commons-beanutils</groupId>
 			<artifactId>commons-beanutils</artifactId>
-			<version>1.9.4</version>
+			<version>${sbking.commons-beanutils.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
-			<version>4.5.14</version>
+			<version>${sbking.httpclient.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>            
