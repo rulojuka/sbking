@@ -22,18 +22,6 @@
 		<java.version>17</java.version> <!-- For spring-boot-maven-plugin -->
 	</properties>
 
-	<repositories>
-		<repository>
-			<id>central</id>
-			<name>Central Repository (copied from Super POM)</name>
-			<url>https://repo.maven.apache.org/maven2</url>
-			<layout>default</layout>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-	</repositories>
-
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
