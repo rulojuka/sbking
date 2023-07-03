@@ -2,20 +2,19 @@ package br.com.sbk.sbking.networking.rest;
 
 import static br.com.sbk.sbking.logging.SBKingLogger.LOGGER;
 
+import java.io.IOException;
 import java.util.UUID;
 
-import org.apache.http.HttpMessage;
-import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpPut;
-import org.apache.http.client.methods.HttpRequestBase;
-import org.apache.http.client.methods.HttpUriRequest;
-import org.apache.http.entity.ContentType;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
+import org.apache.hc.client5.http.classic.methods.HttpPost;
+import org.apache.hc.client5.http.classic.methods.HttpPut;
+import org.apache.hc.client5.http.classic.methods.HttpUriRequest;
+import org.apache.hc.client5.http.fluent.Request;
+import org.apache.hc.client5.http.fluent.Response;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
+import org.apache.hc.client5.http.impl.classic.HttpClients;
+import org.apache.hc.core5.http.ContentType;
+import org.apache.hc.core5.http.io.entity.EntityUtils;
+import org.apache.hc.core5.http.io.entity.StringEntity;
 
 public abstract class BaseRestHTTPClient {
 
@@ -43,61 +42,69 @@ public abstract class BaseRestHTTPClient {
         return identifier.toString();
     }
 
-    protected String createAndSendPostRequest(String url, String body) {
-        LOGGER.trace("[POST] URL: {}", url);
-        LOGGER.trace("Body: {}", body);
-        HttpPost httpPost = new HttpPost(url);
-        this.fillRequestWithBodyAndJson(httpPost, body);
-        return sendRequest(httpPost);
+    protected String createBodyFromContent(String content) {
+        return String.format("{\"content\":\"%s\"}", content);
     }
 
-    protected void createAndSendPostRequest(String url) {
-        this.createAndSendPostRequest(url, "");
+    protected String getWithoutIdentification(String url) {
+        LOGGER.info("[GET] (no identification) URL: {}", url);
+        String result = null;
+        try {
+            Request request = Request.get(url);
+            request.setHeader("Accept", "application/json");
+            request.setHeader("Content-Type", "application/json");
+            Response response = request.execute();
+            result = response.returnContent().asString();
+        } catch (IOException e) {
+            LOGGER.error(e);
+            LOGGER.error(e.getStackTrace());
+        }
+        return result;
     }
 
-    protected void createAndSendPutRequest(String url, String body) {
-        LOGGER.trace("[PUT] URL: {}", url);
-        LOGGER.trace("Body: {}", body);
-        HttpPut httpPut = new HttpPut(url);
-        this.fillRequestWithBodyAndJson(httpPut, body);
-        sendRequest(httpPut);
+    protected String get(String url) {
+        LOGGER.info("[GET] URL: {}", url);
+        String result = null;
+        try {
+            Request request = Request.get(url);
+            request.setHeader("Accept", "application/json");
+            request.setHeader("Content-Type", "application/json");
+            request.setHeader("PlayerUUID", this.getIdentifierString());
+            Response response = request.execute();
+            result = response.returnContent().asString();
+        } catch (IOException e) {
+            LOGGER.error(e);
+            LOGGER.error(e.getStackTrace());
+        }
+        return result;
     }
 
-    protected HttpGet createGetRequest(String url) {
-        LOGGER.trace("[GET] URL: {}", url);
-        HttpGet httpGet = new HttpGet(url);
-        this.setJsonAndIdentifierHeaders(httpGet);
-        return httpGet;
+    protected String post(String url) {
+        return post(url, "");
     }
 
-    protected HttpGet createGetRequestWithoutIdentification(String url) {
-        LOGGER.trace("[GET] (No identification) URL: {}", url);
-        HttpGet httpGet = new HttpGet(url);
-        this.setJsonHeaders(httpGet);
-        return httpGet;
+    protected String post(String url, String body) {
+        LOGGER.info("[POST] URL: {}\n{}", url, body);
+        HttpPost request = new HttpPost(url);
+        request.setHeader("Accept", "application/json");
+        request.setHeader("Content-Type", "application/json");
+        request.setEntity(new StringEntity(body, ContentType.APPLICATION_JSON));
+        if (this.getIdentifierString() != null && !this.getIdentifierString().isEmpty()) {
+            request.setHeader("PlayerUUID", this.getIdentifierString());
+        }
+        return sendRequest(request);
     }
 
-    private void setJsonAndIdentifierHeaders(HttpRequestBase requestBase) {
-        this.setJsonHeaders(requestBase);
-        this.setIdentifierHeader(requestBase);
-    }
-
-    private void fillRequestWithBodyAndJson(HttpEntityEnclosingRequestBase requestBase, String body) {
-        StringEntity requestEntity = new StringEntity(
-                body,
-                ContentType.APPLICATION_JSON);
-        this.setJsonHeaders(requestBase);
-        this.setIdentifierHeader(requestBase);
-        requestBase.setEntity(requestEntity);
-    }
-
-    private void setJsonHeaders(HttpMessage httpMessage) {
-        httpMessage.setHeader("Accept", "application/json");
-        httpMessage.setHeader("Content-Type", "application/json");
-    }
-
-    private void setIdentifierHeader(HttpMessage httpMessage) {
-        httpMessage.setHeader("PlayerUUID", this.getIdentifierString());
+    protected void put(String url, String body) {
+        LOGGER.info("[PUT] URL: {}\n{}", url, body);
+        HttpPut request = new HttpPut(url);
+        request.setHeader("Accept", "application/json");
+        request.setHeader("Content-Type", "application/json");
+        request.setEntity(new StringEntity(body, ContentType.APPLICATION_JSON));
+        if (this.getIdentifierString() != null && !this.getIdentifierString().isEmpty()) {
+            request.setHeader("PlayerUUID", this.getIdentifierString());
+        }
+        sendRequest(request);
     }
 
     private String sendRequest(HttpUriRequest request) {
@@ -108,18 +115,6 @@ public abstract class BaseRestHTTPClient {
         } catch (Exception e) {
             throw new CouldNotSendRequestException(e);
         }
-    }
-
-    protected Result sendRequestWithResponse(HttpUriRequest request) {
-        try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
-            final Result result = httpClient.execute(request, response -> {
-                return new Result(response.getStatusLine().getStatusCode(), EntityUtils.toString(response.getEntity()));
-            });
-            return result;
-        } catch (Exception e) {
-            throw new CouldNotSendRequestException(e);
-        }
-
     }
 
 }

@@ -40,10 +40,11 @@ class AppController {
 
     @GetMapping("/connect")
     public ResponseEntity<UUID> connect() {
-        LOGGER.debug("connect");
+        LOGGER.info("connect");
         UUID playerId = UUID.randomUUID();
         // TODO remove this player at disconnection in the future
         this.getServer().addUnnammedPlayer(playerId);
+        LOGGER.info("ID: {}", playerId);
         return new ResponseEntity<>(playerId, HttpStatus.CREATED);
     }
 
@@ -70,7 +71,7 @@ class AppController {
         this.getServer().joinTable(getUUID(playerUUID), UUID.fromString(tableId));
     }
 
-    @GetMapping("/table/refresh/{tableId}")
+    @PostMapping("/table/refresh/{tableId}")
     public void refreshTable(@RequestHeader("PlayerUUID") String playerUUID, @PathVariable String tableId) {
         LOGGER.trace("refreshTable");
         this.getServer().refreshTable(UUID.fromString(tableId));

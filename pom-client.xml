@@ -22,7 +22,7 @@
 		<java.version>17</java.version> <!-- For spring-boot-maven-plugin -->
 		<sbking.commons-beanutils.version>1.9.4</sbking.commons-beanutils.version>
 		<sbking.commons-configuration2.version>2.9.0</sbking.commons-configuration2.version>
-		<sbking.httpclient.version>4.5.14</sbking.httpclient.version>
+		<sbking.httpclient.version>5.2.1</sbking.httpclient.version>
 		<sbking.junit.version>5.9.3</sbking.junit.version>
 		<sbking.log4j-core.version>2.20.0</sbking.log4j-core.version>
 		<sbking.mockito-core.version>5.4.0</sbking.mockito-core.version>
@@ -63,8 +63,13 @@
 			<version>${sbking.commons-beanutils.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpclient</artifactId>
+			<groupId>org.apache.httpcomponents.client5</groupId>
+			<artifactId>httpclient5</artifactId>
+			<version>${sbking.httpclient.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents.client5</groupId>
+			<artifactId>httpclient5-fluent</artifactId>
 			<version>${sbking.httpclient.version}</version>
 		</dependency>
 		<dependency>

@@ -74,7 +74,7 @@ public class SBKingClient {
             String topic = "/topic/table/" + newTable.toString();
             LOGGER.info("Subscribing to: {}", topic);
             this.dealSubscription = this.stompSession.subscribe(topic, new TableMessageFrameHandler(this));
-            this.restHTTPClient.refreshTable(newTable);
+            this.restHTTPClient.askForRefreshTable(newTable);
         }
         this.currentTable = newTable;
     }

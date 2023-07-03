@@ -34,7 +34,7 @@
 		<sbking.commons-beanutils.version>1.9.4</sbking.commons-beanutils.version>
 		<sbking.commons-configuration2.version>2.9.0</sbking.commons-configuration2.version>
 		<sbking.hibernate-core.version>6.2.2.Final</sbking.hibernate-core.version>
-		<sbking.httpclient.version>4.5.14</sbking.httpclient.version>
+		<sbking.httpclient.version>5.2.1</sbking.httpclient.version>
 		<sbking.jackson.version>2.15.2</sbking.jackson.version>
 		<!-- https://github.com/junit-team/junit5/issues/2881 will have to upgrade spring boot first -->
 		<!-- before bringing the most recent junit version (5.9.3)-->
@@ -111,11 +111,17 @@
 			<artifactId>jackson-databind</artifactId> 
 			<version>${sbking.jackson.version}</version>
 		</dependency>
-		<dependency> <!-- This should not be here, but compile exclusion does not work correctly -->
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpclient</artifactId>
+		<dependency> <!-- This should not be here (client only), but compile exclusion does not work correctly -->
+			<groupId>org.apache.httpcomponents.client5</groupId>
+			<artifactId>httpclient5</artifactId>
 			<version>${sbking.httpclient.version}</version>
 		</dependency>
+		<dependency> <!-- This should not be here (client only), but compile exclusion does not work correctly -->
+			<groupId>org.apache.httpcomponents.client5</groupId>
+			<artifactId>httpclient5-fluent</artifactId>
+			<version>${sbking.httpclient.version}</version>
+		</dependency>
+
 	</dependencies>
 
 	<build> <!-- Run mvn fr.jcgay.maven.plugins:buildplan-maven-plugin:list-phase to see the phase and goals-->
