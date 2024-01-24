@@ -10,14 +10,6 @@ import br.com.sbk.sbking.core.comparators.CardInsideHandComparator;
 
 public class Board {
 
-    /**
-     * @deprecated Kryo needs a no-arg constructor
-     */
-    @Deprecated
-    @SuppressWarnings("unused")
-    private Board() {
-    }
-
     private Map<Direction, Hand> hands = new EnumMap<Direction, Hand>(Direction.class);
     private Direction dealer;
 

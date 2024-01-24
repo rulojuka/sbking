@@ -4,14 +4,6 @@ import br.com.sbk.sbking.core.rulesets.abstractrulesets.Ruleset;
 
 public class GameModeSummary {
 
-    /**
-     * @deprecated Kryo needs a no-arg constructor
-     */
-    @Deprecated
-    @SuppressWarnings("unused")
-    private GameModeSummary() {
-    }
-
     private Direction chosenBy;
     private Ruleset ruleset;
     private Integer orderOfPlay;

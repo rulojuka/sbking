@@ -4,14 +4,6 @@ import br.com.sbk.sbking.core.rulesets.interfaces.Scoreable;
 
 public class Score {
 
-    /**
-     * @deprecated Kryo needs a no-arg constructor
-     */
-    @Deprecated
-    @SuppressWarnings("unused")
-    private Score() {
-    }
-
     private int northSouthPoints = 0;
     private int eastWestPoints = 0;
     private Scoreable scoreable;

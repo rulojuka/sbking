@@ -45,14 +45,6 @@ public class CardInsideHandWithSuitComparator implements Comparator<Card> {
 
   private Map<Suit, Integer> suitOrder;
 
-  /**
-   * @deprecated Kryo needs a no-arg constructor
-   */
-  @Deprecated
-  @SuppressWarnings("unused")
-  private CardInsideHandWithSuitComparator() {
-  }
-
   public CardInsideHandWithSuitComparator(Suit suit) {
     this.suitOrder = suitOrders.get(suit);
   }

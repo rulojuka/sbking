@@ -7,14 +7,6 @@ public class Player {
   private UUID identifier;
   private String nickname;
 
-  /**
-   * @deprecated Kryo needs a no-arg constructor
-   */
-  @Deprecated
-  @SuppressWarnings("unused")
-  private Player() {
-  }
-
   public Player(UUID identifier, String nickname) {
     this.identifier = identifier;
     this.nickname = nickname;

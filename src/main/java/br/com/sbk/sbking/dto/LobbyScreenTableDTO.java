@@ -15,14 +15,6 @@ public class LobbyScreenTableDTO {
     private String gameName;
     private int numberOfSpectators;
 
-    /**
-     * @deprecated Kryo needs a no-arg constructor
-     */
-    @Deprecated
-    @SuppressWarnings("unused")
-    private LobbyScreenTableDTO() {
-    }
-
     public LobbyScreenTableDTO(Table table) {
         this.id = table.getId();
         Map<Direction, Player> tempMap = table.getPlayersDirections();
