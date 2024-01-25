@@ -50,6 +50,15 @@ public class StrainTest {
     }
 
     @Test
+    public void shouldGetSymbol() {
+        assertEquals("D", diamonds.getSymbol());
+        assertEquals("C", clubs.getSymbol());
+        assertEquals("H", hearts.getSymbol());
+        assertEquals("S", spades.getSymbol());
+        assertEquals("N", noTrumps.getSymbol());
+    }
+
+    @Test
     public void shouldGetPositiveRuleset() {
         assertEquals(new PositiveWithTrumpsRuleset(Suit.DIAMONDS), diamonds.getPositiveRuleset());
         assertEquals(new PositiveWithTrumpsRuleset(Suit.CLUBS), clubs.getPositiveRuleset());
