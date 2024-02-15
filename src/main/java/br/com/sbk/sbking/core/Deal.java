@@ -17,6 +17,14 @@ import br.com.sbk.sbking.core.rulesets.abstractrulesets.Ruleset;
 
 public class Deal {
 
+    /**
+     * @deprecated Kryo needs a no-arg constructor
+     */
+    @Deprecated
+    @SuppressWarnings("unused")
+    private Deal() {
+    }
+
     private Board board;
     private int completedTricks;
     private int startingNumberOfCardsInTheHand;

@@ -9,6 +9,14 @@ import br.com.sbk.sbking.core.rulesets.implementations.TrumpSuitWinnable;
 
 public class PositiveWithTrumpsRuleset extends PositiveRuleset {
 
+    /**
+     * @deprecated Kryo needs a no-arg constructor
+     */
+    @Deprecated
+    @SuppressWarnings("unused")
+    private PositiveWithTrumpsRuleset() {
+    }
+
     private Suit trumpSuit;
 
     public PositiveWithTrumpsRuleset(Suit trumpSuit) {

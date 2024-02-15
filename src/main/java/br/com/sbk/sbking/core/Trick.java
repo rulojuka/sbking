@@ -15,6 +15,14 @@ import br.com.sbk.sbking.core.exceptions.TrickAlreadyFullException;
 
 public class Trick {
 
+    /**
+     * @deprecated Kryo needs a no-arg constructor
+     */
+    @Deprecated
+    @SuppressWarnings("unused")
+    private Trick() {
+    }
+
     private List<Card> cards;
     private Direction leader;
     private boolean lastTwo;
