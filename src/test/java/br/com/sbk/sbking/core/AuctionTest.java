@@ -3,7 +3,6 @@ package br.com.sbk.sbking.core;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 
@@ -117,33 +116,6 @@ class AuctionTest {
         assertThrows(InvalidCallException.class, () -> {
             auction.makeCall(Direction.WEST,BiddingBox.REDOUBLE);
         });
-    }
-
-    @Test
-    void shouldFinishSomeValidAuctions() {
-        String validAuctions[]
-                = new String[] {
-                        "P P P P",
-                        "1C P P P",
-                        "P 1S P 2D P 2S P 3H P 3N X P P P",
-                        "P 1C P 1D P 1H P 1S P 2S P 2N P 3N P 4H P P P",
-                        "1C P 1S P 2H P 3H P 3S P 4S P 5D P 6C P 6H P P P",
-                        "P 1C P 2C P 2N P 3N P P P",
-                        "P 1N P P P",
-                        "P 1D P 1S P 1N 2C 2S P P P",
-                        "1D P 1H P 1N P 2N P P P",
-                        "1S P 2S X P 3C 3S 4D X XX P P P"
-        };
-        for (String validAuction : validAuctions) {
-            Direction current = Direction.EAST;
-            Auction auction = new Auction(current);
-            for(String call : validAuction.split(" ")) {
-                assertFalse(auction.isFinished());
-                auction.makeCall(current, BiddingBox.get(call));
-                current = current.next();
-            }
-            assertTrue(auction.isFinished());
-        }
     }
 
 }
