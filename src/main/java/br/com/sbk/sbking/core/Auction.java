@@ -10,17 +10,15 @@ import br.com.sbk.sbking.core.exceptions.InsufficientBidException;
 import br.com.sbk.sbking.core.exceptions.InvalidCallException;
 
 /**
- * The rules for Bridge Auction are as follows (paraphrasing/quoting the 2017 Laws of Bridge):
+ * The rules for Bridge Auction are as follows (paraphrasing/quoting the 2017 Laws of Bridge - LAWS 17-22):
  *
- * - The first call is made by the dealer
- * - Every other call is made by the player who goes next from the last caller
- * - The auction ends after 4 consecutive passes (this only happens when they are the first 4 calls)
- * - The auction ends after 3 consecutive passes if a bid has already been made.
+ * - The first call is made by the dealer - Every other call is made by the player who goes next from the last caller - The auction ends after 4
+ * consecutive passes (this only happens when they are the first 4 calls) - The auction ends after 3 consecutive passes if a bid has already been
+ * made.
  *
- * - Pass is always a valid call
- * - Double (X) can only be called if and only if the last non-pass call was made by the opponents AND it was a bid.
- * - Redouble (XX) can only be called if and only if the last non-pass call was made by the opponents AND it was a double (X).
- * - The first bid is freely chosen from all bids. All other bids must supersede the last bid (and consequently all previous ones).
+ * - Pass is always a valid call - Double (X) can only be called if and only if the last non-pass call was made by the opponents AND it was a bid. -
+ * Redouble (XX) can only be called if and only if the last non-pass call was made by the opponents AND it was a double (X). - The first bid is freely
+ * chosen from all bids. All other bids must supersede the last bid (and consequently all previous ones).
  *
  */
 
@@ -37,6 +35,7 @@ public final class Auction {
      */
     private int lastNonPassCallIndex;
     private int lastBidIndex;
+    private Contract finalContract;
 
     public Auction(Direction dealer) {
         this.dealer = dealer;
@@ -45,6 +44,7 @@ public final class Auction {
         this.finished = false;
         this.lastNonPassCallIndex = -1;
         this.lastBidIndex = -1;
+        this.finalContract = null;
     }
 
     public Direction getDealer() {
@@ -69,6 +69,9 @@ public final class Auction {
         }
         if (this.currentTurn != direction) {
             throw new CallInAnotherPlayersTurnException();
+        }
+        if (direction == null || call == null) {
+            throw new IllegalArgumentException("Parameters should not be null");
         }
 
         if (call.isPass()) {
@@ -103,15 +106,11 @@ public final class Auction {
     }
 
     private boolean isDoubleValid() {
-        return lastNonPassCallIndex >= 0
-                && isLastNonPassBidFromOpponents()
-                && this.bids.get(lastNonPassCallIndex).isBid();
+        return lastNonPassCallIndex >= 0 && isLastNonPassBidFromOpponents() && this.bids.get(lastNonPassCallIndex).isBid();
     }
 
     private boolean isRedoubleValid() {
-        return lastNonPassCallIndex >= 0
-                && isLastNonPassBidFromOpponents()
-                && this.bids.get(lastNonPassCallIndex).isDouble();
+        return lastNonPassCallIndex >= 0 && isLastNonPassBidFromOpponents() && this.bids.get(lastNonPassCallIndex).isDouble();
     }
 
     private boolean isLastNonPassBidFromOpponents() {
@@ -156,6 +155,40 @@ public final class Auction {
             }
         }
         return tailPasses;
+    }
+
+    public Contract getFinalContract() {
+        if (!this.isFinished()) {
+            throw new IllegalStateException("Auction must be finished to have a final contract.");
+        }
+
+        if (this.finalContract != null) {
+            return this.finalContract;
+        }
+
+        Bid lastBid = null;
+        int lastBidIndex = -1;
+        for (int i = this.bids.size() - 1; i >= 0; i--) {
+            if (this.bids.get(i).isBid()) {
+                lastBid = (Bid) this.bids.get(i);
+                lastBidIndex = i;
+                break;
+            }
+        }
+
+        if (lastBid == null) {
+            // Ignoring PASS for now
+            throw new IllegalStateException("PASS is not implemented yet.");
+        } else {
+            List<Call> subList = this.bids.subList(lastBidIndex, this.bids.size());
+            boolean redoubled = subList.stream().anyMatch(call -> call.isRedouble());
+            boolean doubled = subList.stream().anyMatch(call -> call.isDouble());
+            boolean nonVul = false;
+            int level = lastBid.getOddTricks().getLevel();
+            Strain strain = lastBid.getStrain();
+            this.finalContract = new Contract(level, strain, doubled, redoubled, nonVul);
+            return this.finalContract;
+        }
     }
 
 }

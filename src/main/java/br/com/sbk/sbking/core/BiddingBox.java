@@ -39,7 +39,7 @@ public final class BiddingBox {
     }
 
     public static Call get(String label) {
-        return LABEL_TO_BID_MAP.get(label);
+        return LABEL_TO_BID_MAP.get(label.toUpperCase());
     }
 
     public static Call get(Call call) {
