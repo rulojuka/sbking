@@ -191,4 +191,23 @@ public final class Auction {
         }
     }
 
+    @Override
+    public String toString() {
+        StringBuilder returnValue = new StringBuilder();
+        List<Call> calls = this.getBids();
+        for (Call call : calls) {
+            if (call.isPass()) {
+                returnValue.append("P ");
+            } else if (call.isDouble()) {
+                returnValue.append("X ");
+            } else if (call.isRedouble()) {
+                returnValue.append("XX ");
+            } else {
+                Bid bid = (Bid) call;
+                returnValue.append(bid.getOddTricks().getSymbol() + bid.getStrain().getSymbol() + " ");
+            }
+        }
+        return returnValue.toString();
+    }
+
 }
