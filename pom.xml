@@ -32,7 +32,7 @@
 		<sonar.issue.ignore.multicriteria.e3.resourceKey>**/*</sonar.issue.ignore.multicriteria.e3.resourceKey>
 		<java.version>17</java.version> <!-- For spring-boot-maven-plugin -->
 		<sbking.commons-beanutils.version>1.9.4</sbking.commons-beanutils.version>
-		<sbking.commons-configuration2.version>2.9.0</sbking.commons-configuration2.version>
+		<sbking.commons-configuration2.version>2.10.1</sbking.commons-configuration2.version>
 		<sbking.hibernate-core.version>6.2.2.Final</sbking.hibernate-core.version>
 		<sbking.httpclient.version>5.2.1</sbking.httpclient.version>
 		<sbking.jackson.version>2.15.2</sbking.jackson.version>
