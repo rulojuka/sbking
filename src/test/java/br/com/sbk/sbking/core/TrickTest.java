@@ -96,23 +96,14 @@ public class TrickTest {
         Trick trick = new Trick(leader);
 
         Card jackOfClubs = mock(Card.class);
-        when(jackOfClubs.getRank()).thenReturn(Rank.JACK);
-        when(jackOfClubs.getSuit()).thenReturn(Suit.CLUBS);
 
         Card queenOfHearts = mock(Card.class);
-        when(queenOfHearts.getRank()).thenReturn(Rank.QUEEN);
-        when(queenOfHearts.getSuit()).thenReturn(Suit.HEARTS);
 
         Card aceOfSpades = mock(Card.class);
-        when(aceOfSpades.getRank()).thenReturn(Rank.ACE);
-        when(aceOfSpades.getSuit()).thenReturn(Suit.SPADES);
 
         Card kingOfClubs = mock(Card.class);
-        when(kingOfClubs.getRank()).thenReturn(Rank.KING);
-        when(kingOfClubs.getSuit()).thenReturn(Suit.CLUBS);
-
-        when(jackOfClubs.compareRank(kingOfClubs)).thenReturn(-1);
-        when(kingOfClubs.compareRank(jackOfClubs)).thenReturn(1);
+        setupCardGetRankAndGetSuitStubs2(jackOfClubs, queenOfHearts, aceOfSpades, kingOfClubs);
+        setupCardCompareRankStubs(jackOfClubs, kingOfClubs);
 
         trick.addCard(jackOfClubs);
         trick.addCard(queenOfHearts);
@@ -152,23 +143,14 @@ public class TrickTest {
         Trick trick = new Trick(leader);
 
         Card jackOfClubs = mock(Card.class);
-        when(jackOfClubs.getRank()).thenReturn(Rank.JACK);
-        when(jackOfClubs.getSuit()).thenReturn(Suit.CLUBS);
 
         Card queenOfHearts = mock(Card.class);
-        when(queenOfHearts.getRank()).thenReturn(Rank.QUEEN);
-        when(queenOfHearts.getSuit()).thenReturn(Suit.HEARTS);
 
         Card aceOfSpades = mock(Card.class);
-        when(aceOfSpades.getRank()).thenReturn(Rank.ACE);
-        when(aceOfSpades.getSuit()).thenReturn(Suit.SPADES);
 
         Card kingOfClubs = mock(Card.class);
-        when(kingOfClubs.getRank()).thenReturn(Rank.KING);
-        when(kingOfClubs.getSuit()).thenReturn(Suit.CLUBS);
-
-        when(jackOfClubs.compareRank(kingOfClubs)).thenReturn(-1);
-        when(kingOfClubs.compareRank(jackOfClubs)).thenReturn(1);
+        setupCardGetRankAndGetSuitStubs2(jackOfClubs, queenOfHearts, aceOfSpades, kingOfClubs);
+        setupCardCompareRankStubs(jackOfClubs, kingOfClubs);
 
         trick.addCard(jackOfClubs);
         trick.addCard(queenOfHearts);
@@ -218,20 +200,13 @@ public class TrickTest {
     public void getListOfCardsShouldReturnTheCorrectList() {
         Trick trick = new Trick(Direction.NORTH);
         Card jackOfClubs = mock(Card.class);
-        when(jackOfClubs.getRank()).thenReturn(Rank.JACK);
-        when(jackOfClubs.getSuit()).thenReturn(Suit.CLUBS);
 
         Card queenOfHearts = mock(Card.class);
-        when(queenOfHearts.getRank()).thenReturn(Rank.QUEEN);
-        when(queenOfHearts.getSuit()).thenReturn(Suit.HEARTS);
 
         Card aceOfSpades = mock(Card.class);
-        when(aceOfSpades.getRank()).thenReturn(Rank.ACE);
-        when(aceOfSpades.getSuit()).thenReturn(Suit.SPADES);
 
         Card kingOfClubs = mock(Card.class);
-        when(kingOfClubs.getRank()).thenReturn(Rank.KING);
-        when(kingOfClubs.getSuit()).thenReturn(Suit.CLUBS);
+        setupCardGetRankAndGetSuitStubs2(jackOfClubs, queenOfHearts, aceOfSpades, kingOfClubs);
 
         trick.addCard(jackOfClubs);
         trick.addCard(queenOfHearts);
@@ -260,8 +235,7 @@ public class TrickTest {
     public void getListOfCardsShouldReturnAnUnmodifiableList() {
         Trick trick = new Trick(Direction.NORTH);
         Card jackOfClubs = mock(Card.class);
-        when(jackOfClubs.getRank()).thenReturn(Rank.JACK);
-        when(jackOfClubs.getSuit()).thenReturn(Suit.CLUBS);
+        setupCardGetRankAndGetSuitStubs(jackOfClubs);
         for (int i = 0; i < COMPLETE_TRICK_NUMBER_OF_CARDS; i++) {
             trick.addCard(jackOfClubs);
         }
@@ -278,16 +252,14 @@ public class TrickTest {
         Trick trick = new Trick(Direction.NORTH);
 
         Card jackOfClubs = mock(Card.class);
-        when(jackOfClubs.isMan()).thenReturn(true);
 
         Card queenOfHearts = mock(Card.class);
-        when(queenOfHearts.isMan()).thenReturn(false);
+        setupCardIsManStubs(jackOfClubs, queenOfHearts);
 
         Card kingOfDiamonds = mock(Card.class);
-        when(kingOfDiamonds.isMan()).thenReturn(true);
 
         Card aceOfSpades = mock(Card.class);
-        when(aceOfSpades.isMan()).thenReturn(false);
+        setupCardIsManStubs(kingOfDiamonds, aceOfSpades);
 
         trick.addCard(jackOfClubs);
         trick.addCard(queenOfHearts);
@@ -530,4 +502,28 @@ public class TrickTest {
         assertEquals(expectedLastPlayer, lastPlayer);
     }
 
+    private void setupCardGetRankAndGetSuitStubs(Card jackOfClubs) {
+        when(jackOfClubs.getRank()).thenReturn(Rank.JACK);
+        when(jackOfClubs.getSuit()).thenReturn(Suit.CLUBS);
+    }
+
+    private void setupCardGetRankAndGetSuitStubs2(Card jackOfClubs, Card queenOfHearts, Card aceOfSpades, Card kingOfClubs) {
+        setupCardGetRankAndGetSuitStubs(jackOfClubs);
+        when(queenOfHearts.getRank()).thenReturn(Rank.QUEEN);
+        when(queenOfHearts.getSuit()).thenReturn(Suit.HEARTS);
+        when(aceOfSpades.getRank()).thenReturn(Rank.ACE);
+        when(aceOfSpades.getSuit()).thenReturn(Suit.SPADES);
+        when(kingOfClubs.getRank()).thenReturn(Rank.KING);
+        when(kingOfClubs.getSuit()).thenReturn(Suit.CLUBS);
+    }
+
+    private void setupCardCompareRankStubs(Card jackOfClubs, Card kingOfClubs) {
+        when(jackOfClubs.compareRank(kingOfClubs)).thenReturn(-1);
+        when(kingOfClubs.compareRank(jackOfClubs)).thenReturn(1);
+    }
+
+    private void setupCardIsManStubs(Card jackOfClubs, Card queenOfHearts) {
+        when(jackOfClubs.isMan()).thenReturn(true);
+        when(queenOfHearts.isMan()).thenReturn(false);
+    }
 }
