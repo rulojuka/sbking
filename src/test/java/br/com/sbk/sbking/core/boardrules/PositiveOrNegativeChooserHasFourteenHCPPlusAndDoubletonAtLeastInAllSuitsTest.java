@@ -21,13 +21,9 @@ public class PositiveOrNegativeChooserHasFourteenHCPPlusAndDoubletonAtLeastInAll
   public void shouldBeValidWithAValidBoard() {
     Hand handWithRules = mock(Hand.class);
     HandEvaluations handEvaluations = mock(HandEvaluations.class);
-    when(handWithRules.getHandEvaluations()).thenReturn(handEvaluations);
-    when(handEvaluations.getHCP()).thenReturn(14);
-    when(handEvaluations.getShortestSuitLength()).thenReturn(2);
 
     Board validBoard = mock(Board.class);
-    when(validBoard.getDealer()).thenReturn(dealer);
-    when(validBoard.getHandOf(positiveOrNegativeChooser)).thenReturn(handWithRules);
+    setupBoardGetDealerAndGetHandEvaluationsAndGetHCPAnd2MoreStubs(handWithRules, handEvaluations, validBoard, 14, 2);
 
     assertEquals(true, subject.isValid(validBoard));
   }
@@ -36,13 +32,9 @@ public class PositiveOrNegativeChooserHasFourteenHCPPlusAndDoubletonAtLeastInAll
   public void shouldBeInvalidWithValidPointsButInvalidDistribution() {
     Hand handWithRules = mock(Hand.class);
     HandEvaluations handEvaluations = mock(HandEvaluations.class);
-    when(handWithRules.getHandEvaluations()).thenReturn(handEvaluations);
-    when(handEvaluations.getHCP()).thenReturn(14);
-    when(handEvaluations.getShortestSuitLength()).thenReturn(1);
 
     Board invalidBoard = mock(Board.class);
-    when(invalidBoard.getDealer()).thenReturn(dealer);
-    when(invalidBoard.getHandOf(positiveOrNegativeChooser)).thenReturn(handWithRules);
+    setupBoardGetDealerAndGetHandEvaluationsAndGetHCPAnd2MoreStubs(handWithRules, handEvaluations, invalidBoard, 14, 1);
 
     assertEquals(false, subject.isValid(invalidBoard));
   }
@@ -51,15 +43,18 @@ public class PositiveOrNegativeChooserHasFourteenHCPPlusAndDoubletonAtLeastInAll
   public void shouldBeInvalidWithValidDistributionButInvalidPoints() {
     Hand handWithRules = mock(Hand.class);
     HandEvaluations handEvaluations = mock(HandEvaluations.class);
-    when(handWithRules.getHandEvaluations()).thenReturn(handEvaluations);
-    when(handEvaluations.getHCP()).thenReturn(11);
-    when(handEvaluations.getShortestSuitLength()).thenReturn(3);
 
     Board validBoard = mock(Board.class);
-    when(validBoard.getDealer()).thenReturn(dealer);
-    when(validBoard.getHandOf(positiveOrNegativeChooser)).thenReturn(handWithRules);
+    setupBoardGetDealerAndGetHandEvaluationsAndGetHCPAnd2MoreStubs(handWithRules, handEvaluations, validBoard, 11, 3);
 
     assertEquals(false, subject.isValid(validBoard));
   }
 
+  private void setupBoardGetDealerAndGetHandEvaluationsAndGetHCPAnd2MoreStubs(Hand handWithRules, HandEvaluations handEvaluations, Board validBoard, int getHCPReturnValue, int getShortestSuitLengthReturnValue) {
+    when(handWithRules.getHandEvaluations()).thenReturn(handEvaluations);
+    when(handEvaluations.getHCP()).thenReturn(getHCPReturnValue);
+    when(handEvaluations.getShortestSuitLength()).thenReturn(getShortestSuitLengthReturnValue);
+    when(validBoard.getDealer()).thenReturn(dealer);
+    when(validBoard.getHandOf(positiveOrNegativeChooser)).thenReturn(handWithRules);
+  }
 }
