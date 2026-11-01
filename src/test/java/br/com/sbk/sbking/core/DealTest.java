@@ -108,8 +108,7 @@ public class DealTest {
     public void shouldGetHandOfACertainDirection() {
         dealer = Direction.WEST;
         Direction currentPlayer = dealer.getLeaderWhenDealer();
-        when(board.getHandOf(currentPlayer)).thenReturn(hand);
-        when(board.getDealer()).thenReturn(dealer);
+        setupBoardGetDealerAndGetHandOfStubs(currentPlayer, hand);
         Deal deal = new Deal(board, ruleset, leader, null);
 
         assertEquals(hand, deal.getHandOf(currentPlayer));
@@ -129,8 +128,7 @@ public class DealTest {
         Hand handOfCurrentPlayer = mock(Hand.class);
         Card card = mock(Card.class);
 
-        when(board.getDealer()).thenReturn(dealer);
-        when(board.getHandOf(currentPlayer)).thenReturn(handOfCurrentPlayer);
+        setupBoardGetDealerAndGetHandOfStubs(currentPlayer, handOfCurrentPlayer);
         when(handOfCurrentPlayer.containsCard(card)).thenReturn(false);
 
         Deal deal = new Deal(board, ruleset, currentPlayer, null);
@@ -144,8 +142,7 @@ public class DealTest {
         Direction currentPlayer = leader;
         Card card = mock(Card.class);
 
-        when(board.getDealer()).thenReturn(dealer);
-        when(board.getHandOf(currentPlayer)).thenReturn(hand);
+        setupBoardGetDealerAndGetHandOfStubs(currentPlayer, hand);
         when(hand.containsCard(card)).thenReturn(true);
 
         when(ruleset.prohibitsHeartsUntilOnlySuitLeft()).thenReturn(true);
@@ -165,11 +162,7 @@ public class DealTest {
     public void firstPlayedCardInATrickShouldAlwaysFollowSuit() {
         Card card = mock(Card.class);
 
-        when(board.getDealer()).thenReturn(dealer);
-        when(board.getHandOf(any(Direction.class))).thenReturn(hand);
-        when(hand.containsCard(card)).thenReturn(true);
-
-        when(ruleset.followsSuit(any(), any(), any())).thenReturn(false);
+        setupBoardGetDealerAndGetHandOfAndFollowsSuitAnd1MoreStubs(card, dealer, false);
 
         Deal deal = new Deal(board, ruleset, leader, null);
 
@@ -182,11 +175,7 @@ public class DealTest {
     public void playCardShouldThrowExceptionIfSecondCardDoesNotFollowSuit() {
         Card card = mock(Card.class);
 
-        when(board.getDealer()).thenReturn(dealer);
-        when(board.getHandOf(any(Direction.class))).thenReturn(hand);
-        when(hand.containsCard(card)).thenReturn(true);
-
-        when(ruleset.followsSuit(any(), any(), any())).thenReturn(false);
+        setupBoardGetDealerAndGetHandOfAndFollowsSuitAnd1MoreStubs(card, dealer, false);
 
         Deal deal = new Deal(board, ruleset, leader, null);
 
@@ -201,9 +190,7 @@ public class DealTest {
     public void playCardShouldStartNewTrickIfCurrentTrickIsNotStartedYet() {
         Card card = mock(Card.class);
 
-        when(board.getDealer()).thenReturn(dealer);
-        when(board.getHandOf(any(Direction.class))).thenReturn(hand);
-        when(hand.containsCard(card)).thenReturn(true);
+        setupBoardGetDealerAndGetHandOfAndContainsCardStubs(card, dealer);
 
         Deal deal = new Deal(board, ruleset, leader, null);
 
@@ -218,9 +205,7 @@ public class DealTest {
         Card card = mock(Card.class);
         int numberOfCardsInTheTrick;
 
-        when(board.getDealer()).thenReturn(dealer);
-        when(board.getHandOf(any(Direction.class))).thenReturn(hand);
-        when(hand.containsCard(card)).thenReturn(true);
+        setupBoardGetDealerAndGetHandOfAndContainsCardStubs(card, dealer);
 
         Deal deal = new Deal(board, ruleset, leader, null);
         numberOfCardsInTheTrick = deal.getCurrentTrick().getCards().size();
@@ -236,9 +221,7 @@ public class DealTest {
         Direction nextPlayer = currentPlayer.next();
         Card card = mock(Card.class);
 
-        when(board.getDealer()).thenReturn(dealer);
-        when(board.getHandOf(any(Direction.class))).thenReturn(hand);
-        when(hand.containsCard(card)).thenReturn(true);
+        setupBoardGetDealerAndGetHandOfAndContainsCardStubs(card, dealer);
 
         Deal deal = new Deal(board, ruleset, currentPlayer, null);
         deal.playCard(card);
@@ -251,11 +234,7 @@ public class DealTest {
         Direction winner = Direction.SOUTH;
         Card card = mock(Card.class);
 
-        when(board.getDealer()).thenReturn(dealer);
-        when(board.getHandOf(any(Direction.class))).thenReturn(hand);
-        when(hand.containsCard(card)).thenReturn(true);
-
-        when(ruleset.followsSuit(any(), any(), any())).thenReturn(true);
+        setupBoardGetDealerAndGetHandOfAndFollowsSuitAnd1MoreStubs(card, dealer, true);
 
         when(ruleset.getWinner(any())).thenReturn(winner);
 
@@ -276,11 +255,7 @@ public class DealTest {
         Card card = mock(Card.class);
         int trickPoints = 1;
 
-        when(board.getDealer()).thenReturn(currentPlayer);
-        when(board.getHandOf(any(Direction.class))).thenReturn(hand);
-        when(hand.containsCard(card)).thenReturn(true);
-
-        when(ruleset.followsSuit(any(), any(), any())).thenReturn(true);
+        setupBoardGetDealerAndGetHandOfAndFollowsSuitAnd1MoreStubs(card, currentPlayer, true);
 
         when(ruleset.getWinner(any())).thenReturn(winner);
         when(ruleset.getPoints(any())).thenReturn(trickPoints);
@@ -303,11 +278,7 @@ public class DealTest {
         int noCompletedTricks = 0;
         int oneCompletedTricks = noCompletedTricks + 1;
 
-        when(board.getDealer()).thenReturn(currentPlayer);
-        when(board.getHandOf(any(Direction.class))).thenReturn(hand);
-        when(hand.containsCard(card)).thenReturn(true);
-
-        when(ruleset.followsSuit(any(), any(), any())).thenReturn(true);
+        setupBoardGetDealerAndGetHandOfAndFollowsSuitAnd1MoreStubs(card, currentPlayer, true);
 
         when(ruleset.getWinner(any())).thenReturn(winner);
 
@@ -635,5 +606,21 @@ public class DealTest {
             assertEquals(false, deal.getAcceptedClaimMap().get(direction));
         }
         assertEquals(null, deal.getClaimer());
+    }
+
+    private void setupBoardGetDealerAndGetHandOfAndContainsCardStubs(Card card, Direction getDealerReturnValue) {
+        when(board.getDealer()).thenReturn(getDealerReturnValue);
+        when(board.getHandOf(any(Direction.class))).thenReturn(hand);
+        when(hand.containsCard(card)).thenReturn(true);
+    }
+
+    private void setupBoardGetDealerAndGetHandOfAndFollowsSuitAnd1MoreStubs(Card card, Direction getDealerReturnValue, boolean followsSuitReturnValue) {
+        setupBoardGetDealerAndGetHandOfAndContainsCardStubs(card, getDealerReturnValue);
+        when(ruleset.followsSuit(any(), any(), any())).thenReturn(followsSuitReturnValue);
+    }
+
+    private void setupBoardGetDealerAndGetHandOfStubs(Direction currentPlayer, Hand getHandOfReturnValue) {
+        when(board.getDealer()).thenReturn(dealer);
+        when(board.getHandOf(currentPlayer)).thenReturn(getHandOfReturnValue);
     }
 }
